@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="ATTENDANCE_DETAILS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EMPLOYEE_ID" Type="bigint" Nullable="false" />
+    <Property Name="ATT_DATE" Type="date" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EMPLOYEE_INFO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EMPLOYEE_NAME" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ADDRESS" Type="nvarchar" MaxLength="100" />
+    <Property Name="CONTACT" Type="varchar" MaxLength="50" />
+    <Property Name="EMAIL" Type="varchar" MaxLength="50" />
+    <Property Name="NID" Type="nvarchar" MaxLength="50" />
+    <Property Name="IMAGE" Type="nvarchar" MaxLength="500" />
+    <Property Name="IS_DELETED" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="JOINING_DATE" Type="nvarchar" MaxLength="50" />
+    <Property Name="RESIGNING_DATE" Type="nvarchar" MaxLength="50" />
+    <Property Name="DESIGNATION" Type="nvarchar" MaxLength="50" />
+    <Property Name="ACTION_BY" Type="bigint" />
+    <Property Name="ACTION_DATE" Type="datetime" Nullable="false" />
+    <Property Name="UPDATE_BY" Type="bigint" />
+    <Property Name="UPDATE_DATE" Type="datetime" />
+    <Property Name="CITY" Type="nvarchar" MaxLength="50" />
+    <Property Name="POSTAL_CODE" Type="int" />
+  </EntityType>
+  <EntityType Name="SALARY_INFO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EMPLOYEE_ID" Type="bigint" Nullable="false" />
+    <Property Name="BASIC_SALARY" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="BONUS" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="OTHERS" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="SALARY_PAID" Type="date" Nullable="false" />
+    <Property Name="TOTAL" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ACTION_BY" Type="bigint" Nullable="false" />
+    <Property Name="ACTION_DATE" Type="datetime" Nullable="false" />
+    <Property Name="UPDATE_BY" Type="bigint" />
+    <Property Name="UPDATE_DATE" Type="datetime" />
+    <Property Name="REMARKS" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="USER_INFO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EMPLOYEE_ID" Type="bigint" />
+    <Property Name="USER_NAME" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CONTACT" Type="varchar" MaxLength="50" />
+    <Property Name="USER_ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="PASSWORD" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="USER_LEVEL" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="IS_DELETED" Type="char" MaxLength="1" />
+    <Property Name="ACTION_DATE" Type="datetime" />
+    <Property Name="ACTION_BY" Type="bigint" />
+    <Property Name="UPDATE_DATE" Type="datetime" />
+    <Property Name="UPDATE_BY" Type="bigint" />
+  </EntityType>
+  <Association Name="FK_SALARY_INFO_EMPLOYEE_INFO">
+    <End Role="EMPLOYEE_INFO" Type="Self.EMPLOYEE_INFO" Multiplicity="1" />
+    <End Role="SALARY_INFO" Type="Self.SALARY_INFO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EMPLOYEE_INFO">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="SALARY_INFO">
+        <PropertyRef Name="EMPLOYEE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_USER_INFO_EMPLOYEE_INFO">
+    <End Role="EMPLOYEE_INFO" Type="Self.EMPLOYEE_INFO" Multiplicity="0..1" />
+    <End Role="USER_INFO" Type="Self.USER_INFO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EMPLOYEE_INFO">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="USER_INFO">
+        <PropertyRef Name="EMPLOYEE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="EMSModelStoreContainer">
+    <EntitySet Name="ATTENDANCE_DETAILS" EntityType="Self.ATTENDANCE_DETAILS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EMPLOYEE_INFO" EntityType="Self.EMPLOYEE_INFO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SALARY_INFO" EntityType="Self.SALARY_INFO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="USER_INFO" EntityType="Self.USER_INFO" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_SALARY_INFO_EMPLOYEE_INFO" Association="Self.FK_SALARY_INFO_EMPLOYEE_INFO">
+      <End Role="EMPLOYEE_INFO" EntitySet="EMPLOYEE_INFO" />
+      <End Role="SALARY_INFO" EntitySet="SALARY_INFO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_USER_INFO_EMPLOYEE_INFO" Association="Self.FK_USER_INFO_EMPLOYEE_INFO">
+      <End Role="EMPLOYEE_INFO" EntitySet="EMPLOYEE_INFO" />
+      <End Role="USER_INFO" EntitySet="USER_INFO" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

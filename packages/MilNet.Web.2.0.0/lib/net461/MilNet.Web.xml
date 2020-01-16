@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MilNet.Web</name>
+    </assembly>
+    <members>
+        <member name="T:MilNet.Web.RouteValueDictionaryExtensions">
+            <summary>Extensions for <see cref="T:System.Web.Routing.RouteValueDictionary"/></summary>
+        </member>
+        <member name="M:MilNet.Web.RouteValueDictionaryExtensions.CopyRouteValueDictionary(System.Web.Routing.RouteValueDictionary,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>Copy a route value dictionary, altered with custom html attributes</summary>
+            <param name="dictionary">Dictionary to copy</param>
+            <param name="htmlAttributes">HTML attributes, to alter the dictionary</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

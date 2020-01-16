@@ -1,0 +1,1409 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MilNet.Web.Mvc</name>
+    </assembly>
+    <members>
+        <member name="T:MilNet.Web.Mvc.Common.AttributeHelper">
+            <summary>Attributes helpers</summary>
+        </member>
+        <member name="M:MilNet.Web.Mvc.Common.AttributeHelper.GetInnerInputHtmlAttributes(System.Boolean)">
+            <summary>Get the class for a main item</summary>
+            <param name="disabled">The field is disabled</param>
+        </member>
+        <member name="M:MilNet.Web.Mvc.Common.AttributeHelper.GetInnerDateInputHtmlAttributes(System.Boolean)">
+            <summary>Get the class for a main date item</summary>
+            <param name="disabled">The field is disabled</param>
+        </member>
+        <member name="M:MilNet.Web.Mvc.Common.PropertyHelper.#ctor(System.Reflection.PropertyInfo)">
+            <summary>
+            Initializes a fast property helper. This constructor does not cache the helper.
+            </summary>
+        </member>
+        <member name="M:MilNet.Web.Mvc.Common.PropertyHelper.MakeFastPropertySetter``1(System.Reflection.PropertyInfo)">
+            <summary>
+            Creates a single fast property setter. The result is not cached.
+            </summary>
+            <param name="propertyInfo">propertyInfo to extract the getter for.</param>
+            <returns>a fast setter.</returns>
+            <remarks>This method is more memory efficient than a dynamically compiled lambda, and about the same speed.</remarks>
+        </member>
+        <member name="M:MilNet.Web.Mvc.Common.PropertyHelper.GetProperties(System.Object)">
+            <summary>
+            Creates and caches fast property helpers that expose getters for every public get property on the underlying type.
+            </summary>
+            <param name="instance">the instance to extract property accessors for.</param>
+            <returns>a cached array of all public property getters from the underlying type of this instance.</returns>
+        </member>
+        <member name="M:MilNet.Web.Mvc.Common.PropertyHelper.MakeFastPropertyGetter(System.Reflection.PropertyInfo)">
+            <summary>
+            Creates a single fast property getter. The result is not cached.
+            </summary>
+            <param name="propertyInfo">propertyInfo to extract the getter for.</param>
+            <returns>a fast getter.</returns>
+            <remarks>This method is more memory efficient than a dynamically compiled lambda, and about the same speed.</remarks>
+        </member>
+        <member name="T:MilNet.Web.Mvc.Common.FieldHelper">
+            <summary>Field helpers</summary>
+        </member>
+        <member name="M:MilNet.Web.Mvc.Common.FieldHelper.FieldInputHelper(System.Web.Mvc.HtmlHelper,System.String,MilNet.Web.Mvc.ISizeConfiguration,System.String,System.Collections.Generic.IDictionary{System.String,System.Object},System.String)">
+            <summary>Field helper</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="addon">Addon content</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+            <param name="innerInput">Inner input</param>
+            <exception cref="T:System.ArgumentException"/>
+            <exception cref="T:System.NotImplementedException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.Common.FieldHelper.FieldInputHelperFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},MilNet.Web.Mvc.ISizeConfiguration,System.String,System.Collections.Generic.IDictionary{System.String,System.Object},System.String)">
+            <summary>Field helper</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="expression">Expression that identifies the property to display</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="addon">Addon content</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+            <param name="innerInput">Inner input</param>
+            <exception cref="T:System.ArgumentException"/>
+            <exception cref="T:System.NotImplementedException"/>
+        </member>
+        <member name="T:MilNet.Web.Mvc.Common.EmptyTestHelper">
+            <summary>Helpers for control, with "empty" test</summary>
+        </member>
+        <member name="M:MilNet.Web.Mvc.Common.EmptyTestHelper.EmptyTestLabelForModel(System.Web.Mvc.HtmlHelper,System.String,MilNet.Web.Mvc.ISizeConfiguration)">
+            <summary>Label helper, with "empty" test</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <exception cref="T:System.ArgumentException"/>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.Common.EmptyTestHelper.EmptyTestLabelFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},MilNet.Web.Mvc.ISizeConfiguration)">
+            <summary>Label helper, with "empty" test</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="expression">Expression that identifies the property to display</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <exception cref="T:System.ArgumentException"/>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.Common.EmptyTestHelper.EmptyTestValidationMessageFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},MilNet.Web.Mvc.ISizeConfiguration)">
+            <summary>Validation message helper, with "empty" test</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="expression">Expression that identifies the property to display</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <exception cref="T:System.ArgumentException"/>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="T:MilNet.Web.Mvc.ButtonExtensions">
+            <summary>Extensions for HTML buttons</summary>
+        </member>
+        <member name="M:MilNet.Web.Mvc.ButtonExtensions.FieldButton(System.Web.Mvc.HtmlHelper,System.String,System.String)">
+            <summary>Button</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="title">Button title</param>
+        </member>
+        <member name="M:MilNet.Web.Mvc.ButtonExtensions.FieldButton(System.Web.Mvc.HtmlHelper,System.String,System.String,MilNet.Web.Mvc.ISizeConfiguration)">
+            <summary>Button</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="title">Button title</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+        </member>
+        <member name="M:MilNet.Web.Mvc.ButtonExtensions.FieldButton(System.Web.Mvc.HtmlHelper,System.String,System.String,MilNet.Web.Mvc.ISizeConfiguration,System.Object)">
+            <summary>Button</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="title">Button title</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+        </member>
+        <member name="M:MilNet.Web.Mvc.ButtonExtensions.FieldButton(System.Web.Mvc.HtmlHelper,System.String,System.String,MilNet.Web.Mvc.ISizeConfiguration,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>Button</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="title">Button title</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+        </member>
+        <member name="M:MilNet.Web.Mvc.ButtonExtensions.InputHelper(System.Web.Mvc.HtmlHelper,System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>Input helper</summary>
+        </member>
+        <member name="T:MilNet.Web.Mvc.CultureConfigurationExtensions">
+            <summary><see cref="T:MilNet.Core.Configuration.CultureConfiguration"/> extensions</summary>
+        </member>
+        <member name="M:MilNet.Web.Mvc.CultureConfigurationExtensions.GetCultureConfiguration(MilNet.Core.Configuration.CultureConfiguration,System.Web.HttpRequestBase)">
+            <summary>Get culture from a HTTP request with a culture cookie</summary>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.CultureConfigurationExtensions.SetCultureRoute(MilNet.Core.Configuration.CultureConfiguration,System.Web.HttpRequestBase,System.String)">
+            <summary>Set culture to a HTTP request</summary>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.CultureConfigurationExtensions.SetCultureCookie(MilNet.Core.Configuration.CultureConfiguration,System.Web.HttpResponseBase,System.Web.HttpRequestBase,System.String)">
+            <summary>Update culture into culture cookie</summary>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="T:MilNet.Web.Mvc.CultureConstraint">
+            <summary>Culture route constraint</summary>
+        </member>
+        <member name="M:MilNet.Web.Mvc.CultureConstraint.#ctor(System.String)">
+            <summary>Constructor</summary>
+            <param name="pattern">Culture pattern</param>
+        </member>
+        <member name="M:MilNet.Web.Mvc.CultureConstraint.Match(System.Web.HttpContextBase,System.Web.Routing.Route,System.String,System.Web.Routing.RouteValueDictionary,System.Web.Routing.RouteDirection)">
+            <summary>Match</summary>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="T:MilNet.Web.Mvc.FormsExtensions">
+            <summary>Extensions for HTML forms</summary>
+        </member>
+        <member name="M:MilNet.Web.Mvc.FormsExtensions.FieldSubmit(System.Web.Mvc.HtmlHelper,System.String)">
+            <summary>Submit</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="title">Submit button title</param>
+        </member>
+        <member name="M:MilNet.Web.Mvc.FormsExtensions.FieldSubmit(System.Web.Mvc.HtmlHelper,System.String,MilNet.Web.Mvc.ISizeConfiguration)">
+            <summary>Submit</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="title">Submit button title</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+        </member>
+        <member name="M:MilNet.Web.Mvc.FormsExtensions.FieldSubmit(System.Web.Mvc.HtmlHelper,System.String,MilNet.Web.Mvc.ISizeConfiguration,System.Object)">
+            <summary>Submit</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="title">Submit button title</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+        </member>
+        <member name="M:MilNet.Web.Mvc.FormsExtensions.FieldSubmit(System.Web.Mvc.HtmlHelper,System.String,MilNet.Web.Mvc.ISizeConfiguration,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>Submit</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="title">Submit button title</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+        </member>
+        <member name="M:MilNet.Web.Mvc.FormsExtensions.FieldSubmitHelper(System.Web.Mvc.HtmlHelper,System.String,MilNet.Web.Mvc.ISizeConfiguration,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>Submit</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="title">Submit button title</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+        </member>
+        <member name="T:MilNet.Web.Mvc.InputExtensions">
+            <summary>Extensions for HTML inputs</summary>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.FieldCheckBox(System.Web.Mvc.HtmlHelper,System.String,System.String)">
+            <summary>Check box</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="name">Input name</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.FieldCheckBox(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Boolean)">
+            <summary>Check box</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="name">Input name</param>
+            <param name="isChecked">Input is checked</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.FieldCheckBox(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Boolean,System.Object)">
+            <summary>Check box</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="name">Input name</param>
+            <param name="isChecked">Input is checked</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.FieldCheckBox(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Boolean,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>Check box</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="name">Input name</param>
+            <param name="isChecked">Input is checked</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.FieldCheckBox(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Boolean,MilNet.Web.Mvc.ISizeConfiguration)">
+            <summary>Check box</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="name">Input name</param>
+            <param name="isChecked">Input is checked</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.FieldCheckBox(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Boolean,MilNet.Web.Mvc.ISizeConfiguration,System.Boolean)">
+            <summary>Check box</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="name">Input name</param>
+            <param name="isChecked">Input is checked</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="disabled">The field is disabled</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.FieldCheckBox(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Boolean,MilNet.Web.Mvc.ISizeConfiguration,System.Boolean,System.Object)">
+            <summary>Check box</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="name">Input name</param>
+            <param name="isChecked">Input is checked</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="disabled">The field is disabled</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.FieldCheckBox(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Boolean,MilNet.Web.Mvc.ISizeConfiguration,System.Boolean,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>Check box</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="name">Input name</param>
+            <param name="isChecked">Input is checked</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="disabled">The field is disabled</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.FieldCheckBoxFor``1(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}})">
+            <summary>Check box</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="expression">Expression that identifies the property to display</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.FieldCheckBoxFor``1(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.Object)">
+            <summary>Check box</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="expression">Expression that identifies the property to display</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+            <exception cref="T:System.ArgumentException"/>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.FieldCheckBoxFor``1(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>Check box</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="expression">Expression that identifies the property to display</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+            <exception cref="T:System.ArgumentException"/>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.FieldCheckBoxFor``1(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},MilNet.Web.Mvc.ISizeConfiguration)">
+            <summary>Check box</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="expression">Expression that identifies the property to display</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <exception cref="T:System.ArgumentException"/>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.FieldCheckBoxFor``1(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},MilNet.Web.Mvc.ISizeConfiguration,System.Boolean)">
+            <summary>Check box</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="expression">Expression that identifies the property to display</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="disabled">The field is disabled</param>
+            <exception cref="T:System.ArgumentException"/>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.FieldCheckBoxFor``1(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},MilNet.Web.Mvc.ISizeConfiguration,System.Boolean,System.Object)">
+            <summary>Check box</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="expression">Expression that identifies the property to display</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="disabled">The field is disabled</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+            <exception cref="T:System.ArgumentException"/>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.FieldCheckBoxFor``1(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},MilNet.Web.Mvc.ISizeConfiguration,System.Boolean,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>Check box</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="expression">Expression that identifies the property to display</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="disabled">The field is disabled</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+            <exception cref="T:System.ArgumentException"/>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.FieldPassword(System.Web.Mvc.HtmlHelper,System.String,System.String)">
+            <summary>Password</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="name">Input name</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.FieldPassword(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Object)">
+            <summary>Password</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="name">Input name</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.FieldPassword(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>Password</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="name">Input name</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.FieldPassword(System.Web.Mvc.HtmlHelper,System.String,System.String,MilNet.Web.Mvc.ISizeConfiguration)">
+            <summary>Password</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="name">Input name</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.FieldPassword(System.Web.Mvc.HtmlHelper,System.String,System.String,MilNet.Web.Mvc.ISizeConfiguration,System.Boolean)">
+            <summary>Password</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="name">Input name</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="disabled">The field is disabled</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.FieldPassword(System.Web.Mvc.HtmlHelper,System.String,System.String,MilNet.Web.Mvc.ISizeConfiguration,System.Boolean,System.String)">
+            <summary>Password</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="name">Input name</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="disabled">The field is disabled</param>
+            <param name="addon">Addon content</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.FieldPassword(System.Web.Mvc.HtmlHelper,System.String,System.String,MilNet.Web.Mvc.ISizeConfiguration,System.Boolean,System.String,System.Object)">
+            <summary>Password</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="name">Input name</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="disabled">The field is disabled</param>
+            <param name="addon">Addon content</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.FieldPassword(System.Web.Mvc.HtmlHelper,System.String,System.String,MilNet.Web.Mvc.ISizeConfiguration,System.Boolean,System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>Password</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="name">Input name</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="disabled">The field is disabled</param>
+            <param name="addon">Addon content</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.FieldPasswordFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}})">
+            <summary>Password</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="expression">Expression that identifies the property to display</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.FieldPasswordFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Object)">
+            <summary>Password</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="expression">Expression that identifies the property to display</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.FieldPasswordFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>Password</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="expression">Expression that identifies the property to display</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.FieldPasswordFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},MilNet.Web.Mvc.ISizeConfiguration)">
+            <summary>Password</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="expression">Expression that identifies the property to display</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <exception cref="T:System.ArgumentException"/>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.FieldPasswordFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},MilNet.Web.Mvc.ISizeConfiguration,System.Boolean)">
+            <summary>Password</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="expression">Expression that identifies the property to display</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="disabled">The field is disabled</param>
+            <exception cref="T:System.ArgumentException"/>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.FieldPasswordFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},MilNet.Web.Mvc.ISizeConfiguration,System.Boolean,System.String)">
+            <summary>Password</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="expression">Expression that identifies the property to display</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="disabled">The field is disabled</param>
+            <param name="addon">Addon content</param>
+            <exception cref="T:System.ArgumentException"/>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.FieldPasswordFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},MilNet.Web.Mvc.ISizeConfiguration,System.Boolean,System.String,System.Object)">
+            <summary>Password</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="expression">Expression that identifies the property to display</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="disabled">The field is disabled</param>
+            <param name="addon">Addon content</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+            <exception cref="T:System.ArgumentException"/>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.FieldPasswordFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},MilNet.Web.Mvc.ISizeConfiguration,System.Boolean,System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>Password</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="expression">Expression that identifies the property to display</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="disabled">The field is disabled</param>
+            <param name="addon">Addon content</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+            <exception cref="T:System.ArgumentException"/>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.FieldTextBox(System.Web.Mvc.HtmlHelper,System.String,System.String)">
+            <summary>Text box</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="name">Input name</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.FieldTextBox(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Object)">
+            <summary>Text box</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="name">Input name</param>
+            <param name="value">Input value</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.FieldTextBox(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Object,System.Object)">
+            <summary>Text box</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="name">Input name</param>
+            <param name="value">Input value</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.FieldTextBox(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Object,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>Text box</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="name">Input name</param>
+            <param name="value">Input value</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.FieldTextBox(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Object,MilNet.Web.Mvc.ISizeConfiguration)">
+            <summary>Text box</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="name">Input name</param>
+            <param name="value">Input value</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.FieldTextBox(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Object,MilNet.Web.Mvc.ISizeConfiguration,System.Boolean)">
+            <summary>Text box</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="name">Input name</param>
+            <param name="value">Input value</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="disabled">The field is disabled</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.FieldTextBox(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Object,MilNet.Web.Mvc.ISizeConfiguration,System.Boolean,System.String)">
+            <summary>Text box</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="name">Input name</param>
+            <param name="value">Input value</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="disabled">The field is disabled</param>
+            <param name="addon">Addon content</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.FieldTextBox(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Object,MilNet.Web.Mvc.ISizeConfiguration,System.Boolean,System.String,System.Object)">
+            <summary>Text box</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="name">Input name</param>
+            <param name="value">Input value</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="disabled">The field is disabled</param>
+            <param name="addon">Addon content</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.FieldTextBox(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Object,MilNet.Web.Mvc.ISizeConfiguration,System.Boolean,System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>Text box</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="name">Input name</param>
+            <param name="value">Input value</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="disabled">The field is disabled</param>
+            <param name="addon">Addon content</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.FieldTextBoxFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}})">
+            <summary>Text box</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="expression">Expression that identifies the property to display</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.FieldTextBoxFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Object)">
+            <summary>Text box</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="expression">Expression that identifies the property to display</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.FieldTextBoxFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>Text box</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="expression">Expression that identifies the property to display</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.FieldTextBoxFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},MilNet.Web.Mvc.ISizeConfiguration)">
+            <summary>Text box</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="expression">Expression that identifies the property to display</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <exception cref="T:System.ArgumentException"/>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.FieldTextBoxFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},MilNet.Web.Mvc.ISizeConfiguration,System.Boolean)">
+            <summary>Text box</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="expression">Expression that identifies the property to display</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="disabled">The field is disabled</param>
+            <exception cref="T:System.ArgumentException"/>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.FieldTextBoxFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},MilNet.Web.Mvc.ISizeConfiguration,System.Boolean,System.String)">
+            <summary>Text box</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="expression">Expression that identifies the property to display</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="disabled">The field is disabled</param>
+            <param name="addon">Addon content</param>
+            <exception cref="T:System.ArgumentException"/>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.FieldTextBoxFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},MilNet.Web.Mvc.ISizeConfiguration,System.Boolean,System.String,System.Object)">
+            <summary>Text box</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="expression">Expression that identifies the property to display</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="disabled">The field is disabled</param>
+            <param name="addon">Addon content</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+            <exception cref="T:System.ArgumentException"/>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.FieldTextBoxFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},MilNet.Web.Mvc.ISizeConfiguration,System.Boolean,System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>Text box</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="expression">Expression that identifies the property to display</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="disabled">The field is disabled</param>
+            <param name="addon">Addon content</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+            <exception cref="T:System.ArgumentException"/>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.InputHelper(System.Web.Mvc.HtmlHelper,System.Web.Mvc.InputType,System.Web.Mvc.ModelMetadata,System.String,System.Object,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>Input helper</summary>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.GetModelStateValue(System.Web.Mvc.HtmlHelper,System.String,System.Type)">
+            <summary>Get model state value</summary>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.EvalString(System.Web.Mvc.HtmlHelper,System.String,System.String)">
+            <summary>Evaluate a string</summary>
+        </member>
+        <member name="M:MilNet.Web.Mvc.InputExtensions.EvalBoolean(System.Web.Mvc.HtmlHelper,System.String)">
+            <summary>Evaluate a boolean</summary>
+        </member>
+        <member name="T:MilNet.Web.Mvc.LegendExtensions">
+            <summary>Extensions for HTML legends</summary>
+        </member>
+        <member name="M:MilNet.Web.Mvc.LegendExtensions.FieldLegend(System.Web.Mvc.HtmlHelper,System.String)">
+            <summary>Legend</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="legendTitle">Legend title</param>
+        </member>
+        <member name="M:MilNet.Web.Mvc.LegendExtensions.FieldLegend(System.Web.Mvc.HtmlHelper,System.String,System.Boolean)">
+            <summary>Legend</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="legendTitle">Legend title</param>
+            <param name="small">Display legend as small text</param>
+        </member>
+        <member name="M:MilNet.Web.Mvc.LegendExtensions.FieldLegendHelper(System.Web.Mvc.HtmlHelper,System.String,System.Boolean)">
+            <summary>Legend</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="legendTitle">Legend title</param>
+            <param name="small">Display legend as small text</param>
+        </member>
+        <member name="T:MilNet.Web.Mvc.LinkExtensions">
+            <summary>Extensions for HTML links</summary>
+        </member>
+        <member name="M:MilNet.Web.Mvc.LinkExtensions.FieldLink(System.Web.Mvc.HtmlHelper,System.String,System.String)">
+            <summary>Link</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label</param>
+            <param name="linkTarget">Link target</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.LinkExtensions.FieldLink(System.Web.Mvc.HtmlHelper,System.String,System.String,System.String)">
+            <summary>Link</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label</param>
+            <param name="linkText">Link text</param>
+            <param name="linkTarget">Link target</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.LinkExtensions.FieldLink(System.Web.Mvc.HtmlHelper,System.String,System.String,System.String,MilNet.Web.Mvc.ISizeConfiguration)">
+            <summary>Link</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label</param>
+            <param name="linkText">Link text</param>
+            <param name="linkTarget">Link target</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.LinkExtensions.FieldLink(System.Web.Mvc.HtmlHelper,System.String,System.String,System.String,MilNet.Web.Mvc.ISizeConfiguration,System.Object)">
+            <summary>Link</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label</param>
+            <param name="linkText">Link text</param>
+            <param name="linkTarget">Link target</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.LinkExtensions.FieldLink(System.Web.Mvc.HtmlHelper,System.String,System.String,System.String,MilNet.Web.Mvc.ISizeConfiguration,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>Link</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label</param>
+            <param name="linkText">Link text</param>
+            <param name="linkTarget">Link target</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.LinkExtensions.FieldActionLink(System.Web.Mvc.HtmlHelper,System.String,System.String,System.String)">
+            <summary>Link</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label</param>
+            <param name="linkText">Link text</param>
+            <param name="actionName">Action name</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.LinkExtensions.FieldActionLink(System.Web.Mvc.HtmlHelper,System.String,System.String,System.String,System.String)">
+            <summary>Link</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label</param>
+            <param name="linkText">Link text</param>
+            <param name="actionName">Action name</param>
+            <param name="controllerName">Controller name</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.LinkExtensions.FieldActionLink(System.Web.Mvc.HtmlHelper,System.String,System.String,System.String,System.String,System.Object)">
+            <summary>Link</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label</param>
+            <param name="linkText">Link text</param>
+            <param name="actionName">Action name</param>
+            <param name="controllerName">Controller name</param>
+            <param name="routeValues">Route values</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.LinkExtensions.FieldActionLink(System.Web.Mvc.HtmlHelper,System.String,System.String,System.String,System.String,System.Web.Routing.RouteValueDictionary)">
+            <summary>Link</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label</param>
+            <param name="linkText">Link text</param>
+            <param name="actionName">Action name</param>
+            <param name="controllerName">Controller name</param>
+            <param name="routeValues">Route values</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.LinkExtensions.FieldActionLink(System.Web.Mvc.HtmlHelper,System.String,System.String,System.String,System.String,System.Object,MilNet.Web.Mvc.ISizeConfiguration)">
+            <summary>Link</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label</param>
+            <param name="linkText">Link text</param>
+            <param name="actionName">Action name</param>
+            <param name="controllerName">Controller name</param>
+            <param name="routeValues">Route values</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.LinkExtensions.FieldActionLink(System.Web.Mvc.HtmlHelper,System.String,System.String,System.String,System.String,System.Web.Routing.RouteValueDictionary,MilNet.Web.Mvc.ISizeConfiguration)">
+            <summary>Link</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label</param>
+            <param name="linkText">Link text</param>
+            <param name="actionName">Action name</param>
+            <param name="controllerName">Controller name</param>
+            <param name="routeValues">Route values</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.LinkExtensions.FieldActionLink(System.Web.Mvc.HtmlHelper,System.String,System.String,System.String,System.String,System.Object,MilNet.Web.Mvc.ISizeConfiguration,System.Object)">
+            <summary>Link</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label</param>
+            <param name="linkText">Link text</param>
+            <param name="actionName">Action name</param>
+            <param name="controllerName">Controller name</param>
+            <param name="routeValues">Route values</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="htmlAttributes">HTML attributes</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.LinkExtensions.FieldActionLink(System.Web.Mvc.HtmlHelper,System.String,System.String,System.String,System.String,System.Web.Routing.RouteValueDictionary,MilNet.Web.Mvc.ISizeConfiguration,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>Link</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label</param>
+            <param name="linkText">Link text</param>
+            <param name="actionName">Action name</param>
+            <param name="controllerName">Controller name</param>
+            <param name="routeValues">Route values</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="htmlAttributes">HTML attributes</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.LinkExtensions.InputHelper(System.String,System.String)">
+            <summary>Input helper</summary>
+        </member>
+        <member name="M:MilNet.Web.Mvc.LinkExtensions.ObjectToDictionary(System.Object)">
+            <summary>Given an object of anonymous type, add each property as a key and associated with its value to a dictionary.
+            This helper will cache accessors and types, and is intended when the anonymous object is accessed multiple times throughout the lifetime of the web application.</summary>
+        </member>
+        <member name="T:MilNet.Web.Mvc.PaginationExtensions">
+            <summary>Extensions for HTML paginations</summary>
+        </member>
+        <member name="M:MilNet.Web.Mvc.PaginationExtensions.Pagination(System.Web.Mvc.HtmlHelper,System.Int32,System.Int32,System.Func{System.Int32,System.String})">
+            <summary>Pagination</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="currentPage">Current page</param>
+            <param name="totalPages">Total pages</param>
+            <param name="hrefFactory">Function to create a link to a new page, from the page position</param>
+        </member>
+        <member name="M:MilNet.Web.Mvc.PaginationExtensions.Pagination(System.Web.Mvc.HtmlHelper,System.Int32,System.Int32,System.Func{System.Int32,System.String},System.Int32)">
+            <summary>Pagination</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="currentPage">Current page</param>
+            <param name="totalPages">Total pages</param>
+            <param name="hrefFactory">Function to create a link to a new page, from the page position</param>
+            <param name="padding">Padding size (items count on each side of the current item)</param>
+        </member>
+        <member name="M:MilNet.Web.Mvc.PaginationExtensions.RenderPaginationNumber(System.Int32,System.Int32,System.Func{System.Int32,System.String})">
+            <summary>Render a new pagination number item</summary>
+        </member>
+        <member name="M:MilNet.Web.Mvc.PaginationExtensions.RenderPaginationTag(System.Web.Mvc.TagBuilder,System.String,System.Boolean,System.String)">
+            <summary>Render a new pagination tag item</summary>
+        </member>
+        <member name="M:MilNet.Web.Mvc.PaginationExtensions.RenderPaginationItem(System.String,System.String,System.Boolean,System.Boolean,System.String)">
+            <summary>Render a new pagination item</summary>
+            <param name="text">Text into the item - must be carefully encoded first</param>
+            <param name="ariaLabel">Aria label, if exists</param>
+            <param name="active">Item is active</param>
+            <param name="disabled">Item is disabled</param>
+            <param name="href">Link to the page</param>
+        </member>
+        <member name="T:MilNet.Web.Mvc.SelectExtensions">
+            <summary>Extensions for HTML selects</summary>
+        </member>
+        <member name="M:MilNet.Web.Mvc.SelectExtensions.FieldSelect(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Collections.Generic.IEnumerable{System.Web.Mvc.SelectListItem})">
+            <summary>Select</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="name">Input name</param>
+            <param name="selectList">Select list</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.SelectExtensions.FieldSelect(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Collections.Generic.IEnumerable{System.Web.Mvc.SelectListItem},System.Object)">
+            <summary>Select</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="name">Input name</param>
+            <param name="selectList">Select list</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.SelectExtensions.FieldSelect(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Collections.Generic.IEnumerable{System.Web.Mvc.SelectListItem},System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>Select</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="name">Input name</param>
+            <param name="selectList">Select list</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.SelectExtensions.FieldSelect(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Collections.Generic.IEnumerable{System.Web.Mvc.SelectListItem},MilNet.Web.Mvc.ISizeConfiguration)">
+            <summary>Select</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="name">Input name</param>
+            <param name="selectList">Select list</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.SelectExtensions.FieldSelect(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Collections.Generic.IEnumerable{System.Web.Mvc.SelectListItem},MilNet.Web.Mvc.ISizeConfiguration,System.Boolean)">
+            <summary>Select</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="name">Input name</param>
+            <param name="selectList">Select list</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="disabled">The field is disabled</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.SelectExtensions.FieldSelect(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Collections.Generic.IEnumerable{System.Web.Mvc.SelectListItem},MilNet.Web.Mvc.ISizeConfiguration,System.Boolean,System.String)">
+            <summary>Select</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="name">Input name</param>
+            <param name="selectList">Select list</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="disabled">The field is disabled</param>
+            <param name="addon">Addon content</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.SelectExtensions.FieldSelect(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Collections.Generic.IEnumerable{System.Web.Mvc.SelectListItem},MilNet.Web.Mvc.ISizeConfiguration,System.Boolean,System.String,System.Object)">
+            <summary>Select</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="name">Input name</param>
+            <param name="selectList">Select list</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="disabled">The field is disabled</param>
+            <param name="addon">Addon content</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.SelectExtensions.FieldSelect(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Collections.Generic.IEnumerable{System.Web.Mvc.SelectListItem},MilNet.Web.Mvc.ISizeConfiguration,System.Boolean,System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>Select</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="name">Input name</param>
+            <param name="selectList">Select list</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="disabled">The field is disabled</param>
+            <param name="addon">Addon content</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.SelectExtensions.FieldSelectFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Collections.Generic.IEnumerable{System.Web.Mvc.SelectListItem})">
+            <summary>Select</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="expression">Expression that identifies the property to display</param>
+            <param name="selectList">Select list</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.SelectExtensions.FieldSelectFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Collections.Generic.IEnumerable{System.Web.Mvc.SelectListItem},MilNet.Web.Mvc.ISizeConfiguration)">
+            <summary>Select</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="expression">Expression that identifies the property to display</param>
+            <param name="selectList">Select list</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.SelectExtensions.FieldSelectFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Collections.Generic.IEnumerable{System.Web.Mvc.SelectListItem},MilNet.Web.Mvc.ISizeConfiguration,System.Boolean)">
+            <summary>Select</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="expression">Expression that identifies the property to display</param>
+            <param name="selectList">Select list</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="disabled">The field is disabled</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.SelectExtensions.FieldSelectFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Collections.Generic.IEnumerable{System.Web.Mvc.SelectListItem},MilNet.Web.Mvc.ISizeConfiguration,System.Boolean,System.String)">
+            <summary>Select</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="expression">Expression that identifies the property to display</param>
+            <param name="selectList">Select list</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="disabled">The field is disabled</param>
+            <param name="addon">Addon content</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.SelectExtensions.FieldSelectFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Collections.Generic.IEnumerable{System.Web.Mvc.SelectListItem},MilNet.Web.Mvc.ISizeConfiguration,System.Boolean,System.String,System.Object)">
+            <summary>Select</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="expression">Expression that identifies the property to display</param>
+            <param name="selectList">Select list</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="disabled">The field is disabled</param>
+            <param name="addon">Addon content</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.SelectExtensions.FieldSelectFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Collections.Generic.IEnumerable{System.Web.Mvc.SelectListItem},MilNet.Web.Mvc.ISizeConfiguration,System.Boolean,System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>Select</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="expression">Expression that identifies the property to display</param>
+            <param name="selectList">Select list</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="disabled">The field is disabled</param>
+            <param name="addon">Addon content</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.SelectExtensions.InputHelper(System.Web.Mvc.HtmlHelper,System.Web.Mvc.ModelMetadata,System.String,System.String,System.Collections.Generic.IEnumerable{System.Web.Mvc.SelectListItem},System.Boolean,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>Input helper</summary>
+        </member>
+        <member name="T:MilNet.Web.Mvc.BaseSizeConfiguration">
+            <summary>Base of size configuration</summary>
+        </member>
+        <member name="P:MilNet.Web.Mvc.BaseSizeConfiguration.Name">
+            <summary>Configuration name</summary>
+        </member>
+        <member name="P:MilNet.Web.Mvc.BaseSizeConfiguration.LabelSize">
+            <summary>Label size</summary>
+        </member>
+        <member name="P:MilNet.Web.Mvc.BaseSizeConfiguration.InputSize">
+            <summary>Input size</summary>
+        </member>
+        <member name="P:MilNet.Web.Mvc.BaseSizeConfiguration.ValidationMessageSize">
+            <summary>Validation message size</summary>
+        </member>
+        <member name="P:MilNet.Web.Mvc.BaseSizeConfiguration.SubmitSize">
+            <summary>Submit size</summary>
+        </member>
+        <member name="P:MilNet.Web.Mvc.BaseSizeConfiguration.LabelClass">
+            <summary>Label class</summary>
+        </member>
+        <member name="P:MilNet.Web.Mvc.BaseSizeConfiguration.InputClass">
+            <summary>Input class</summary>
+        </member>
+        <member name="P:MilNet.Web.Mvc.BaseSizeConfiguration.ValidationMessageClass">
+            <summary>Validation message class</summary>
+        </member>
+        <member name="P:MilNet.Web.Mvc.BaseSizeConfiguration.SubmitClass">
+            <summary>Submit class</summary>
+        </member>
+        <member name="P:MilNet.Web.Mvc.BaseSizeConfiguration.LabelHtmlAttributes">
+            <summary>Label HTML attributes</summary>
+        </member>
+        <member name="P:MilNet.Web.Mvc.BaseSizeConfiguration.InputHtmlAttributes">
+            <summary>Input HTML attributes</summary>
+        </member>
+        <member name="P:MilNet.Web.Mvc.BaseSizeConfiguration.ValidationMessageHtmlAttributes">
+            <summary>Validation message HTML attributes</summary>
+        </member>
+        <member name="P:MilNet.Web.Mvc.BaseSizeConfiguration.SubmitHtmlAttributes">
+            <summary>Submit HTML attributes</summary>
+        </member>
+        <member name="T:MilNet.Web.Mvc.DefaultSizeConfiguration">
+            <summary>Classic size configuration</summary>
+        </member>
+        <member name="P:MilNet.Web.Mvc.DefaultSizeConfiguration.Name">
+            <summary>Configuration name</summary>
+        </member>
+        <member name="P:MilNet.Web.Mvc.DefaultSizeConfiguration.LabelSize">
+            <summary>Label size</summary>
+        </member>
+        <member name="P:MilNet.Web.Mvc.DefaultSizeConfiguration.InputSize">
+            <summary>Input size</summary>
+        </member>
+        <member name="P:MilNet.Web.Mvc.DefaultSizeConfiguration.ValidationMessageSize">
+            <summary>Validation message size</summary>
+        </member>
+        <member name="P:MilNet.Web.Mvc.DefaultSizeConfiguration.SubmitSize">
+            <summary>Submit size</summary>
+        </member>
+        <member name="T:MilNet.Web.Mvc.ISizeConfiguration">
+            <summary>Interface of size configuration</summary>
+        </member>
+        <member name="P:MilNet.Web.Mvc.ISizeConfiguration.Name">
+            <summary>Configuration name</summary>
+        </member>
+        <member name="P:MilNet.Web.Mvc.ISizeConfiguration.LabelSize">
+            <summary>Label size</summary>
+        </member>
+        <member name="P:MilNet.Web.Mvc.ISizeConfiguration.InputSize">
+            <summary>Input size</summary>
+        </member>
+        <member name="P:MilNet.Web.Mvc.ISizeConfiguration.ValidationMessageSize">
+            <summary>Validation message size</summary>
+        </member>
+        <member name="P:MilNet.Web.Mvc.ISizeConfiguration.SubmitSize">
+            <summary>Submit size</summary>
+        </member>
+        <member name="P:MilNet.Web.Mvc.ISizeConfiguration.LabelClass">
+            <summary>Label class</summary>
+        </member>
+        <member name="P:MilNet.Web.Mvc.ISizeConfiguration.InputClass">
+            <summary>Input class</summary>
+        </member>
+        <member name="P:MilNet.Web.Mvc.ISizeConfiguration.ValidationMessageClass">
+            <summary>Validation message class</summary>
+        </member>
+        <member name="P:MilNet.Web.Mvc.ISizeConfiguration.SubmitClass">
+            <summary>Submit class</summary>
+        </member>
+        <member name="P:MilNet.Web.Mvc.ISizeConfiguration.LabelHtmlAttributes">
+            <summary>Label HTML attributes</summary>
+        </member>
+        <member name="P:MilNet.Web.Mvc.ISizeConfiguration.InputHtmlAttributes">
+            <summary>Input HTML attributes</summary>
+        </member>
+        <member name="P:MilNet.Web.Mvc.ISizeConfiguration.ValidationMessageHtmlAttributes">
+            <summary>Validation message HTML attributes</summary>
+        </member>
+        <member name="P:MilNet.Web.Mvc.ISizeConfiguration.SubmitHtmlAttributes">
+            <summary>Submit HTML attributes</summary>
+        </member>
+        <member name="T:MilNet.Web.Mvc.LargeSizeConfiguration">
+            <summary>Large size configuration</summary>
+        </member>
+        <member name="P:MilNet.Web.Mvc.LargeSizeConfiguration.Name">
+            <summary>Configuration name</summary>
+        </member>
+        <member name="P:MilNet.Web.Mvc.LargeSizeConfiguration.LabelSize">
+            <summary>Label size</summary>
+        </member>
+        <member name="P:MilNet.Web.Mvc.LargeSizeConfiguration.InputSize">
+            <summary>Input size</summary>
+        </member>
+        <member name="P:MilNet.Web.Mvc.LargeSizeConfiguration.ValidationMessageSize">
+            <summary>Validation message size</summary>
+        </member>
+        <member name="P:MilNet.Web.Mvc.LargeSizeConfiguration.SubmitSize">
+            <summary>Submit size</summary>
+        </member>
+        <member name="T:MilNet.Web.Mvc.TextAreaExtensions">
+            <summary>Extensions for HTML text areas</summary>
+        </member>
+        <member name="F:MilNet.Web.Mvc.TextAreaExtensions.implicitRows">
+            <summary>Implicit rows count</summary>
+        </member>
+        <member name="F:MilNet.Web.Mvc.TextAreaExtensions.implicitColumns">
+            <summary>Implicit rows count</summary>
+        </member>
+        <member name="M:MilNet.Web.Mvc.TextAreaExtensions.FieldTextArea(System.Web.Mvc.HtmlHelper,System.String,System.String)">
+            <summary>Text area</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="name">Input name</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.TextAreaExtensions.FieldTextArea(System.Web.Mvc.HtmlHelper,System.String,System.String,System.String)">
+            <summary>Text area</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="name">Input name</param>
+            <param name="value">Input value</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.TextAreaExtensions.FieldTextArea(System.Web.Mvc.HtmlHelper,System.String,System.String,System.String,System.Object)">
+            <summary>Text area</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="name">Input name</param>
+            <param name="value">Input value</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.TextAreaExtensions.FieldTextArea(System.Web.Mvc.HtmlHelper,System.String,System.String,System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>Text area</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="name">Input name</param>
+            <param name="value">Input value</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.TextAreaExtensions.FieldTextArea(System.Web.Mvc.HtmlHelper,System.String,System.String,System.String,System.Int32)">
+            <summary>Text area</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="name">Input name</param>
+            <param name="value">Input value</param>
+            <param name="rows">Rows count</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.TextAreaExtensions.FieldTextArea(System.Web.Mvc.HtmlHelper,System.String,System.String,System.String,System.Int32,MilNet.Web.Mvc.ISizeConfiguration)">
+            <summary>Text area</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="name">Input name</param>
+            <param name="value">Input value</param>
+            <param name="rows">Rows count</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.TextAreaExtensions.FieldTextArea(System.Web.Mvc.HtmlHelper,System.String,System.String,System.String,System.Int32,MilNet.Web.Mvc.ISizeConfiguration,System.Boolean)">
+            <summary>Text area</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="name">Input name</param>
+            <param name="value">Input value</param>
+            <param name="rows">Rows count</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="disabled">The field is disabled</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.TextAreaExtensions.FieldTextArea(System.Web.Mvc.HtmlHelper,System.String,System.String,System.String,System.Int32,MilNet.Web.Mvc.ISizeConfiguration,System.Boolean,System.String)">
+            <summary>Text area</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="name">Input name</param>
+            <param name="value">Input value</param>
+            <param name="rows">Rows count</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="disabled">The field is disabled</param>
+            <param name="addon">Addon content</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.TextAreaExtensions.FieldTextArea(System.Web.Mvc.HtmlHelper,System.String,System.String,System.String,System.Int32,MilNet.Web.Mvc.ISizeConfiguration,System.Boolean,System.String,System.Object)">
+            <summary>Text area</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="name">Input name</param>
+            <param name="value">Input value</param>
+            <param name="rows">Rows count</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="disabled">The field is disabled</param>
+            <param name="addon">Addon content</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.TextAreaExtensions.FieldTextArea(System.Web.Mvc.HtmlHelper,System.String,System.String,System.String,System.Int32,MilNet.Web.Mvc.ISizeConfiguration,System.Boolean,System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>Text area</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label text</param>
+            <param name="name">Input name</param>
+            <param name="value">Input value</param>
+            <param name="rows">Rows count</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="disabled">The field is disabled</param>
+            <param name="addon">Addon content</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.TextAreaExtensions.FieldTextAreaFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}})">
+            <summary>Text area</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="expression">Expression that identifies the property to display</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.TextAreaExtensions.FieldTextAreaFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Object)">
+            <summary>Text area</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="expression">Expression that identifies the property to display</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.TextAreaExtensions.FieldTextAreaFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>Text area</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="expression">Expression that identifies the property to display</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.TextAreaExtensions.FieldTextAreaFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Int32)">
+            <summary>Text area</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="expression">Expression that identifies the property to display</param>
+            <param name="rows">Rows count</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.TextAreaExtensions.FieldTextAreaFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Int32,MilNet.Web.Mvc.ISizeConfiguration)">
+            <summary>Text area</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="expression">Expression that identifies the property to display</param>
+            <param name="rows">Rows count</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <exception cref="T:System.ArgumentException"/>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.TextAreaExtensions.FieldTextAreaFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Int32,MilNet.Web.Mvc.ISizeConfiguration,System.Boolean)">
+            <summary>Text area</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="expression">Expression that identifies the property to display</param>
+            <param name="rows">Rows count</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="disabled">The field is disabled</param>
+            <exception cref="T:System.ArgumentException"/>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.TextAreaExtensions.FieldTextAreaFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Int32,MilNet.Web.Mvc.ISizeConfiguration,System.Boolean,System.String)">
+            <summary>Text area</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="expression">Expression that identifies the property to display</param>
+            <param name="rows">Rows count</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="disabled">The field is disabled</param>
+            <param name="addon">Addon content</param>
+            <exception cref="T:System.ArgumentException"/>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.TextAreaExtensions.FieldTextAreaFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Int32,MilNet.Web.Mvc.ISizeConfiguration,System.Boolean,System.String,System.Object)">
+            <summary>Text area</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="expression">Expression that identifies the property to display</param>
+            <param name="rows">Rows count</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="disabled">The field is disabled</param>
+            <param name="addon">Addon content</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+            <exception cref="T:System.ArgumentException"/>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.TextAreaExtensions.FieldTextAreaFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Int32,MilNet.Web.Mvc.ISizeConfiguration,System.Boolean,System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>Text area</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="expression">Expression that identifies the property to display</param>
+            <param name="rows">Rows count</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="disabled">The field is disabled</param>
+            <param name="addon">Addon content</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+            <exception cref="T:System.ArgumentException"/>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.TextAreaExtensions.TextAreaHelper(System.Web.Mvc.HtmlHelper,System.Web.Mvc.ModelMetadata,System.String,System.Collections.Generic.IDictionary{System.String,System.Object},System.Collections.Generic.IDictionary{System.String,System.Object},System.String)">
+            <summary>Text area helper</summary>
+        </member>
+        <member name="M:MilNet.Web.Mvc.TextAreaExtensions.GetRowsAndColumnsDictionary(System.Int32,System.Int32)">
+            <summary>Get rows and columns as a dictionary</summary>
+            <param name="rows">Rows count</param>
+            <param name="columns">Columns count</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">Count is less than 0</exception>
+        </member>
+        <member name="T:MilNet.Web.Mvc.StaticTextExtensions">
+            <summary>Extensions for HTML static texts</summary>
+        </member>
+        <member name="M:MilNet.Web.Mvc.StaticTextExtensions.FieldStaticText(System.Web.Mvc.HtmlHelper,System.String,System.String)">
+            <summary>Static text</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label</param>
+            <param name="value">Value</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.StaticTextExtensions.FieldStaticText(System.Web.Mvc.HtmlHelper,System.String,System.String,MilNet.Web.Mvc.ISizeConfiguration)">
+            <summary>Static text</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label</param>
+            <param name="value">Value</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.StaticTextExtensions.FieldStaticText(System.Web.Mvc.HtmlHelper,System.String,System.String,MilNet.Web.Mvc.ISizeConfiguration,System.String)">
+            <summary>Static text</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label</param>
+            <param name="value">Value</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="addon">Addon content</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.StaticTextExtensions.FieldStaticText(System.Web.Mvc.HtmlHelper,System.String,System.String,MilNet.Web.Mvc.ISizeConfiguration,System.String,System.Object)">
+            <summary>Static text</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label</param>
+            <param name="value">Value</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="addon">Addon content</param>
+            <param name="htmlAttributes">HTML attributes</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.StaticTextExtensions.FieldStaticText(System.Web.Mvc.HtmlHelper,System.String,System.String,MilNet.Web.Mvc.ISizeConfiguration,System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>Static text</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="labelText">Label</param>
+            <param name="value">Value</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="addon">Addon content</param>
+            <param name="htmlAttributes">HTML attributes</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.StaticTextExtensions.FieldStaticTextFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}})">
+            <summary>Static text</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="expression">Expression that identifies the property to display</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.StaticTextExtensions.FieldStaticTextFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Object)">
+            <summary>Static text</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="expression">Expression that identifies the property to display</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.StaticTextExtensions.FieldStaticTextFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>Static text</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="expression">Expression that identifies the property to display</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.StaticTextExtensions.FieldStaticTextFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},MilNet.Web.Mvc.ISizeConfiguration)">
+            <summary>Static text</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="expression">Expression that identifies the property to display</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <exception cref="T:System.ArgumentException"/>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.StaticTextExtensions.FieldStaticTextFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},MilNet.Web.Mvc.ISizeConfiguration,System.String)">
+            <summary>Static text</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="expression">Expression that identifies the property to display</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="addon">Addon content</param>
+            <exception cref="T:System.ArgumentException"/>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.StaticTextExtensions.FieldStaticTextFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},MilNet.Web.Mvc.ISizeConfiguration,System.String,System.Object)">
+            <summary>Static text</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="expression">Expression that identifies the property to display</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="addon">Addon content</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+            <exception cref="T:System.ArgumentException"/>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.StaticTextExtensions.FieldStaticTextFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},MilNet.Web.Mvc.ISizeConfiguration,System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>Static text</summary>
+            <param name="htmlHelper">HTML helper</param>
+            <param name="expression">Expression that identifies the property to display</param>
+            <param name="sizeConfiguration">Items size configuration</param>
+            <param name="addon">Addon content</param>
+            <param name="htmlAttributes">HTML attributes on input</param>
+            <exception cref="T:System.ArgumentException"/>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.StaticTextExtensions.InputHelper(System.String)">
+            <summary>Input helper</summary>
+        </member>
+        <member name="T:MilNet.Web.Mvc.ThemeConfigurationExtensions">
+            <summary><see cref="T:MilNet.Core.Configuration.ThemeConfiguration"/> extensions</summary>
+        </member>
+        <member name="M:MilNet.Web.Mvc.ThemeConfigurationExtensions.GetThemeCookie(MilNet.Core.Configuration.ThemeConfiguration,System.Web.HttpRequestBase)">
+            <summary>Get theme from a HTTP request with a theme cookie</summary>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:MilNet.Web.Mvc.ThemeConfigurationExtensions.SetThemeCookie(MilNet.Core.Configuration.ThemeConfiguration,System.Web.HttpResponseBase,System.Web.HttpRequestBase,System.String)">
+            <summary>Update theme into theme cookie</summary>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+    </members>
+</doc>

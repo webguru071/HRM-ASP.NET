@@ -1,0 +1,53 @@
+﻿@model IEnumerable<EMSApp.Models.SALARY_INFO>
+
+@{
+    ViewBag.Title = "Salary Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <p class="btn btn-primary pull-left">
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                Employee
+            </th>
+            <th>
+                Paid Date
+            </th>
+            <th>
+                Total Salary
+            </th>
+
+            <th>
+                Action
+            </th>
+        </tr>
+
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EMPLOYEE_INFO.EMPLOYEE_NAME)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SALARY_PAID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TOTAL)
+                    </td>
+
+                    <td>
+                        @Html.ActionLink("View", "Edit", new { id = item.ID })                       
+                    </td>
+                </tr>
+            }
+
+        }
+
+    </table>
+</div>

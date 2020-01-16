@@ -1,0 +1,2083 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MilNet.Core</name>
+    </assembly>
+    <members>
+        <member name="T:MilNet.Core.Application.ApplicationFile">
+            <summary>File containing application details</summary>
+        </member>
+        <member name="P:MilNet.Core.Application.ApplicationFile.Versions">
+            <summary>List of versions</summary>
+        </member>
+        <member name="P:MilNet.Core.Application.ApplicationFile.Dependencies">
+            <summary>List of dependencies</summary>
+        </member>
+        <member name="M:MilNet.Core.Application.ApplicationFile.Read(System.String)">
+            <summary>Read a file containing application details</summary>
+            <param name="fileName">File to read</param>
+            <exception cref="T:System.ArgumentNullException"/>
+            <exception cref="T:System.IO.FileNotFoundException"/>
+            <exception cref="T:System.IO.IOException"/>
+        </member>
+        <member name="T:MilNet.Core.Application.Dependencies.DependenciesFile">
+            <summary>Files containing details of dependencies</summary>
+        </member>
+        <member name="P:MilNet.Core.Application.Dependencies.DependenciesFile.Dependencies">
+            <summary>List of dependencies</summary>
+        </member>
+        <member name="M:MilNet.Core.Application.Dependencies.DependenciesFile.Read(System.String)">
+            <summary>Read a file containing dependencies details</summary>
+            <param name="fileName">File name</param>
+            <exception cref="T:System.ArgumentNullException"/>
+            <exception cref="T:System.IO.FileNotFoundException"/>
+            <exception cref="T:System.IO.IOException"/>
+        </member>
+        <member name="T:MilNet.Core.Application.Dependencies.Dependency">
+            <summary>Dependency</summary>
+        </member>
+        <member name="P:MilNet.Core.Application.Dependencies.Dependency.Name">
+            <summary>Name</summary>
+        </member>
+        <member name="P:MilNet.Core.Application.Dependencies.Dependency.Version">
+            <summary>Version</summary>
+        </member>
+        <member name="P:MilNet.Core.Application.Dependencies.Dependency.Authors">
+            <summary>Authors</summary>
+        </member>
+        <member name="P:MilNet.Core.Application.Dependencies.Dependency.License">
+            <summary>License</summary>
+        </member>
+        <member name="P:MilNet.Core.Application.Dependencies.Dependency.HasLicense">
+            <summary>Existing license</summary>
+        </member>
+        <member name="T:MilNet.Core.Application.Dependencies.IDependenciesFile">
+            <summary>Interface of file containing dependencies details</summary>
+        </member>
+        <member name="P:MilNet.Core.Application.Dependencies.IDependenciesFile.Dependencies">
+            <summary>List of dependencies</summary>
+        </member>
+        <member name="M:MilNet.Core.Application.Dependencies.IDependenciesFile.Read(System.String)">
+            <summary>Read a file containing dependencies details</summary>
+            <param name="fileName">File name</param>
+            <exception cref="T:System.ArgumentNullException"/>
+            <exception cref="T:System.IO.FileNotFoundException"/>
+            <exception cref="T:System.IO.IOException"/>
+        </member>
+        <member name="T:MilNet.Core.Application.IApplicationFile">
+            <summary>File containing application details</summary>
+        </member>
+        <member name="T:MilNet.Core.Application.Versions.TypeItem">
+            <summary>Version detail item type</summary>
+        </member>
+        <member name="F:MilNet.Core.Application.Versions.TypeItem.Unknown">
+            <summary>Unknown</summary>
+        </member>
+        <member name="F:MilNet.Core.Application.Versions.TypeItem.BugCorrection">
+            <summary>Bug correction</summary>
+        </member>
+        <member name="F:MilNet.Core.Application.Versions.TypeItem.NewFeature">
+            <summary>New feature</summary>
+        </member>
+        <member name="F:MilNet.Core.Application.Versions.TypeItem.OperationChange">
+            <summary>Operation change</summary>
+        </member>
+        <member name="F:MilNet.Core.Application.Versions.TypeItem.DeletedFeature">
+            <summary>Deleted feature</summary>
+        </member>
+        <member name="T:MilNet.Core.Application.Versions.Item">
+            <summary>Version detail item</summary>
+            <remarks>TODO Review (protected) set</remarks>
+        </member>
+        <member name="P:MilNet.Core.Application.Versions.Item.Description">
+            <summary>Item description</summary>
+        </member>
+        <member name="M:MilNet.Core.Application.Versions.Item.#ctor">
+            <summary>Constructor</summary>
+        </member>
+        <member name="M:MilNet.Core.Application.Versions.Item.ToString">
+            <summary>Convert to string</summary>
+        </member>
+        <member name="M:MilNet.Core.Application.Versions.Item.FromString(System.String)">
+            <summary>Read as string</summary>
+        </member>
+        <member name="M:MilNet.Core.Application.Versions.Item.Write(MilNet.Core.Application.Versions.TypeItem)">
+            <summary>Ecriture d'un type d'item énumérée en string</summary>
+        </member>
+        <member name="M:MilNet.Core.Application.Versions.Item.Read(System.String)">
+            <summary>Read an item type as string</summary>
+        </member>
+        <member name="T:MilNet.Core.Application.Versions.IVersionsFile">
+            <summary>Interface of file containing versions details</summary>
+        </member>
+        <member name="P:MilNet.Core.Application.Versions.IVersionsFile.Versions">
+            <summary>List of versions</summary>
+        </member>
+        <member name="M:MilNet.Core.Application.Versions.IVersionsFile.Read(System.String)">
+            <summary>Read a file containing versions details</summary>
+            <param name="fileName">File name</param>
+            <exception cref="T:System.ArgumentNullException"/>
+            <exception cref="T:System.IO.FileNotFoundException"/>
+            <exception cref="T:System.IO.IOException"/>
+        </member>
+        <member name="T:MilNet.Core.Application.Versions.Version">
+            <summary>Version details</summary>
+        </member>
+        <member name="P:MilNet.Core.Application.Versions.Version.Number">
+            <summary>Version number</summary>
+        </member>
+        <member name="P:MilNet.Core.Application.Versions.Version.Items">
+            <summary>List of version details item</summary>
+        </member>
+        <member name="T:MilNet.Core.Application.Versions.VersionsFile">
+            <summary>File containing versions details</summary>
+        </member>
+        <member name="P:MilNet.Core.Application.Versions.VersionsFile.Versions">
+            <summary>List of versions</summary>
+        </member>
+        <member name="M:MilNet.Core.Application.Versions.VersionsFile.Read(System.String)">
+            <summary>Read a file containing versions details</summary>
+            <param name="fileName">Filename</param>
+            <exception cref="T:System.ArgumentNullException"/>
+            <exception cref="T:System.IO.FileNotFoundException"/>
+            <exception cref="T:System.IO.IOException"/>
+        </member>
+        <member name="T:MilNet.Core.Attributes.DataTableAttribute">
+            <summary>Data table property</summary>
+        </member>
+        <member name="M:MilNet.Core.Attributes.DataTableAttribute.#ctor">
+            <summary>Constructor</summary>
+        </member>
+        <member name="P:MilNet.Core.Attributes.DataTableAttribute.Format">
+            <summary>Display format</summary>
+        </member>
+        <member name="P:MilNet.Core.Attributes.DataTableAttribute.Header">
+            <summary>Header string (localized or not)</summary>
+        </member>
+        <member name="T:MilNet.Core.Attributes.DataTableDisplay">
+            <summary>Display data table properties</summary>
+        </member>
+        <member name="M:MilNet.Core.Attributes.DataTableDisplay.GetDataTableHeaders(System.Type)">
+            <summary>Get headers of class containing <see cref="T:MilNet.Core.Attributes.DataTableAttribute"/> indicators</summary>
+            <param name="type">Type</param>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:MilNet.Core.Attributes.DataTableDisplay.GetDataTableStyles(System.Type)">
+            <summary>Get styles of class containing <see cref="T:MilNet.Core.Attributes.DataTableAttribute"/> indicators</summary>
+            <param name="type">Type</param>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:MilNet.Core.Attributes.DataTableDisplay.GetDataTableProperties(System.Type)">
+            <summary>Get properties of class containing <see cref="T:MilNet.Core.Attributes.DataTableAttribute"/> indicators</summary>
+            <param name="type">Type</param>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:MilNet.Core.Attributes.DataTableDisplay.GetDataTableValues``1(``0)">
+            <summary>Get formatted values class properties containing <see cref="T:MilNet.Core.Attributes.DataTableAttribute"/> indicators</summary>
+            <param name="instance">Instance</param>
+        </member>
+        <member name="M:MilNet.Core.Attributes.DataTableDisplay.GetDataTableFormattedValues``1(``0,System.IFormatProvider)">
+            <summary>Get formatted values class properties containing <see cref="T:MilNet.Core.Attributes.DataTableAttribute"/> indicators</summary>
+            <param name="instance">Instance</param>
+            <param name="formatProvider">Format provider</param>
+        </member>
+        <member name="T:MilNet.Core.Attributes.LocalizedAttribute">
+            <summary>Localized attribute</summary>
+        </member>
+        <member name="M:MilNet.Core.Attributes.LocalizedAttribute.#ctor">
+            <summary>Default constructor for any localized attribute</summary>
+            <remarks>This constructor chooses an empty message. Developers subclassing LocalizedAttribute should use other constructors or supply a better message</remarks>
+        </member>
+        <member name="M:MilNet.Core.Attributes.LocalizedAttribute.#ctor(System.String)">
+            <summary>Constructor that accepts a fixed message</summary>
+            <param name="message">A non-localized message to use in <see cref="P:MilNet.Core.Attributes.LocalizedAttribute.MessageString"/></param>
+        </member>
+        <member name="M:MilNet.Core.Attributes.LocalizedAttribute.#ctor(System.Func{System.String})">
+            <summary>Allows for providing a resource accessor function that will be used by the <see cref="P:MilNet.Core.Attributes.LocalizedAttribute.MessageString"/>property to retrieve the message</summary>
+            <param name="messageAccessor">The <see cref="T:System.Func`1"/> that will return a message</param>
+        </member>
+        <member name="P:MilNet.Core.Attributes.LocalizedAttribute.DefaultMessage">
+            <summary>Default message string. This message will be used if the user has not set <see cref="P:MilNet.Core.Attributes.LocalizedAttribute.Message"/> or the <see cref="P:MilNet.Core.Attributes.LocalizedAttribute.MessageResourceType"/> and <see cref="P:MilNet.Core.Attributes.LocalizedAttribute.MessageResourceName"/> pair</summary>
+        </member>
+        <member name="P:MilNet.Core.Attributes.LocalizedAttribute.MessageString">
+            <summary>Localized message string, coming either from <see cref="P:MilNet.Core.Attributes.LocalizedAttribute.Message"/>, or from evaluating the <see cref="P:MilNet.Core.Attributes.LocalizedAttribute.MessageResourceType"/> and <see cref="P:MilNet.Core.Attributes.LocalizedAttribute.MessageResourceName"/> pair</summary>
+        </member>
+        <member name="P:MilNet.Core.Attributes.LocalizedAttribute.CustomMessageSet">
+            <summary>Flag indicating whether a developer has customized the attribute's message by setting any one of <see cref="P:MilNet.Core.Attributes.LocalizedAttribute.Message"/>, <see cref="P:MilNet.Core.Attributes.LocalizedAttribute.MessageResourceName"/>, <see cref="P:MilNet.Core.Attributes.LocalizedAttribute.MessageResourceType"/> or <see cref="P:MilNet.Core.Attributes.LocalizedAttribute.DefaultMessage"/></summary>
+        </member>
+        <member name="P:MilNet.Core.Attributes.LocalizedAttribute.Message">
+            <summary>Explicit message string</summary>
+            <value>This property is intended to be used for non-localizable error messages Use <see cref="P:MilNet.Core.Attributes.LocalizedAttribute.MessageResourceType"/> and <see cref="P:MilNet.Core.Attributes.LocalizedAttribute.MessageResourceName"/> for localizable messages</value>
+        </member>
+        <member name="P:MilNet.Core.Attributes.LocalizedAttribute.MessageResourceName">
+            <summary>Resource name (property name) to use as the key for lookups on the resource type</summary>
+            <value>Use this property to set the name of the property within <see cref="P:MilNet.Core.Attributes.LocalizedAttribute.MessageResourceType"/> that will provide a localized error message. Use <see cref="P:MilNet.Core.Attributes.LocalizedAttribute.Message"/> for non-localized error messages</value>
+        </member>
+        <member name="P:MilNet.Core.Attributes.LocalizedAttribute.MessageResourceType">
+            <summary>Resource type to use for error message lookups</summary>
+            <value>Use this property only in conjunction with <see cref="P:MilNet.Core.Attributes.LocalizedAttribute.MessageResourceName"/>. They are used together to retrieve localized messages at runtime
+            <para>Use <see cref="P:MilNet.Core.Attributes.LocalizedAttribute.Message"/> instead of this pair if messages are not localized</para>
+            </value>
+        </member>
+        <member name="M:MilNet.Core.Attributes.LocalizedAttribute.SetupResourceAccessor">
+            <summary>Validates the configuration of this attribute and sets up the appropriate string accessor. This method bypasses all verification once the ResourceAccessor has been set.</summary>
+            <exception cref="T:System.InvalidOperationException"> is thrown if the current attribute is malformed.</exception>
+        </member>
+        <member name="M:MilNet.Core.Attributes.LocalizedAttribute.SetResourceAccessorByPropertyLookup">
+            <summary>Set the resource accessor from the property lookup</summary>
+            <exception cref="T:System.InvalidOperationException"/>
+        </member>
+        <member name="T:MilNet.Core.Configuration.Configuration">
+            <summary>Configuration</summary>
+        </member>
+        <member name="M:MilNet.Core.Configuration.Configuration.#ctor(System.String,System.String,System.String)">
+            <summary>Constructor</summary>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="P:MilNet.Core.Configuration.Configuration.ConfigurationPath">
+            <summary>Configuration file absolute path</summary>
+        </member>
+        <member name="P:MilNet.Core.Configuration.Configuration.DependenciesPath">
+            <summary>Dependencies file absolute path</summary>
+        </member>
+        <member name="P:MilNet.Core.Configuration.Configuration.LogPath">
+            <summary>Log file absolute path</summary>
+        </member>
+        <member name="M:MilNet.Core.Configuration.Configuration.OpenSettings">
+            <summary>Open configuration file to read settings</summary>
+            <exception cref="T:System.IO.FileNotFoundException"/>
+            <exception cref="T:System.IO.IOException"/>
+            <exception cref="T:System.NotSupportedException"/>
+        </member>
+        <member name="M:MilNet.Core.Configuration.Configuration.OpenSettings(System.String)">
+            <summary>Open configuration file to read settings</summary>
+            <param name="fileName">File name</param>
+            <exception cref="T:System.IO.FileNotFoundException"/>
+            <exception cref="T:System.IO.IOException"/>
+            <exception cref="T:System.NotSupportedException"/>
+        </member>
+        <member name="M:MilNet.Core.Configuration.Configuration.SaveSettings">
+            <summary>Save settings into application configuration file</summary>
+            <exception cref="T:System.IO.DirectoryNotFoundException"/>
+            <exception cref="T:System.IO.IOException"/>
+            <exception cref="T:System.UnauthorizedAccessException"/>
+            <exception cref="T:System.NotSupportedException"/>
+            <exception cref="T:System.Security.SecurityException"/>
+        </member>
+        <member name="F:MilNet.Core.Configuration.Configuration.log">
+            <summary>General application log</summary>
+        </member>
+        <member name="P:MilNet.Core.Configuration.Configuration.LogFileName">
+            <summary>Log file name</summary>
+        </member>
+        <member name="P:MilNet.Core.Configuration.Configuration.LogMaxSize">
+            <summary>Log maximum size</summary>
+        </member>
+        <member name="M:MilNet.Core.Configuration.Configuration.ReadAllLog(System.Boolean,System.Boolean)">
+            <summary>Read the log file</summary>
+            <exception cref="T:System.Security.SecurityException"/>
+            <exception cref="T:System.UnauthorizedAccessException"/>
+            <exception cref="T:System.NotSupportedException"/>
+        </member>
+        <member name="M:MilNet.Core.Configuration.Configuration.WriteLog(System.String)">
+            <summary>Write a message into log file</summary>
+            <remarks>Log message is horodated</remarks>
+            <exception cref="T:System.IO.IOException">I/O exception</exception>
+            <exception cref="T:System.Security.SecurityException"/>
+            <exception cref="T:System.UnauthorizedAccessException"/>
+            <exception cref="T:System.NotSupportedException"/>
+        </member>
+        <member name="M:MilNet.Core.Configuration.Configuration.WriteLog(System.String,MilNet.Core.Logs.Log.Gravity)">
+            <summary>Write a message into log file</summary>
+            <remarks>Log message is horodated</remarks>
+            <exception cref="T:System.IO.IOException">I/O exception</exception>
+            <exception cref="T:System.Security.SecurityException"/>
+            <exception cref="T:System.UnauthorizedAccessException"/>
+            <exception cref="T:System.NotSupportedException"/>
+        </member>
+        <member name="M:MilNet.Core.Configuration.Configuration.WriteLog(System.Exception,System.Boolean)">
+            <summary>Write an exception into log file</summary>
+            <remarks>Log message is horodated</remarks>
+            <exception cref="T:System.IO.IOException">I/O exception</exception>
+            <exception cref="T:System.Security.SecurityException"/>
+            <exception cref="T:System.UnauthorizedAccessException"/>
+            <exception cref="T:System.NotSupportedException"/>
+        </member>
+        <member name="M:MilNet.Core.Configuration.Configuration.WriteLog(System.Exception,MilNet.Core.Logs.Log.Gravity,System.Boolean)">
+            <summary>Write an exception into log file</summary>
+            <remarks>Log message is horodated</remarks>
+            <exception cref="T:System.IO.IOException">I/O exception</exception>
+            <exception cref="T:System.Security.SecurityException"/>
+            <exception cref="T:System.UnauthorizedAccessException"/>
+            <exception cref="T:System.NotSupportedException"/>
+        </member>
+        <member name="M:MilNet.Core.Configuration.Configuration.WriteLog(System.Exception)">
+            <summary>Write an exception into log file</summary>
+            <remarks>Log message is horodated</remarks>
+            <exception cref="T:System.IO.IOException">I/O exception</exception>
+            <exception cref="T:System.Security.SecurityException"/>
+            <exception cref="T:System.UnauthorizedAccessException"/>
+            <exception cref="T:System.NotSupportedException"/>
+        </member>
+        <member name="M:MilNet.Core.Configuration.Configuration.WriteLog(System.Exception,MilNet.Core.Logs.Log.Gravity)">
+            <summary>Write an exception into log file</summary>
+            <remarks>Log message is horodated</remarks>
+            <exception cref="T:System.IO.IOException">I/O exception</exception>
+            <exception cref="T:System.Security.SecurityException"/>
+            <exception cref="T:System.UnauthorizedAccessException"/>
+            <exception cref="T:System.NotSupportedException"/>
+        </member>
+        <member name="F:MilNet.Core.Configuration.Configuration.dependenciesFile">
+            <summary>Application dependencies</summary>
+        </member>
+        <member name="P:MilNet.Core.Configuration.Configuration.Dependencies">
+            <summary>Application dependencies</summary>=
+        </member>
+        <member name="T:MilNet.Core.Configuration.CultureConfiguration">
+            <summary>Cookie for culture management</summary>
+        </member>
+        <member name="F:MilNet.Core.Configuration.CultureConfiguration.validCultures">
+            <summary>Valid cultures</summary>
+        </member>
+        <member name="F:MilNet.Core.Configuration.CultureConfiguration.implementedCultures">
+            <summary>Implemented cultures</summary>
+        </member>
+        <member name="M:MilNet.Core.Configuration.CultureConfiguration.#ctor(System.String[])">
+            <summary>Constructor</summary>
+            <param name="implementedCultures">Implemented cultures</param>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:MilNet.Core.Configuration.CultureConfiguration.IsRighToLeft">
+            <summary>Write from right to left</summary>
+        </member>
+        <member name="M:MilNet.Core.Configuration.CultureConfiguration.GetImplementedCulture(System.String)">
+            <summary>Search an implemented culture</summary>
+            <param name="name">Culture name ("en" by example)</param>
+            <returns>Correct culture; or "en" by default</returns>
+        </member>
+        <member name="P:MilNet.Core.Configuration.CultureConfiguration.DefaultCulture">
+            <summary>Default culture ("en")</summary>
+        </member>
+        <member name="P:MilNet.Core.Configuration.CultureConfiguration.CurrentCulture">
+            <summary>Current thread culture name</summary>
+        </member>
+        <member name="P:MilNet.Core.Configuration.CultureConfiguration.CurrentNeutralCulture">
+            <summary>Current thread neutral culture name</summary>
+        </member>
+        <member name="M:MilNet.Core.Configuration.CultureConfiguration.GetNeutralCulture(System.String)">
+            <summary>Application neutral culture name</summary>
+        </member>
+        <member name="T:MilNet.Core.Configuration.IConfiguration">
+            <summary>Interface of configuration</summary>
+        </member>
+        <member name="M:MilNet.Core.Configuration.IConfiguration.OpenSettings">
+            <summary>Open configuration file to read settings</summary>
+            <exception cref="T:System.IO.FileNotFoundException"/>
+            <exception cref="T:System.IO.IOException"/>
+            <exception cref="T:System.NotSupportedException"/>
+        </member>
+        <member name="M:MilNet.Core.Configuration.IConfiguration.SaveSettings">
+            <summary>Save settings into application configuration file</summary>
+            <exception cref="T:System.IO.DirectoryNotFoundException"/>
+            <exception cref="T:System.IO.IOException"/>
+            <exception cref="T:System.UnauthorizedAccessException"/>
+            <exception cref="T:System.NotSupportedException"/>
+            <exception cref="T:System.Security.SecurityException"/>
+        </member>
+        <member name="P:MilNet.Core.Configuration.IConfiguration.LogFileName">
+            <summary>Log file name</summary>
+        </member>
+        <member name="P:MilNet.Core.Configuration.IConfiguration.LogMaxSize">
+            <summary>Log maximum size</summary>
+        </member>
+        <member name="M:MilNet.Core.Configuration.IConfiguration.ReadAllLog(System.Boolean,System.Boolean)">
+            <summary>Read the log file</summary>
+            <exception cref="T:System.Security.SecurityException"/>
+            <exception cref="T:System.UnauthorizedAccessException"/>
+            <exception cref="T:System.NotSupportedException"/>
+        </member>
+        <member name="M:MilNet.Core.Configuration.IConfiguration.WriteLog(System.String)">
+            <summary>Write a message into log file</summary>
+            <remarks>Log message is horodated</remarks>
+            <exception cref="T:System.IO.IOException">I/O exception</exception>
+            <exception cref="T:System.Security.SecurityException"/>
+            <exception cref="T:System.UnauthorizedAccessException"/>
+            <exception cref="T:System.NotSupportedException"/>
+        </member>
+        <member name="M:MilNet.Core.Configuration.IConfiguration.WriteLog(System.String,MilNet.Core.Logs.Log.Gravity)">
+            <summary>Write a message into log file</summary>
+            <remarks>Log message is horodated</remarks>
+            <exception cref="T:System.IO.IOException">I/O exception</exception>
+            <exception cref="T:System.Security.SecurityException"/>
+            <exception cref="T:System.UnauthorizedAccessException"/>
+            <exception cref="T:System.NotSupportedException"/>
+        </member>
+        <member name="M:MilNet.Core.Configuration.IConfiguration.WriteLog(System.Exception,System.Boolean)">
+            <summary>Write an exception into log file</summary>
+            <remarks>Log message is horodated</remarks>
+            <exception cref="T:System.IO.IOException">I/O exception</exception>
+            <exception cref="T:System.Security.SecurityException"/>
+            <exception cref="T:System.UnauthorizedAccessException"/>
+            <exception cref="T:System.NotSupportedException"/>
+        </member>
+        <member name="M:MilNet.Core.Configuration.IConfiguration.WriteLog(System.Exception,MilNet.Core.Logs.Log.Gravity,System.Boolean)">
+            <summary>Write an exception into log file</summary>
+            <remarks>Log message is horodated</remarks>
+            <exception cref="T:System.IO.IOException">I/O exception</exception>
+            <exception cref="T:System.Security.SecurityException"/>
+            <exception cref="T:System.UnauthorizedAccessException"/>
+            <exception cref="T:System.NotSupportedException"/>
+        </member>
+        <member name="M:MilNet.Core.Configuration.IConfiguration.WriteLog(System.Exception)">
+            <summary>Write an exception into log file</summary>
+            <remarks>Log message is horodated</remarks>
+            <exception cref="T:System.IO.IOException">I/O exception</exception>
+            <exception cref="T:System.Security.SecurityException"/>
+            <exception cref="T:System.UnauthorizedAccessException"/>
+            <exception cref="T:System.NotSupportedException"/>
+        </member>
+        <member name="M:MilNet.Core.Configuration.IConfiguration.WriteLog(System.Exception,MilNet.Core.Logs.Log.Gravity)">
+            <summary>Write an exception into log file</summary>
+            <remarks>Log message is horodated</remarks>
+            <exception cref="T:System.IO.IOException">I/O exception</exception>
+            <exception cref="T:System.Security.SecurityException"/>
+            <exception cref="T:System.UnauthorizedAccessException"/>
+            <exception cref="T:System.NotSupportedException"/>
+        </member>
+        <member name="P:MilNet.Core.Configuration.IConfiguration.Dependencies">
+            <summary>Application dependencies</summary>
+        </member>
+        <member name="T:MilNet.Core.Configuration.Prop">
+            <summary>Configuration property</summary>
+        </member>
+        <member name="E:MilNet.Core.Configuration.Prop.PropertyChanged">
+            <summary>Notification of property value change</summary>
+        </member>
+        <member name="P:MilNet.Core.Configuration.Prop.Name">
+            <summary>Name of the configuration key</summary>
+        </member>
+        <member name="M:MilNet.Core.Configuration.Prop.#ctor(System.String)">
+            <summary>Constructor</summary>
+            <param name="name">Name of the configuration key</param>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:MilNet.Core.Configuration.Prop.Equals(MilNet.Core.Configuration.Prop)">
+            <summary>Test of equality between two configuration keys</summary>
+            <remarks>Egality by <see cref="P:MilNet.Core.Configuration.Prop.Name"/></remarks>
+        </member>
+        <member name="M:MilNet.Core.Configuration.Prop.OnPropertyChanged">
+            <summary>Invoke a new <see cref="T:System.ComponentModel.PropertyChangedEventHandler"/> if the property value changes</summary>
+        </member>
+        <member name="M:MilNet.Core.Configuration.Prop.ToString">
+            <summary>Key value as string</summary>
+        </member>
+        <member name="M:MilNet.Core.Configuration.Prop.FromString(System.String)">
+            <summary>Key value from string</summary>
+            <exception cref="T:System.NotSupportedException"/>
+        </member>
+        <member name="M:MilNet.Core.Configuration.Prop.UseDefaultValue">
+            <summary>Fill the value with the default value</summary>
+        </member>
+        <member name="T:MilNet.Core.Configuration.PropCollection">
+            <summary>Collection of configuration properties</summary>
+        </member>
+        <member name="P:MilNet.Core.Configuration.PropCollection.Item(System.String)">
+            <summary>Get or set the configuration property with the specified <param name="name"/></summary>
+            <exception cref="T:System.ArgumentNullException"/>
+            <exception cref="T:System.InvalidOperationException">The property has not been found</exception>
+        </member>
+        <member name="M:MilNet.Core.Configuration.PropCollection.Save(System.String)">
+            <summary>Save the properties collection into an XML file</summary>
+            <exception cref="T:System.ArgumentNullException"/>
+            <exception cref="T:System.IO.DirectoryNotFoundException"/>
+            <exception cref="T:System.IO.IOException"/>
+            <exception cref="T:System.UnauthorizedAccessException"/>
+            <exception cref="T:System.NotSupportedException"/>
+            <exception cref="T:System.Security.SecurityException"/>
+        </member>
+        <member name="M:MilNet.Core.Configuration.PropCollection.Open(System.String)">
+            <summary>Open an XML file to fill the properties collection</summary>
+            <param name="fileName">File name</param>
+            <exception cref="T:System.ArgumentNullException"/>
+            <exception cref="T:System.IO.FileNotFoundException"/>
+            <exception cref="T:System.IO.IOException"/>
+            <exception cref="T:System.NotSupportedException"/>
+        </member>
+        <member name="M:MilNet.Core.Configuration.PropCollection.UseDefaultValues">
+            <summary>Fill properties values with default values</summary>
+        </member>
+        <member name="P:MilNet.Core.Configuration.PropCollection.Count">
+            <summary>Properties count</summary>
+        </member>
+        <member name="P:MilNet.Core.Configuration.PropCollection.IsReadOnly">
+            <summary>Read only</summary>
+        </member>
+        <member name="M:MilNet.Core.Configuration.PropCollection.Add(MilNet.Core.Configuration.Prop)">
+            <summary>Add a new property into collection</summary>
+        </member>
+        <member name="M:MilNet.Core.Configuration.PropCollection.Clear">
+            <summary>Clear properties collection</summary>
+        </member>
+        <member name="M:MilNet.Core.Configuration.PropCollection.Contains(MilNet.Core.Configuration.Prop)">
+            <summary>Contains</summary>
+        </member>
+        <member name="M:MilNet.Core.Configuration.PropCollection.CopyTo(MilNet.Core.Configuration.Prop[],System.Int32)">
+            <summary>Copy to a properties array</summary>
+            <exception cref="T:System.NotImplementedException"/>
+        </member>
+        <member name="M:MilNet.Core.Configuration.PropCollection.GetEnumerator">
+            <summary>Properties enumerator</summary>
+            <exception cref="T:System.NotImplementedException"/>
+        </member>
+        <member name="M:MilNet.Core.Configuration.PropCollection.Remove(MilNet.Core.Configuration.Prop)">
+            <summary>Remove a property from collection</summary>
+        </member>
+        <member name="M:MilNet.Core.Configuration.PropCollection.System#Collections#IEnumerable#GetEnumerator">
+            <summary>Enumerator</summary>
+        </member>
+        <member name="T:MilNet.Core.Configuration.Prop`1">
+            <summary>Typed configuration property</summary>
+            <typeparam name="T">Type of the configuration property</typeparam>
+        </member>
+        <member name="P:MilNet.Core.Configuration.Prop`1.DefaultValue">
+            <summary>Default value</summary>
+        </member>
+        <member name="P:MilNet.Core.Configuration.Prop`1.Value">
+            <summary>Value</summary>
+        </member>
+        <member name="M:MilNet.Core.Configuration.Prop`1.#ctor(System.String,`0)">
+            <summary>Constructor</summary>
+            <param name="name">Name of the configuration key</param>
+            <param name="defaultValue">Default value</param>
+        </member>
+        <member name="M:MilNet.Core.Configuration.Prop`1.ToString">
+            <summary>Key value as string</summary>
+        </member>
+        <member name="M:MilNet.Core.Configuration.Prop`1.FromString(System.String)">
+            <summary>Key value from string</summary>
+            <exception cref="T:System.NotSupportedException"/>
+        </member>
+        <member name="M:MilNet.Core.Configuration.Prop`1.UseDefaultValue">
+            <summary>Fill the value with the default value</summary>
+        </member>
+        <member name="T:MilNet.Core.Configuration.ThemeConfiguration">
+            <summary>Cookie for theme management</summary>
+        </member>
+        <member name="F:MilNet.Core.Configuration.ThemeConfiguration.validThemes">
+            <summary>Valid themes</summary>
+        </member>
+        <member name="F:MilNet.Core.Configuration.ThemeConfiguration.implementedThemes">
+            <summary>Implemented themes</summary>
+        </member>
+        <member name="M:MilNet.Core.Configuration.ThemeConfiguration.#ctor(System.String[])">
+            <summary>Constructor</summary>
+            <param name="implementedThemes">Implemented themes</param>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:MilNet.Core.Configuration.ThemeConfiguration.GetImplementedTheme(System.String)">
+            <summary>Search an implemented theme</summary>
+            <param name="name">Theme name ("light" by example)</param>
+            <returns>Correct theme; or "light" by default</returns>
+        </member>
+        <member name="P:MilNet.Core.Configuration.ThemeConfiguration.DefaultTheme">
+            <summary>Default theme ("light")</summary>
+        </member>
+        <member name="T:MilNet.Core.Exceptions.ForbiddenException">
+            <summary>Forbidden exception</summary>
+        </member>
+        <member name="M:MilNet.Core.Exceptions.ForbiddenException.#ctor">
+            <summary>Constructor</summary>
+        </member>
+        <member name="M:MilNet.Core.Exceptions.ForbiddenException.#ctor(System.String)">
+            <summary>Constructor</summary>
+        </member>
+        <member name="M:MilNet.Core.Exceptions.ForbiddenException.#ctor(System.String,System.Exception)">
+            <summary>Constructor</summary>
+        </member>
+        <member name="M:MilNet.Core.Exceptions.ForbiddenException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>Constructor</summary>
+        </member>
+        <member name="T:MilNet.Core.Exceptions.NotFoundException">
+            <summary>Not found exception</summary>
+        </member>
+        <member name="M:MilNet.Core.Exceptions.NotFoundException.#ctor">
+            <summary>Constructor</summary>
+        </member>
+        <member name="M:MilNet.Core.Exceptions.NotFoundException.#ctor(System.String)">
+            <summary>Constructor</summary>
+        </member>
+        <member name="M:MilNet.Core.Exceptions.NotFoundException.#ctor(System.String,System.Exception)">
+            <summary>Constructor</summary>
+        </member>
+        <member name="M:MilNet.Core.Exceptions.NotFoundException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>Constructor</summary>
+        </member>
+        <member name="T:MilNet.Core.Helpers.DisposableHelper">
+            <summary>Disposable helper</summary>
+        </member>
+        <member name="M:MilNet.Core.Helpers.DisposableHelper.#ctor(System.Action,System.Action)">
+            <summary>Constructor</summary>
+            <remarks>Write the <paramref name="begin"/> action</remarks>
+            <param name="begin">Begin action</param>
+            <param name="end">End action</param>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:MilNet.Core.Helpers.DisposableHelper.Dispose">
+            <summary>Dispose</summary>
+            <remarks>Write the end action</remarks>
+        </member>
+        <member name="T:MilNet.Core.Logs.Log">
+            <summary>Log</summary>
+        </member>
+        <member name="P:MilNet.Core.Logs.Log.Path">
+            <summary>Absolute log file path</summary>
+        </member>
+        <member name="P:MilNet.Core.Logs.Log.MaxSize">
+            <summary>Maximum size authorized for the log file</summary>
+        </member>
+        <member name="P:MilNet.Core.Logs.Log.FileName">
+            <summary>Log file name</summary>
+        </member>
+        <member name="M:MilNet.Core.Logs.Log.#ctor(System.String)">
+            <summary>Constructor</summary>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="T:MilNet.Core.Logs.Log.Gravity">
+            <summary>Gravity of a message to write</summary>
+        </member>
+        <member name="F:MilNet.Core.Logs.Log.Gravity.Information">
+            <summary>Information message</summary>
+        </member>
+        <member name="F:MilNet.Core.Logs.Log.Gravity.Warning">
+            <summary>Warning message</summary>
+        </member>
+        <member name="F:MilNet.Core.Logs.Log.Gravity.Error">
+            <summary>Error message</summary>
+        </member>
+        <member name="M:MilNet.Core.Logs.Log.CheckSize">
+            <summary>Check if the log file exists ; check the log file size</summary>
+            <exception cref="T:System.IO.IOException">I/O exception</exception>
+            <exception cref="T:System.Security.SecurityException"/>
+            <exception cref="T:System.UnauthorizedAccessException"/>
+            <exception cref="T:System.NotSupportedException"/>
+        </member>
+        <member name="M:MilNet.Core.Logs.Log.CheckSize(System.Int64)">
+            <summary>Check if the log file exists ; check the log file size</summary>
+            <exception cref="T:System.IO.IOException">I/O exception</exception>
+            <exception cref="T:System.Security.SecurityException"/>
+            <exception cref="T:System.UnauthorizedAccessException"/>
+            <exception cref="T:System.NotSupportedException"/>
+        </member>
+        <member name="M:MilNet.Core.Logs.Log.Write(System.String,MilNet.Core.Logs.Log.Gravity)">
+            <summary>Write a message into log file</summary>
+            <remarks>Log message is horodated</remarks>
+            <exception cref="T:System.IO.IOException">I/O exception</exception>
+            <exception cref="T:System.Security.SecurityException"/>
+            <exception cref="T:System.UnauthorizedAccessException"/>
+            <exception cref="T:System.NotSupportedException"/>
+        </member>
+        <member name="M:MilNet.Core.Logs.Log.Write(System.Exception,MilNet.Core.Logs.Log.Gravity)">
+            <summary>Write an exception into log file</summary>
+            <remarks>Log message is horodated; no exception is thrown if ex is null</remarks>
+            <exception cref="T:System.IO.IOException">I/O exception</exception>
+            <exception cref="T:System.Security.SecurityException"/>
+            <exception cref="T:System.UnauthorizedAccessException"/>
+            <exception cref="T:System.NotSupportedException"/>
+        </member>
+        <member name="M:MilNet.Core.Logs.Log.ReadAll(System.Boolean,System.Boolean)">
+            <summary>Read log file content</summary>
+            <param name="inverseOrder">Inverse lines order</param>
+            <param name="detectWarnings">Detect warning and error lines</param>
+            <returns>Log file content as flat string</returns>
+            <exception cref="T:System.Security.SecurityException"/>
+            <exception cref="T:System.UnauthorizedAccessException"/>
+            <exception cref="T:System.NotSupportedException"/>
+        </member>
+        <member name="M:MilNet.Core.Logs.Log.ReadAllLines">
+            <summary>Read all lines from the log file</summary>
+            <returns>Log file content as string array</returns>
+            <exception cref="T:System.Security.SecurityException"/>
+            <exception cref="T:System.UnauthorizedAccessException"/>
+            <exception cref="T:System.NotSupportedException"/>
+        </member>
+        <member name="M:MilNet.Core.Logs.Log.ReadAllByte">
+            <summary>Read all lines from the log file</summary>
+            <returns>Log file content as byte array</returns>
+            <exception cref="T:System.UnauthorizedAccessException"/>
+            <exception cref="T:System.NotSupportedException"/>
+        </member>
+        <member name="M:MilNet.Core.Logs.Log.DetectWarnings(System.String)">
+            <summary>Detect warnings and errors into a log line</summary>
+            <param name="line">Log line</param>
+        </member>
+        <member name="T:MilNet.Core.Resources.Resources">
+            <summary>
+              Une classe de ressource fortement typée destinée, entre autres, à la consultation des chaînes localisées.
+            </summary>
+        </member>
+        <member name="P:MilNet.Core.Resources.Resources.ResourceManager">
+            <summary>
+              Retourne l'instance ResourceManager mise en cache utilisée par cette classe.
+            </summary>
+        </member>
+        <member name="P:MilNet.Core.Resources.Resources.Culture">
+            <summary>
+              Remplace la propriété CurrentUICulture du thread actuel pour toutes
+              les recherches de ressources à l'aide de cette classe de ressource fortement typée.
+            </summary>
+        </member>
+        <member name="P:MilNet.Core.Resources.Resources.BugCorrection">
+            <summary>
+              Recherche une chaîne localisée semblable à Bug correction.
+            </summary>
+        </member>
+        <member name="P:MilNet.Core.Resources.Resources.DeletedFeature">
+            <summary>
+              Recherche une chaîne localisée semblable à Deleted feature.
+            </summary>
+        </member>
+        <member name="P:MilNet.Core.Resources.Resources.FileCantBeOpened">
+            <summary>
+              Recherche une chaîne localisée semblable à File {0} can&apos;t be opened..
+            </summary>
+        </member>
+        <member name="P:MilNet.Core.Resources.Resources.FileLogCreatedInto">
+            <summary>
+              Recherche une chaîne localisée semblable à File log created into {0}..
+            </summary>
+        </member>
+        <member name="P:MilNet.Core.Resources.Resources.FileNotFound">
+            <summary>
+              Recherche une chaîne localisée semblable à File {0} not found..
+            </summary>
+        </member>
+        <member name="P:MilNet.Core.Resources.Resources.FileNotFoundSettingsCantBeLoaded">
+            <summary>
+              Recherche une chaîne localisée semblable à File {0} doesn&apos;t exist. Settings can&apos;t be loaded..
+            </summary>
+        </member>
+        <member name="P:MilNet.Core.Resources.Resources.FolderNotFoundSettingsCantBeSaved">
+            <summary>
+              Recherche une chaîne localisée semblable à Folder {0} doesn&apos;t exist. Settings can&apos;t be saved..
+            </summary>
+        </member>
+        <member name="P:MilNet.Core.Resources.Resources.IndexNotFound">
+            <summary>
+              Recherche une chaîne localisée semblable à Index not found.
+            </summary>
+        </member>
+        <member name="P:MilNet.Core.Resources.Resources.LogFileCantBeOpened">
+            <summary>
+              Recherche une chaîne localisée semblable à Log file {0} can&apos;t be opened..
+            </summary>
+        </member>
+        <member name="P:MilNet.Core.Resources.Resources.NewFeature">
+            <summary>
+              Recherche une chaîne localisée semblable à New feature.
+            </summary>
+        </member>
+        <member name="P:MilNet.Core.Resources.Resources.NoLogFileFound">
+            <summary>
+              Recherche une chaîne localisée semblable à No log file found into {0}..
+            </summary>
+        </member>
+        <member name="P:MilNet.Core.Resources.Resources.OperationChange">
+            <summary>
+              Recherche une chaîne localisée semblable à Operation change.
+            </summary>
+        </member>
+        <member name="P:MilNet.Core.Resources.Resources.RunsCantBeProcessedIntoFile">
+            <summary>
+              Recherche une chaîne localisée semblable à Runs can&apos;t be processed into the file {0}..
+            </summary>
+        </member>
+        <member name="P:MilNet.Core.Resources.Resources.SerieOfRunsNotFoundIntoFile">
+            <summary>
+              Recherche une chaîne localisée semblable à The serie of runs can&apos;t be found into the file {0}..
+            </summary>
+        </member>
+        <member name="T:MilNet.Core.Traces.Csv.BaseSerie`1">
+            <summary>Trace file data serie</summary>
+            <typeparam name="T">Readed data type</typeparam>
+        </member>
+        <member name="P:MilNet.Core.Traces.Csv.BaseSerie`1.Type">
+            <summary>Base serie type</summary>
+        </member>
+        <member name="P:MilNet.Core.Traces.Csv.BaseSerie`1.Header">
+            <summary>File serie header</summary>
+        </member>
+        <member name="P:MilNet.Core.Traces.Csv.BaseSerie`1.IsRegexHeader">
+            <summary>Header is recognized with a regex</summary>
+        </member>
+        <member name="P:MilNet.Core.Traces.Csv.BaseSerie`1.index">
+            <summary>Index of the associated property</summary>
+        </member>
+        <member name="P:MilNet.Core.Traces.Csv.BaseSerie`1.Title">
+            <summary>Serie title displayed on the graphs</summary>
+        </member>
+        <member name="P:MilNet.Core.Traces.Csv.BaseSerie`1.ColumnIndex">
+            <summary>Index of the file serie column</summary>
+        </member>
+        <member name="P:MilNet.Core.Traces.Csv.BaseSerie`1.IsAbscisse">
+            <summary>The serie can be used as an abcisse</summary>
+        </member>
+        <member name="P:MilNet.Core.Traces.Csv.BaseSerie`1.IsString">
+            <summary>The serie is a string</summary>
+        </member>
+        <member name="P:MilNet.Core.Traces.Csv.BaseSerie`1.TypeDataToDisplay">
+            <summary>Type of data to used to display the serie</summary>
+        </member>
+        <member name="P:MilNet.Core.Traces.Csv.BaseSerie`1.Readed">
+            <summary>The serie is readed; useful to reset the column index</summary>
+        </member>
+        <member name="P:MilNet.Core.Traces.Csv.BaseSerie`1.data">
+            <summary>Readed data</summary>
+            <remarks>All the serie runs are in this collection</remarks>
+        </member>
+        <member name="M:MilNet.Core.Traces.Csv.BaseSerie`1.#ctor(System.Enum,System.String,System.Int32[])">
+            <summary>Constructor</summary>
+            <param name="type">Serie type</param>
+            <param name="header">File serie header</param>
+            <param name="index">Index of the associated property</param>
+        </member>
+        <member name="M:MilNet.Core.Traces.Csv.BaseSerie`1.CleanData">
+            <summary>Clear all the previous readed data</summary>
+            <remarks>Configuration is maintained</remarks>
+        </member>
+        <member name="M:MilNet.Core.Traces.Csv.BaseSerie`1.Add(System.String,System.Globalization.CultureInfo,System.Globalization.CultureInfo)">
+            <summary>Convert and add a new value to the data collection</summary>
+            <param name="value">Value to add</param>
+            <param name="culture">Culture associated to the int and double values types</param>
+            <param name="cultureDate">Culture associated to the dates</param>
+        </member>
+        <member name="M:MilNet.Core.Traces.Csv.BaseSerie`1.AddRun(System.Int32)">
+            <summary>Add a new run</summary>
+            <param name="value">Run number</param>
+        </member>
+        <member name="M:MilNet.Core.Traces.Csv.BaseSerie`1.AddNull">
+            <summary>Add a new empty value</summary>
+        </member>
+        <member name="M:MilNet.Core.Traces.Csv.BaseSerie`1.RemoveLast">
+            <summary>Remove the last value from the data collection</summary>
+        </member>
+        <member name="M:MilNet.Core.Traces.Csv.BaseSerie`1.RemoveAt(System.Int32)">
+            <summary>Remove a value from the data collection</summary>
+            <param name="index">Index of the value to remove</param>
+            <exception cref="T:System.ArgumentOutOfRangeException"/>
+        </member>
+        <member name="P:MilNet.Core.Traces.Csv.BaseSerie`1.Count">
+            <summary>Data count</summary>
+        </member>
+        <member name="M:MilNet.Core.Traces.Csv.BaseSerie`1.MatchIndex(System.Int32[])">
+            <summary>Correspondance with the associated property index</summary>
+            <param name="index">Index table to test</param>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:MilNet.Core.Traces.Csv.BaseSerie`1.AddData(`0)">
+            <summary>Add a new data to the collection</summary>
+            <param name="value">Value to add</param>
+        </member>
+        <member name="M:MilNet.Core.Traces.Csv.BaseSerie`1.GetData">
+            <summary>Get the data</summary>
+        </member>
+        <member name="M:MilNet.Core.Traces.Csv.BaseSerie`1.GetFirstData">
+            <summary>Get the first readed point</summary>
+        </member>
+        <member name="M:MilNet.Core.Traces.Csv.BaseSerie`1.GetFirstData(System.Func{`0,System.Boolean})">
+            <summary>Get the first readed point</summary>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:MilNet.Core.Traces.Csv.BaseSerie`1.GetLastData">
+            <summary>Get the last readed point</summary>
+        </member>
+        <member name="M:MilNet.Core.Traces.Csv.BaseSerie`1.GetLastData(System.Func{`0,System.Boolean})">
+            <summary>Get the last readed point</summary>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="T:MilNet.Core.Traces.Csv.FileCsv">
+            <summary>Data trace file from a CSV formatted file</summary>
+        </member>
+        <member name="P:MilNet.Core.Traces.Csv.FileCsv.Type">
+            <summary>File type</summary>
+        </member>
+        <member name="P:MilNet.Core.Traces.Csv.FileCsv.FileReaded">
+            <summary>File is readed</summary>
+        </member>
+        <member name="P:MilNet.Core.Traces.Csv.FileCsv.SeriesReaded">
+            <summary>Series are readed</summary>
+        </member>
+        <member name="P:MilNet.Core.Traces.Csv.FileCsv.Series">
+            <summary>Series associated to the files</summary>
+        </member>
+        <member name="P:MilNet.Core.Traces.Csv.FileCsv.SerieRun">
+            <summary>Serie of runs</summary>
+        </member>
+        <member name="P:MilNet.Core.Traces.Csv.FileCsv.Lines">
+            <summary>File lines</summary>
+        </member>
+        <member name="M:MilNet.Core.Traces.Csv.FileCsv.#ctor(System.String,MilNet.Core.Traces.Csv.SerieRun)">
+            <summary>Constructor</summary>
+            <param name="ext">File extension</param>
+            <param name="serieRun">Serie of runs</param>
+            <exception cref="T:System.ArgumentNullException">Argument empty or null</exception>
+        </member>
+        <member name="M:MilNet.Core.Traces.Csv.FileCsv.ReadFile(System.String,System.Boolean)">
+            <summary>Read the CSV file</summary>
+            <param name="baseFileName">Absolute path of the file to read, without extension</param>
+            <param name="init">Clear all previous readed data before reading the CSV file</param>
+            <exception cref="T:System.ArgumentNullException"/>
+            <exception cref="T:System.IO.FileLoadException">No valid line found into the file</exception>
+            <exception cref="T:System.IO.IOException">I/O Exception</exception>
+            <exception cref="T:System.UnauthorizedAccessException"/>
+            <exception cref="T:System.NotSupportedException"/>
+        </member>
+        <member name="M:MilNet.Core.Traces.Csv.FileCsv.ReadSeries">
+            <summary>Interpret the CSB file lines</summary>
+            <remarks>Data of the whole lines will be saved</remarks>
+            <exception cref="T:System.IO.FileLoadException">Read problem</exception>
+            <exception cref="T:System.Text.RegularExpressions.RegexMatchTimeoutException"/>
+        </member>
+        <member name="M:MilNet.Core.Traces.Csv.FileCsv.CleanData">
+            <summary>Clear all previous readed data</summary>
+            <remarks>Configuration is maintained</remarks>
+        </member>
+        <member name="T:MilNet.Core.Traces.Csv.FileTable">
+            <summary>Fichier CSV utilisable pour un affichage comme tableau</summary>
+        </member>
+        <member name="P:MilNet.Core.Traces.Csv.FileTable.Header">
+            <summary>Header line</summary>
+        </member>
+        <member name="P:MilNet.Core.Traces.Csv.FileTable.Content">
+            <summary>Content lines</summary>
+        </member>
+        <member name="P:MilNet.Core.Traces.Csv.FileTable.Readed">
+            <summary>Readed</summary>
+        </member>
+        <member name="P:MilNet.Core.Traces.Csv.FileTable.Type">
+            <summary>File type</summary>
+        </member>
+        <member name="M:MilNet.Core.Traces.Csv.FileTable.#ctor(System.String)">
+            <summary>Constructor</summary>
+            <param name="ext">File extension</param>
+        </member>
+        <member name="M:MilNet.Core.Traces.Csv.FileTable.CleanData">
+            <summary>Clear all previous readed data</summary>
+        </member>
+        <member name="M:MilNet.Core.Traces.Csv.FileTable.Read(System.String,System.Char)">
+            <summary>Read the file</summary>
+            <param name="fileName">Complete file name (with repository and extension)</param>
+            <param name="separator">Columns separator</param>
+            <exception cref="T:System.ArgumentNullException"/>
+            <exception cref="T:System.UnauthorizedAccessException"/>
+            <exception cref="T:System.NotSupportedException"/>
+            <exception cref="T:System.IO.IOException">I/O exception</exception>
+            <exception cref="T:System.Security.SecurityException"/>
+        </member>
+        <member name="T:MilNet.Core.Traces.Csv.ISerie">
+            <summary>Trace file data serie</summary>
+        </member>
+        <member name="P:MilNet.Core.Traces.Csv.ISerie.Type">
+            <summary>Base serie type</summary>
+        </member>
+        <member name="P:MilNet.Core.Traces.Csv.ISerie.Header">
+            <summary>File serie header</summary>
+        </member>
+        <member name="P:MilNet.Core.Traces.Csv.ISerie.IsRegexHeader">
+            <summary>Header is recognized with a regex</summary>
+        </member>
+        <member name="P:MilNet.Core.Traces.Csv.ISerie.Title">
+            <summary>Serie title displayed on the graphs</summary>
+        </member>
+        <member name="P:MilNet.Core.Traces.Csv.ISerie.ColumnIndex">
+            <summary>Index of the file serie column</summary>
+        </member>
+        <member name="P:MilNet.Core.Traces.Csv.ISerie.IsAbscisse">
+            <summary>The serie can be used as an abcisse</summary>
+        </member>
+        <member name="P:MilNet.Core.Traces.Csv.ISerie.IsString">
+            <summary>The serie is a string</summary>
+        </member>
+        <member name="P:MilNet.Core.Traces.Csv.ISerie.TypeDataToDisplay">
+            <summary>Type of data to used to display the serie</summary>
+        </member>
+        <member name="P:MilNet.Core.Traces.Csv.ISerie.Readed">
+            <summary>The serie is readed; useful to reset the column index</summary>
+        </member>
+        <member name="M:MilNet.Core.Traces.Csv.ISerie.Add(System.String,System.Globalization.CultureInfo,System.Globalization.CultureInfo)">
+            <summary>Convert and add a new value to the data collection</summary>
+            <param name="value">Value to add</param>
+            <param name="culture">Culture associated to the int and double values types</param>
+            <param name="cultureDate">Culture associated to the dates</param>
+        </member>
+        <member name="M:MilNet.Core.Traces.Csv.ISerie.AddRun(System.Int32)">
+            <summary>Add a new run</summary>
+            <param name="value">Run number</param>
+        </member>
+        <member name="M:MilNet.Core.Traces.Csv.ISerie.AddNull">
+            <summary>Add a new empty value</summary>
+        </member>
+        <member name="M:MilNet.Core.Traces.Csv.ISerie.RemoveLast">
+            <summary>Remove the last value from the data collection</summary>
+        </member>
+        <member name="M:MilNet.Core.Traces.Csv.ISerie.RemoveAt(System.Int32)">
+            <summary>Remove a value from the data collection</summary>
+            <param name="index">Index of the value to remove</param>
+            <exception cref="T:System.ArgumentOutOfRangeException"/>
+        </member>
+        <member name="P:MilNet.Core.Traces.Csv.ISerie.Count">
+            <summary>Data count</summary>
+        </member>
+        <member name="M:MilNet.Core.Traces.Csv.ISerie.MatchIndex(System.Int32[])">
+            <summary>Correspondance with the associated property index</summary>
+            <param name="index">Index table to test</param>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="T:MilNet.Core.Traces.Csv.SerieDateTime">
+            <summary>Trace file data serie</summary>
+            <remarks>Data will be read as datetimes</remarks>
+        </member>
+        <member name="M:MilNet.Core.Traces.Csv.SerieDateTime.#ctor(System.Enum,System.String,System.Int32[])">
+            <summary>Constructor</summary>
+            <param name="type">Serie type</param>
+            <param name="header">File serie header</param>
+            <param name="index">Associated property index</param>
+        </member>
+        <member name="M:MilNet.Core.Traces.Csv.SerieDateTime.Add(System.String,System.Globalization.CultureInfo,System.Globalization.CultureInfo)">
+            <summary>Convert and add a new value to the data collection</summary>
+            <param name="value">Value to add</param>
+            <param name="culture">Culture associated to the int and double values types</param>
+            <param name="cultureDate">Culture associated to the dates</param>
+        </member>
+        <member name="T:MilNet.Core.Traces.Csv.SerieDouble">
+            <summary>Trace file data serie</summary>
+            <remarks>Data will be read as doubles</remarks>
+        </member>
+        <member name="M:MilNet.Core.Traces.Csv.SerieDouble.#ctor(System.Enum,System.String,System.Int32[])">
+            <summary>Constructor</summary>
+            <param name="type">Serie type</param>
+            <param name="header">File serie header</param>
+            <param name="index">Associated property index</param>
+        </member>
+        <member name="M:MilNet.Core.Traces.Csv.SerieDouble.Add(System.String,System.Globalization.CultureInfo,System.Globalization.CultureInfo)">
+            <summary>Convert and add a new value to the data collection</summary>
+            <param name="value">Value to add</param>
+            <param name="culture">Culture associated to the int and double values types</param>
+            <param name="cultureDate">Culture associated to the dates</param>
+        </member>
+        <member name="T:MilNet.Core.Traces.Csv.SerieInt">
+            <summary>Trace file data serie</summary>
+            <remarks>Data will be read as integers</remarks>
+        </member>
+        <member name="M:MilNet.Core.Traces.Csv.SerieInt.#ctor(System.Enum,System.String,System.Int32[])">
+            <summary>Constructor</summary>
+            <param name="type">Serie type</param>
+            <param name="header">File serie header</param>
+            <param name="index">Associated property index</param>
+        </member>
+        <member name="M:MilNet.Core.Traces.Csv.SerieInt.Add(System.String,System.Globalization.CultureInfo,System.Globalization.CultureInfo)">
+            <summary>Convert and add a new value to the data collection</summary>
+            <param name="value">Value to add</param>
+            <param name="culture">Culture associated to the int and double values types</param>
+            <param name="cultureDate">Culture associated to the dates</param>
+        </member>
+        <member name="T:MilNet.Core.Traces.Csv.SerieRun">
+            <summary>Serie of trace file runs</summary>
+        </member>
+        <member name="M:MilNet.Core.Traces.Csv.SerieRun.#ctor(System.Enum,System.String,System.Int32[])">
+            <summary>Constructor</summary>
+            <param name="type">Serie data type</param>
+            <param name="header">File serie header</param>
+            <param name="index">Associated property index</param>
+        </member>
+        <member name="M:MilNet.Core.Traces.Csv.SerieRun.AddRun(System.Int32)">
+            <summary>Add a new run</summary>
+            <param name="value">Value of the run</param>
+        </member>
+        <member name="T:MilNet.Core.Traces.Csv.SerieString">
+            <summary>Trace file data serie</summary>
+            <remarks>Data will be read as strings</remarks>
+        </member>
+        <member name="M:MilNet.Core.Traces.Csv.SerieString.#ctor(System.Enum,System.String,System.Int32[])">
+            <summary>Constructor</summary>
+            <param name="type">Serie type</param>
+            <param name="header">File serie header</param>
+            <param name="index">Associated property index</param>
+        </member>
+        <member name="M:MilNet.Core.Traces.Csv.SerieString.Add(System.String,System.Globalization.CultureInfo,System.Globalization.CultureInfo)">
+            <summary>Convert and add a new value to the data collection</summary>
+            <param name="value">Value to add</param>
+            <param name="culture">Culture associated to the int and double values types</param>
+            <param name="cultureDate">Culture associated to the dates</param>
+        </member>
+        <member name="M:MilNet.Core.Traces.Csv.SerieString.GetFirstData">
+            <summary>Get the first readed point</summary>
+        </member>
+        <member name="M:MilNet.Core.Traces.Csv.SerieString.GetLastData">
+            <summary>Get the last readed point</summary>
+        </member>
+        <member name="T:MilNet.Core.Traces.FilesConfiguration">
+            <summary>Used trace files configuration</summary>
+        </member>
+        <member name="P:MilNet.Core.Traces.FilesConfiguration.FileName">
+            <summary>Configuration file name</summary>
+        </member>
+        <member name="P:MilNet.Core.Traces.FilesConfiguration.Files">
+            <summary>Collection of trace files needed for a blend</summary>
+        </member>
+        <member name="P:MilNet.Core.Traces.FilesConfiguration.Item(System.String)">
+            <summary>Configured trace file</summary>
+            <param name="ext">Extension</param>
+        </member>
+        <member name="M:MilNet.Core.Traces.FilesConfiguration.ReadLastValue``1(System.Enum,``0,System.Int32[])">
+            <summary>Read the last valid value from the files configuration</summary>
+            <param name="type">Serie type</param>
+            <param name="defaultValue">Default value to use</param>
+            <param name="index">Serie index</param>
+        </member>
+        <member name="M:MilNet.Core.Traces.FilesConfiguration.ReadLastValue``1(System.Enum,System.Nullable{``0},System.Int32[])">
+            <summary>Read the last valid value from the files configuration</summary>
+            <param name="type">Serie type</param>
+            <param name="defaultValue">Default value to use</param>
+            <param name="index">Serie index</param>
+        </member>
+        <member name="M:MilNet.Core.Traces.FilesConfiguration.ReadLastValue``1(System.Enum,``0,System.Func{System.String,``0},System.Int32[])">
+            <summary>Read the last valid value from the files configuration</summary>
+            <param name="type">Serie type</param>
+            <param name="defaultValue">Default value to use</param>
+            <param name="function">Function to transform the read value</param>
+            <param name="index">Serie index</param>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:MilNet.Core.Traces.FilesConfiguration.ReadLastValue``2(System.Enum,``1,System.Func{``0,``1},System.Int32[])">
+            <summary>Read the last valid value from the files configuration</summary>
+            <param name="type">Serie type</param>
+            <param name="defaultValue">Default value to use</param>
+            <param name="function">Function to transform the read value</param>
+            <param name="index">Serie index</param>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:MilNet.Core.Traces.FilesConfiguration.ReadFirstValue``1(System.Enum,``0,System.Int32[])">
+            <summary>Read the first valid value from the files configuration</summary>
+            <param name="type">Serie type</param>
+            <param name="defaultValue">Default value to use</param>
+            <param name="index">Serie index</param>
+        </member>
+        <member name="M:MilNet.Core.Traces.FilesConfiguration.ReadFirstValue``1(System.Enum,System.Nullable{``0},System.Int32[])">
+            <summary>Read the first valid value from the files configuration</summary>
+            <param name="type">Serie type</param>
+            <param name="defaultValue">Default value to use</param>
+            <param name="index">Serie index</param>
+        </member>
+        <member name="M:MilNet.Core.Traces.FilesConfiguration.ReadFirstValue(System.Enum,System.String,System.Int32[])">
+            <summary>Read the first valid value from the files configuration</summary>
+            <param name="type">Serie type</param>
+            <param name="defaultValue">Default value to use</param>
+            <param name="index">Serie index</param>
+        </member>
+        <member name="M:MilNet.Core.Traces.FilesConfiguration.ReadFirstValue``1(System.Enum,``0,System.Func{System.String,``0},System.Int32[])">
+            <summary>Read the first valid value from the files configuration</summary>
+            <param name="type">Serie type</param>
+            <param name="defaultValue">Default value to use</param>
+            <param name="function">Function to transform the read value</param>
+            <param name="index">Serie index</param>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:MilNet.Core.Traces.FilesConfiguration.GetData``1(System.Enum,System.Int32[])">
+            <summary>Get the readed points table, for an information type</summary>
+            <param name="type">Information type</param>
+            <param name="index">Index</param>
+        </member>
+        <member name="M:MilNet.Core.Traces.FilesConfiguration.ReadFiles(System.String)">
+            <summary>Read all the CSV files of the configuration</summary>
+            <param name="baseFileName">Base of the file name</param>
+            <remarks>All previous readed data will be cleared</remarks>
+            <exception cref="T:System.ArgumentNullException"/>
+            <exception cref="T:System.IO.IOException">File alreaded opened</exception>
+            <exception cref="T:System.UnauthorizedAccessException"/>
+            <exception cref="T:System.NotSupportedException"/>
+        </member>
+        <member name="M:MilNet.Core.Traces.FilesConfiguration.ReadFiles(System.String,System.Boolean)">
+            <summary>Read all the CSV files of the configuration</summary>
+            <param name="baseFileName">Base of the file name</param>
+            <param name="init">Clear all previous readed data</param>
+            <exception cref="T:System.ArgumentNullException"/>
+            <exception cref="T:System.IO.IOException">File alreaded opened</exception>
+            <exception cref="T:System.UnauthorizedAccessException"/>
+            <exception cref="T:System.NotSupportedException"/>
+        </member>
+        <member name="M:MilNet.Core.Traces.FilesConfiguration.ReadSeries">
+            <summary>Read the series of all the CSV files of the configuration</summary>
+            <remarks>Match data among the files; be sure all file has a run serie defined</remarks>
+            <exception cref="T:System.IO.FileLoadException">Read problem</exception>
+            <exception cref="T:System.Text.RegularExpressions.RegexMatchTimeoutException"/>
+        </member>
+        <member name="M:MilNet.Core.Traces.FilesConfiguration.GetSerie``1(System.Enum,System.Int32[])">
+            <summary>Get the serie, for an information type</summary>
+            <param name="type">Information type</param>
+            <param name="index">Index</param>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:MilNet.Core.Traces.FilesConfiguration.GetFirstData``1(System.Enum,System.Int32[])">
+            <summary>Get the first readed point, for an information type</summary>
+            <param name="type">Information type</param>
+            <param name="index">Index</param>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:MilNet.Core.Traces.FilesConfiguration.GetFirstData(System.Enum,System.Int32[])">
+            <summary>Get the first readed point, for an information type</summary>
+            <param name="type">Information type</param>
+            <param name="index">Index</param>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:MilNet.Core.Traces.FilesConfiguration.GetLastData``1(System.Enum,System.Int32[])">
+            <summary>Get the last readed point, for an information type</summary>
+            <param name="type">Information type</param>
+            <param name="index">Index</param>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:MilNet.Core.Traces.FilesConfiguration.GetLastData(System.Enum,System.Int32[])">
+            <summary>Get the last readed point, for an information type</summary>
+            <param name="type">Information type</param>
+            <param name="index">Index</param>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="T:MilNet.Core.Traces.ICleanable">
+            <summary>Clean interface</summary>
+        </member>
+        <member name="M:MilNet.Core.Traces.ICleanable.CleanData">
+            <summary>Clear all the previous readed data</summary>
+        </member>
+        <member name="T:MilNet.Core.Traces.ITraceFile">
+            <summary>Trace file interface</summary>
+        </member>
+        <member name="P:MilNet.Core.Traces.ITraceFile.Type">
+            <summary>File type</summary>
+        </member>
+        <member name="P:MilNet.Core.Traces.ITraceFile.Ext">
+            <summary>File extension</summary>
+        </member>
+        <member name="T:MilNet.Core.Traces.Texte.TextFile">
+            <summary>Text trace file</summary>
+        </member>
+        <member name="P:MilNet.Core.Traces.Texte.TextFile.Type">
+            <summary>File type</summary>
+        </member>
+        <member name="P:MilNet.Core.Traces.Texte.TextFile.Text">
+            <summary>Text file content</summary>
+        </member>
+        <member name="M:MilNet.Core.Traces.Texte.TextFile.#ctor(System.String)">
+            <summary>Constructor</summary>
+            <param name="ext">File extension</param>
+        </member>
+        <member name="M:MilNet.Core.Traces.Texte.TextFile.ReadFile(System.String)">
+            <summary>Read the file</summary>
+            <param name="fileName">File name (with directory and extension)</param>
+            <exception cref="T:System.ArgumentNullException"/>
+            <exception cref="T:System.UnauthorizedAccessException"/>
+            <exception cref="T:System.NotSupportedException"/>
+            <exception cref="T:System.IO.IOException">I/O exception; a specific message is put into <see cref="P:MilNet.Core.Traces.Texte.TextFile.Text"/> and can be displayed to users</exception>
+        </member>
+        <member name="M:MilNet.Core.Traces.Texte.TextFile.CleanData">
+            <summary>Clear all previous readed data</summary>
+            <remarks>Configuration is maintained</remarks>
+        </member>
+        <member name="T:MilNet.Core.Traces.TraceFile">
+            <summary>Trace file</summary>
+        </member>
+        <member name="P:MilNet.Core.Traces.TraceFile.Type">
+            <summary>File type</summary>
+        </member>
+        <member name="P:MilNet.Core.Traces.TraceFile.Ext">
+            <summary>File extension</summary>
+        </member>
+        <member name="P:MilNet.Core.Traces.TraceFile.BaseFileName">
+            <summary>File name base</summary>
+        </member>
+        <member name="P:MilNet.Core.Traces.TraceFile.FileName">
+            <summary>File name</summary>
+        </member>
+        <member name="M:MilNet.Core.Traces.TraceFile.CleanData">
+            <summary>Clear all previous readed data</summary>
+            <remarks>Configuration is maintained</remarks>
+        </member>
+        <member name="M:MilNet.Core.Traces.TraceFile.#ctor(System.String)">
+            <summary>Constructor</summary>
+            <param name="ext">File extension</param>
+        </member>
+        <member name="T:MilNet.Core.Traces.TraceFile.TypeFile">
+            <summary>File type</summary>
+        </member>
+        <member name="F:MilNet.Core.Traces.TraceFile.TypeFile.Csv">
+            <summary>Fichier de données CSV</summary>
+        </member>
+        <member name="F:MilNet.Core.Traces.TraceFile.TypeFile.Texte">
+            <summary>Fichier de données textuelles</summary>
+        </member>
+        <member name="T:MilNet.Core.Traces.TraceFile.TypeData">
+            <summary>Data type to use to display series</summary>
+        </member>
+        <member name="F:MilNet.Core.Traces.TraceFile.TypeData.NotSet">
+            <summary>Displayed with Serie.IsDate</summary>
+        </member>
+        <member name="F:MilNet.Core.Traces.TraceFile.TypeData.Double">
+            <summary>Displayed as decimal numbers</summary>
+        </member>
+        <member name="F:MilNet.Core.Traces.TraceFile.TypeData.Int32">
+            <summary>Displayed as short integers</summary>
+        </member>
+        <member name="F:MilNet.Core.Traces.TraceFile.TypeData.Time">
+            <summary>Displayed as time (hours and minutes)</summary>
+        </member>
+        <member name="T:MilNet.Core.Types.BitFieldEnum`1">
+            <summary>Bit field enumeration</summary>
+        </member>
+        <member name="P:MilNet.Core.Types.BitFieldEnum`1.Value">
+            <summary>Value</summary>
+        </member>
+        <member name="P:MilNet.Core.Types.BitFieldEnum`1.DefaultValue">
+            <summary>Default value</summary>
+        </member>
+        <member name="P:MilNet.Core.Types.BitFieldEnum`1.Values">
+            <summary>Value as array</summary>
+        </member>
+        <member name="M:MilNet.Core.Types.BitFieldEnum`1.ToString">
+            <summary>Convert to string</summary>
+        </member>
+        <member name="M:MilNet.Core.Types.BitFieldEnum`1.Equals(MilNet.Core.Types.BitFieldEnum{`0})">
+            <summary>Equality check</summary>
+        </member>
+        <member name="T:MilNet.Core.Types.DataCollection`1">
+            <summary>Collection of data</summary>
+            <typeparam name="TData">Type of data</typeparam>
+        </member>
+        <member name="M:MilNet.Core.Types.DataCollection`1.#ctor">
+            <summary>Constructor</summary>
+        </member>
+        <member name="M:MilNet.Core.Types.DataCollection`1.#ctor(System.Collections.Generic.IList{`0})">
+            <summary>Constructor</summary>
+            <param name="list">List to be wrapped into the collection</param>
+        </member>
+        <member name="M:MilNet.Core.Types.DataCollection`1.#ctor(System.Collections.Generic.IEnumerable{`0})">
+            <summary>Constructor</summary>
+            <param name="collection">Collection to be wrapped into the collection</param>
+        </member>
+        <member name="M:MilNet.Core.Types.DataCollection`1.#ctor(`0[])">
+            <summary>Constructor</summary>
+            <param name="collection">Collection to be wrapped into the collection</param>
+        </member>
+        <member name="M:MilNet.Core.Types.DataCollection`1.AddRange(System.Collections.Generic.IEnumerable{`0})">
+            <summary>Add elements to the current collection</summary>
+            <param name="collection">Collection of elements</param>
+            <exception cref="T:System.ArgumentNullException">The collection to add is null</exception>
+        </member>
+        <member name="M:MilNet.Core.Types.DataCollection`1.AddRange(`0[])">
+            <summary>Add elements to the current collection</summary>
+            <param name="collection">Collection of elements</param>
+            <exception cref="T:System.ArgumentNullException">The collection to add is null</exception>
+        </member>
+        <member name="M:MilNet.Core.Types.DataCollection`1.AddRangeCollection(System.Collections.Generic.IEnumerable{`0})">
+            <summary>Add elements to the current collection</summary>
+            <param name="collection">Collection of elements</param>
+            <exception cref="T:System.ArgumentNullException">The collection to add is null</exception>
+        </member>
+        <member name="M:MilNet.Core.Types.DataCollection`1.Shift(System.Int32)">
+            <summary>Shift the points of the current data collection</summary>
+            <param name="value">Shift value; if positive, new points will be added first; if negative, first points will be deleted</param>
+        </member>
+        <member name="T:MilNet.Core.Types.IBitFieldEnum`2">
+            <summary>Interface of bit field enumeration</summary>
+        </member>
+        <member name="P:MilNet.Core.Types.IBitFieldEnum`2.Value">
+            <summary>Detail as values</summary>
+        </member>
+        <member name="P:MilNet.Core.Types.IBitFieldEnum`2.Values">
+            <summary>Detail as values array</summary>
+        </member>
+        <member name="M:MilNet.Core.Types.IBitFieldEnum`2.ToString">
+            <summary>Detail as text</summary>
+            <remarks>the ToString() method must be overrided</remarks>
+        </member>
+        <member name="T:MilNet.Core.Types.IReadableEnum`2">
+            <summary>Interface of readable/writable enumeration</summary>
+        </member>
+        <member name="P:MilNet.Core.Types.IReadableEnum`2.Value">
+            <summary>Detail as value</summary>
+        </member>
+        <member name="P:MilNet.Core.Types.IReadableEnum`2.Text">
+            <summary>Detail as text</summary>
+        </member>
+        <member name="M:MilNet.Core.Types.IReadableEnum`2.ToString">
+            <summary>Detail as text</summary>
+            <remarks>the ToString() method must be overrided</remarks>
+        </member>
+        <member name="M:MilNet.Core.Types.IReadableEnum`2.FromString(System.String)">
+            <summary>Read as string</summary>
+        </member>
+        <member name="T:MilNet.Core.Types.ReadableEnum`1">
+            <summary>Readable/writable enumeration</summary>
+        </member>
+        <member name="M:MilNet.Core.Types.ReadableEnum`1.#ctor">
+            <summary>Constructor</summary>
+            <remarks>Fill <see cref="P:MilNet.Core.Types.ReadableEnum`1.DefaultValue"/> if needed</remarks>
+        </member>
+        <member name="M:MilNet.Core.Types.ReadableEnum`1.#ctor(`0)">
+            <summary>Constructor</summary>
+            <param name="defaultValue">Default value</param>
+            <remarks><see cref="P:MilNet.Core.Types.ReadableEnum`1.Value"/> will be filled with the default value; also if no value can be read from string</remarks>
+        </member>
+        <member name="P:MilNet.Core.Types.ReadableEnum`1.Value">
+            <summary>Value</summary>
+        </member>
+        <member name="P:MilNet.Core.Types.ReadableEnum`1.DefaultValue">
+            <summary>Default value</summary>
+        </member>
+        <member name="P:MilNet.Core.Types.ReadableEnum`1.Text">
+            <summary>Value as string</summary>
+        </member>
+        <member name="M:MilNet.Core.Types.ReadableEnum`1.ToString">
+            <summary>Convert to string</summary>
+        </member>
+        <member name="M:MilNet.Core.Types.ReadableEnum`1.FromString(System.String)">
+            <summary>Read as string</summary>
+        </member>
+        <member name="M:MilNet.Core.Types.ReadableEnum`1.Equals(MilNet.Core.Types.ReadableEnum{`0})">
+            <summary>Equality check</summary>
+        </member>
+        <member name="T:MilNet.Core.Types.TypesExtensions">
+            <summary>Types extensions</summary>
+        </member>
+        <member name="M:MilNet.Core.Types.TypesExtensions.CheckDateTime(System.String,System.Globalization.DateTimeStyles,System.IFormatProvider)">
+            <summary>Check if a string can be parsed to a DateTime</summary>
+            <param name="value">Value</param>
+            <param name="styles">Styles</param>
+            <param name="provider">Provider</param>
+        </member>
+        <member name="M:MilNet.Core.Types.TypesExtensions.ConvertDateTime(System.String,System.Globalization.DateTimeStyles,System.IFormatProvider)">
+            <summary>Check a string and convert it to DateTime</summary>
+            <param name="value">Value</param>
+            <param name="styles">Styles</param>
+            <param name="provider">Provider</param>
+            <exception cref="T:System.FormatException">Not a DateTime</exception>
+        </member>
+        <member name="M:MilNet.Core.Types.TypesExtensions.ConvertDateTimeSafe(System.String,System.Globalization.DateTimeStyles,System.IFormatProvider)">
+            <summary>Check a string and convert it to DateTime</summary>
+            <param name="value">Value</param>
+            <param name="styles">Styles</param>
+            <param name="provider">Provider</param>
+            <returns>Conversion to DateTime, or null</returns>
+        </member>
+        <member name="M:MilNet.Core.Types.TypesExtensions.CheckMySqlDateTime(System.String,System.Globalization.DateTimeStyles,System.IFormatProvider)">
+            <summary>Check if a string can be parsed to a DateTime</summary>
+            <param name="value">Value</param>
+            <param name="styles">Styles</param>
+            <param name="provider">Provider</param>
+            <remarks>The year must be upper than 1753 (MySql restriction)</remarks>
+        </member>
+        <member name="M:MilNet.Core.Types.TypesExtensions.ConvertMySqlDateTime(System.String,System.Globalization.DateTimeStyles,System.IFormatProvider)">
+            <summary>Check a string and convert it to DateTime</summary>
+            <param name="value">Value</param>
+            <param name="styles">Styles</param>
+            <param name="provider">Provider</param>
+            <remarks>The year must be upper than 1753 (MySql restriction)</remarks>
+            <exception cref="T:System.FormatException">Not a DateTime</exception>
+        </member>
+        <member name="M:MilNet.Core.Types.TypesExtensions.ConvertMySqlDateTimeSafe(System.String,System.Globalization.DateTimeStyles,System.IFormatProvider)">
+            <summary>Check a string and convert it to DateTime</summary>
+            <param name="value">Value</param>
+            <param name="styles">Styles</param>
+            <param name="provider">Provider</param>
+            <remarks>The year must be upper than 1753 (MySql restriction)</remarks>
+            <returns>Conversion to DateTime, or null</returns>
+        </member>
+        <member name="M:MilNet.Core.Types.TypesExtensions.CheckDouble(System.String,System.Globalization.NumberStyles,System.Globalization.CultureInfo)">
+            <summary>Check if a string can be parsed to a double</summary>
+            <param name="value">Value</param>
+            <param name="style">Number styles</param>
+            <param name="provider">Format provider</param>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:MilNet.Core.Types.TypesExtensions.ConvertDouble(System.String,System.Globalization.NumberStyles,System.Globalization.CultureInfo)">
+            <summary>Check a string and convert it to double</summary>
+            <param name="value">Value</param>
+            <param name="style">Number styles</param>
+            <param name="provider">Format provider</param>
+            <exception cref="T:System.FormatException">Not a double</exception>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:MilNet.Core.Types.TypesExtensions.ConvertDoubleSafe(System.String,System.Globalization.NumberStyles,System.Globalization.CultureInfo)">
+            <summary>Check a string and convert it to double</summary>
+            <param name="value">Value</param>
+            <param name="style">Number styles</param>
+            <param name="provider">Format provider</param>
+            <exception cref="T:System.FormatException">Not a double</exception>
+            <returns>Conversion to double, or null</returns>
+        </member>
+        <member name="M:MilNet.Core.Types.TypesExtensions.ReplaceNumberDecimalSeparator(System.String,System.Globalization.CultureInfo)">
+            <summary>Replace point and comma by the number decimal separator of a culture</summary>
+            <param name="value">Value</param>
+            <param name="provider">Format provider</param>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="T:TraceModel.AireGraphique">
+            <summary>Aire graphique</summary>
+        </member>
+        <member name="P:TraceModel.AireGraphique.Titre">
+            <summary>Titre de l'aire graphique</summary>
+        </member>
+        <member name="P:TraceModel.AireGraphique.SeriesAffichees">
+            <summary>Séries associées à l'aire graphique</summary>
+        </member>
+        <member name="P:TraceModel.AireGraphique.s_MinY1">
+            <summary>Ordonnée minimale</summary>
+        </member>
+        <member name="P:TraceModel.AireGraphique.MinY1">
+            <summary>Ordonnée minimale</summary>
+        </member>
+        <member name="P:TraceModel.AireGraphique.s_MaxY1">
+            <summary>Ordonnée maximale</summary>
+        </member>
+        <member name="P:TraceModel.AireGraphique.MaxY1">
+            <summary>Ordonnée maximale</summary>
+        </member>
+        <member name="P:TraceModel.AireGraphique.IsStartedFromZeroY1">
+            <summary>Début de l'axe des ordonnées à 0</summary>
+        </member>
+        <member name="P:TraceModel.AireGraphique.s_MinY2">
+            <summary>Ordonnée minimale</summary>
+        </member>
+        <member name="P:TraceModel.AireGraphique.MinY2">
+            <summary>Ordonnée minimale</summary>
+        </member>
+        <member name="P:TraceModel.AireGraphique.s_MaxY2">
+            <summary>Ordonnée maximale</summary>
+        </member>
+        <member name="P:TraceModel.AireGraphique.MaxY2">
+            <summary>Ordonnée maximale</summary>
+        </member>
+        <member name="P:TraceModel.AireGraphique.IsStartedFromZeroY2">
+            <summary>Début de l'axe des ordonnées à 0</summary>
+        </member>
+        <member name="P:TraceModel.AireGraphique.AncrageLegende">
+            <summary>Type d'ancrage de la légende sur l'aire graphique</summary>
+        </member>
+        <member name="P:TraceModel.AireGraphique.IsDockedInsideChartArea">
+            <summary>Ancrage de la légende dans l'aire graphique</summary>
+        </member>
+        <member name="M:TraceModel.AireGraphique.#ctor">
+            <summary>Constructeur</summary>
+        </member>
+        <member name="M:TraceModel.AireGraphique.Equals(System.Object)">
+            <summary>Vérifie l'égalité avec un header</summary>
+            <param name="other">Header</param>
+        </member>
+        <member name="M:TraceModel.AireGraphique.ExisteSerieHeader(System.String)">
+            <summary>Existence d'un en-tête de série selon l'en-tête</summary>
+        </member>
+        <member name="M:TraceModel.AireGraphique.From(TraceModel.AireGraphique)">
+            <summary>Copie des propriétés d'une autre aire graphique</summary>
+        </member>
+        <member name="M:TraceModel.AireGraphique.ToString">
+            <summary>Transformation en string</summary>
+        </member>
+        <member name="M:TraceModel.AireGraphique.Validate">
+            <summary>Valide l'aire graphique</summary>
+        </member>
+        <member name="M:TraceModel.AireGraphique.Validate(System.String)">
+            <summary>Valide les paramètres fournis selon les critères de validation d'aire graphique</summary>
+        </member>
+        <member name="M:TraceModel.AireGraphique.Equals(TraceModel.AireGraphique)">
+            <summary>Egalité entre aires graphiques</summary>
+        </member>
+        <member name="M:TraceModel.AireGraphique.GetHashCode">
+            <summary>Hash de code</summary>
+            <exception cref="T:System.NotImplementedException">La méthode n'est pas implémentée</exception>
+        </member>
+        <member name="M:TraceModel.AireGraphique.CleanData">
+            <summary>Nettoie les données lues, mais pas la configuration</summary>
+        </member>
+        <member name="T:TraceModel.Dal">
+            <summary>Classe d'interface du modèle</summary>
+        </member>
+        <member name="F:TraceModel.Dal.SEP">
+            <summary>Séprateurs des fichiers trace</summary>
+        </member>
+        <member name="P:TraceModel.Dal.NomFichier">
+            <summary>Nom du fichier de configuration</summary>
+        </member>
+        <member name="P:TraceModel.Dal.Fichiers">
+            <summary>Fichiers</summary>
+        </member>
+        <member name="P:TraceModel.Dal.Sections">
+            <summary>Sections</summary>
+        </member>
+        <member name="P:TraceModel.Dal.Abscisses">
+            <summary>Abscisses</summary>
+        </member>
+        <member name="P:TraceModel.Dal.Series">
+            <summary>Séries</summary>
+        </member>
+        <member name="M:TraceModel.Dal.#ctor">
+            <summary>Constructeur</summary>
+        </member>
+        <member name="M:TraceModel.Dal.ExisteFichier(System.String)">
+            <summary>Existence d'un fichier selon l'extension</summary>
+        </member>
+        <member name="M:TraceModel.Dal.ExisteFichier(TraceModel.Fichier)">
+            <summary>Existence d'un fichier</summary>
+        </member>
+        <member name="M:TraceModel.Dal.ExisteSection(System.String)">
+            <summary>Existence d'une section selon le titre</summary>
+        </member>
+        <member name="M:TraceModel.Dal.ExisteSection(TraceModel.Section)">
+            <summary>Existence d'une section</summary>
+        </member>
+        <member name="M:TraceModel.Dal.LireFichierConfigurationAsync">
+            <summary>Lecture du fichier de configuration</summary>
+        </member>
+        <member name="M:TraceModel.Dal.EcrireFichierConfigurationAsync(System.String)">
+            <summary>Ecriture du fichier de configuration</summary>
+        </member>
+        <member name="M:TraceModel.Dal.LireFichiersTracesAsync(System.String,System.Boolean)">
+            <summary>Lecture de tous les fichiers traces prévus par la configuration</summary>
+            <param name="base_nom_fichier">Chemin absolu des fichiers à lire, sans extension</param>
+            <param name="init">Réinitialisation des données avant lecture</param>
+        </member>
+        <member name="M:TraceModel.Dal.GetSerieByHeader(System.String)">
+            <summary>Première série avec le <param name="header"/> correspondant</summary>
+        </member>
+        <member name="M:TraceModel.Dal.GetAbscisseByIndex(System.Int32)">
+            <summary>Série d'abscisse à la position définie par <param name="index"/></summary>
+        </member>
+        <member name="M:TraceModel.Dal.ExtFichiersPresents(System.String)">
+            <summary>Liste des extensions de fichiers présents</summary>
+            <param name="base_nom_fichier">Chemin absolu des fichiers à lire, sans extension</param>
+        </member>
+        <member name="M:TraceModel.Dal.Clone">
+            <summary>Clone la configuration</summary>
+        </member>
+        <member name="M:TraceModel.Dal.CleanData">
+            <summary>Nettoie les données lues, mais pas la configuration</summary>
+        </member>
+        <member name="T:TraceModel.Fichier">
+            <summary>Fichier</summary>=
+        </member>
+        <member name="P:TraceModel.Fichier.Ext">
+            <summary>Extension de fichier (sous format .xxx)</summary>
+        </member>
+        <member name="P:TraceModel.Fichier.Obligatoire">
+            <summary>Présence obligatoire du fichier pour afficher les données</summary>
+        </member>
+        <member name="P:TraceModel.Fichier.IsCsv">
+            <summary>Format CSV</summary>
+        </member>
+        <member name="P:TraceModel.Fichier.Lu">
+            <summary>Flag de lecture du fichier</summary>
+        </member>
+        <member name="P:TraceModel.Fichier.Series">
+            <summary>Séries associées au Fichier</summary>
+        </member>
+        <member name="M:TraceModel.Fichier.#ctor">
+            <summary>Constructeur</summary>
+        </member>
+        <member name="M:TraceModel.Fichier.ExisteSerie(System.String)">
+            <summary>Existence d'une série selon l'en-tête</summary>
+        </member>
+        <member name="M:TraceModel.Fichier.ExisteSerie(TraceModel.Serie)">
+            <summary>Existence d'une série selon l'en-tête</summary>
+        </member>
+        <member name="M:TraceModel.Fichier.LireAsync(System.String,System.Boolean)">
+            <summary>Lecture de fichier trace</summary>
+            <param name="base_nom_fichier">Chemin absolu du fichier à lire, sans extension</param>
+            <param name="init">Réinitialisation des données avant lecture</param>
+        </member>
+        <member name="M:TraceModel.Fichier.From(TraceModel.Fichier)">
+            <summary>Copie des propriétés d'un autre fichier</summary>
+        </member>
+        <member name="M:TraceModel.Fichier.ToString">
+            <summary>Transformation en string</summary>
+        </member>
+        <member name="M:TraceModel.Fichier.Equals(System.Object)">
+            <summary>Vérifie l'égalité avec un header</summary>
+            <param name="other">Header</param>
+        </member>
+        <member name="M:TraceModel.Fichier.Validate">
+            <summary>Valide le fichier</summary>
+        </member>
+        <member name="M:TraceModel.Fichier.Validate(System.String)">
+            <summary>Valide les paramètres fournis selon les critères de validation de fichier</summary>
+        </member>
+        <member name="M:TraceModel.Fichier.Equals(TraceModel.Fichier)">
+            <summary>Egalité entre fichiers</summary>
+        </member>
+        <member name="M:TraceModel.Fichier.GetHashCode">
+            <summary>Hash de code</summary>
+            <exception cref="T:System.NotImplementedException">La méthode n'est pas implémentée</exception>
+        </member>
+        <member name="M:TraceModel.Fichier.CleanData">
+            <summary>Nettoie les données lues, mais pas la configuration</summary>
+        </member>
+        <member name="T:TraceModel.ICleanable">
+            <summary>Interface de nettoyage</summary>
+        </member>
+        <member name="M:TraceModel.ICleanable.CleanData">
+            <summary>Nettoie les données lues</summary>
+        </member>
+        <member name="T:TraceModel.IDal">
+            <summary>Interface publique du modèle</summary>
+        </member>
+        <member name="P:TraceModel.IDal.NomFichier">
+            <summary>Nom du fichier de configuration</summary>
+        </member>
+        <member name="P:TraceModel.IDal.Fichiers">
+            <summary>Fichiers</summary>
+        </member>
+        <member name="P:TraceModel.IDal.Sections">
+            <summary>Sections</summary>
+        </member>
+        <member name="P:TraceModel.IDal.Abscisses">
+            <summary>Abscisses</summary>
+        </member>
+        <member name="P:TraceModel.IDal.Series">
+            <summary>Séries</summary>
+        </member>
+        <member name="M:TraceModel.IDal.ExisteFichier(System.String)">
+            <summary>Existence d'un fichier déjà ajouté en configuration</summary>
+        </member>
+        <member name="M:TraceModel.IDal.ExisteFichier(TraceModel.Fichier)">
+            <summary>Existence d'un fichier déjà ajouté en configuration</summary>
+        </member>
+        <member name="M:TraceModel.IDal.ExisteSection(System.String)">
+            <summary>Existence d'une section déjà ajoutée en configuration</summary>
+        </member>
+        <member name="M:TraceModel.IDal.ExisteSection(TraceModel.Section)">
+            <summary>Existence d'une section déjà ajoutée en configuration</summary>
+        </member>
+        <member name="M:TraceModel.IDal.LireFichierConfigurationAsync">
+            <summary>Lecture du fichier de configuration défini avec <see cref="P:TraceModel.IDal.NomFichier"/></summary>
+        </member>
+        <member name="M:TraceModel.IDal.EcrireFichierConfigurationAsync(System.String)">
+            <summary>Ecriture d'un fichier de configuration</summary>
+        </member>
+        <member name="M:TraceModel.IDal.LireFichiersTracesAsync(System.String,System.Boolean)">
+            <summary>Lecture de fichiers traces, en fonction de <param name="base_nom_fichier"/> et des extensions de <see cref="P:TraceModel.IDal.Fichiers"/>. <param name="init"/> indique la réinitialisation des données.</summary>
+        </member>
+        <member name="M:TraceModel.IDal.Clone">
+            <summary>Clone la configuration</summary>
+        </member>
+        <member name="M:TraceModel.IDal.GetSerieByHeader(System.String)">
+            <summary>Première série avec le <param name="header"/> correspondant</summary>
+        </member>
+        <member name="M:TraceModel.IDal.GetAbscisseByIndex(System.Int32)">
+            <summary>Série d'abscisse à la position définie par <param name="index"/></summary>
+        </member>
+        <member name="M:TraceModel.IDal.ExtFichiersPresents(System.String)">
+            <summary>Liste des extensions de fichiers présents</summary>
+            <param name="base_nom_fichier">Chemin absolu des fichiers à lire, sans extension</param>
+        </member>
+        <member name="T:TraceModel.Properties.Resources">
+            <summary>
+              Une classe de ressource fortement typée destinée, entre autres, à la consultation des chaînes localisées.
+            </summary>
+        </member>
+        <member name="P:TraceModel.Properties.Resources.ResourceManager">
+            <summary>
+              Retourne l'instance ResourceManager mise en cache utilisée par cette classe.
+            </summary>
+        </member>
+        <member name="P:TraceModel.Properties.Resources.Culture">
+            <summary>
+              Remplace la propriété CurrentUICulture du thread actuel pour toutes
+              les recherches de ressources à l'aide de cette classe de ressource fortement typée.
+            </summary>
+        </member>
+        <member name="P:TraceModel.Properties.Resources.ColonnesNumPassageNonTrouvees">
+            <summary>
+              Recherche une chaîne localisée semblable à The run numbers column was&apos;n found into file {0}..
+            </summary>
+        </member>
+        <member name="P:TraceModel.Properties.Resources.EnTeteSerieNecessaire">
+            <summary>
+              Recherche une chaîne localisée semblable à A column header is required for the serie..
+            </summary>
+        </member>
+        <member name="P:TraceModel.Properties.Resources.ErreursNumLignesfichier">
+            <summary>
+              Recherche une chaîne localisée semblable à Lines count into file {0} is unexpected..
+            </summary>
+        </member>
+        <member name="P:TraceModel.Properties.Resources.ExtensionFichierCommenceParPoint">
+            <summary>
+              Recherche une chaîne localisée semblable à File extension must start with a point (format: .xxx)..
+            </summary>
+        </member>
+        <member name="P:TraceModel.Properties.Resources.ExtensionFichierComporteCaracteresInvalides">
+            <summary>
+              Recherche une chaîne localisée semblable à The file extension contains invalid chars..
+            </summary>
+        </member>
+        <member name="P:TraceModel.Properties.Resources.ExtensionFichierNecessaire">
+            <summary>
+              Recherche une chaîne localisée semblable à An extension is required for the file..
+            </summary>
+        </member>
+        <member name="P:TraceModel.Properties.Resources.ExtensionVide">
+            <summary>
+              Recherche une chaîne localisée semblable à The file extension is empty..
+            </summary>
+        </member>
+        <member name="P:TraceModel.Properties.Resources.NombrePassagesFichierIncoherent">
+            <summary>
+              Recherche une chaîne localisée semblable à Run count for file {0] is unexpected..
+            </summary>
+        </member>
+        <member name="P:TraceModel.Properties.Resources.TitreAireGraphiqueNecessaire">
+            <summary>
+              Recherche une chaîne localisée semblable à A titre is required for the chartarea..
+            </summary>
+        </member>
+        <member name="P:TraceModel.Properties.Resources.TitreSectionNecessaire">
+            <summary>
+              Recherche une chaîne localisée semblable à A title is required for the section..
+            </summary>
+        </member>
+        <member name="P:TraceModel.Properties.Resources.TitreSerieNecessaire">
+            <summary>
+              Recherche une chaîne localisée semblable à A title is required for the serie..
+            </summary>
+        </member>
+        <member name="P:TraceModel.Properties.Resources.TitreSousSectionNecessaire">
+            <summary>
+              Recherche une chaîne localisée semblable à A title is required for the subsection..
+            </summary>
+        </member>
+        <member name="T:TraceModel.Section">
+            <summary>Section</summary>
+        </member>
+        <member name="P:TraceModel.Section.Titre">
+            <summary>Titre de la section</summary>
+        </member>
+        <member name="P:TraceModel.Section.SousSections">
+            <summary>SousSection associées au Section</summary>
+        </member>
+        <member name="M:TraceModel.Section.#ctor">
+            <summary>Constructeur</summary>
+        </member>
+        <member name="M:TraceModel.Section.ExisteSousSection(System.String)">
+            <summary>Existence d'une sous-section selon le titre</summary>
+        </member>
+        <member name="M:TraceModel.Section.ExisteSousSection(TraceModel.SousSection)">
+            <summary>Existence d'une sous-section selon le titre</summary>
+        </member>
+        <member name="M:TraceModel.Section.From(TraceModel.Section)">
+            <summary>Copie des propriétés d'une autre section</summary>
+        </member>
+        <member name="M:TraceModel.Section.ToString">
+            <summary>Transformation en string</summary>
+        </member>
+        <member name="M:TraceModel.Section.Equals(System.Object)">
+            <summary>Vérifie l'égalité avec un header</summary>
+            <param name="other">Header</param>
+        </member>
+        <member name="M:TraceModel.Section.Validate">
+            <summary>Valide la section</summary>
+        </member>
+        <member name="M:TraceModel.Section.Validate(System.String)">
+            <summary>Valide les paramètres fournis selon les critères de validation de section</summary>
+        </member>
+        <member name="M:TraceModel.Section.Equals(TraceModel.Section)">
+            <summary>Egalité entre sections</summary>
+        </member>
+        <member name="M:TraceModel.Section.GetHashCode">
+            <summary>Hash de code</summary>
+            <exception cref="T:System.NotImplementedException">La méthode n'est pas implémentée</exception>
+        </member>
+        <member name="M:TraceModel.Section.CleanData">
+            <summary>Nettoie les données lues, mais pas la configuration</summary>
+        </member>
+        <member name="T:TraceModel.Serie">
+            <summary>Série</summary>
+        </member>
+        <member name="T:TraceModel.Serie.TypeDonnees">
+            <summary>Type de données à utiliser dans l'affichage des séries</summary>
+        </member>
+        <member name="F:TraceModel.Serie.TypeDonnees.NotSet">
+            <summary>Affiché selon <see cref="P:TraceModel.Serie.IsDate"/></summary>
+        </member>
+        <member name="F:TraceModel.Serie.TypeDonnees.Double">
+            <summary>Affiché comme nombre décimal</summary>
+        </member>
+        <member name="F:TraceModel.Serie.TypeDonnees.Int32">
+            <summary>Affiché comme nombre entier court</summary>
+        </member>
+        <member name="F:TraceModel.Serie.TypeDonnees.Time">
+            <summary>Affiché comme temps (heures et minutes)</summary>
+        </member>
+        <member name="P:TraceModel.Serie.EnTete">
+            <summary>En-tête de la série dans le fichier</summary>
+        </member>
+        <member name="P:TraceModel.Serie.Titre">
+            <summary>Titre de la série affichée dans les graphs</summary>
+        </member>
+        <member name="P:TraceModel.Serie.IndexColonne">
+            <summary>Index de la colonnes de la série dans le fichier</summary>
+        </member>
+        <member name="P:TraceModel.Serie.IsNumPassages">
+            <summary>Flag indiquant que la série contient les numéros de passage</summary>
+        </member>
+        <member name="P:TraceModel.Serie.IsAbscisse">
+            <summary>Flag indiquant que la série peut être utilisée en abscisses</summary>
+        </member>
+        <member name="P:TraceModel.Serie.IsDate">
+            <summary>Flag indiquant que la série est une date</summary>
+            <remarks>Utilisé uniquement pour le format de nombre des abscisses</remarks>
+        </member>
+        <member name="P:TraceModel.Serie.s_TypeDonneesAffichage">
+            <summary>Type de données à utiliser dans l'affichage de la série</summary>
+        </member>
+        <member name="P:TraceModel.Serie.TypeDonneesAffichage">
+            <summary>Type de données à utiliser dans l'affichage de la série</summary>
+        </member>
+        <member name="P:TraceModel.Serie.Lue">
+            <summary>Flag de lecture de la série ; permet de réinitialiser l'index de colonne</summary>
+        </member>
+        <member name="P:TraceModel.Serie.s_Couleur">
+            <summary>Couleur de la série</summary>
+        </member>
+        <member name="P:TraceModel.Serie.Couleur">
+            <summary>Couleur de la série</summary>
+        </member>
+        <member name="P:TraceModel.Serie.s_Width">
+            <summary>Taille de la série</summary>
+        </member>
+        <member name="P:TraceModel.Serie.Width">
+            <summary>Taille de la série</summary>
+        </member>
+        <member name="P:TraceModel.Serie.Style">
+            <summary>Style de trait de la série</summary>
+        </member>
+        <member name="P:TraceModel.Serie.Type">
+            <summary>Type de série</summary>
+        </member>
+        <member name="P:TraceModel.Serie.Donnees">
+            <summary>Données lues de la série</summary>
+        </member>
+        <member name="M:TraceModel.Serie.#ctor">
+            <summary>Constructeur</summary>
+        </member>
+        <member name="M:TraceModel.Serie.From(TraceModel.Serie)">
+            <summary>Copie des propriétés d'une autre série</summary>
+        </member>
+        <member name="M:TraceModel.Serie.ToString">
+            <summary>Transformation en string</summary>
+        </member>
+        <member name="M:TraceModel.Serie.Equals(System.Object)">
+            <summary>Vérifie l'égalité avec un header</summary>
+            <param name="other">Header</param>
+        </member>
+        <member name="M:TraceModel.Serie.Validate">
+            <summary>Valide la série</summary>
+        </member>
+        <member name="M:TraceModel.Serie.Validate(System.String,System.String)">
+            <summary>Valide les paramètres fournis selon les critères de validation de série</summary>
+        </member>
+        <member name="M:TraceModel.Serie.Equals(TraceModel.Serie)">
+            <summary>Egalité entre séries</summary>
+        </member>
+        <member name="M:TraceModel.Serie.GetHashCode">
+            <summary>Hash de code</summary>
+            <exception cref="T:System.NotImplementedException">La méthode n'est pas implémentée</exception>
+        </member>
+        <member name="M:TraceModel.Serie.CleanData">
+            <summary>Nettoie les données lues, mais pas la configuration</summary>
+        </member>
+        <member name="T:TraceModel.SerieAffichee">
+            <summary>Série affichée</summary>
+        </member>
+        <member name="P:TraceModel.SerieAffichee.EnTete">
+            <summary>En-tête de la série dans le fichier</summary>
+        </member>
+        <member name="P:TraceModel.SerieAffichee.UtiliseY2">
+            <summary>Flag indiquant que la série utilise l'axe Y2</summary>
+        </member>
+        <member name="M:TraceModel.SerieAffichee.From(TraceModel.SerieAffichee)">
+            <summary>Copie des propriétés d'une autre série</summary>
+        </member>
+        <member name="M:TraceModel.SerieAffichee.ToString">
+            <summary>Transformation en string</summary>
+        </member>
+        <member name="M:TraceModel.SerieAffichee.Equals(System.Object)">
+            <summary>Vérifie l'égalité avec un header</summary>
+            <param name="other">Header</param>
+        </member>
+        <member name="M:TraceModel.SerieAffichee.Validate">
+            <summary>Valide la série affichée</summary>
+        </member>
+        <member name="M:TraceModel.SerieAffichee.Validate(System.String)">
+            <summary>Valide les paramètres fournis selon les critères de validation de série</summary>
+        </member>
+        <member name="M:TraceModel.SerieAffichee.Equals(TraceModel.SerieAffichee)">
+            <summary>Egalité entre séries</summary>
+        </member>
+        <member name="M:TraceModel.SerieAffichee.GetHashCode">
+            <summary>Hash de code</summary>
+            <exception cref="T:System.NotImplementedException">La méthode n'est pas implémentée</exception>
+        </member>
+        <member name="M:TraceModel.SerieAffichee.CleanData">
+            <summary>Nettoie les données lues, mais pas la configuration</summary>
+        </member>
+        <member name="T:TraceModel.SousSection">
+            <summary>Sous-section</summary>
+        </member>
+        <member name="P:TraceModel.SousSection.Titre">
+            <summary>Titre de la sous-section</summary>
+        </member>
+        <member name="P:TraceModel.SousSection.AiresGraphiques">
+            <summary>Séries associées au SousSection</summary>
+        </member>
+        <member name="M:TraceModel.SousSection.#ctor">
+            <summary>Constructeur</summary>
+        </member>
+        <member name="M:TraceModel.SousSection.ExisteAireGraphique(System.String)">
+            <summary>Existence d'une aire graphique selon le titre</summary>
+        </member>
+        <member name="M:TraceModel.SousSection.ExisteAireGraphique(TraceModel.AireGraphique)">
+            <summary>Existence d'une aire graphique selon le titre</summary>
+        </member>
+        <member name="M:TraceModel.SousSection.From(TraceModel.SousSection)">
+            <summary>Copie des propriétés d'une autre sous-section</summary>
+        </member>
+        <member name="M:TraceModel.SousSection.ToString">
+            <summary>Transformation en string</summary>
+        </member>
+        <member name="M:TraceModel.SousSection.Equals(System.Object)">
+            <summary>Vérifie l'égalité avec un header</summary>
+            <param name="other">Header</param>
+        </member>
+        <member name="M:TraceModel.SousSection.Validate">
+            <summary>Valide la sous-section</summary>
+        </member>
+        <member name="M:TraceModel.SousSection.Validate(System.String)">
+            <summary>Valide les paramètres fournis selon les critères de validation de sous-section</summary>
+        </member>
+        <member name="M:TraceModel.SousSection.Equals(TraceModel.SousSection)">
+            <summary>Egalité entre sous-sections</summary>
+        </member>
+        <member name="M:TraceModel.SousSection.GetHashCode">
+            <summary>Hash de code</summary>
+            <exception cref="T:System.NotImplementedException">La méthode n'est pas implémentée</exception>
+        </member>
+        <member name="M:TraceModel.SousSection.CleanData">
+            <summary>Nettoie les données lues, mais pas la configuration</summary>
+        </member>
+        <member name="T:TraceModel.Tools">
+            <summary>Outils utilisés par TraceLecteur</summary>
+        </member>
+        <member name="M:TraceModel.Tools.FromString(System.String)">
+            <summary>Convertit un string, éventuelle null, en booléen</summary>
+            <remarks>Test sur la valeur "YES" ; non sensible à la casse</remarks>
+        </member>
+        <member name="M:TraceModel.Tools.ToString(System.Boolean)">
+            <summary>Convertit un booléen en string YES ou NO</summary>
+        </member>
+    </members>
+</doc>
