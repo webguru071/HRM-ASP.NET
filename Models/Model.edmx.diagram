@@ -5,13 +5,18 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="542d0dff45874b8c9ee6298c96dbdeca" Name="Diagram1">
-        <EntityTypeShape EntityType="EMSModel.ATTENDANCE_DETAILS" Width="1.5" PointX="5.625" PointY="2.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EMSModel.USER_INFO" Width="1.5" PointX="8.375" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="EMSModel.EMPLOYEE_INFO" Width="1.5" PointX="0.75" PointY="2.625" />
-        <AssociationConnector Association="EMSModel.FK_USER_INFO_EMPLOYEE_INFO" />
-        <EntityTypeShape EntityType="EMSModel.SALARY_INFO" Width="1.5" PointX="3" PointY="3.25" />
+        <EntityTypeShape EntityType="EMSModel.ATTENDANCE_DETAILS" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="EMSModel.EMPLOYEE_INFO" Width="1.5" PointX="0.75" PointY="6.875" />
+        <EntityTypeShape EntityType="EMSModel.SALARY_INFO" Width="1.5" PointX="3" PointY="11.375" />
+        <EntityTypeShape EntityType="EMSModel.TEAM" Width="1.5" PointX="3" PointY="3.5" />
+        <EntityTypeShape EntityType="EMSModel.TEAM_DETAILS" Width="1.5" PointX="5.25" PointY="6.125" />
+        <EntityTypeShape EntityType="EMSModel.USER_INFO" Width="1.5" PointX="3" PointY="15.625" />
         <AssociationConnector Association="EMSModel.FK_SALARY_INFO_EMPLOYEE_INFO" />
-        </Diagram>
+        <AssociationConnector Association="EMSModel.FK_TEAM_DETAILS_EMPLOYEE_INFO" />
+        <AssociationConnector Association="EMSModel.FK_TEAM_EMPLOYEE_INFO" />
+        <AssociationConnector Association="EMSModel.FK_USER_INFO_EMPLOYEE_INFO" />
+        <AssociationConnector Association="EMSModel.FK_TEAM_DETAILS_TEAM" />
+      </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

@@ -54,10 +54,9 @@ namespace EMSApp.Controllers
                 else
                 {
                     // TODO: Add insert logic here
-                    if (emp.ACTION_BY.ToString() != null)
-                    {
-                        // emp.ACTION_BY = DateTime.Now;
-                    }
+                    
+                     emp.ACTION_BY = Convert.ToInt64(Session["ID"]);
+                  
                     emp.ACTION_DATE = DateTime.Now;
                     if (ModelState.IsValid)
                     {

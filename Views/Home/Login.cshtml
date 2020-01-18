@@ -1,10 +1,9 @@
 ﻿@model EMSApp.Models.USER_INFO
 
 @{
-    Layout = null;
+    Layout = "";
 }
 
-<meta name="viewport" content="width=device-width" />
 
 @using (Html.BeginForm())
 {
@@ -249,7 +248,7 @@
 
         .button {
             margin: 40px 0;
-            overflow: hidden;
+            height:60px;
             z-index: 2;
         }
 
@@ -413,6 +412,8 @@
             outline: none;
         }
     </style>
+    <meta name="viewport" content="width=device-width" />
+
     <div class="materialContainer">
         <div class="box">
             <div class="title">LOGIN</div>
@@ -430,7 +431,7 @@
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             </div>
             <div class="button login">
-                <input type="submit" name="submitButton" value="GO" class=" button login" style="color:aqua" onclick="javascript:Login()" />
+                <input type="submit" name="submitButton" value="GO" class=" button button login" style="color:red;background-color: darksalmon;border-radius:10px;font-size:large" onclick="javascript:Login()" />
             </div>
 
             <a href="" class="pass-forgot">Forgot your password?</a>

@@ -12,21 +12,19 @@ namespace EMSApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class SALARY_INFO
+    public partial class TEAM_DETAILS
     {
         public long ID { get; set; }
-        public long EMPLOYEE_ID { get; set; }
-        public decimal BASIC_SALARY { get; set; }
-        public Nullable<decimal> BONUS { get; set; }
-        public Nullable<decimal> OTHERS { get; set; }
-        public System.DateTime SALARY_PAID { get; set; }
-        public Nullable<decimal> TOTAL { get; set; }
+        public long TEAM { get; set; }
+        public long MEMBER { get; set; }
+        public string REMARKS { get; set; }
+        public string STATUS { get; set; }
         public long ACTION_BY { get; set; }
         public System.DateTime ACTION_DATE { get; set; }
         public Nullable<long> UPDATE_BY { get; set; }
         public Nullable<System.DateTime> UPDATE_DATE { get; set; }
-        public string REMARKS { get; set; }
     
         public virtual EMPLOYEE_INFO EMPLOYEE_INFO { get; set; }
+        public virtual TEAM TEAM1 { get; set; }
     }
 }

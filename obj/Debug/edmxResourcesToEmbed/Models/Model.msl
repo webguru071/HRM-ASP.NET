@@ -4,27 +4,9 @@
     <EntitySetMapping Name="ATTENDANCE_DETAILS">
       <EntityTypeMapping TypeName="EMSModel.ATTENDANCE_DETAILS">
         <MappingFragment StoreEntitySet="ATTENDANCE_DETAILS">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="EMPLOYEE_ID" ColumnName="EMPLOYEE_ID" />
           <ScalarProperty Name="ATT_DATE" ColumnName="ATT_DATE" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="USER_INFO">
-      <EntityTypeMapping TypeName="EMSModel.USER_INFO">
-        <MappingFragment StoreEntitySet="USER_INFO">
-          <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="EMPLOYEE_ID" ColumnName="EMPLOYEE_ID" />
-          <ScalarProperty Name="USER_NAME" ColumnName="USER_NAME" />
-          <ScalarProperty Name="CONTACT" ColumnName="CONTACT" />
-          <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
-          <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
-          <ScalarProperty Name="USER_LEVEL" ColumnName="USER_LEVEL" />
-          <ScalarProperty Name="IS_DELETED" ColumnName="IS_DELETED" />
-          <ScalarProperty Name="ACTION_DATE" ColumnName="ACTION_DATE" />
-          <ScalarProperty Name="ACTION_BY" ColumnName="ACTION_BY" />
-          <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
-          <ScalarProperty Name="UPDATE_BY" ColumnName="UPDATE_BY" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -64,6 +46,54 @@
           <ScalarProperty Name="OTHERS" ColumnName="OTHERS" />
           <ScalarProperty Name="BONUS" ColumnName="BONUS" />
           <ScalarProperty Name="BASIC_SALARY" ColumnName="BASIC_SALARY" />
+          <ScalarProperty Name="EMPLOYEE_ID" ColumnName="EMPLOYEE_ID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TEAMs">
+      <EntityTypeMapping TypeName="EMSModel.TEAM">
+        <MappingFragment StoreEntitySet="TEAM">
+          <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
+          <ScalarProperty Name="UPDATE_BY" ColumnName="UPDATE_BY" />
+          <ScalarProperty Name="ACTION_DATE" ColumnName="ACTION_DATE" />
+          <ScalarProperty Name="ACTION_BY" ColumnName="ACTION_BY" />
+          <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+          <ScalarProperty Name="REMARKS" ColumnName="REMARKS" />
+          <ScalarProperty Name="TEAM_LEADER" ColumnName="TEAM_LEADER" />
+          <ScalarProperty Name="TEAM_TITLE" ColumnName="TEAM_TITLE" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TEAM_DETAILS">
+      <EntityTypeMapping TypeName="EMSModel.TEAM_DETAILS">
+        <MappingFragment StoreEntitySet="TEAM_DETAILS">
+          <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
+          <ScalarProperty Name="UPDATE_BY" ColumnName="UPDATE_BY" />
+          <ScalarProperty Name="ACTION_DATE" ColumnName="ACTION_DATE" />
+          <ScalarProperty Name="ACTION_BY" ColumnName="ACTION_BY" />
+          <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+          <ScalarProperty Name="REMARKS" ColumnName="REMARKS" />
+          <ScalarProperty Name="MEMBER" ColumnName="MEMBER" />
+          <ScalarProperty Name="TEAM" ColumnName="TEAM" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="USER_INFO">
+      <EntityTypeMapping TypeName="EMSModel.USER_INFO">
+        <MappingFragment StoreEntitySet="USER_INFO">
+          <ScalarProperty Name="UPDATE_BY" ColumnName="UPDATE_BY" />
+          <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
+          <ScalarProperty Name="ACTION_BY" ColumnName="ACTION_BY" />
+          <ScalarProperty Name="ACTION_DATE" ColumnName="ACTION_DATE" />
+          <ScalarProperty Name="IS_DELETED" ColumnName="IS_DELETED" />
+          <ScalarProperty Name="USER_LEVEL" ColumnName="USER_LEVEL" />
+          <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+          <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+          <ScalarProperty Name="CONTACT" ColumnName="CONTACT" />
+          <ScalarProperty Name="USER_NAME" ColumnName="USER_NAME" />
           <ScalarProperty Name="EMPLOYEE_ID" ColumnName="EMPLOYEE_ID" />
           <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>

@@ -47,6 +47,34 @@
     <Property Name="UPDATE_DATE" Type="datetime" />
     <Property Name="REMARKS" Type="nvarchar" MaxLength="50" />
   </EntityType>
+  <EntityType Name="TEAM">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TEAM_TITLE" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="TEAM_LEADER" Type="bigint" Nullable="false" />
+    <Property Name="REMARKS" Type="nvarchar" MaxLength="50" />
+    <Property Name="STATUS" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="ACTION_BY" Type="bigint" Nullable="false" />
+    <Property Name="ACTION_DATE" Type="datetime" Nullable="false" />
+    <Property Name="UPDATE_BY" Type="bigint" />
+    <Property Name="UPDATE_DATE" Type="datetime" />
+  </EntityType>
+  <EntityType Name="TEAM_DETAILS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TEAM" Type="bigint" Nullable="false" />
+    <Property Name="MEMBER" Type="bigint" Nullable="false" />
+    <Property Name="REMARKS" Type="nvarchar" MaxLength="50" />
+    <Property Name="STATUS" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="ACTION_BY" Type="bigint" Nullable="false" />
+    <Property Name="ACTION_DATE" Type="datetime" Nullable="false" />
+    <Property Name="UPDATE_BY" Type="bigint" />
+    <Property Name="UPDATE_DATE" Type="datetime" />
+  </EntityType>
   <EntityType Name="USER_INFO">
     <Key>
       <PropertyRef Name="ID" />
@@ -76,6 +104,42 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_TEAM_DETAILS_EMPLOYEE_INFO">
+    <End Role="EMPLOYEE_INFO" Type="Self.EMPLOYEE_INFO" Multiplicity="1" />
+    <End Role="TEAM_DETAILS" Type="Self.TEAM_DETAILS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EMPLOYEE_INFO">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TEAM_DETAILS">
+        <PropertyRef Name="MEMBER" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TEAM_DETAILS_TEAM">
+    <End Role="TEAM" Type="Self.TEAM" Multiplicity="1" />
+    <End Role="TEAM_DETAILS" Type="Self.TEAM_DETAILS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TEAM">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TEAM_DETAILS">
+        <PropertyRef Name="TEAM" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TEAM_EMPLOYEE_INFO">
+    <End Role="EMPLOYEE_INFO" Type="Self.EMPLOYEE_INFO" Multiplicity="1" />
+    <End Role="TEAM" Type="Self.TEAM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EMPLOYEE_INFO">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TEAM">
+        <PropertyRef Name="TEAM_LEADER" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_USER_INFO_EMPLOYEE_INFO">
     <End Role="EMPLOYEE_INFO" Type="Self.EMPLOYEE_INFO" Multiplicity="0..1" />
     <End Role="USER_INFO" Type="Self.USER_INFO" Multiplicity="*" />
@@ -92,10 +156,24 @@
     <EntitySet Name="ATTENDANCE_DETAILS" EntityType="Self.ATTENDANCE_DETAILS" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="EMPLOYEE_INFO" EntityType="Self.EMPLOYEE_INFO" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SALARY_INFO" EntityType="Self.SALARY_INFO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TEAM" EntityType="Self.TEAM" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TEAM_DETAILS" EntityType="Self.TEAM_DETAILS" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="USER_INFO" EntityType="Self.USER_INFO" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_SALARY_INFO_EMPLOYEE_INFO" Association="Self.FK_SALARY_INFO_EMPLOYEE_INFO">
       <End Role="EMPLOYEE_INFO" EntitySet="EMPLOYEE_INFO" />
       <End Role="SALARY_INFO" EntitySet="SALARY_INFO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TEAM_DETAILS_EMPLOYEE_INFO" Association="Self.FK_TEAM_DETAILS_EMPLOYEE_INFO">
+      <End Role="EMPLOYEE_INFO" EntitySet="EMPLOYEE_INFO" />
+      <End Role="TEAM_DETAILS" EntitySet="TEAM_DETAILS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TEAM_DETAILS_TEAM" Association="Self.FK_TEAM_DETAILS_TEAM">
+      <End Role="TEAM" EntitySet="TEAM" />
+      <End Role="TEAM_DETAILS" EntitySet="TEAM_DETAILS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TEAM_EMPLOYEE_INFO" Association="Self.FK_TEAM_EMPLOYEE_INFO">
+      <End Role="EMPLOYEE_INFO" EntitySet="EMPLOYEE_INFO" />
+      <End Role="TEAM" EntitySet="TEAM" />
     </AssociationSet>
     <AssociationSet Name="FK_USER_INFO_EMPLOYEE_INFO" Association="Self.FK_USER_INFO_EMPLOYEE_INFO">
       <End Role="EMPLOYEE_INFO" EntitySet="EMPLOYEE_INFO" />

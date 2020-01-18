@@ -26,8 +26,10 @@ namespace EMSApp.Models
         }
     
         public virtual DbSet<ATTENDANCE_DETAILS> ATTENDANCE_DETAILS { get; set; }
-        public virtual DbSet<USER_INFO> USER_INFO { get; set; }
         public virtual DbSet<EMPLOYEE_INFO> EMPLOYEE_INFO { get; set; }
         public virtual DbSet<SALARY_INFO> SALARY_INFO { get; set; }
+        public virtual DbSet<TEAM> TEAMs { get; set; }
+        public virtual DbSet<TEAM_DETAILS> TEAM_DETAILS { get; set; }
+        public virtual DbSet<USER_INFO> USER_INFO { get; set; }
     }
 }

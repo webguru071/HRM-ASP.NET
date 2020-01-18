@@ -87,7 +87,7 @@ namespace EMSApp.Controllers
                     {
                         if (user.ACTION_BY.ToString() != null)
                         {
-                            // emp.ACTION_BY = DateTime.Now;
+                            user.ACTION_BY = Convert.ToInt64(Session["ID"]);
                         }
                         user.ACTION_DATE = DateTime.Now;
                         if (user.EMPLOYEE_ID == 0)
@@ -121,7 +121,7 @@ namespace EMSApp.Controllers
         {
             var data = db.USER_INFO.Where(x => x.ID == id).FirstOrDefault();
             Session["AD"] = data.ACTION_DATE;
-            //Session["AT"] = data.ACTION_BY;
+            Session["AT"] = data.ACTION_BY;
             ViewBag.EMPLOYEE_ID = new SelectList(SetEmployee(), "Value", "Text", data.EMPLOYEE_ID);
             ViewBag.USER_LEVEL = new SelectList(SetUserLevel(), "Value", "Text", data.USER_LEVEL);
             ViewBag.IS_DELETED = new SelectList(SetStatusList(), "Value", "Text", data.IS_DELETED);
@@ -153,10 +153,7 @@ namespace EMSApp.Controllers
                     count = db.USER_INFO.Where(x => x.USER_ID == user.USER_ID).Count();
                     if (count == 0)
                     {
-                        if (user.UPDATE_BY.ToString() != null)
-                        {
-                            // emp.UPDATE_BY = DateTime.Now;
-                        }
+                        user.UPDATE_BY = Convert.ToInt64(Session["ID"]);
                         user.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
                         user.UPDATE_DATE = DateTime.Now;
                         if (user.EMPLOYEE_ID == 0)

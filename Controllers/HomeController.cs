@@ -1,4 +1,5 @@
 ﻿using EMSApp.Models;
+using System;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -17,7 +18,7 @@ namespace EMSApp.Controllers
             return View();
         }
 
-        [HttpPost]
+        [HttpPost]      
         public ActionResult Login(USER_INFO user)
         {
             string userId = user.USER_ID;
@@ -32,6 +33,7 @@ namespace EMSApp.Controllers
                 if (data != null)
                 {
                     Session["ID"] = data.ID;
+                    long userID = Convert.ToInt64(Session["ID"]);
                     Response.Redirect("~/Home/Index");
                 }
                 else
