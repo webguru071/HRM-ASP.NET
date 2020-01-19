@@ -1,0 +1,40 @@
+﻿@model IEnumerable<EMSApp.Models.DEPARTMENT_INFO>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DEPT_TITLE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.REMARKS)
+        </th>
+
+        <th>Action</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DEPT_TITLE)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.REMARKS)
+            </td>
+
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.DEPT_ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.DEPT_ID })
+            </td>
+        </tr>
+    }
+
+</table>

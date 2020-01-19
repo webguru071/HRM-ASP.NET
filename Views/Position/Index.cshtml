@@ -1,0 +1,70 @@
+﻿@model IEnumerable<EMSApp.Models.POSITIONAL_INFO>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.POSITION_TITLE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DUTY_TYPE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RATE_TYPE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PAY_FREQ)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.DIVISION_INFO.DIV_TITLE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EMPLOYEE_INFO.EMPLOYEE_NAME)
+        </th>
+        <th></th>
+    </tr>
+
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.POSITION_TITLE)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DUTY_TYPE)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RATE_TYPE)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PAY_FREQ)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.DIVISION_INFO.DIV_TITLE)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EMPLOYEE_INFO.EMPLOYEE_NAME)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.POSITION_ID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.POSITION_ID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.POSITION_ID })
+                </td>
+            </tr>
+        }
+    }
+
+</table>

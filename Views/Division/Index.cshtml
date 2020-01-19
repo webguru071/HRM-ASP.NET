@@ -1,0 +1,43 @@
+﻿@model IEnumerable<EMSApp.Models.DIVISION_INFO>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DIV_TITLE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DEPARTMENT_INFO.DEPT_TITLE)
+        </th>
+        <th></th>
+    </tr>
+
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DIV_TITLE)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.DEPARTMENT_INFO.DEPT_TITLE)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.DIV_ID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.DIV_ID })
+                </td>
+            </tr>
+        }
+
+    }
+
+</table>
