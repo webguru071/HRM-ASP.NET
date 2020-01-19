@@ -51,7 +51,7 @@ namespace EMSApp.Controllers
                 }
                 else
                 {
-                    long userID = Convert.ToInt64(Session["ID"]);
+                    long userID = Convert.ToInt64(Session["USER_ID"]);
                     team.ACTION_BY = userID;
                     team.ACTION_DATE = DateTime.Now;
 
@@ -123,8 +123,8 @@ namespace EMSApp.Controllers
                 }
                 else
                 {
-                    long userID = Convert.ToInt64(Session["ID"]);
-                    team.UPDATE_BY = Convert.ToInt64(Session["ID"]);
+                    long userID = Convert.ToInt64(Session["USER_ID"]);
+                    team.UPDATE_BY = Convert.ToInt64(Session["USER_ID"]);
                     team.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
                     team.UPDATE_DATE = DateTime.Now;
 
@@ -170,7 +170,7 @@ namespace EMSApp.Controllers
         [HttpGet]
         public ActionResult TeamMemberIndex()
         {
-            var data = db.TEAM_DETAILS.Where(x => x.STATUS == "a").ToList();
+            var data = db.TEAM_DETAILS.Where(x => x.STATUS == "a").OrderBy(x=>x.TEAM).ToList();
             return View(data);
         }
         [HttpGet]
@@ -199,7 +199,7 @@ namespace EMSApp.Controllers
                 }
                 else
                 {
-                    long userID = Convert.ToInt64(Session["ID"]);
+                    long userID = Convert.ToInt64(Session["USER_ID"]);
                     details.ACTION_BY = userID;
                     details.ACTION_DATE = DateTime.Now;
 
@@ -249,8 +249,8 @@ namespace EMSApp.Controllers
                 }
                 else
                 {
-                    long userID = Convert.ToInt64(Session["ID"]);
-                    details.UPDATE_BY = Convert.ToInt64(Session["ID"]);
+                    long userID = Convert.ToInt64(Session["USER_ID"]);
+                    details.UPDATE_BY = Convert.ToInt64(Session["USER_ID"]);
                     details.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
                     details.UPDATE_DATE = DateTime.Now;
 

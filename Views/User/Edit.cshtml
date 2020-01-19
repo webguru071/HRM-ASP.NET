@@ -18,7 +18,7 @@
         }
     </style>
     <style>
-        #EMPLOYEE_ID {
+        #empId {
             background-color: #202940;
         }
     </style>
@@ -36,12 +36,11 @@
                             </div>
                             <div class="card-body">
                                 <form>
-
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label class="bmd-label-floating">Employee Name</label>
-                                                @Html.DropDownList("EMPLOYEE_ID", null, htmlAttributes: new { @class = "form-control" })
+                                                @Html.DropDownList("EMPLOYEE_ID", null, htmlAttributes: new { @class = "form-control", @id = "empId", @onchange = "GetEmpInfo()" })
                                                 @Html.ValidationMessageFor(model => model.EMPLOYEE_ID, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
@@ -110,4 +109,24 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        function GetEmpInfo() {
+            var id = $('#empId').val();
+
+            $.ajax({
+                url: "@Url.Action("GetEmpInfo", "User")",
+                type: "GET",
+                dataType: "JSON",
+                data: { id: id },
+                success: function (listOfData) {
+                    $('#USER_NAME').val(listOfData["EMPLOYEE_NAME"]);
+                    $('#CONTACT').val(listOfData["CONTACT"]);
+                },
+                error: function (data) {
+                    alert("Error");
+                }
+
+            });
+        }
+    </script>
 }

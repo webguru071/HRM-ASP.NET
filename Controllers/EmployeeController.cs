@@ -55,7 +55,7 @@ namespace EMSApp.Controllers
                 {
                     // TODO: Add insert logic here
                     
-                     emp.ACTION_BY = Convert.ToInt64(Session["ID"]);
+                     emp.ACTION_BY = Convert.ToInt64(Session["USER_ID"]);
                   
                     emp.ACTION_DATE = DateTime.Now;
                     if (ModelState.IsValid)
@@ -119,7 +119,7 @@ namespace EMSApp.Controllers
                 {
                     // TODO: Add insert logic here
 
-                    //emp.UPDATE_BY = DateTime.Now;
+                    emp.UPDATE_BY = Convert.ToInt64(Session["USER_ID"]);
                     emp.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
                     emp.UPDATE_DATE = DateTime.Now;
                     if (ModelState.IsValid)

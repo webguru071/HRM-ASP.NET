@@ -87,7 +87,7 @@ namespace EMSApp.Controllers
                     {
                         if (user.ACTION_BY.ToString() != null)
                         {
-                            user.ACTION_BY = Convert.ToInt64(Session["ID"]);
+                            user.ACTION_BY = Convert.ToInt64(Session["USER_ID"]);
                         }
                         user.ACTION_DATE = DateTime.Now;
                         if (user.EMPLOYEE_ID == 0)
@@ -153,7 +153,7 @@ namespace EMSApp.Controllers
                     count = db.USER_INFO.Where(x => x.USER_ID == user.USER_ID).Count();
                     if (count == 0)
                     {
-                        user.UPDATE_BY = Convert.ToInt64(Session["ID"]);
+                        user.UPDATE_BY = Convert.ToInt64(Session["USER_ID"]);
                         user.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
                         user.UPDATE_DATE = DateTime.Now;
                         if (user.EMPLOYEE_ID == 0)

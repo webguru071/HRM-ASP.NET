@@ -55,7 +55,7 @@ namespace EMSApp.Controllers
                     salary.TOTAL = salary.BASIC_SALARY + salary.BONUS + salary.OTHERS;
                     if (salary.ACTION_BY.ToString() != null)
                     {
-                        // emp.ACTION_BY = DateTime.Now;
+                        salary.ACTION_BY = Convert.ToInt64(Session["USER_ID"]);
                     }
                     salary.ACTION_DATE = DateTime.Now;
                    
@@ -111,7 +111,7 @@ namespace EMSApp.Controllers
                     salary.TOTAL = salary.BASIC_SALARY + salary.BONUS + salary.OTHERS;
                     if (salary.UPDATE_BY.ToString() != null)
                     {
-                        // emp.UPDATE_BY = DateTime.Now;
+                        salary.UPDATE_BY = Convert.ToInt64(Session["USER_ID"]);
                     }
                     salary.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
                     salary.UPDATE_DATE = DateTime.Now;

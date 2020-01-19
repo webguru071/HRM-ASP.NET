@@ -147,6 +147,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\NoticeController.cs" />
     <Compile Include="Controllers\SalaryController.cs" />
     <Compile Include="Controllers\TeamController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -157,6 +158,12 @@
     <Compile Include="Helper\DBHelper.cs" />
     <Compile Include="Helper\ListValue.cs" />
     <Compile Include="Models\ATTENDANCE_DETAILS.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DEPARTMENT_INFO.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DIVISION_INFO.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EMPLOYEE_INFO.cs">
@@ -177,6 +184,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\NOTICE_BOARD.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\POSITIONAL_INFO.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SALARY_INFO.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -186,6 +199,13 @@
     <Compile Include="Models\TEAM_DETAILS.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TRANSACTION_ITEM.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TRANSACTION_SHEET.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserModel\NoticeBoard.cs" />
     <Compile Include="Models\USER_INFO.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -494,6 +514,9 @@
     <Content Include="Views\Team\TeamMember.cshtml" />
     <Content Include="Views\Team\TeamMemberIndex.cshtml" />
     <Content Include="Views\Team\TeamMemberEdit.cshtml" />
+    <Content Include="Views\Notice\Index.cshtml" />
+    <Content Include="Views\Notice\Create.cshtml" />
+    <Content Include="Views\Notice\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

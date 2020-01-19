@@ -11,12 +11,14 @@ namespace EMSApp.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class EMPLOYEE_INFO
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public EMPLOYEE_INFO()
         {
+            this.POSITIONAL_INFO = new HashSet<POSITIONAL_INFO>();
             this.SALARY_INFO = new HashSet<SALARY_INFO>();
             this.TEAM_DETAILS = new HashSet<TEAM_DETAILS>();
             this.TEAMs = new HashSet<TEAM>();
@@ -27,6 +29,7 @@ namespace EMSApp.Models
         public string EMPLOYEE_NAME { get; set; }
         public string ADDRESS { get; set; }
         public string CONTACT { get; set; }
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
         public string EMAIL { get; set; }
         public string NID { get; set; }
         public string IMAGE { get; set; }
@@ -40,7 +43,14 @@ namespace EMSApp.Models
         public Nullable<System.DateTime> UPDATE_DATE { get; set; }
         public string CITY { get; set; }
         public Nullable<int> POSTAL_CODE { get; set; }
+        public string DOB { get; set; }
+        public string GENDER { get; set; }
+        public string MARITALA_STATUS { get; set; }
+        public string NATIONALITY { get; set; }
+        public string BLOOD_GROUP { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<POSITIONAL_INFO> POSITIONAL_INFO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SALARY_INFO> SALARY_INFO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

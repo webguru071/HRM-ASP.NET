@@ -5,68 +5,70 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<p class="btn btn-warning pull-left">
-    @Html.ActionLink("Create New", "TeamMember")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.REMARKS)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.STATUS)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ACTION_BY)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ACTION_DATE)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UPDATE_BY)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UPDATE_DATE)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EMPLOYEE_INFO.EMPLOYEE_NAME)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TEAM1.TEAM_TITLE)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.REMARKS)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.STATUS)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ACTION_BY)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ACTION_DATE)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UPDATE_BY)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UPDATE_DATE)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EMPLOYEE_INFO.EMPLOYEE_NAME)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TEAM1.TEAM_TITLE)
-        </td>
-        <td>
-            @Html.ActionLink("View", "TeamMemberEdit", new { id=item.ID })
-        </td>
-    </tr>
-}
+<div class="container">
+    <div class="container-fluid">
 
-</table>
+        <div class="row">
+            <div class="col-md-12">
+                <p class="btn btn-warning pull-left">
+                    @Html.ActionLink("Create New", "TeamMember")
+                </p>
+            </div>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-primary">
+                        <h4 class="card-title ">All Teams</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class=" text-primary">
+                                <th>
+                                    Team
+                                </th>
+                                <th>
+                                   Member
+                                </th>
+                                <th>
+                                    Remarks
+                                </th>
+                                <th>
+                                    Action
+                                </th>
+                                </thead>
+                                <tbody>
+                                    @if (Model != null)
+                                    {
+                                        foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.TEAM)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.MEMBER)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.REMARKS)
+                                                </td>
+
+                                                <td>
+                                                    @Html.ActionLink("View", "TeamMemberEdit", new { id = item.ID })
+                                                </td>
+                                            </tr>
+                                        }
+
+                                    }
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

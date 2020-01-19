@@ -1,0 +1,35 @@
+﻿@model IEnumerable<EMSApp.Models.NOTICE_BOARD>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NOTICE)
+        </th>
+        
+        <th>
+            Action
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NOTICE)
+            </td>                      
+            <td>
+                @Html.ActionLink("View", "Edit", new { id = item.ID })
+            </td>
+        </tr>
+    }
+
+</table>

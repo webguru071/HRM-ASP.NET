@@ -12,26 +12,23 @@ namespace EMSApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class TEAM
+    public partial class DEPARTMENT_INFO
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TEAM()
+        public DEPARTMENT_INFO()
         {
-            this.TEAM_DETAILS = new HashSet<TEAM_DETAILS>();
+            this.DIVISION_INFO = new HashSet<DIVISION_INFO>();
         }
     
-        public long ID { get; set; }
-        public string TEAM_TITLE { get; set; }
-        public long TEAM_LEADER { get; set; }
+        public long DEPT_ID { get; set; }
+        public string DEPT_TITLE { get; set; }
         public string REMARKS { get; set; }
-        public string STATUS { get; set; }
         public long ACTION_BY { get; set; }
         public System.DateTime ACTION_DATE { get; set; }
         public Nullable<long> UPDATE_BY { get; set; }
         public Nullable<System.DateTime> UPDATE_DATE { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TEAM_DETAILS> TEAM_DETAILS { get; set; }
-        public virtual EMPLOYEE_INFO EMPLOYEE_INFO { get; set; }
+        public virtual ICollection<DIVISION_INFO> DIVISION_INFO { get; set; }
     }
 }

@@ -19,25 +19,32 @@
                 <div class="col-md-8">
                     <div class="card">
                         <div class="card-header card-header-primary">
-                            <h4 class="card-title">Employee Details</h4>
+                            <h4 class="card-title"> Add Employee</h4>
                             <p class="card-category">Complete Employee profile</p>
                         </div>
                         <div class="card-body">
                             <form>
 
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="bmd-label-floating">Full Name</label>
                                             @Html.EditorFor(model => model.EMPLOYEE_NAME, new { htmlAttributes = new { @class = "form-control" } })
                                             @Html.ValidationMessageFor(model => model.EMPLOYEE_NAME, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="bmd-label-floating">Contact</label>
                                             @Html.EditorFor(model => model.CONTACT, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
                                             @Html.ValidationMessageFor(model => model.CONTACT, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">Email</label>
+                                            @Html.EditorFor(model => model.EMAIL, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.EMAIL, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
                                 </div>
@@ -67,30 +74,77 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="form-group">
-                                            <label class="bmd-label-floating">Email</label>
-                                            @Html.EditorFor(model => model.EMAIL, new { htmlAttributes = new { @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.EMAIL, "", new { @class = "text-danger" })
+                                            <label class="bmd-label-floating">Gender</label>
+                                            @Html.DropDownList("GENDER", new SelectListItem[]
+                                            {
+                                                 new SelectListItem { Text = "Select One", Value="" },
+                                                new SelectListItem { Text = "Male", Value="m" },
+                                                new SelectListItem{ Text="Female",Value="f" },
+                                                new SelectListItem{ Text="Other", Value="o" },},
+                                                htmlAttributes: new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.GENDER, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">DOB</label>
+                                            @Html.EditorFor(model => model.DOB, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                                            @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="bmd-label-floating">NID</label>
                                             @Html.EditorFor(model => model.NID, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
                                             @Html.ValidationMessageFor(model => model.NID, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
-                                </div>
 
+                                </div>
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label class="bmd-label-floating">Designation</label>
-                                            @Html.EditorFor(model => model.DESIGNATION, new { htmlAttributes = new { @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.DESIGNATION, "", new { @class = "text-danger" })
+                                            <label class="bmd-label-floating">Nationality</label>
+                                            @Html.EditorFor(model => model.NATIONALITY, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.NATIONALITY, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">Marital Status</label>
+                                            @Html.DropDownList("MARITALA_STATUS", new SelectListItem[]
+                                             {
+                                                 new SelectListItem { Text = "Select One", Value="" },
+                                                 new SelectListItem { Text = "Single", Value="s" },
+                                                 new SelectListItem{ Text="Married",Value="m" },
+                                                 new SelectListItem{ Text="seperated", Value="x" },},
+                                                 htmlAttributes: new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.MARITALA_STATUS, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group ">
+                                            <label class="bmd-label-floating">Blood Group</label>
+                                            @Html.DropDownList("BLOOD_GROUP", new SelectListItem[]
+                                            {
+                                                 new SelectListItem { Text = "Select One", Value="" },
+                                                new SelectListItem { Text = "A+", Value="A+" },
+                                                new SelectListItem{ Text="B+",Value="B+" },
+                                                new SelectListItem{ Text="AB+",Value="AB+" },
+                                                new SelectListItem{ Text="O+",Value="O+" },
+                                                new SelectListItem{ Text="A-",Value="A-" },
+                                                new SelectListItem{ Text="B-",Value="B-" },
+                                                new SelectListItem{ Text="AB-",Value="AB-" },
+                                                new SelectListItem{ Text="O-", Value="O-" },},
+                                                htmlAttributes: new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.BLOOD_GROUP, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="bmd-label-floating">Joining Date</label>
@@ -101,19 +155,20 @@
                                     <div class="col-md-4">
                                         <div class="form-group ">
                                             <label class="bmd-label-floating">Resigning Date</label>
-                                            @Html.EditorFor(model => model.RESIGNING_DATE, new { htmlAttributes = new { @class = "form-control ", @type = "date" } })
+                                            @Html.EditorFor(model => model.RESIGNING_DATE, new { htmlAttributes = new { @class = "form-control datepicker" } })
                                             @Html.ValidationMessageFor(model => model.RESIGNING_DATE, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="bmd-label-floating">Status</label>
                                             @Html.DropDownList("IS_DELETED", null, htmlAttributes: new { @class = "form-control" })
                                             @Html.ValidationMessageFor(model => model.IS_DELETED, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
+                                </div>
+                                <div class="row">
+
                                     @*<div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="bmd-label-floating">Image</label>
@@ -123,7 +178,7 @@
                                         </div>*@
                                 </div>
 
-                                <button type="submit" class="btn btn-primary pull-right">Update</button>
+                                <button type="submit" class="btn btn-primary pull-right">Save</button>
                                 <div class="clearfix"></div>
                             </form>
                         </div>

@@ -18,7 +18,9 @@ namespace EMSApp.Controllers
             return View();
         }
 
-        [HttpPost]      
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public ActionResult Login(USER_INFO user)
         {
             string userId = user.USER_ID;
@@ -33,7 +35,7 @@ namespace EMSApp.Controllers
                 if (data != null)
                 {
                     Session["ID"] = data.ID;
-                    long userID = Convert.ToInt64(Session["ID"]);
+                    long userID = Convert.ToInt64(Session["USER_ID"]);
                     Response.Redirect("~/Home/Index");
                 }
                 else
@@ -43,6 +45,12 @@ namespace EMSApp.Controllers
                 }
             }
 
+            return View();
+        }
+        public ActionResult Logout()
+        {
+            Session["USER_ID"] = null;
+            Response.Redirect("~/Home/Login");
             return View();
         }
     }
