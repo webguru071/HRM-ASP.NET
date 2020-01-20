@@ -149,30 +149,20 @@ namespace EMSApp.Controllers
                 }
                 else
                 {
-                    int count = 0;
-                    count = db.USER_INFO.Where(x => x.USER_ID == user.USER_ID).Count();
-                    if (count == 0)
+                    user.UPDATE_BY = Convert.ToInt64(Session["USER_ID"]);
+                    user.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
+                    user.UPDATE_DATE = DateTime.Now;
+                    if (user.EMPLOYEE_ID == 0)
                     {
-                        user.UPDATE_BY = Convert.ToInt64(Session["USER_ID"]);
-                        user.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
-                        user.UPDATE_DATE = DateTime.Now;
-                        if (user.EMPLOYEE_ID == 0)
-                        {
-                            user.EMPLOYEE_ID = null;
-                        }
-                        if (ModelState.IsValid)
-                        {
-                            db.Entry(user).State = EntityState.Modified;
-                            db.SaveChanges();
-                            Session["AD"] = null;
-                            return RedirectToAction("Index");
-                        }
+                        user.EMPLOYEE_ID = null;
                     }
-                    else
+                    if (ModelState.IsValid)
                     {
-                        ModelState.AddModelError("", "User Id is Already Created!!");
+                        db.Entry(user).State = EntityState.Modified;
+                        db.SaveChanges();
+                        Session["AD"] = null;
+                        return RedirectToAction("Index");
                     }
-
                 }
                 GetDataInBag();
                 return View();

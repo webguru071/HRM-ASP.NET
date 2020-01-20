@@ -11,8 +11,7 @@ namespace EMSApp.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class EMPLOYEE_INFO
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -29,7 +28,6 @@ namespace EMSApp.Models
         public string EMPLOYEE_NAME { get; set; }
         public string ADDRESS { get; set; }
         public string CONTACT { get; set; }
-        [EmailAddress(ErrorMessage = "Invalid Email Address")]
         public string EMAIL { get; set; }
         public string NID { get; set; }
         public string IMAGE { get; set; }

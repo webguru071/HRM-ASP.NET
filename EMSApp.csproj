@@ -149,6 +149,8 @@
     <Compile Include="Controllers\DivisionController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LeaveController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\NoticeController.cs" />
     <Compile Include="Controllers\PositionController.cs" />
     <Compile Include="Controllers\SalaryController.cs" />
@@ -170,6 +172,12 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EMPLOYEE_INFO.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LEAVE_APPLICATION.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LEAVE_TYPE.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Model.Context.cs">
@@ -209,10 +217,13 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserModel\NoticeBoard.cs" />
+    <Compile Include="Models\UserModel\PositionalInfo.cs" />
     <Compile Include="Models\USER_INFO.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Position\IPosition.cs" />
+    <Compile Include="Services\Position\PositionService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\assets\css\login.css" />
@@ -510,7 +521,6 @@
     <Content Include="Views\Salary\Index.cshtml" />
     <Content Include="Views\Salary\Create.cshtml" />
     <Content Include="Views\Salary\Edit.cshtml" />
-    <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Team\Index.cshtml" />
     <Content Include="Views\Team\Create.cshtml" />
     <Content Include="Views\Team\Edit.cshtml" />
@@ -530,6 +540,12 @@
     <Content Include="Views\Division\Delete.cshtml" />
     <Content Include="Views\Position\Index.cshtml" />
     <Content Include="Views\Position\Create.cshtml" />
+    <Content Include="Views\Position\Edit.cshtml" />
+    <Content Include="Views\Login\LogIn.cshtml" />
+    <Content Include="Views\Shared\_Login.cshtml" />
+    <Content Include="Views\Leave\Index.cshtml" />
+    <Content Include="Views\Leave\Create.cshtml" />
+    <Content Include="Views\Leave\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

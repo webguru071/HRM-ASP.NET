@@ -36,6 +36,34 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="EMPLOYEE_INFO">
+      <EntityTypeMapping TypeName="EMSModel.EMPLOYEE_INFO">
+        <MappingFragment StoreEntitySet="EMPLOYEE_INFO">
+          <ScalarProperty Name="BLOOD_GROUP" ColumnName="BLOOD_GROUP" />
+          <ScalarProperty Name="NATIONALITY" ColumnName="NATIONALITY" />
+          <ScalarProperty Name="MARITALA_STATUS" ColumnName="MARITALA_STATUS" />
+          <ScalarProperty Name="GENDER" ColumnName="GENDER" />
+          <ScalarProperty Name="DOB" ColumnName="DOB" />
+          <ScalarProperty Name="POSTAL_CODE" ColumnName="POSTAL_CODE" />
+          <ScalarProperty Name="CITY" ColumnName="CITY" />
+          <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
+          <ScalarProperty Name="UPDATE_BY" ColumnName="UPDATE_BY" />
+          <ScalarProperty Name="ACTION_DATE" ColumnName="ACTION_DATE" />
+          <ScalarProperty Name="ACTION_BY" ColumnName="ACTION_BY" />
+          <ScalarProperty Name="DESIGNATION" ColumnName="DESIGNATION" />
+          <ScalarProperty Name="RESIGNING_DATE" ColumnName="RESIGNING_DATE" />
+          <ScalarProperty Name="JOINING_DATE" ColumnName="JOINING_DATE" />
+          <ScalarProperty Name="IS_DELETED" ColumnName="IS_DELETED" />
+          <ScalarProperty Name="IMAGE" ColumnName="IMAGE" />
+          <ScalarProperty Name="NID" ColumnName="NID" />
+          <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+          <ScalarProperty Name="CONTACT" ColumnName="CONTACT" />
+          <ScalarProperty Name="ADDRESS" ColumnName="ADDRESS" />
+          <ScalarProperty Name="EMPLOYEE_NAME" ColumnName="EMPLOYEE_NAME" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="NOTICE_BOARD">
       <EntityTypeMapping TypeName="EMSModel.NOTICE_BOARD">
         <MappingFragment StoreEntitySet="NOTICE_BOARD">
@@ -162,31 +190,33 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="EMPLOYEE_INFO">
-      <EntityTypeMapping TypeName="EMSModel.EMPLOYEE_INFO">
-        <MappingFragment StoreEntitySet="EMPLOYEE_INFO">
-          <ScalarProperty Name="BLOOD_GROUP" ColumnName="BLOOD_GROUP" />
-          <ScalarProperty Name="NATIONALITY" ColumnName="NATIONALITY" />
-          <ScalarProperty Name="MARITALA_STATUS" ColumnName="MARITALA_STATUS" />
-          <ScalarProperty Name="GENDER" ColumnName="GENDER" />
-          <ScalarProperty Name="DOB" ColumnName="DOB" />
-          <ScalarProperty Name="POSTAL_CODE" ColumnName="POSTAL_CODE" />
-          <ScalarProperty Name="CITY" ColumnName="CITY" />
+    <EntitySetMapping Name="LEAVE_APPLICATION">
+      <EntityTypeMapping TypeName="EMSModel.LEAVE_APPLICATION">
+        <MappingFragment StoreEntitySet="LEAVE_APPLICATION">
           <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
           <ScalarProperty Name="UPDATE_BY" ColumnName="UPDATE_BY" />
-          <ScalarProperty Name="ACTION_DATE" ColumnName="ACTION_DATE" />
-          <ScalarProperty Name="ACTION_BY" ColumnName="ACTION_BY" />
-          <ScalarProperty Name="DESIGNATION" ColumnName="DESIGNATION" />
-          <ScalarProperty Name="RESIGNING_DATE" ColumnName="RESIGNING_DATE" />
-          <ScalarProperty Name="JOINING_DATE" ColumnName="JOINING_DATE" />
-          <ScalarProperty Name="IS_DELETED" ColumnName="IS_DELETED" />
-          <ScalarProperty Name="IMAGE" ColumnName="IMAGE" />
-          <ScalarProperty Name="NID" ColumnName="NID" />
-          <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
-          <ScalarProperty Name="CONTACT" ColumnName="CONTACT" />
-          <ScalarProperty Name="ADDRESS" ColumnName="ADDRESS" />
-          <ScalarProperty Name="EMPLOYEE_NAME" ColumnName="EMPLOYEE_NAME" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ACTIVE_DATE" ColumnName="ACTIVE_DATE" />
+          <ScalarProperty Name="ACTIVE_BY" ColumnName="ACTIVE_BY" />
+          <ScalarProperty Name="REMARKS" ColumnName="REMARKS" />
+          <ScalarProperty Name="APPROVED_END_DATE" ColumnName="APPROVED_END_DATE" />
+          <ScalarProperty Name="APPROVED_START_DATE" ColumnName="APPROVED_START_DATE" />
+          <ScalarProperty Name="END_DATE" ColumnName="END_DATE" />
+          <ScalarProperty Name="START_DATE" ColumnName="START_DATE" />
+          <ScalarProperty Name="LEAVE_TYPE_ID" ColumnName="LEAVE_TYPE_ID" />
+          <ScalarProperty Name="LEAVE_APP_ID" ColumnName="LEAVE_APP_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LEAVE_TYPE">
+      <EntityTypeMapping TypeName="EMSModel.LEAVE_TYPE">
+        <MappingFragment StoreEntitySet="LEAVE_TYPE">
+          <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
+          <ScalarProperty Name="UPDATE_BY" ColumnName="UPDATE_BY" />
+          <ScalarProperty Name="ACTIVE_DATE" ColumnName="ACTIVE_DATE" />
+          <ScalarProperty Name="ACTIVE_BY" ColumnName="ACTIVE_BY" />
+          <ScalarProperty Name="REMARKS" ColumnName="REMARKS" />
+          <ScalarProperty Name="LEAVE_TITLE" ColumnName="LEAVE_TITLE" />
+          <ScalarProperty Name="LEAVE_ID" ColumnName="LEAVE_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

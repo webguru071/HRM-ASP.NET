@@ -64,6 +64,34 @@
           <Property Name="NATIONALITY" Type="nvarchar" MaxLength="50" />
           <Property Name="BLOOD_GROUP" Type="char" MaxLength="2" />
         </EntityType>
+        <EntityType Name="LEAVE_APPLICATION">
+          <Key>
+            <PropertyRef Name="LEAVE_APP_ID" />
+          </Key>
+          <Property Name="LEAVE_APP_ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LEAVE_TYPE_ID" Type="bigint" Nullable="false" />
+          <Property Name="START_DATE" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="END_DATE" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="APPROVED_START_DATE" Type="nvarchar" MaxLength="50" />
+          <Property Name="APPROVED_END_DATE" Type="nvarchar" MaxLength="50" />
+          <Property Name="REMARKS" Type="nvarchar" MaxLength="50" />
+          <Property Name="ACTIVE_BY" Type="bigint" Nullable="false" />
+          <Property Name="ACTIVE_DATE" Type="datetime" Nullable="false" />
+          <Property Name="UPDATE_BY" Type="bigint" />
+          <Property Name="UPDATE_DATE" Type="datetime" />
+        </EntityType>
+        <EntityType Name="LEAVE_TYPE">
+          <Key>
+            <PropertyRef Name="LEAVE_ID" />
+          </Key>
+          <Property Name="LEAVE_ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LEAVE_TITLE" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="REMARKS" Type="nvarchar" MaxLength="500" />
+          <Property Name="ACTIVE_BY" Type="bigint" Nullable="false" />
+          <Property Name="ACTIVE_DATE" Type="datetime" Nullable="false" />
+          <Property Name="UPDATE_BY" Type="bigint" />
+          <Property Name="UPDATE_DATE" Type="datetime" />
+        </EntityType>
         <EntityType Name="NOTICE_BOARD">
           <Key>
             <PropertyRef Name="ID" />
@@ -194,6 +222,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_LEAVE_APPLICATION_LEAVE_APPLICATION">
+          <End Role="LEAVE_TYPE" Type="Self.LEAVE_TYPE" Multiplicity="1" />
+          <End Role="LEAVE_APPLICATION" Type="Self.LEAVE_APPLICATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LEAVE_TYPE">
+              <PropertyRef Name="LEAVE_ID" />
+            </Principal>
+            <Dependent Role="LEAVE_APPLICATION">
+              <PropertyRef Name="LEAVE_TYPE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_POSITIONAL_INFO_DIVISION_INFO">
           <End Role="DIVISION_INFO" Type="Self.DIVISION_INFO" Multiplicity="1" />
           <End Role="POSITIONAL_INFO" Type="Self.POSITIONAL_INFO" Multiplicity="*" />
@@ -295,6 +335,8 @@
           <EntitySet Name="DEPARTMENT_INFO" EntityType="Self.DEPARTMENT_INFO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DIVISION_INFO" EntityType="Self.DIVISION_INFO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EMPLOYEE_INFO" EntityType="Self.EMPLOYEE_INFO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LEAVE_APPLICATION" EntityType="Self.LEAVE_APPLICATION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LEAVE_TYPE" EntityType="Self.LEAVE_TYPE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NOTICE_BOARD" EntityType="Self.NOTICE_BOARD" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="POSITIONAL_INFO" EntityType="Self.POSITIONAL_INFO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SALARY_INFO" EntityType="Self.SALARY_INFO" Schema="dbo" store:Type="Tables" />
@@ -306,6 +348,10 @@
           <AssociationSet Name="FK_DIVISION_INFO_DEPARTMENT_INFO" Association="Self.FK_DIVISION_INFO_DEPARTMENT_INFO">
             <End Role="DEPARTMENT_INFO" EntitySet="DEPARTMENT_INFO" />
             <End Role="DIVISION_INFO" EntitySet="DIVISION_INFO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LEAVE_APPLICATION_LEAVE_APPLICATION" Association="Self.FK_LEAVE_APPLICATION_LEAVE_APPLICATION">
+            <End Role="LEAVE_TYPE" EntitySet="LEAVE_TYPE" />
+            <End Role="LEAVE_APPLICATION" EntitySet="LEAVE_APPLICATION" />
           </AssociationSet>
           <AssociationSet Name="FK_POSITIONAL_INFO_DIVISION_INFO" Association="Self.FK_POSITIONAL_INFO_DIVISION_INFO">
             <End Role="DIVISION_INFO" EntitySet="DIVISION_INFO" />
@@ -348,6 +394,7 @@
           <EntitySet Name="ATTENDANCE_DETAILS" EntityType="EMSModel.ATTENDANCE_DETAILS" />
           <EntitySet Name="DEPARTMENT_INFO" EntityType="EMSModel.DEPARTMENT_INFO" />
           <EntitySet Name="DIVISION_INFO" EntityType="EMSModel.DIVISION_INFO" />
+          <EntitySet Name="EMPLOYEE_INFO" EntityType="EMSModel.EMPLOYEE_INFO" />
           <EntitySet Name="NOTICE_BOARD" EntityType="EMSModel.NOTICE_BOARD" />
           <EntitySet Name="POSITIONAL_INFO" EntityType="EMSModel.POSITIONAL_INFO" />
           <EntitySet Name="SALARY_INFO" EntityType="EMSModel.SALARY_INFO" />
@@ -364,15 +411,6 @@
             <End Role="DIVISION_INFO" EntitySet="DIVISION_INFO" />
             <End Role="POSITIONAL_INFO" EntitySet="POSITIONAL_INFO" />
           </AssociationSet>
-          <AssociationSet Name="FK_TEAM_DETAILS_TEAM" Association="EMSModel.FK_TEAM_DETAILS_TEAM">
-            <End Role="TEAM" EntitySet="TEAMs" />
-            <End Role="TEAM_DETAILS" EntitySet="TEAM_DETAILS" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TRANSACTION_SHEET_TRANSACTION_ITEM" Association="EMSModel.FK_TRANSACTION_SHEET_TRANSACTION_ITEM">
-            <End Role="TRANSACTION_ITEM" EntitySet="TRANSACTION_ITEM" />
-            <End Role="TRANSACTION_SHEET" EntitySet="TRANSACTION_SHEET" />
-          </AssociationSet>
-          <EntitySet Name="EMPLOYEE_INFO" EntityType="EMSModel.EMPLOYEE_INFO" />
           <AssociationSet Name="FK_POSITIONAL_INFO_EMPLOYEE_INFO" Association="EMSModel.FK_POSITIONAL_INFO_EMPLOYEE_INFO">
             <End Role="EMPLOYEE_INFO" EntitySet="EMPLOYEE_INFO" />
             <End Role="POSITIONAL_INFO" EntitySet="POSITIONAL_INFO" />
@@ -392,6 +430,20 @@
           <AssociationSet Name="FK_USER_INFO_EMPLOYEE_INFO" Association="EMSModel.FK_USER_INFO_EMPLOYEE_INFO">
             <End Role="EMPLOYEE_INFO" EntitySet="EMPLOYEE_INFO" />
             <End Role="USER_INFO" EntitySet="USER_INFO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TEAM_DETAILS_TEAM" Association="EMSModel.FK_TEAM_DETAILS_TEAM">
+            <End Role="TEAM" EntitySet="TEAMs" />
+            <End Role="TEAM_DETAILS" EntitySet="TEAM_DETAILS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TRANSACTION_SHEET_TRANSACTION_ITEM" Association="EMSModel.FK_TRANSACTION_SHEET_TRANSACTION_ITEM">
+            <End Role="TRANSACTION_ITEM" EntitySet="TRANSACTION_ITEM" />
+            <End Role="TRANSACTION_SHEET" EntitySet="TRANSACTION_SHEET" />
+          </AssociationSet>
+          <EntitySet Name="LEAVE_APPLICATION" EntityType="EMSModel.LEAVE_APPLICATION" />
+          <EntitySet Name="LEAVE_TYPE" EntityType="EMSModel.LEAVE_TYPE" />
+          <AssociationSet Name="FK_LEAVE_APPLICATION_LEAVE_APPLICATION" Association="EMSModel.FK_LEAVE_APPLICATION_LEAVE_APPLICATION">
+            <End Role="LEAVE_TYPE" EntitySet="LEAVE_TYPE" />
+            <End Role="LEAVE_APPLICATION" EntitySet="LEAVE_APPLICATION" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="ATTENDANCE_DETAILS">
@@ -428,6 +480,38 @@
           <Property Name="UPDATE_DATE" Type="DateTime" Precision="3" />
           <NavigationProperty Name="DEPARTMENT_INFO" Relationship="EMSModel.FK_DIVISION_INFO_DEPARTMENT_INFO" FromRole="DIVISION_INFO" ToRole="DEPARTMENT_INFO" />
           <NavigationProperty Name="POSITIONAL_INFO" Relationship="EMSModel.FK_POSITIONAL_INFO_DIVISION_INFO" FromRole="DIVISION_INFO" ToRole="POSITIONAL_INFO" />
+        </EntityType>
+        <EntityType Name="EMPLOYEE_INFO">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EMPLOYEE_NAME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ADDRESS" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CONTACT" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EMAIL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IMAGE" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IS_DELETED" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="JOINING_DATE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RESIGNING_DATE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DESIGNATION" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ACTION_BY" Type="Int64" />
+          <Property Name="ACTION_DATE" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UPDATE_BY" Type="Int64" />
+          <Property Name="UPDATE_DATE" Type="DateTime" Precision="3" />
+          <Property Name="CITY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="POSTAL_CODE" Type="Int32" />
+          <Property Name="DOB" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="GENDER" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="MARITALA_STATUS" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="NATIONALITY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BLOOD_GROUP" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="POSITIONAL_INFO" Relationship="EMSModel.FK_POSITIONAL_INFO_EMPLOYEE_INFO" FromRole="EMPLOYEE_INFO" ToRole="POSITIONAL_INFO" />
+          <NavigationProperty Name="SALARY_INFO" Relationship="EMSModel.FK_SALARY_INFO_EMPLOYEE_INFO" FromRole="EMPLOYEE_INFO" ToRole="SALARY_INFO" />
+          <NavigationProperty Name="TEAM_DETAILS" Relationship="EMSModel.FK_TEAM_DETAILS_EMPLOYEE_INFO" FromRole="EMPLOYEE_INFO" ToRole="TEAM_DETAILS" />
+          <NavigationProperty Name="TEAMs" Relationship="EMSModel.FK_TEAM_EMPLOYEE_INFO" FromRole="EMPLOYEE_INFO" ToRole="TEAM" />
+          <NavigationProperty Name="USER_INFO" Relationship="EMSModel.FK_USER_INFO_EMPLOYEE_INFO" FromRole="EMPLOYEE_INFO" ToRole="USER_INFO" />
         </EntityType>
         <EntityType Name="NOTICE_BOARD">
           <Key>
@@ -490,8 +574,8 @@
           <Property Name="ACTION_DATE" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UPDATE_BY" Type="Int64" />
           <Property Name="UPDATE_DATE" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="TEAM_DETAILS" Relationship="EMSModel.FK_TEAM_DETAILS_TEAM" FromRole="TEAM" ToRole="TEAM_DETAILS" />
           <NavigationProperty Name="EMPLOYEE_INFO" Relationship="EMSModel.FK_TEAM_EMPLOYEE_INFO" FromRole="TEAM" ToRole="EMPLOYEE_INFO" />
+          <NavigationProperty Name="TEAM_DETAILS" Relationship="EMSModel.FK_TEAM_DETAILS_TEAM" FromRole="TEAM" ToRole="TEAM_DETAILS" />
         </EntityType>
         <EntityType Name="TEAM_DETAILS">
           <Key>
@@ -506,8 +590,8 @@
           <Property Name="ACTION_DATE" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UPDATE_BY" Type="Int64" />
           <Property Name="UPDATE_DATE" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="TEAM1" Relationship="EMSModel.FK_TEAM_DETAILS_TEAM" FromRole="TEAM_DETAILS" ToRole="TEAM" />
           <NavigationProperty Name="EMPLOYEE_INFO" Relationship="EMSModel.FK_TEAM_DETAILS_EMPLOYEE_INFO" FromRole="TEAM_DETAILS" ToRole="EMPLOYEE_INFO" />
+          <NavigationProperty Name="TEAM1" Relationship="EMSModel.FK_TEAM_DETAILS_TEAM" FromRole="TEAM_DETAILS" ToRole="TEAM" />
         </EntityType>
         <EntityType Name="TRANSACTION_ITEM">
           <Key>
@@ -581,62 +665,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TEAM_DETAILS_TEAM">
-          <End Type="EMSModel.TEAM" Role="TEAM" Multiplicity="1" />
-          <End Type="EMSModel.TEAM_DETAILS" Role="TEAM_DETAILS" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TEAM">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="TEAM_DETAILS">
-              <PropertyRef Name="TEAM" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TRANSACTION_SHEET_TRANSACTION_ITEM">
-          <End Type="EMSModel.TRANSACTION_ITEM" Role="TRANSACTION_ITEM" Multiplicity="1" />
-          <End Type="EMSModel.TRANSACTION_SHEET" Role="TRANSACTION_SHEET" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TRANSACTION_ITEM">
-              <PropertyRef Name="TRNS_ID" />
-            </Principal>
-            <Dependent Role="TRANSACTION_SHEET">
-              <PropertyRef Name="TRNS_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="EMPLOYEE_INFO">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EMPLOYEE_NAME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ADDRESS" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="CONTACT" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="EMAIL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="NID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IMAGE" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="IS_DELETED" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="JOINING_DATE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="RESIGNING_DATE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="DESIGNATION" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ACTION_BY" Type="Int64" />
-          <Property Name="ACTION_DATE" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UPDATE_BY" Type="Int64" />
-          <Property Name="UPDATE_DATE" Type="DateTime" Precision="3" />
-          <Property Name="CITY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="POSTAL_CODE" Type="Int32" />
-          <Property Name="DOB" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="GENDER" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="MARITALA_STATUS" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="NATIONALITY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="BLOOD_GROUP" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
-          <NavigationProperty Name="POSITIONAL_INFO" Relationship="EMSModel.FK_POSITIONAL_INFO_EMPLOYEE_INFO" FromRole="EMPLOYEE_INFO" ToRole="POSITIONAL_INFO" />
-          <NavigationProperty Name="SALARY_INFO" Relationship="EMSModel.FK_SALARY_INFO_EMPLOYEE_INFO" FromRole="EMPLOYEE_INFO" ToRole="SALARY_INFO" />
-          <NavigationProperty Name="TEAM_DETAILS" Relationship="EMSModel.FK_TEAM_DETAILS_EMPLOYEE_INFO" FromRole="EMPLOYEE_INFO" ToRole="TEAM_DETAILS" />
-          <NavigationProperty Name="TEAMs" Relationship="EMSModel.FK_TEAM_EMPLOYEE_INFO" FromRole="EMPLOYEE_INFO" ToRole="TEAM" />
-          <NavigationProperty Name="USER_INFO" Relationship="EMSModel.FK_USER_INFO_EMPLOYEE_INFO" FromRole="EMPLOYEE_INFO" ToRole="USER_INFO" />
-        </EntityType>
         <Association Name="FK_POSITIONAL_INFO_EMPLOYEE_INFO">
           <End Type="EMSModel.EMPLOYEE_INFO" Role="EMPLOYEE_INFO" Multiplicity="1" />
           <End Type="EMSModel.POSITIONAL_INFO" Role="POSITIONAL_INFO" Multiplicity="*" />
@@ -697,6 +725,72 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TEAM_DETAILS_TEAM">
+          <End Type="EMSModel.TEAM" Role="TEAM" Multiplicity="1" />
+          <End Type="EMSModel.TEAM_DETAILS" Role="TEAM_DETAILS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TEAM">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TEAM_DETAILS">
+              <PropertyRef Name="TEAM" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TRANSACTION_SHEET_TRANSACTION_ITEM">
+          <End Type="EMSModel.TRANSACTION_ITEM" Role="TRANSACTION_ITEM" Multiplicity="1" />
+          <End Type="EMSModel.TRANSACTION_SHEET" Role="TRANSACTION_SHEET" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRANSACTION_ITEM">
+              <PropertyRef Name="TRNS_ID" />
+            </Principal>
+            <Dependent Role="TRANSACTION_SHEET">
+              <PropertyRef Name="TRNS_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="LEAVE_APPLICATION">
+          <Key>
+            <PropertyRef Name="LEAVE_APP_ID" />
+          </Key>
+          <Property Name="LEAVE_APP_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LEAVE_TYPE_ID" Type="Int64" Nullable="false" />
+          <Property Name="START_DATE" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="END_DATE" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="APPROVED_START_DATE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="APPROVED_END_DATE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="REMARKS" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ACTIVE_BY" Type="Int64" Nullable="false" />
+          <Property Name="ACTIVE_DATE" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UPDATE_BY" Type="Int64" />
+          <Property Name="UPDATE_DATE" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="LEAVE_TYPE" Relationship="EMSModel.FK_LEAVE_APPLICATION_LEAVE_APPLICATION" FromRole="LEAVE_APPLICATION" ToRole="LEAVE_TYPE" />
+        </EntityType>
+        <EntityType Name="LEAVE_TYPE">
+          <Key>
+            <PropertyRef Name="LEAVE_ID" />
+          </Key>
+          <Property Name="LEAVE_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LEAVE_TITLE" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="REMARKS" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ACTIVE_BY" Type="Int64" Nullable="false" />
+          <Property Name="ACTIVE_DATE" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UPDATE_BY" Type="Int64" />
+          <Property Name="UPDATE_DATE" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="LEAVE_APPLICATION" Relationship="EMSModel.FK_LEAVE_APPLICATION_LEAVE_APPLICATION" FromRole="LEAVE_TYPE" ToRole="LEAVE_APPLICATION" />
+        </EntityType>
+        <Association Name="FK_LEAVE_APPLICATION_LEAVE_APPLICATION">
+          <End Type="EMSModel.LEAVE_TYPE" Role="LEAVE_TYPE" Multiplicity="1" />
+          <End Type="EMSModel.LEAVE_APPLICATION" Role="LEAVE_APPLICATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LEAVE_TYPE">
+              <PropertyRef Name="LEAVE_ID" />
+            </Principal>
+            <Dependent Role="LEAVE_APPLICATION">
+              <PropertyRef Name="LEAVE_TYPE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -735,6 +829,34 @@
                 <ScalarProperty Name="DEPT_ID" ColumnName="DEPT_ID" />
                 <ScalarProperty Name="DIV_TITLE" ColumnName="DIV_TITLE" />
                 <ScalarProperty Name="DIV_ID" ColumnName="DIV_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EMPLOYEE_INFO">
+            <EntityTypeMapping TypeName="EMSModel.EMPLOYEE_INFO">
+              <MappingFragment StoreEntitySet="EMPLOYEE_INFO">
+                <ScalarProperty Name="BLOOD_GROUP" ColumnName="BLOOD_GROUP" />
+                <ScalarProperty Name="NATIONALITY" ColumnName="NATIONALITY" />
+                <ScalarProperty Name="MARITALA_STATUS" ColumnName="MARITALA_STATUS" />
+                <ScalarProperty Name="GENDER" ColumnName="GENDER" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="POSTAL_CODE" ColumnName="POSTAL_CODE" />
+                <ScalarProperty Name="CITY" ColumnName="CITY" />
+                <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
+                <ScalarProperty Name="UPDATE_BY" ColumnName="UPDATE_BY" />
+                <ScalarProperty Name="ACTION_DATE" ColumnName="ACTION_DATE" />
+                <ScalarProperty Name="ACTION_BY" ColumnName="ACTION_BY" />
+                <ScalarProperty Name="DESIGNATION" ColumnName="DESIGNATION" />
+                <ScalarProperty Name="RESIGNING_DATE" ColumnName="RESIGNING_DATE" />
+                <ScalarProperty Name="JOINING_DATE" ColumnName="JOINING_DATE" />
+                <ScalarProperty Name="IS_DELETED" ColumnName="IS_DELETED" />
+                <ScalarProperty Name="IMAGE" ColumnName="IMAGE" />
+                <ScalarProperty Name="NID" ColumnName="NID" />
+                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+                <ScalarProperty Name="CONTACT" ColumnName="CONTACT" />
+                <ScalarProperty Name="ADDRESS" ColumnName="ADDRESS" />
+                <ScalarProperty Name="EMPLOYEE_NAME" ColumnName="EMPLOYEE_NAME" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -864,31 +986,33 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="EMPLOYEE_INFO">
-            <EntityTypeMapping TypeName="EMSModel.EMPLOYEE_INFO">
-              <MappingFragment StoreEntitySet="EMPLOYEE_INFO">
-                <ScalarProperty Name="BLOOD_GROUP" ColumnName="BLOOD_GROUP" />
-                <ScalarProperty Name="NATIONALITY" ColumnName="NATIONALITY" />
-                <ScalarProperty Name="MARITALA_STATUS" ColumnName="MARITALA_STATUS" />
-                <ScalarProperty Name="GENDER" ColumnName="GENDER" />
-                <ScalarProperty Name="DOB" ColumnName="DOB" />
-                <ScalarProperty Name="POSTAL_CODE" ColumnName="POSTAL_CODE" />
-                <ScalarProperty Name="CITY" ColumnName="CITY" />
+          <EntitySetMapping Name="LEAVE_APPLICATION">
+            <EntityTypeMapping TypeName="EMSModel.LEAVE_APPLICATION">
+              <MappingFragment StoreEntitySet="LEAVE_APPLICATION">
                 <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
                 <ScalarProperty Name="UPDATE_BY" ColumnName="UPDATE_BY" />
-                <ScalarProperty Name="ACTION_DATE" ColumnName="ACTION_DATE" />
-                <ScalarProperty Name="ACTION_BY" ColumnName="ACTION_BY" />
-                <ScalarProperty Name="DESIGNATION" ColumnName="DESIGNATION" />
-                <ScalarProperty Name="RESIGNING_DATE" ColumnName="RESIGNING_DATE" />
-                <ScalarProperty Name="JOINING_DATE" ColumnName="JOINING_DATE" />
-                <ScalarProperty Name="IS_DELETED" ColumnName="IS_DELETED" />
-                <ScalarProperty Name="IMAGE" ColumnName="IMAGE" />
-                <ScalarProperty Name="NID" ColumnName="NID" />
-                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
-                <ScalarProperty Name="CONTACT" ColumnName="CONTACT" />
-                <ScalarProperty Name="ADDRESS" ColumnName="ADDRESS" />
-                <ScalarProperty Name="EMPLOYEE_NAME" ColumnName="EMPLOYEE_NAME" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ACTIVE_DATE" ColumnName="ACTIVE_DATE" />
+                <ScalarProperty Name="ACTIVE_BY" ColumnName="ACTIVE_BY" />
+                <ScalarProperty Name="REMARKS" ColumnName="REMARKS" />
+                <ScalarProperty Name="APPROVED_END_DATE" ColumnName="APPROVED_END_DATE" />
+                <ScalarProperty Name="APPROVED_START_DATE" ColumnName="APPROVED_START_DATE" />
+                <ScalarProperty Name="END_DATE" ColumnName="END_DATE" />
+                <ScalarProperty Name="START_DATE" ColumnName="START_DATE" />
+                <ScalarProperty Name="LEAVE_TYPE_ID" ColumnName="LEAVE_TYPE_ID" />
+                <ScalarProperty Name="LEAVE_APP_ID" ColumnName="LEAVE_APP_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LEAVE_TYPE">
+            <EntityTypeMapping TypeName="EMSModel.LEAVE_TYPE">
+              <MappingFragment StoreEntitySet="LEAVE_TYPE">
+                <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
+                <ScalarProperty Name="UPDATE_BY" ColumnName="UPDATE_BY" />
+                <ScalarProperty Name="ACTIVE_DATE" ColumnName="ACTIVE_DATE" />
+                <ScalarProperty Name="ACTIVE_BY" ColumnName="ACTIVE_BY" />
+                <ScalarProperty Name="REMARKS" ColumnName="REMARKS" />
+                <ScalarProperty Name="LEAVE_TITLE" ColumnName="LEAVE_TITLE" />
+                <ScalarProperty Name="LEAVE_ID" ColumnName="LEAVE_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

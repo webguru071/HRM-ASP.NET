@@ -30,8 +30,8 @@ namespace EMSApp.Models
         public Nullable<long> UPDATE_BY { get; set; }
         public Nullable<System.DateTime> UPDATE_DATE { get; set; }
     
+        public virtual EMPLOYEE_INFO EMPLOYEE_INFO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TEAM_DETAILS> TEAM_DETAILS { get; set; }
-        public virtual EMPLOYEE_INFO EMPLOYEE_INFO { get; set; }
     }
 }

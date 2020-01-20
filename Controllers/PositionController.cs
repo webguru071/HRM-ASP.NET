@@ -1,5 +1,7 @@
 ﻿using EMSApp.Models;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -30,40 +32,118 @@ namespace EMSApp.Controllers
 
         // POST: Position/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(POSITIONAL_INFO obj)
         {
             try
             {
                 // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                if (obj.EMPLOYEE_ID <= 0)
+                {
+                    ModelState.AddModelError("", "Please Select Employee Name");
+                }
+                else if (obj.DIV_ID <= 0)
+                {
+                    ModelState.AddModelError("", "Please Select Division Name");
+                }
+                else if (string.IsNullOrEmpty(obj.POSITION_TITLE))
+                {
+                    ModelState.AddModelError("", "Please Add Position Name");
+                }
+                else if (string.IsNullOrEmpty(obj.DUTY_TYPE))
+                {
+                    ModelState.AddModelError("", "Please Select Duty Type");
+                }
+                else if (string.IsNullOrEmpty(obj.RATE_TYPE))
+                {
+                    ModelState.AddModelError("", "Please Select Rate Type");
+                }
+                else if (string.IsNullOrEmpty(obj.PAY_FREQ))
+                {
+                    ModelState.AddModelError("", "Please Select Payment Frequency Type");
+                }
+                else
+                {
+                    long userID = Convert.ToInt64(Session["USER_ID"]);
+                    obj.ACTION_BY = userID;
+                    obj.ACTION_DATE = DateTime.Now;
+                    if (ModelState.IsValid)
+                    {
+                        db.POSITIONAL_INFO.Add(obj);
+                        db.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
+                }
             }
             catch
             {
+                GetDataInBag();
                 return View();
             }
+            GetDataInBag();
+            return View();
         }
 
         // GET: Position/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var dt = db.POSITIONAL_INFO.Where(x => x.POSITION_ID == id).FirstOrDefault();
+            GetDataInBag(dt.EMPLOYEE_ID,dt.DIV_ID);
+            Session["AD"] = dt.ACTION_DATE;
+            return View(dt);
         }
 
         // POST: Position/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, POSITIONAL_INFO obj )
         {
             try
             {
                 // TODO: Add update logic here
+                if (obj.EMPLOYEE_ID <= 0)
+                {
+                    ModelState.AddModelError("", "Please Select Employee Name");
+                }
+                else if (obj.DIV_ID <= 0)
+                {
+                    ModelState.AddModelError("", "Please Select Division Name");
+                }
+                else if (string.IsNullOrEmpty(obj.POSITION_TITLE))
+                {
+                    ModelState.AddModelError("", "Please Add Position Name");
+                }
+                else if (string.IsNullOrEmpty(obj.DUTY_TYPE))
+                {
+                    ModelState.AddModelError("", "Please Select Duty Type");
+                }
+                else if (string.IsNullOrEmpty(obj.RATE_TYPE))
+                {
+                    ModelState.AddModelError("", "Please Select Rate Type");
+                }
+                else if (string.IsNullOrEmpty(obj.PAY_FREQ))
+                {
+                    ModelState.AddModelError("", "Please Select Payment Frequency Type");
+                }
+                else
+                {                    
+                    obj.UPDATE_BY = Convert.ToInt64(Session["USER_ID"]);
+                    obj.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
+                    obj.UPDATE_DATE = DateTime.Now;
 
-                return RedirectToAction("Index");
+                    if (ModelState.IsValid)
+                    {
+                        db.Entry(obj).State = EntityState.Modified;
+                        db.SaveChanges();
+                        Session["AD"] = null;
+                        return RedirectToAction("Index");
+                    }
+                }
             }
-            catch
+            catch(Exception ex)
             {
-                return View();
+              
             }
+            GetDataInBag(obj.EMPLOYEE_ID, obj.DIV_ID);
+            return View();
         }
 
         // GET: Position/Delete/5
