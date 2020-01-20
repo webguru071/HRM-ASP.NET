@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
+using EMSApp.Services.Position;
 
 namespace EMSApp.Controllers
 {
     public class PositionController : Controller
     {
         EMSEntities db = new EMSEntities();
+        IPosition ins = new PositionService();
         // GET: Position
         public ActionResult Index()
         {

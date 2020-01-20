@@ -22,10 +22,10 @@ namespace EMSApp.Helper
             string connStr = "";
             try
             {
-                if (ConfigurationManager.ConnectionStrings["EMSEntities"] == null)
+                if (ConfigurationManager.ConnectionStrings["SQLEntities"] == null)
                     connStr = @"Data Source=.;Initial Catalog=EMS;User ID=sa;password=12345";
                 else
-                    connStr = ConfigurationManager.ConnectionStrings["EMSEntities"].ConnectionString;
+                    connStr = ConfigurationManager.ConnectionStrings["SQLEntities"].ConnectionString;
             }
             catch (Exception ex)
             {
