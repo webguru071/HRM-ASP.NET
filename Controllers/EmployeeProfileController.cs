@@ -1,17 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using EMSApp.Models;
 
 namespace EMSApp.Controllers
 {
     public class EmployeeProfileController : Controller
     {
+        EMSEntities db = new EMSEntities();
         // GET: EmployeeProfile
         public ActionResult Index()
         {
-            return View();
+            long empId = Convert.ToInt64(Session["EMP_ID"]);
+            var data = db.EMPLOYEE_INFO.Where(x => x.ID == empId && x.IS_DELETED == Helper.ConstantValue.UserStatusActive).FirstOrDefault();
+            return View(data);
         }
 
         // GET: EmployeeProfile/Details/5
@@ -45,23 +50,38 @@ namespace EMSApp.Controllers
         // GET: EmployeeProfile/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var data = db.EMPLOYEE_INFO.Where(x => x.ID == id && x.IS_DELETED == Helper.ConstantValue.UserStatusActive).FirstOrDefault();
+            Session["AD"] = data.ACTION_DATE;
+            Session["NAME"] = data.EMPLOYEE_NAME;
+            Session["ISD"] = data.IS_DELETED;
+            return View(data);
         }
 
         // POST: EmployeeProfile/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, EMPLOYEE_INFO emp)
         {
             try
             {
                 // TODO: Add update logic here
-
-                return RedirectToAction("Index");
+                emp.EMPLOYEE_NAME = Convert.ToString(Session["NAME"]);
+                emp.IS_DELETED = Convert.ToString(Session["ISD"]);
+                emp.UPDATE_BY = Convert.ToInt64(Session["USER_ID"]);
+                emp.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
+                emp.UPDATE_DATE = DateTime.Now;
+                if (ModelState.IsValid)
+                {
+                    db.Entry(emp).State = EntityState.Modified;
+                    db.SaveChanges();
+                    Session["AD"] = null;
+                    return RedirectToAction("Index");
+                }
             }
-            catch
+            catch(Exception ex)
             {
                 return View();
             }
+            return View();
         }
 
         // GET: EmployeeProfile/Delete/5

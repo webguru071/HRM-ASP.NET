@@ -1,0 +1,48 @@
+﻿@model IEnumerable<EMSApp.Models.SALARY_GRADE>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>Action</th>
+        <th>
+            @Html.DisplayNameFor(model => model.GRADE_TITLE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GRADE_TYPE)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.GRADE_ID })|
+                @Html.ActionLink("Delete", "Delete", new { id = item.GRADE_ID })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GRADE_TITLE)
+            </td>
+            <td>
+                @if (item.GRADE_TYPE == EMSApp.Helper.ConstantValue.SalaryGradeAdd)
+                {
+                    item.GRADE_TYPE = "Addition";
+                }
+                @if (item.GRADE_TYPE == EMSApp.Helper.ConstantValue.SalaryGradeDeduct)
+                {
+                    item.GRADE_TYPE = "Deduction";
+                }
+                @Html.DisplayFor(modelItem => item.GRADE_TYPE)
+            </td>            
+        </tr>
+    }
+
+</table>

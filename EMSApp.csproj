@@ -157,6 +157,7 @@
     <Compile Include="Controllers\NoticeController.cs" />
     <Compile Include="Controllers\PositionController.cs" />
     <Compile Include="Controllers\SalaryController.cs" />
+    <Compile Include="Controllers\SalaryGradeController.cs" />
     <Compile Include="Controllers\TeamController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -172,6 +173,9 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DIVISION_INFO.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EMPLOYEE_APPLICATION.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EMPLOYEE_INFO.cs">
@@ -202,6 +206,9 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\POSITIONAL_INFO.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SALARY_GRADE.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SALARY_INFO.cs">
@@ -576,6 +583,10 @@
     <Content Include="Views\Income\ExpenseSheetDelete.cshtml" />
     <Content Include="Views\Income\Delete.cshtml" />
     <Content Include="Views\EmployeeProfile\Index.cshtml" />
+    <Content Include="Views\EmployeeProfile\Edit.cshtml" />
+    <Content Include="Views\SalaryGrade\Index.cshtml" />
+    <Content Include="Views\SalaryGrade\Create.cshtml" />
+    <Content Include="Views\SalaryGrade\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

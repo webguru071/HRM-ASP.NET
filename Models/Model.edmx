@@ -37,6 +37,15 @@
           <Property Name="UPDATE_BY" Type="bigint" />
           <Property Name="UPDATE_DATE" Type="datetime" />
         </EntityType>
+        <EntityType Name="EMPLOYEE_APPLICATION">
+          <Key>
+            <PropertyRef Name="APP_ID" />
+          </Key>
+          <Property Name="APP_ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="APP_SUB" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="APP_BODY" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="EMP_ID" Type="bigint" Nullable="false" />
+        </EntityType>
         <EntityType Name="EMPLOYEE_INFO">
           <Key>
             <PropertyRef Name="ID" />
@@ -112,6 +121,7 @@
           </Key>
           <Property Name="POSITION_ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="POSITION_TITLE" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="EMPLOYEE_ID" Type="bigint" Nullable="false" />
           <Property Name="DUTY_TYPE" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="RATE_TYPE" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="PAY_FREQ" Type="char" MaxLength="1" Nullable="false" />
@@ -120,7 +130,7 @@
           <Property Name="ACTION_DATE" Type="datetime" Nullable="false" />
           <Property Name="UPDATE_BY" Type="bigint" />
           <Property Name="UPDATE_DATE" Type="datetime" />
-          <Property Name="EMPLOYEE_ID" Type="bigint" Nullable="false" />
+          <Property Name="BASIC_SALARY" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="SALARY_INFO">
           <Key>
@@ -138,6 +148,18 @@
           <Property Name="UPDATE_BY" Type="bigint" />
           <Property Name="UPDATE_DATE" Type="datetime" />
           <Property Name="REMARKS" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="SALARY-GRADE">
+          <Key>
+            <PropertyRef Name="GRADE_ID" />
+          </Key>
+          <Property Name="GRADE_ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GRADE_TITLE" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="GRADE_TYPE" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="ACTION_BY" Type="bigint" Nullable="false" />
+          <Property Name="ACTION_DATE" Type="datetime" Nullable="false" />
+          <Property Name="UPDATE_BY" Type="bigint" />
+          <Property Name="UPDATE_DATE" Type="datetime" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -232,6 +254,18 @@
             </Principal>
             <Dependent Role="DIVISION_INFO">
               <PropertyRef Name="DEPT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EMPLOYEE_APPLICATION_EMPLOYEE_INFO">
+          <End Role="EMPLOYEE_INFO" Type="Self.EMPLOYEE_INFO" Multiplicity="1" />
+          <End Role="EMPLOYEE_APPLICATION" Type="Self.EMPLOYEE_APPLICATION" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLOYEE_INFO">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="EMPLOYEE_APPLICATION">
+              <PropertyRef Name="APP_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -359,12 +393,14 @@
           <EntitySet Name="ATTENDANCE_DETAILS" EntityType="Self.ATTENDANCE_DETAILS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DEPARTMENT_INFO" EntityType="Self.DEPARTMENT_INFO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DIVISION_INFO" EntityType="Self.DIVISION_INFO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EMPLOYEE_APPLICATION" EntityType="Self.EMPLOYEE_APPLICATION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EMPLOYEE_INFO" EntityType="Self.EMPLOYEE_INFO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LEAVE_APPLICATION" EntityType="Self.LEAVE_APPLICATION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LEAVE_TYPE" EntityType="Self.LEAVE_TYPE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NOTICE_BOARD" EntityType="Self.NOTICE_BOARD" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="POSITIONAL_INFO" EntityType="Self.POSITIONAL_INFO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SALARY_INFO" EntityType="Self.SALARY_INFO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SALARY-GRADE" EntityType="Self.SALARY-GRADE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TEAM_DETAILS" EntityType="Self.TEAM_DETAILS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TEAM_INFO" EntityType="Self.TEAM_INFO" Schema="dbo" store:Type="Tables" />
@@ -374,6 +410,10 @@
           <AssociationSet Name="FK_DIVISION_INFO_DEPARTMENT_INFO" Association="Self.FK_DIVISION_INFO_DEPARTMENT_INFO">
             <End Role="DEPARTMENT_INFO" EntitySet="DEPARTMENT_INFO" />
             <End Role="DIVISION_INFO" EntitySet="DIVISION_INFO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EMPLOYEE_APPLICATION_EMPLOYEE_INFO" Association="Self.FK_EMPLOYEE_APPLICATION_EMPLOYEE_INFO">
+            <End Role="EMPLOYEE_INFO" EntitySet="EMPLOYEE_INFO" />
+            <End Role="EMPLOYEE_APPLICATION" EntitySet="EMPLOYEE_APPLICATION" />
           </AssociationSet>
           <AssociationSet Name="FK_LEAVE_APPLICATION_EMPLOYEE_INFO" Association="Self.FK_LEAVE_APPLICATION_EMPLOYEE_INFO">
             <End Role="EMPLOYEE_INFO" EntitySet="EMPLOYEE_INFO" />
@@ -426,21 +466,12 @@
           <EntitySet Name="DIVISION_INFO" EntityType="EMSModel.DIVISION_INFO" />
           <EntitySet Name="EMPLOYEE_INFO" EntityType="EMSModel.EMPLOYEE_INFO" />
           <EntitySet Name="NOTICE_BOARD" EntityType="EMSModel.NOTICE_BOARD" />
-          <EntitySet Name="POSITIONAL_INFO" EntityType="EMSModel.POSITIONAL_INFO" />
           <EntitySet Name="SALARY_INFO" EntityType="EMSModel.SALARY_INFO" />
           <EntitySet Name="TRANSACTION_ITEM" EntityType="EMSModel.TRANSACTION_ITEM" />
           <EntitySet Name="USER_INFO" EntityType="EMSModel.USER_INFO" />
           <AssociationSet Name="FK_DIVISION_INFO_DEPARTMENT_INFO" Association="EMSModel.FK_DIVISION_INFO_DEPARTMENT_INFO">
             <End Role="DEPARTMENT_INFO" EntitySet="DEPARTMENT_INFO" />
             <End Role="DIVISION_INFO" EntitySet="DIVISION_INFO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_POSITIONAL_INFO_DIVISION_INFO" Association="EMSModel.FK_POSITIONAL_INFO_DIVISION_INFO">
-            <End Role="DIVISION_INFO" EntitySet="DIVISION_INFO" />
-            <End Role="POSITIONAL_INFO" EntitySet="POSITIONAL_INFO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_POSITIONAL_INFO_EMPLOYEE_INFO" Association="EMSModel.FK_POSITIONAL_INFO_EMPLOYEE_INFO">
-            <End Role="EMPLOYEE_INFO" EntitySet="EMPLOYEE_INFO" />
-            <End Role="POSITIONAL_INFO" EntitySet="POSITIONAL_INFO" />
           </AssociationSet>
           <AssociationSet Name="FK_SALARY_INFO_EMPLOYEE_INFO" Association="EMSModel.FK_SALARY_INFO_EMPLOYEE_INFO">
             <End Role="EMPLOYEE_INFO" EntitySet="EMPLOYEE_INFO" />
@@ -480,6 +511,21 @@
             <End Role="TEAM_INFO" EntitySet="TEAM_INFO" />
             <End Role="TEAM_DETAILS" EntitySet="TEAM_DETAILS" />
           </AssociationSet>
+          <EntitySet Name="EMPLOYEE_APPLICATION" EntityType="EMSModel.EMPLOYEE_APPLICATION" />
+          <EntitySet Name="POSITIONAL_INFO" EntityType="EMSModel.POSITIONAL_INFO" />
+          <AssociationSet Name="FK_POSITIONAL_INFO_DIVISION_INFO" Association="EMSModel.FK_POSITIONAL_INFO_DIVISION_INFO">
+            <End Role="DIVISION_INFO" EntitySet="DIVISION_INFO" />
+            <End Role="POSITIONAL_INFO" EntitySet="POSITIONAL_INFO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EMPLOYEE_APPLICATION_EMPLOYEE_INFO" Association="EMSModel.FK_EMPLOYEE_APPLICATION_EMPLOYEE_INFO">
+            <End Role="EMPLOYEE_INFO" EntitySet="EMPLOYEE_INFO" />
+            <End Role="EMPLOYEE_APPLICATION" EntitySet="EMPLOYEE_APPLICATION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_POSITIONAL_INFO_EMPLOYEE_INFO" Association="EMSModel.FK_POSITIONAL_INFO_EMPLOYEE_INFO">
+            <End Role="EMPLOYEE_INFO" EntitySet="EMPLOYEE_INFO" />
+            <End Role="POSITIONAL_INFO" EntitySet="POSITIONAL_INFO" />
+          </AssociationSet>
+          <EntitySet Name="SALARY_GRADE" EntityType="EMSModel.SALARY_GRADE" />
           </EntityContainer>
         <EntityType Name="ATTENDANCE_DETAILS">
           <Key>
@@ -542,12 +588,13 @@
           <Property Name="MARITALA_STATUS" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="NATIONALITY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="BLOOD_GROUP" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
-          <NavigationProperty Name="POSITIONAL_INFO" Relationship="EMSModel.FK_POSITIONAL_INFO_EMPLOYEE_INFO" FromRole="EMPLOYEE_INFO" ToRole="POSITIONAL_INFO" />
           <NavigationProperty Name="SALARY_INFO" Relationship="EMSModel.FK_SALARY_INFO_EMPLOYEE_INFO" FromRole="EMPLOYEE_INFO" ToRole="SALARY_INFO" />
           <NavigationProperty Name="USER_INFO" Relationship="EMSModel.FK_USER_INFO_EMPLOYEE_INFO" FromRole="EMPLOYEE_INFO" ToRole="USER_INFO" />
           <NavigationProperty Name="LEAVE_APPLICATION" Relationship="EMSModel.FK_LEAVE_APPLICATION_EMPLOYEE_INFO" FromRole="EMPLOYEE_INFO" ToRole="LEAVE_APPLICATION" />
           <NavigationProperty Name="TEAM_INFO" Relationship="EMSModel.FK_TEAM_EMPLOYEE_INFO" FromRole="EMPLOYEE_INFO" ToRole="TEAM_INFO" />
           <NavigationProperty Name="TEAM_DETAILS" Relationship="EMSModel.FK_TEAM_DETAILS_EMPLOYEE_INFO" FromRole="EMPLOYEE_INFO" ToRole="TEAM_DETAILS" />
+          <NavigationProperty Name="EMPLOYEE_APPLICATION" Relationship="EMSModel.FK_EMPLOYEE_APPLICATION_EMPLOYEE_INFO" FromRole="EMPLOYEE_INFO" ToRole="EMPLOYEE_APPLICATION" />
+          <NavigationProperty Name="POSITIONAL_INFO" Relationship="EMSModel.FK_POSITIONAL_INFO_EMPLOYEE_INFO" FromRole="EMPLOYEE_INFO" ToRole="POSITIONAL_INFO" />
         </EntityType>
         <EntityType Name="NOTICE_BOARD">
           <Key>
@@ -560,24 +607,6 @@
           <Property Name="UPDATE_BY" Type="Int64" />
           <Property Name="UPDATE_DATE" Type="DateTime" Precision="3" />
           <Property Name="STATUS" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-        </EntityType>
-        <EntityType Name="POSITIONAL_INFO">
-          <Key>
-            <PropertyRef Name="POSITION_ID" />
-          </Key>
-          <Property Name="POSITION_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="POSITION_TITLE" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="DUTY_TYPE" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="RATE_TYPE" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="PAY_FREQ" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="DIV_ID" Type="Int64" Nullable="false" />
-          <Property Name="ACTION_BY" Type="Int64" Nullable="false" />
-          <Property Name="ACTION_DATE" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UPDATE_BY" Type="Int64" />
-          <Property Name="UPDATE_DATE" Type="DateTime" Precision="3" />
-          <Property Name="EMPLOYEE_ID" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="DIVISION_INFO" Relationship="EMSModel.FK_POSITIONAL_INFO_DIVISION_INFO" FromRole="POSITIONAL_INFO" ToRole="DIVISION_INFO" />
-          <NavigationProperty Name="EMPLOYEE_INFO" Relationship="EMSModel.FK_POSITIONAL_INFO_EMPLOYEE_INFO" FromRole="POSITIONAL_INFO" ToRole="EMPLOYEE_INFO" />
         </EntityType>
         <EntityType Name="SALARY_INFO">
           <Key>
@@ -637,30 +666,6 @@
             </Principal>
             <Dependent Role="DIVISION_INFO">
               <PropertyRef Name="DEPT_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_POSITIONAL_INFO_DIVISION_INFO">
-          <End Type="EMSModel.DIVISION_INFO" Role="DIVISION_INFO" Multiplicity="1" />
-          <End Type="EMSModel.POSITIONAL_INFO" Role="POSITIONAL_INFO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DIVISION_INFO">
-              <PropertyRef Name="DIV_ID" />
-            </Principal>
-            <Dependent Role="POSITIONAL_INFO">
-              <PropertyRef Name="DIV_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_POSITIONAL_INFO_EMPLOYEE_INFO">
-          <End Type="EMSModel.EMPLOYEE_INFO" Role="EMPLOYEE_INFO" Multiplicity="1" />
-          <End Type="EMSModel.POSITIONAL_INFO" Role="POSITIONAL_INFO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EMPLOYEE_INFO">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="POSITIONAL_INFO">
-              <PropertyRef Name="EMPLOYEE_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -853,6 +858,83 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="EMPLOYEE_APPLICATION">
+          <Key>
+            <PropertyRef Name="APP_ID" />
+          </Key>
+          <Property Name="APP_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="APP_SUB" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="APP_BODY" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="EMP_ID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="EMPLOYEE_INFO" Relationship="EMSModel.FK_EMPLOYEE_APPLICATION_EMPLOYEE_INFO" FromRole="EMPLOYEE_APPLICATION" ToRole="EMPLOYEE_INFO" />
+        </EntityType>
+        <EntityType Name="POSITIONAL_INFO">
+          <Key>
+            <PropertyRef Name="POSITION_ID" />
+          </Key>
+          <Property Name="POSITION_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="POSITION_TITLE" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EMPLOYEE_ID" Type="Int64" Nullable="false" />
+          <Property Name="DUTY_TYPE" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="RATE_TYPE" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="PAY_FREQ" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="DIV_ID" Type="Int64" Nullable="false" />
+          <Property Name="ACTION_BY" Type="Int64" Nullable="false" />
+          <Property Name="ACTION_DATE" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UPDATE_BY" Type="Int64" />
+          <Property Name="UPDATE_DATE" Type="DateTime" Precision="3" />
+          <Property Name="BASIC_SALARY" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="DIVISION_INFO" Relationship="EMSModel.FK_POSITIONAL_INFO_DIVISION_INFO" FromRole="POSITIONAL_INFO" ToRole="DIVISION_INFO" />
+          <NavigationProperty Name="EMPLOYEE_INFO" Relationship="EMSModel.FK_POSITIONAL_INFO_EMPLOYEE_INFO" FromRole="POSITIONAL_INFO" ToRole="EMPLOYEE_INFO" />
+        </EntityType>
+        <Association Name="FK_POSITIONAL_INFO_DIVISION_INFO">
+          <End Type="EMSModel.DIVISION_INFO" Role="DIVISION_INFO" Multiplicity="1" />
+          <End Type="EMSModel.POSITIONAL_INFO" Role="POSITIONAL_INFO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DIVISION_INFO">
+              <PropertyRef Name="DIV_ID" />
+            </Principal>
+            <Dependent Role="POSITIONAL_INFO">
+              <PropertyRef Name="DIV_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EMPLOYEE_APPLICATION_EMPLOYEE_INFO">
+          <End Type="EMSModel.EMPLOYEE_INFO" Role="EMPLOYEE_INFO" Multiplicity="1" />
+          <End Type="EMSModel.EMPLOYEE_APPLICATION" Role="EMPLOYEE_APPLICATION" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLOYEE_INFO">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="EMPLOYEE_APPLICATION">
+              <PropertyRef Name="APP_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_POSITIONAL_INFO_EMPLOYEE_INFO">
+          <End Type="EMSModel.EMPLOYEE_INFO" Role="EMPLOYEE_INFO" Multiplicity="1" />
+          <End Type="EMSModel.POSITIONAL_INFO" Role="POSITIONAL_INFO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLOYEE_INFO">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="POSITIONAL_INFO">
+              <PropertyRef Name="EMPLOYEE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="SALARY_GRADE">
+          <Key>
+            <PropertyRef Name="GRADE_ID" />
+          </Key>
+          <Property Name="GRADE_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GRADE_TITLE" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="GRADE_TYPE" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ACTION_BY" Type="Int64" Nullable="false" />
+          <Property Name="ACTION_DATE" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UPDATE_BY" Type="Int64" />
+          <Property Name="UPDATE_DATE" Type="DateTime" Precision="3" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -932,23 +1014,6 @@
                 <ScalarProperty Name="ACTION_BY" ColumnName="ACTION_BY" />
                 <ScalarProperty Name="NOTICE" ColumnName="NOTICE" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="POSITIONAL_INFO">
-            <EntityTypeMapping TypeName="EMSModel.POSITIONAL_INFO">
-              <MappingFragment StoreEntitySet="POSITIONAL_INFO">
-                <ScalarProperty Name="EMPLOYEE_ID" ColumnName="EMPLOYEE_ID" />
-                <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
-                <ScalarProperty Name="UPDATE_BY" ColumnName="UPDATE_BY" />
-                <ScalarProperty Name="ACTION_DATE" ColumnName="ACTION_DATE" />
-                <ScalarProperty Name="ACTION_BY" ColumnName="ACTION_BY" />
-                <ScalarProperty Name="DIV_ID" ColumnName="DIV_ID" />
-                <ScalarProperty Name="PAY_FREQ" ColumnName="PAY_FREQ" />
-                <ScalarProperty Name="RATE_TYPE" ColumnName="RATE_TYPE" />
-                <ScalarProperty Name="DUTY_TYPE" ColumnName="DUTY_TYPE" />
-                <ScalarProperty Name="POSITION_TITLE" ColumnName="POSITION_TITLE" />
-                <ScalarProperty Name="POSITION_ID" ColumnName="POSITION_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1089,6 +1154,47 @@
                 <ScalarProperty Name="MEMBER" ColumnName="MEMBER" />
                 <ScalarProperty Name="TEAM_ID" ColumnName="TEAM_ID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EMPLOYEE_APPLICATION">
+            <EntityTypeMapping TypeName="EMSModel.EMPLOYEE_APPLICATION">
+              <MappingFragment StoreEntitySet="EMPLOYEE_APPLICATION">
+                <ScalarProperty Name="EMP_ID" ColumnName="EMP_ID" />
+                <ScalarProperty Name="APP_BODY" ColumnName="APP_BODY" />
+                <ScalarProperty Name="APP_SUB" ColumnName="APP_SUB" />
+                <ScalarProperty Name="APP_ID" ColumnName="APP_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="POSITIONAL_INFO">
+            <EntityTypeMapping TypeName="EMSModel.POSITIONAL_INFO">
+              <MappingFragment StoreEntitySet="POSITIONAL_INFO">
+                <ScalarProperty Name="BASIC_SALARY" ColumnName="BASIC_SALARY" />
+                <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
+                <ScalarProperty Name="UPDATE_BY" ColumnName="UPDATE_BY" />
+                <ScalarProperty Name="ACTION_DATE" ColumnName="ACTION_DATE" />
+                <ScalarProperty Name="ACTION_BY" ColumnName="ACTION_BY" />
+                <ScalarProperty Name="DIV_ID" ColumnName="DIV_ID" />
+                <ScalarProperty Name="PAY_FREQ" ColumnName="PAY_FREQ" />
+                <ScalarProperty Name="RATE_TYPE" ColumnName="RATE_TYPE" />
+                <ScalarProperty Name="DUTY_TYPE" ColumnName="DUTY_TYPE" />
+                <ScalarProperty Name="EMPLOYEE_ID" ColumnName="EMPLOYEE_ID" />
+                <ScalarProperty Name="POSITION_TITLE" ColumnName="POSITION_TITLE" />
+                <ScalarProperty Name="POSITION_ID" ColumnName="POSITION_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SALARY_GRADE">
+            <EntityTypeMapping TypeName="EMSModel.SALARY_GRADE">
+              <MappingFragment StoreEntitySet="SALARY-GRADE">
+                <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
+                <ScalarProperty Name="UPDATE_BY" ColumnName="UPDATE_BY" />
+                <ScalarProperty Name="ACTION_DATE" ColumnName="ACTION_DATE" />
+                <ScalarProperty Name="ACTION_BY" ColumnName="ACTION_BY" />
+                <ScalarProperty Name="GRADE_TYPE" ColumnName="GRADE_TYPE" />
+                <ScalarProperty Name="GRADE_TITLE" ColumnName="GRADE_TITLE" />
+                <ScalarProperty Name="GRADE_ID" ColumnName="GRADE_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

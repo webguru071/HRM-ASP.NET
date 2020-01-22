@@ -11,6 +11,9 @@ namespace EMSApp.Helper
         {
 
         }
+        //Status
+        public static string UserStatusActive = "a";
+        public static string UserStatusDeactive = "d";
         //User
         public static string UserLevelAdmin="a";
         public static string UserLevelEmployee="e";
@@ -42,5 +45,8 @@ namespace EMSApp.Helper
         //Transaction Sheet
         public static string TransactionSheetPayTypeCash = "c";
         public static string TransactionSheetPayTypeBank = "b";
+        //Payroll
+        public static string SalaryGradeAdd = "a";
+        public static string SalaryGradeDeduct = "d";
     }
 }

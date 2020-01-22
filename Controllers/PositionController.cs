@@ -48,7 +48,7 @@ namespace EMSApp.Controllers
                 }
                 else if (string.IsNullOrEmpty(obj.POSITION_TITLE))
                 {
-                    ModelState.AddModelError("", "Please Add Position Name");
+                    ModelState.AddModelError("", "Please Enter Position Name");
                 }
                 else if (string.IsNullOrEmpty(obj.DUTY_TYPE))
                 {
@@ -61,6 +61,10 @@ namespace EMSApp.Controllers
                 else if (string.IsNullOrEmpty(obj.PAY_FREQ))
                 {
                     ModelState.AddModelError("", "Please Select Payment Frequency Type");
+                }
+                else if (obj.BASIC_SALARY <= 0)
+                {
+                    ModelState.AddModelError("", "Please Enter Basic Salary");
                 }
                 else
                 {
@@ -123,6 +127,10 @@ namespace EMSApp.Controllers
                 else if (string.IsNullOrEmpty(obj.PAY_FREQ))
                 {
                     ModelState.AddModelError("", "Please Select Payment Frequency Type");
+                }
+                else if (obj.BASIC_SALARY <= 0)
+                {
+                    ModelState.AddModelError("", "Please Enter Basic Salary");
                 }
                 else
                 {
