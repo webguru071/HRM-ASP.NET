@@ -9,7 +9,7 @@
 {
     @Html.AntiForgeryToken()
     <style>
-        #TEAM {
+        #TEAM_ID {
             background-color: #202940;
         }
 
@@ -39,9 +39,9 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="bmd-laTEAMbel-floating">Team</label>
-                                                @Html.DropDownList("TEAM", null, htmlAttributes: new { @class = "form-control", @onchange = "GetEmpInfo()" })
-                                                @Html.ValidationMessageFor(model => model.TEAM, "", new { @class = "text-danger" })
+                                                <label class="bmd-label-floating">Team</label>
+                                                @Html.DropDownList("TEAM_ID", null, htmlAttributes: new { @class = "form-control", @onchange = "GetEmpInfo()" })
+                                                @Html.ValidationMessageFor(model => model.TEAM_ID, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -93,7 +93,7 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript">
         function GetEmpInfo() {
-            var id = $('#TEAM').val();
+            var id = $('#TEAM_ID').val();
 
             $.ajax({
                 url: "@Url.Action("GetTeamLeader", "Team")",

@@ -1,0 +1,73 @@
+﻿@model EMSApp.Models.TRANSACTION_SHEET
+
+@{
+    ViewBag.Title = "ExpenseSheetDelete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ExpenseSheetDelete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>TRANSACTION_SHEET</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DATE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DATE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TRANSACTION_ITEM.TRNS_TITLE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TRANSACTION_ITEM.TRNS_TITLE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AMOUNT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AMOUNT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PAY_TYPE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PAY_TYPE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.REMARKS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.REMARKS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VOUCHER_NO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VOUCHER_NO)
+        </dd>
+
+
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "ExpenseSheetIndex")
+        </div>
+    }
+</div>

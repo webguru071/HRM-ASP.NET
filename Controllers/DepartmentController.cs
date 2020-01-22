@@ -40,7 +40,7 @@ namespace EMSApp.Controllers
                 {
                     ModelState.AddModelError("", "Please Add Department Name");
                 }
-                
+
                 else
                 {
                     long userID = Convert.ToInt64(Session["USER_ID"]);
@@ -57,7 +57,7 @@ namespace EMSApp.Controllers
             }
             catch (Exception ex)
             {
-               
+
             }
             return View();
         }
@@ -119,13 +119,14 @@ namespace EMSApp.Controllers
             {
                 // TODO: Add delete logic here
                 var dt = db.DEPARTMENT_INFO.Where(x => x.DEPT_ID == id).FirstOrDefault();
-                if(dt!=null){
+                if (dt != null)
+                {
                     db.DEPARTMENT_INFO.Remove(dt);
                     db.SaveChanges();
                     return RedirectToAction("Index");
-                }              
+                }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return View();
             }

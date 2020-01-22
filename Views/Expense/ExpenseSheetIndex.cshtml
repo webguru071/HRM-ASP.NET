@@ -1,0 +1,76 @@
+﻿@model IEnumerable<EMSApp.Models.TRANSACTION_SHEET>
+
+@{
+    ViewBag.Title = "Expense List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Expense List</h2>
+
+<p>
+    @Html.ActionLink("Create New", "ExpenseSheetCreate")
+</p>
+<table class="table">
+    <tr>
+        <th>
+           Enpenses Item
+        </th>
+        <th>
+           Voucher No
+        </th>
+        <th>
+           Amount
+        </th>
+        <th>
+            Payment
+        </th>
+        <th>
+          Date
+        </th>
+        <th>
+           Remarks
+        </th>
+
+        <th>Active</th>
+    </tr>
+
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.TRANSACTION_ITEM.TRNS_TITLE)
+    </td>
+    <th>
+        @Html.DisplayFor(model => item.VOUCHER_NO)
+    </th>
+    <td>
+        @Html.DisplayFor(modelItem => item.AMOUNT)
+    </td>
+    <td>
+        @if (item.PAY_TYPE == EMSApp.Helper.ConstantValue.TransactionSheetPayTypeBank)
+        {
+            item.PAY_TYPE = "Bank";
+        }
+        @if (item.PAY_TYPE == EMSApp.Helper.ConstantValue.TransactionSheetPayTypeCash)
+        {
+            item.PAY_TYPE = "Cash";
+        }
+        @Html.DisplayFor(modelItem => item.PAY_TYPE)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.DATE)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.REMARKS)
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "ExpenseSheetEdit", new { id = item.TRNS_S_ID }) |
+        @Html.ActionLink("Delete", "ExpenseSheetDelete", new { id = item.TRNS_S_ID })
+    </td>
+</tr>
+        }
+    }
+
+</table>

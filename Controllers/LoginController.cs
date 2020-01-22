@@ -44,7 +44,8 @@ namespace EMSApp.Controllers
                 if (data != null)
                 {
                     Session["USER_ID"] = data.ID;
-                    long userID = Convert.ToInt64(Session["USER_ID"]);
+                    Session["USER_LEVEL"]=data.USER_LEVEL;
+                    Session["EMP_ID"]=data.EMPLOYEE_ID;
                     Response.Redirect("~/Home/Index");
                 }
                 else

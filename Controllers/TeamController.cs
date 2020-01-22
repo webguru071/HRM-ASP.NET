@@ -1,4 +1,5 @@
 ﻿using EMSApp.Models;
+using EMSApp.Services;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -10,10 +11,11 @@ namespace EMSApp.Controllers
     public class TeamController : Controller
     {
         EMSEntities db = new EMSEntities();
+        ICombine service = new CombineServices();
         // GET: Team
         public ActionResult Index()
         {
-            var data = db.TEAMs.Where(x => x.STATUS == "a").ToList();
+            var data = db.TEAM_INFO.Where(x => x.STATUS == "a").ToList();
             return View(data);
         }
 
@@ -32,7 +34,7 @@ namespace EMSApp.Controllers
 
         // POST: Team/Create
         [HttpPost]
-        public ActionResult Create(TEAM team)
+        public ActionResult Create(TEAM_INFO team)
         {
             try
             {
@@ -51,13 +53,12 @@ namespace EMSApp.Controllers
                 }
                 else
                 {
-                    long userID = Convert.ToInt64(Session["USER_ID"]);
-                    team.ACTION_BY = userID;
+                    team.ACTION_BY = Convert.ToInt64(Session["USER_ID"]);
                     team.ACTION_DATE = DateTime.Now;
 
                     if (ModelState.IsValid)
                     {
-                        db.TEAMs.Add(team);
+                        db.TEAM_INFO.Add(team);
                         db.SaveChanges();
                         return RedirectToAction("Index");
                     }
@@ -95,7 +96,7 @@ namespace EMSApp.Controllers
         // GET: Team/Edit/5
         public ActionResult Edit(int id)
         {
-            var data = db.TEAMs.Where(x => x.ID == id).FirstOrDefault();
+            var data = db.TEAM_INFO.Where(x => x.ID == id).FirstOrDefault();
             Session["AD"] = data.ACTION_DATE;
             Session["AT"] = data.ACTION_BY;
             GetDataInBag(data.TEAM_LEADER, data.STATUS);
@@ -104,7 +105,7 @@ namespace EMSApp.Controllers
 
         // POST: Team/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, TEAM team)
+        public ActionResult Edit(int id, TEAM_INFO team)
         {
             try
             {
@@ -123,7 +124,6 @@ namespace EMSApp.Controllers
                 }
                 else
                 {
-                    long userID = Convert.ToInt64(Session["USER_ID"]);
                     team.UPDATE_BY = Convert.ToInt64(Session["USER_ID"]);
                     team.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
                     team.UPDATE_DATE = DateTime.Now;
@@ -170,7 +170,7 @@ namespace EMSApp.Controllers
         [HttpGet]
         public ActionResult TeamMemberIndex()
         {
-            var data = db.TEAM_DETAILS.Where(x => x.STATUS == "a").OrderBy(x=>x.TEAM).ToList();
+            var data = db.TEAM_DETAILS.Where(x => x.STATUS == "a").OrderBy(x => x.TEAM_ID).ToList();
             return View(data);
         }
         [HttpGet]
@@ -185,7 +185,7 @@ namespace EMSApp.Controllers
             try
             {
                 // TODO: Add insert logic here
-                if (details.TEAM <= 0)
+                if (details.TEAM_ID <= 0)
                 {
                     ModelState.AddModelError("", "Team is Required!!");
                 }
@@ -226,7 +226,7 @@ namespace EMSApp.Controllers
             var data = db.TEAM_DETAILS.Where(x => x.ID == id).FirstOrDefault();
             Session["AD"] = data.ACTION_DATE;
             Session["AT"] = data.ACTION_BY;
-            GetDataInBagForMember(data.TEAM, data.MEMBER, data.STATUS);
+            GetDataInBagForMember(data.TEAM_ID, data.MEMBER, data.STATUS);
             return View(data);
         }
         [HttpPost]
@@ -235,7 +235,7 @@ namespace EMSApp.Controllers
             try
             {
                 // TODO: Add insert logic here
-                if (details.TEAM<=0)
+                if (details.TEAM_ID <= 0)
                 {
                     ModelState.AddModelError("", "Team is Required!!");
                 }
@@ -262,19 +262,19 @@ namespace EMSApp.Controllers
                         return RedirectToAction("TeamMemberIndex");
                     }
                 }
-                GetDataInBagForMember(details.TEAM, details.MEMBER, details.STATUS);
+                GetDataInBagForMember(details.TEAM_ID, details.MEMBER, details.STATUS);
                 return View();
             }
             catch (Exception ex)
             {
-                GetDataInBagForMember(details.TEAM, details.MEMBER, details.STATUS);
+                GetDataInBagForMember(details.TEAM_ID, details.MEMBER, details.STATUS);
                 return View();
             }
         }
         private void GetDataInBagForMember(long teamId = 0, long member = 0, string status = "")
         {
             ViewBag.MEMBER = new SelectList(SetMember(), "Value", "Text", member);
-            ViewBag.TEAM = new SelectList(SetTeam(), "Value", "Text", teamId);
+            ViewBag.TEAM_ID = new SelectList(SetTeam(), "Value", "Text", teamId);
             ViewBag.STATUS = new SelectList(SetStatusList(), "Value", "Text", status);
         }
 
@@ -286,14 +286,14 @@ namespace EMSApp.Controllers
         }
         private List<SelectListItem> SetTeam()
         {
-            List<SelectListItem> teamList = new SelectList(db.TEAMs, "ID", "TEAM_TITLE").ToList();
+            List<SelectListItem> teamList = new SelectList(db.TEAM_INFO, "ID", "TEAM_TITLE").ToList();
             teamList.Insert(0, (new SelectListItem { Text = "Select One", Value = "0" }));
             return teamList;
         }
         public JsonResult GetTeamLeader(int id)
         {
-            var leaderName = db.EMPLOYEE_INFO.Where(x => x.ID == id && x.IS_DELETED == "a").FirstOrDefault();
-            return Json(leaderName.EMPLOYEE_NAME, JsonRequestBehavior.AllowGet) ;
+            string leaderName = service.GetTeamLeaderById(id);
+            return Json(leaderName, JsonRequestBehavior.AllowGet);
         }
     }
 }

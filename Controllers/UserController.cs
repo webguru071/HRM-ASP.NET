@@ -103,7 +103,7 @@ namespace EMSApp.Controllers
                     }
                     else
                     {
-                        ModelState.AddModelError("", "User Id is Already Created!!");
+                        ModelState.AddModelError("", "User Id is Already Exist! Please Try With Another User ID.");
                     }
                 }
                 GetDataInBag();

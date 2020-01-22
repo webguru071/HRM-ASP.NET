@@ -40,9 +40,9 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="bmd-laTEAMbel-floating">Team</label>
-                                                @Html.DropDownList("TEAM", null, htmlAttributes: new { @class = "form-control", @onchange = "GetEmpInfo()" })
-                                                @Html.ValidationMessageFor(model => model.TEAM, "", new { @class = "text-danger" })
+                                                <label class="bmd-label-floating">Team</label>
+                                                @Html.DropDownList("TEAM_ID", null, htmlAttributes: new { @class = "form-control", @onchange = "GetEmpInfo()" })
+                                                @Html.ValidationMessageFor(model => model.TEAM_ID, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -55,21 +55,28 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
+                                                <label class="bmd-label-floating">Team Leader</label>
+                                                @Html.DropDownList("MEMBER", null, htmlAttributes: new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.MEMBER, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
                                                 <label class="bmd-label-floating">Status</label>
                                                 @Html.DropDownList("STATUS", null, htmlAttributes: new { @class = "form-control" })
                                                 @Html.ValidationMessageFor(model => model.STATUS, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
 
-                                        <div class="col-md-8">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label class="bmd-label-floating">Remarks</label>
                                                 @Html.EditorFor(model => model.REMARKS, new { htmlAttributes = new { @class = "form-control" } })
                                                 @Html.ValidationMessageFor(model => model.REMARKS, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
-                                        <button type="submit" class="btn btn-primary pull-right">Save</button>
                                     </div>
+                                    <button type="submit" class="btn btn-primary pull-right">Save</button>
                                     <div class="clearfix"></div>
                                 </form>
                             </div>
@@ -82,11 +89,12 @@
     </div>
 }
 
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript">
         function GetEmpInfo() {
-            var id = $('#TEAM').val();
+            var id = $('#TEAM_ID').val();
 
             $.ajax({
                 url: "@Url.Action("GetTeamLeader", "Team")",

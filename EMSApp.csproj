@@ -148,7 +148,10 @@
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\DivisionController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
+    <Compile Include="Controllers\EmployeeProfileController.cs" />
+    <Compile Include="Controllers\ExpenseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IncomeController.cs" />
     <Compile Include="Controllers\LeaveController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\NoticeController.cs" />
@@ -204,10 +207,13 @@
     <Compile Include="Models\SALARY_INFO.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TEAM.cs">
+    <Compile Include="Models\sysdiagram.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TEAM_DETAILS.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TEAM_INFO.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TRANSACTION_ITEM.cs">
@@ -222,6 +228,8 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\CombineServices.cs" />
+    <Compile Include="Services\ICombine.cs" />
     <Compile Include="Services\Position\IPosition.cs" />
     <Compile Include="Services\Position\PositionService.cs" />
   </ItemGroup>
@@ -546,9 +554,32 @@
     <Content Include="Views\Leave\Index.cshtml" />
     <Content Include="Views\Leave\Create.cshtml" />
     <Content Include="Views\Leave\Edit.cshtml" />
+    <Content Include="Views\Leave\LeaveAppIndex.cshtml" />
+    <Content Include="Views\Leave\LeaveAppAdd.cshtml" />
+    <Content Include="Views\Leave\LeaveAppEdit.cshtml" />
+    <Content Include="Views\Expense\Index.cshtml" />
+    <Content Include="Views\Expense\Create.cshtml" />
+    <Content Include="Views\Expense\Edit.cshtml" />
+    <Content Include="Views\Expense\ExpenseSheetIndex.cshtml" />
+    <Content Include="Views\Expense\ExpenseSheetCreate.cshtml" />
+    <Content Include="Views\Expense\ExpenseSheetEdit.cshtml" />
+    <Content Include="Views\Income\IncomeSheetEdit.cshtml" />
+    <Content Include="Views\Income\IncomeSheetCreate.cshtml" />
+    <Content Include="Views\Income\IncomeSheetIndex.cshtml" />
+    <Content Include="Views\Income\Edit.cshtml" />
+    <Content Include="Views\Income\Create.cshtml" />
+    <Content Include="Views\Income\Index.cshtml" />
+    <Content Include="Views\Leave\Delete.cshtml" />
+    <Content Include="Views\Expense\Delete.cshtml" />
+    <Content Include="Views\Expense\ExpenseSheetDelete.cshtml" />
+    <Content Include="Views\Position\Delete.cshtml" />
+    <Content Include="Views\Income\ExpenseSheetDelete.cshtml" />
+    <Content Include="Views\Income\Delete.cshtml" />
+    <Content Include="Views\EmployeeProfile\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Transaction\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

@@ -1,17 +1,16 @@
-﻿using EMSApp.Models;
+﻿using EMSApp.Helper;
+using EMSApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
-using EMSApp.Services.Position;
 
 namespace EMSApp.Controllers
 {
     public class PositionController : Controller
     {
         EMSEntities db = new EMSEntities();
-        IPosition ins = new PositionService();
         // GET: Position
         public ActionResult Index()
         {
@@ -89,14 +88,14 @@ namespace EMSApp.Controllers
         public ActionResult Edit(int id)
         {
             var dt = db.POSITIONAL_INFO.Where(x => x.POSITION_ID == id).FirstOrDefault();
-            GetDataInBag(dt.EMPLOYEE_ID,dt.DIV_ID);
+            GetDataInBag(dt.EMPLOYEE_ID, dt.DIV_ID);
             Session["AD"] = dt.ACTION_DATE;
             return View(dt);
         }
 
         // POST: Position/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, POSITIONAL_INFO obj )
+        public ActionResult Edit(int id, POSITIONAL_INFO obj)
         {
             try
             {
@@ -126,7 +125,7 @@ namespace EMSApp.Controllers
                     ModelState.AddModelError("", "Please Select Payment Frequency Type");
                 }
                 else
-                {                    
+                {
                     obj.UPDATE_BY = Convert.ToInt64(Session["USER_ID"]);
                     obj.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
                     obj.UPDATE_DATE = DateTime.Now;
@@ -140,9 +139,9 @@ namespace EMSApp.Controllers
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-              
+
             }
             GetDataInBag(obj.EMPLOYEE_ID, obj.DIV_ID);
             return View();
@@ -151,23 +150,30 @@ namespace EMSApp.Controllers
         // GET: Position/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var dt = db.POSITIONAL_INFO.Where(x => x.POSITION_ID == id).FirstOrDefault();
+            return View(dt);
         }
 
         // POST: Position/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id, POSITIONAL_INFO collection)
         {
             try
             {
                 // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
+                var dt = db.POSITIONAL_INFO.Where(x => x.POSITION_ID == id).FirstOrDefault();
+                if (dt != null)
+                {
+                    db.POSITIONAL_INFO.Remove(dt);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
             }
-            catch
+            catch (Exception ex)
             {
                 return View();
             }
+            return View();
         }
         private void GetDataInBag(long empId = 0, long divId = 0)
         {
@@ -180,7 +186,7 @@ namespace EMSApp.Controllers
             empList.Insert(0, (new SelectListItem { Text = "Select One", Value = "0" }));
             return empList;
         }
-       
+
         private List<SelectListItem> SetDiv()
         {
             List<SelectListItem> divtList = new SelectList(db.DIVISION_INFO, "DIV_ID", "DIV_TITLE").ToList();

@@ -16,16 +16,19 @@ namespace EMSApp.Models
     {
         public long LEAVE_APP_ID { get; set; }
         public long LEAVE_TYPE_ID { get; set; }
+        public long EMPLOYEE_ID { get; set; }
         public string START_DATE { get; set; }
         public string END_DATE { get; set; }
         public string APPROVED_START_DATE { get; set; }
         public string APPROVED_END_DATE { get; set; }
+        public string STATUS { get; set; }
         public string REMARKS { get; set; }
         public long ACTIVE_BY { get; set; }
         public System.DateTime ACTIVE_DATE { get; set; }
         public Nullable<long> UPDATE_BY { get; set; }
         public Nullable<System.DateTime> UPDATE_DATE { get; set; }
     
+        public virtual EMPLOYEE_INFO EMPLOYEE_INFO { get; set; }
         public virtual LEAVE_TYPE LEAVE_TYPE { get; set; }
     }
 }

@@ -23,7 +23,7 @@ namespace EMSApp.Helper
             try
             {
                 if (ConfigurationManager.ConnectionStrings["SQLEntities"] == null)
-                    connStr = @"Data Source=.;Initial Catalog=EMS;User ID=sa;password=12345";
+                    connStr = @"Data Source=DESKTOP-OSJOPBK\SQLEXPRESS;Initial Catalog=EMS;User ID=sa;password=12345";
                 else
                     connStr = ConfigurationManager.ConnectionStrings["SQLEntities"].ConnectionString;
             }
@@ -71,7 +71,7 @@ namespace EMSApp.Helper
                 scalarValue = sqlCmd.ExecuteScalar();
                 return scalarValue;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return null;
             }

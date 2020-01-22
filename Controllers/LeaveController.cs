@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using EMSApp.Models;
+using EMSApp.Helper;
 namespace EMSApp.Controllers
 {
     public class LeaveController : Controller
@@ -40,7 +41,7 @@ namespace EMSApp.Controllers
                 {
                     ModelState.AddModelError("", "Please Add Leave Type");
                 }
-                
+
                 else
                 {
                     long userID = Convert.ToInt64(Session["USER_ID"]);
@@ -55,16 +56,16 @@ namespace EMSApp.Controllers
                 }
             }
             catch
-            {               
+            {
                 return View();
-            }           
+            }
             return View();
         }
 
         // GET: Leave/Edit/5
         public ActionResult Edit(int id)
         {
-            var dt = db.LEAVE_TYPE.Where(x => x.LEAVE_ID == id).FirstOrDefault();            
+            var dt = db.LEAVE_TYPE.Where(x => x.LEAVE_ID == id).FirstOrDefault();
             Session["AD"] = dt.ACTIVE_DATE;
             return View(dt);
         }
@@ -106,7 +107,8 @@ namespace EMSApp.Controllers
         // GET: Leave/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var dt = db.LEAVE_TYPE.Where(x => x.LEAVE_ID == id).FirstOrDefault();
+            return View(dt);
         }
 
         // POST: Leave/Delete/5
@@ -116,13 +118,195 @@ namespace EMSApp.Controllers
             try
             {
                 // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
+                var dt = db.LEAVE_TYPE.Where(x => x.LEAVE_ID == id).FirstOrDefault();
+                if (dt != null)
+                {
+                    db.LEAVE_TYPE.Remove(dt);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
             }
-            catch
+            catch (Exception ex)
             {
                 return View();
             }
+            return View();
+        }
+        [HttpGet]
+        public ActionResult LeaveAppIndex()
+        {
+            if (Session["USER_LEVEL"].ToString() == ConstantValue.UserLevelAdmin)
+            {
+                var data = db.LEAVE_APPLICATION.Where(x => x.STATUS == ConstantValue.LeaveStatusPending).ToList();
+                return View(data);
+            }
+            else
+            {
+                long empId = Convert.ToInt64(Session["EMP_ID"]);
+                var data = db.LEAVE_APPLICATION.Where(x => x.EMPLOYEE_ID == empId).ToList();
+                return View(data);
+            }
+        }
+        [HttpGet]
+        public ActionResult LeaveAppAdd()
+        {
+            if ((Session["USER_LEVEL"].ToString() == ConstantValue.UserLevelAdmin))
+            {
+                GetDataInBag();
+            }
+            else
+            {
+                long empId = Convert.ToInt64(Session["EMP_ID"]);
+                GetDataInBag(empId: empId);
+            }
+
+            return View();
+        }
+        [HttpPost]
+        public ActionResult LeaveAppAdd(LEAVE_APPLICATION collection)
+        {
+            try
+            {
+                // TODO: Add insert logic here
+                if (collection.EMPLOYEE_ID <= 0)
+                {
+                    ModelState.AddModelError("", "Employee Name is Required!!");
+                }
+                else if (collection.LEAVE_TYPE_ID <= 0)
+                {
+                    ModelState.AddModelError("", "Leave Type is Required!!");
+                }
+
+                else if (string.IsNullOrEmpty(collection.START_DATE))
+                {
+                    ModelState.AddModelError("", "Leave Start Date is Required!!");
+                }
+                else if (string.IsNullOrEmpty(collection.END_DATE))
+                {
+                    ModelState.AddModelError("", "Leave End Date is Required!!");
+                }
+                else
+                {
+                    collection.STATUS = ConstantValue.LeaveStatusPending;
+                    collection.ACTIVE_BY = Convert.ToInt64(Session["USER_ID"]);
+                    collection.ACTIVE_DATE = DateTime.Now;
+
+                    if (ModelState.IsValid)
+                    {
+                        db.LEAVE_APPLICATION.Add(collection);
+                        db.SaveChanges();
+                        return RedirectToAction("LeaveAppIndex");
+                    }
+                }
+                GetDataInBag(empId: collection.EMPLOYEE_ID);
+                return View();
+            }
+            catch (Exception ex)
+            {
+                GetDataInBag(empId: collection.EMPLOYEE_ID);
+                return View();
+            }
+        }
+        [HttpGet]
+        public ActionResult LeaveAppEdit(long id)
+        {
+            var data = db.LEAVE_APPLICATION.Where(x => x.LEAVE_APP_ID == id && x.STATUS != ConstantValue.LeaveStatusApproved).FirstOrDefault();
+            long empId = Convert.ToInt64(Session["EMP_ID"]);
+            Session["AD"] = data.ACTIVE_DATE;
+            GetDataInBag(data.EMPLOYEE_ID, data.LEAVE_TYPE_ID);
+            return View(data);
+        }
+        [HttpPost]
+        public ActionResult LeaveAppEdit(long id, LEAVE_APPLICATION collection)
+        {
+            try
+            {
+                // TODO: Add insert logic here
+                if (collection.EMPLOYEE_ID <= 0)
+                {
+                    ModelState.AddModelError("", "Employee Name is Required!!");
+                }
+                else if (collection.LEAVE_TYPE_ID <= 0)
+                {
+                    ModelState.AddModelError("", "Leave Type is Required!!");
+                }
+
+                else if (string.IsNullOrEmpty(collection.START_DATE))
+                {
+                    ModelState.AddModelError("", "Leave Start Date is Required!!");
+                }
+                else if (string.IsNullOrEmpty(collection.END_DATE))
+                {
+                    ModelState.AddModelError("", "Leave End Date is Required!!");
+                }
+                else
+                {
+                    collection.STATUS = ConstantValue.LeaveStatusPending;
+                    collection.UPDATE_BY = Convert.ToInt64(Session["USER_ID"]);
+                    collection.ACTIVE_DATE = Convert.ToDateTime(Session["AD"]);
+                    collection.UPDATE_DATE = DateTime.Now;
+
+                    if (ModelState.IsValid)
+                    {
+                        db.Entry(collection).State = EntityState.Modified;
+                        db.SaveChanges();
+                        Session["AD"] = null;
+                        return RedirectToAction("LeaveAppIndex");
+                    }
+                }
+                GetDataInBag(empId: collection.EMPLOYEE_ID);
+                return View();
+            }
+            catch (Exception ex)
+            {
+                GetDataInBag(empId: collection.EMPLOYEE_ID);
+                return View();
+            }
+        }
+        private void GetDataInBag(long empId = 0, long leaveType = 0)
+        {
+            ViewBag.EMPLOYEE_ID = new SelectList(SetEmployee(), "Value", "Text", empId);
+            ViewBag.LEAVE_TYPE_ID = new SelectList(SetLeaveType(), "Value", "Text", leaveType);
+        }
+        private List<SelectListItem> SetEmployee()
+        {
+            List<SelectListItem> empList = new SelectList(db.EMPLOYEE_INFO, "ID", "EMPLOYEE_NAME").ToList();
+            empList.Insert(0, (new SelectListItem { Text = "Select One", Value = "0" }));
+            return empList;
+        }
+        private List<SelectListItem> SetLeaveType()
+        {
+            List<SelectListItem> leaveTypeList = new SelectList(db.LEAVE_TYPE, "LEAVE_ID", "LEAVE_TITLE").ToList();
+            leaveTypeList.Insert(0, (new SelectListItem { Text = "Select One", Value = "0" }));
+            return leaveTypeList;
+        }
+        [HttpGet]
+        public ActionResult LeaveAppDelete(int id)
+        {
+            var dt = db.LEAVE_APPLICATION.Where(x => x.LEAVE_APP_ID == id).FirstOrDefault();
+            return View(dt);
+        }
+
+        // POST: Leave/Delete/5
+        [HttpPost]
+        public ActionResult LeaveAppDelete(int id, FormCollection collection)
+        {
+            try
+            {
+                // TODO: Add delete logic here
+                var dt = db.LEAVE_APPLICATION.Where(x => x.LEAVE_APP_ID == id).FirstOrDefault();
+                if (dt != null)
+                {
+                    db.LEAVE_APPLICATION.Remove(dt);
+                    db.SaveChanges();
+                    return RedirectToAction("LeaveAppIndex");
+                }
+            }
+            catch (Exception ex)
+            {
+                return View();
+            }
+            return View();
         }
     }
 }

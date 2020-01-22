@@ -15,7 +15,7 @@ namespace EMSApp.Models
     public partial class TEAM_DETAILS
     {
         public long ID { get; set; }
-        public long TEAM { get; set; }
+        public long TEAM_ID { get; set; }
         public long MEMBER { get; set; }
         public string REMARKS { get; set; }
         public string STATUS { get; set; }
@@ -25,6 +25,6 @@ namespace EMSApp.Models
         public Nullable<System.DateTime> UPDATE_DATE { get; set; }
     
         public virtual EMPLOYEE_INFO EMPLOYEE_INFO { get; set; }
-        public virtual TEAM TEAM1 { get; set; }
+        public virtual TEAM_INFO TEAM_INFO { get; set; }
     }
 }

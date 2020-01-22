@@ -1,0 +1,101 @@
+﻿@model IEnumerable<EMSApp.Models.LEAVE_APPLICATION>
+
+@{
+    ViewBag.Title = "LeaveAppIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>LeaveAppIndex</h2>
+
+<p>
+    @Html.ActionLink("Create New", "LeaveAppAdd")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Applicant
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LEAVE_TYPE.LEAVE_TITLE)
+        </th>
+        <th>
+            START DATE
+        </th>
+        <th>
+            END DATE
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.REMARKS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.STATUS)
+        </th>
+        <th>Action</th>
+    </tr>
+
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+<tr>
+    <th>
+        @Html.DisplayFor(modelItem => item.EMPLOYEE_INFO.EMPLOYEE_NAME)
+    </th>
+    <td>
+        @Html.DisplayFor(modelItem => item.LEAVE_TYPE.LEAVE_TITLE)
+    </td>
+    <td>
+        Applied Start Date: @Html.DisplayFor(modelItem => item.START_DATE)
+        <br />
+        Approved Start Date: @Html.DisplayFor(modelItem => item.APPROVED_START_DATE)
+    </td>
+    <td>
+        Applied End Date: @Html.DisplayFor(modelItem => item.END_DATE)
+        <br />
+        Approved End Date: @Html.DisplayFor(modelItem => item.APPROVED_END_DATE)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.REMARKS)
+    </td>
+    <td>
+
+        @if (item.STATUS == EMSApp.Helper.ConstantValue.LeaveStatusPending)
+        {
+            item.STATUS = "Pending";
+        }
+        @if (item.STATUS == EMSApp.Helper.ConstantValue.LeaveStatusApproved)
+        {
+            item.STATUS = "Approved";
+        }
+        @if (item.STATUS == EMSApp.Helper.ConstantValue.LeaveStatusCanceled)
+        {
+            item.STATUS = "Cancel";
+        }
+        @Html.DisplayFor(modelItem => item.STATUS)
+    </td>
+    @if (Session["USER_LEVEL"].ToString() == EMSApp.Helper.ConstantValue.UserLevelAdmin)
+    {
+        if (item.STATUS != EMSApp.Helper.ConstantValue.LeaveStatusApproved)
+        {
+            <td>
+                @Html.ActionLink("View", "Edit", new { id = item.LEAVE_APP_ID })|
+                @Html.ActionLink("Delete", "Delete", new { id = item.LEAVE_APP_ID })
+            </td>
+        }
+    }
+    @if (Session["USER_LEVEL"].ToString() == EMSApp.Helper.ConstantValue.UserLevelEmployee)
+    {
+        if (item.STATUS == EMSApp.Helper.ConstantValue.LeaveStatusPending)
+        {
+            <td>
+                @Html.ActionLink("View", "LeaveAppEdit", new { id = item.LEAVE_APP_ID })|
+                @Html.ActionLink("Delete", "LeaveAppEdit", new { id = item.LEAVE_APP_ID })
+            </td>
+        }
+
+    }
+</tr>
+        }
+    }
+
+</table>

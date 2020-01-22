@@ -1,0 +1,139 @@
+﻿@model EMSApp.Models.EMPLOYEE_INFO
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div>
+    <h4>EMPLOYEE_INFO</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EMPLOYEE_NAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EMPLOYEE_NAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ADDRESS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ADDRESS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CONTACT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CONTACT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EMAIL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EMAIL)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IMAGE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IMAGE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.JOINING_DATE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.JOINING_DATE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RESIGNING_DATE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RESIGNING_DATE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CITY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CITY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.POSTAL_CODE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.POSTAL_CODE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DOB)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DOB)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GENDER)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GENDER)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MARITALA_STATUS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MARITALA_STATUS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NATIONALITY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NATIONALITY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BLOOD_GROUP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BLOOD_GROUP)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

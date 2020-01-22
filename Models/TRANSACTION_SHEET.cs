@@ -15,7 +15,7 @@ namespace EMSApp.Models
     public partial class TRANSACTION_SHEET
     {
         public long TRNS_S_ID { get; set; }
-        public System.DateTime DATE { get; set; }
+        public string DATE { get; set; }
         public long TRNS_ID { get; set; }
         public decimal AMOUNT { get; set; }
         public string PAY_TYPE { get; set; }
@@ -25,6 +25,7 @@ namespace EMSApp.Models
         public Nullable<long> UPDATE_BY { get; set; }
         public Nullable<System.DateTime> UPDATE_DATE { get; set; }
         public string TYPE { get; set; }
+        public string VOUCHER_NO { get; set; }
     
         public virtual TRANSACTION_ITEM TRANSACTION_ITEM { get; set; }
     }

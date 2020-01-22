@@ -12,10 +12,10 @@ namespace EMSApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class TEAM
+    public partial class TEAM_INFO
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TEAM()
+        public TEAM_INFO()
         {
             this.TEAM_DETAILS = new HashSet<TEAM_DETAILS>();
         }

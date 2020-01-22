@@ -65,10 +65,12 @@
     </Key>
     <Property Name="LEAVE_APP_ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="LEAVE_TYPE_ID" Type="bigint" Nullable="false" />
+    <Property Name="EMPLOYEE_ID" Type="bigint" Nullable="false" />
     <Property Name="START_DATE" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="END_DATE" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="APPROVED_START_DATE" Type="nvarchar" MaxLength="50" />
     <Property Name="APPROVED_END_DATE" Type="nvarchar" MaxLength="50" />
+    <Property Name="STATUS" Type="char" MaxLength="1" Nullable="false" />
     <Property Name="REMARKS" Type="nvarchar" MaxLength="50" />
     <Property Name="ACTIVE_BY" Type="bigint" Nullable="false" />
     <Property Name="ACTIVE_DATE" Type="datetime" Nullable="false" />
@@ -132,13 +134,23 @@
     <Property Name="UPDATE_DATE" Type="datetime" />
     <Property Name="REMARKS" Type="nvarchar" MaxLength="50" />
   </EntityType>
-  <EntityType Name="TEAM">
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="TEAM_DETAILS">
     <Key>
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="TEAM_TITLE" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="TEAM_LEADER" Type="bigint" Nullable="false" />
+    <Property Name="TEAM_ID" Type="bigint" Nullable="false" />
+    <Property Name="MEMBER" Type="bigint" Nullable="false" />
     <Property Name="REMARKS" Type="nvarchar" MaxLength="50" />
     <Property Name="STATUS" Type="char" MaxLength="1" Nullable="false" />
     <Property Name="ACTION_BY" Type="bigint" Nullable="false" />
@@ -146,13 +158,13 @@
     <Property Name="UPDATE_BY" Type="bigint" />
     <Property Name="UPDATE_DATE" Type="datetime" />
   </EntityType>
-  <EntityType Name="TEAM_DETAILS">
+  <EntityType Name="TEAM_INFO">
     <Key>
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="TEAM" Type="bigint" Nullable="false" />
-    <Property Name="MEMBER" Type="bigint" Nullable="false" />
+    <Property Name="TEAM_TITLE" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="TEAM_LEADER" Type="bigint" Nullable="false" />
     <Property Name="REMARKS" Type="nvarchar" MaxLength="50" />
     <Property Name="STATUS" Type="char" MaxLength="1" Nullable="false" />
     <Property Name="ACTION_BY" Type="bigint" Nullable="false" />
@@ -177,7 +189,7 @@
       <PropertyRef Name="TRNS_S_ID" />
     </Key>
     <Property Name="TRNS_S_ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="DATE" Type="date" Nullable="false" />
+    <Property Name="DATE" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="TRNS_ID" Type="bigint" Nullable="false" />
     <Property Name="AMOUNT" Type="decimal" Precision="18" Scale="2" Nullable="false" />
     <Property Name="PAY_TYPE" Type="char" MaxLength="1" Nullable="false" />
@@ -187,6 +199,7 @@
     <Property Name="UPDATE_BY" Type="bigint" />
     <Property Name="UPDATE_DATE" Type="datetime" />
     <Property Name="TYPE" Type="char" MaxLength="1" />
+    <Property Name="VOUCHER_NO" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="USER_INFO">
     <Key>
@@ -214,6 +227,18 @@
       </Principal>
       <Dependent Role="DIVISION_INFO">
         <PropertyRef Name="DEPT_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LEAVE_APPLICATION_EMPLOYEE_INFO">
+    <End Role="EMPLOYEE_INFO" Type="Self.EMPLOYEE_INFO" Multiplicity="1" />
+    <End Role="LEAVE_APPLICATION" Type="Self.LEAVE_APPLICATION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EMPLOYEE_INFO">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="LEAVE_APPLICATION">
+        <PropertyRef Name="EMPLOYEE_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -278,25 +303,25 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_TEAM_DETAILS_TEAM">
-    <End Role="TEAM" Type="Self.TEAM" Multiplicity="1" />
+    <End Role="TEAM_INFO" Type="Self.TEAM_INFO" Multiplicity="1" />
     <End Role="TEAM_DETAILS" Type="Self.TEAM_DETAILS" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="TEAM">
+      <Principal Role="TEAM_INFO">
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="TEAM_DETAILS">
-        <PropertyRef Name="TEAM" />
+        <PropertyRef Name="TEAM_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_TEAM_EMPLOYEE_INFO">
     <End Role="EMPLOYEE_INFO" Type="Self.EMPLOYEE_INFO" Multiplicity="1" />
-    <End Role="TEAM" Type="Self.TEAM" Multiplicity="*" />
+    <End Role="TEAM_INFO" Type="Self.TEAM_INFO" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="EMPLOYEE_INFO">
         <PropertyRef Name="ID" />
       </Principal>
-      <Dependent Role="TEAM">
+      <Dependent Role="TEAM_INFO">
         <PropertyRef Name="TEAM_LEADER" />
       </Dependent>
     </ReferentialConstraint>
@@ -335,14 +360,19 @@
     <EntitySet Name="NOTICE_BOARD" EntityType="Self.NOTICE_BOARD" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="POSITIONAL_INFO" EntityType="Self.POSITIONAL_INFO" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SALARY_INFO" EntityType="Self.SALARY_INFO" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="TEAM" EntityType="Self.TEAM" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TEAM_DETAILS" EntityType="Self.TEAM_DETAILS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TEAM_INFO" EntityType="Self.TEAM_INFO" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TRANSACTION_ITEM" EntityType="Self.TRANSACTION_ITEM" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TRANSACTION_SHEET" EntityType="Self.TRANSACTION_SHEET" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="USER_INFO" EntityType="Self.USER_INFO" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_DIVISION_INFO_DEPARTMENT_INFO" Association="Self.FK_DIVISION_INFO_DEPARTMENT_INFO">
       <End Role="DEPARTMENT_INFO" EntitySet="DEPARTMENT_INFO" />
       <End Role="DIVISION_INFO" EntitySet="DIVISION_INFO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LEAVE_APPLICATION_EMPLOYEE_INFO" Association="Self.FK_LEAVE_APPLICATION_EMPLOYEE_INFO">
+      <End Role="EMPLOYEE_INFO" EntitySet="EMPLOYEE_INFO" />
+      <End Role="LEAVE_APPLICATION" EntitySet="LEAVE_APPLICATION" />
     </AssociationSet>
     <AssociationSet Name="FK_LEAVE_APPLICATION_LEAVE_APPLICATION" Association="Self.FK_LEAVE_APPLICATION_LEAVE_APPLICATION">
       <End Role="LEAVE_TYPE" EntitySet="LEAVE_TYPE" />
@@ -365,12 +395,12 @@
       <End Role="TEAM_DETAILS" EntitySet="TEAM_DETAILS" />
     </AssociationSet>
     <AssociationSet Name="FK_TEAM_DETAILS_TEAM" Association="Self.FK_TEAM_DETAILS_TEAM">
-      <End Role="TEAM" EntitySet="TEAM" />
+      <End Role="TEAM_INFO" EntitySet="TEAM_INFO" />
       <End Role="TEAM_DETAILS" EntitySet="TEAM_DETAILS" />
     </AssociationSet>
     <AssociationSet Name="FK_TEAM_EMPLOYEE_INFO" Association="Self.FK_TEAM_EMPLOYEE_INFO">
       <End Role="EMPLOYEE_INFO" EntitySet="EMPLOYEE_INFO" />
-      <End Role="TEAM" EntitySet="TEAM" />
+      <End Role="TEAM_INFO" EntitySet="TEAM_INFO" />
     </AssociationSet>
     <AssociationSet Name="FK_TRANSACTION_SHEET_TRANSACTION_ITEM" Association="Self.FK_TRANSACTION_SHEET_TRANSACTION_ITEM">
       <End Role="TRANSACTION_ITEM" EntitySet="TRANSACTION_ITEM" />
