@@ -1,0 +1,74 @@
+﻿@model IEnumerable<EMSApp.Models.SALARY_SETUP>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.PAY_TYPE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GROSS_SALARY)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ACTION_BY)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ACTION_DATE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UPDATE_BY)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UPDATE_DATE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EMPLOYEE_INFO.EMPLOYEE_NAME)
+        </th>
+        <th></th>
+    </tr>
+
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PAY_TYPE)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GROSS_SALARY)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ACTION_BY)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ACTION_DATE)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UPDATE_BY)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UPDATE_DATE)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EMPLOYEE_INFO.EMPLOYEE_NAME)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.SALARY_SET_ID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.SALARY_SET_ID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.SALARY_SET_ID })
+                </td>
+            </tr>
+        }
+    }
+
+</table>

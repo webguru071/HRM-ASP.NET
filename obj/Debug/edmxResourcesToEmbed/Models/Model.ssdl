@@ -143,6 +143,20 @@
     <Property Name="UPDATE_BY" Type="bigint" />
     <Property Name="UPDATE_DATE" Type="datetime" />
     <Property Name="REMARKS" Type="nvarchar" MaxLength="50" />
+    <Property Name="STATUS" Type="char" MaxLength="1" />
+  </EntityType>
+  <EntityType Name="SALARY_SETUP">
+    <Key>
+      <PropertyRef Name="SALARY_SET_ID" />
+    </Key>
+    <Property Name="SALARY_SET_ID" Type="bigint" Nullable="false" />
+    <Property Name="EMP_ID" Type="bigint" Nullable="false" />
+    <Property Name="PAY_TYPE" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="GROSS_SALARY" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="ACTION_BY" Type="bigint" Nullable="false" />
+    <Property Name="ACTION_DATE" Type="datetime" Nullable="false" />
+    <Property Name="UPDATE_BY" Type="bigint" />
+    <Property Name="UPDATE_DATE" Type="datetime" />
   </EntityType>
   <EntityType Name="SALARY-GRADE">
     <Key>
@@ -324,6 +338,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_SALARY_SETUP_EMPLOYEE_INFO">
+    <End Role="EMPLOYEE_INFO" Type="Self.EMPLOYEE_INFO" Multiplicity="1" />
+    <End Role="SALARY_SETUP" Type="Self.SALARY_SETUP" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EMPLOYEE_INFO">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="SALARY_SETUP">
+        <PropertyRef Name="EMP_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_TEAM_DETAILS_EMPLOYEE_INFO">
     <End Role="EMPLOYEE_INFO" Type="Self.EMPLOYEE_INFO" Multiplicity="1" />
     <End Role="TEAM_DETAILS" Type="Self.TEAM_DETAILS" Multiplicity="*" />
@@ -395,6 +421,7 @@
     <EntitySet Name="NOTICE_BOARD" EntityType="Self.NOTICE_BOARD" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="POSITIONAL_INFO" EntityType="Self.POSITIONAL_INFO" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SALARY_INFO" EntityType="Self.SALARY_INFO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SALARY_SETUP" EntityType="Self.SALARY_SETUP" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SALARY-GRADE" EntityType="Self.SALARY-GRADE" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TEAM_DETAILS" EntityType="Self.TEAM_DETAILS" Schema="dbo" store:Type="Tables" />
@@ -429,6 +456,10 @@
     <AssociationSet Name="FK_SALARY_INFO_EMPLOYEE_INFO" Association="Self.FK_SALARY_INFO_EMPLOYEE_INFO">
       <End Role="EMPLOYEE_INFO" EntitySet="EMPLOYEE_INFO" />
       <End Role="SALARY_INFO" EntitySet="SALARY_INFO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SALARY_SETUP_EMPLOYEE_INFO" Association="Self.FK_SALARY_SETUP_EMPLOYEE_INFO">
+      <End Role="EMPLOYEE_INFO" EntitySet="EMPLOYEE_INFO" />
+      <End Role="SALARY_SETUP" EntitySet="SALARY_SETUP" />
     </AssociationSet>
     <AssociationSet Name="FK_TEAM_DETAILS_EMPLOYEE_INFO" Association="Self.FK_TEAM_DETAILS_EMPLOYEE_INFO">
       <End Role="EMPLOYEE_INFO" EntitySet="EMPLOYEE_INFO" />

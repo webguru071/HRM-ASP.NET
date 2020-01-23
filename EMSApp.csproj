@@ -158,6 +158,7 @@
     <Compile Include="Controllers\PositionController.cs" />
     <Compile Include="Controllers\SalaryController.cs" />
     <Compile Include="Controllers\SalaryGradeController.cs" />
+    <Compile Include="Controllers\SalarySetupController.cs" />
     <Compile Include="Controllers\TeamController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -212,6 +213,9 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SALARY_INFO.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SALARY_SETUP.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sysdiagram.cs">
@@ -587,6 +591,8 @@
     <Content Include="Views\SalaryGrade\Index.cshtml" />
     <Content Include="Views\SalaryGrade\Create.cshtml" />
     <Content Include="Views\SalaryGrade\Edit.cshtml" />
+    <Content Include="Views\SalarySetup\Create.cshtml" />
+    <Content Include="Views\SalarySetup\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

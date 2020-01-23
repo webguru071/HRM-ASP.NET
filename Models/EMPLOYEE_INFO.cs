@@ -17,12 +17,13 @@ namespace EMSApp.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public EMPLOYEE_INFO()
         {
-            this.SALARY_INFO = new HashSet<SALARY_INFO>();
-            this.USER_INFO = new HashSet<USER_INFO>();
             this.LEAVE_APPLICATION = new HashSet<LEAVE_APPLICATION>();
-            this.TEAM_INFO = new HashSet<TEAM_INFO>();
-            this.TEAM_DETAILS = new HashSet<TEAM_DETAILS>();
             this.POSITIONAL_INFO = new HashSet<POSITIONAL_INFO>();
+            this.SALARY_INFO = new HashSet<SALARY_INFO>();
+            this.SALARY_SETUP = new HashSet<SALARY_SETUP>();
+            this.TEAM_DETAILS = new HashSet<TEAM_DETAILS>();
+            this.TEAM_INFO = new HashSet<TEAM_INFO>();
+            this.USER_INFO = new HashSet<USER_INFO>();
         }
     
         public long ID { get; set; }
@@ -48,18 +49,20 @@ namespace EMSApp.Models
         public string NATIONALITY { get; set; }
         public string BLOOD_GROUP { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SALARY_INFO> SALARY_INFO { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<USER_INFO> USER_INFO { get; set; }
+        public virtual EMPLOYEE_APPLICATION EMPLOYEE_APPLICATION { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LEAVE_APPLICATION> LEAVE_APPLICATION { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TEAM_INFO> TEAM_INFO { get; set; }
+        public virtual ICollection<POSITIONAL_INFO> POSITIONAL_INFO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SALARY_INFO> SALARY_INFO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SALARY_SETUP> SALARY_SETUP { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TEAM_DETAILS> TEAM_DETAILS { get; set; }
-        public virtual EMPLOYEE_APPLICATION EMPLOYEE_APPLICATION { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<POSITIONAL_INFO> POSITIONAL_INFO { get; set; }
+        public virtual ICollection<TEAM_INFO> TEAM_INFO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<USER_INFO> USER_INFO { get; set; }
     }
 }
