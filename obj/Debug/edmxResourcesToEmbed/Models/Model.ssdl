@@ -117,6 +117,7 @@
     <Property Name="POSITION_ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="POSITION_TITLE" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="EMPLOYEE_ID" Type="bigint" Nullable="false" />
+    <Property Name="BASIC_SALARY" Type="decimal" Precision="18" Scale="2" />
     <Property Name="DUTY_TYPE" Type="char" MaxLength="1" Nullable="false" />
     <Property Name="RATE_TYPE" Type="char" MaxLength="1" Nullable="false" />
     <Property Name="PAY_FREQ" Type="char" MaxLength="1" Nullable="false" />
@@ -125,7 +126,7 @@
     <Property Name="ACTION_DATE" Type="datetime" Nullable="false" />
     <Property Name="UPDATE_BY" Type="bigint" />
     <Property Name="UPDATE_DATE" Type="datetime" />
-    <Property Name="BASIC_SALARY" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CHANGE_TYPE" Type="char" MaxLength="1" />
   </EntityType>
   <EntityType Name="SALARY_INFO">
     <Key>
@@ -133,30 +134,33 @@
     </Key>
     <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="EMPLOYEE_ID" Type="bigint" Nullable="false" />
-    <Property Name="BASIC_SALARY" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="GROSS_SALARY" Type="decimal" Precision="18" Scale="2" Nullable="false" />
     <Property Name="BONUS" Type="decimal" Precision="18" Scale="2" />
     <Property Name="OTHERS" Type="decimal" Precision="18" Scale="2" />
-    <Property Name="SALARY_PAID" Type="date" Nullable="false" />
+    <Property Name="SALARY_PAID" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="TOTAL" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="STATUS" Type="char" MaxLength="1" />
     <Property Name="ACTION_BY" Type="bigint" Nullable="false" />
     <Property Name="ACTION_DATE" Type="datetime" Nullable="false" />
     <Property Name="UPDATE_BY" Type="bigint" />
     <Property Name="UPDATE_DATE" Type="datetime" />
     <Property Name="REMARKS" Type="nvarchar" MaxLength="50" />
-    <Property Name="STATUS" Type="char" MaxLength="1" />
   </EntityType>
   <EntityType Name="SALARY_SETUP">
     <Key>
       <PropertyRef Name="SALARY_SET_ID" />
     </Key>
-    <Property Name="SALARY_SET_ID" Type="bigint" Nullable="false" />
+    <Property Name="SALARY_SET_ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="EMP_ID" Type="bigint" Nullable="false" />
     <Property Name="PAY_TYPE" Type="char" MaxLength="1" Nullable="false" />
     <Property Name="GROSS_SALARY" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="SALARY_GRADE_SETUP" Type="nvarchar" MaxLength="500" Nullable="false" />
     <Property Name="ACTION_BY" Type="bigint" Nullable="false" />
     <Property Name="ACTION_DATE" Type="datetime" Nullable="false" />
     <Property Name="UPDATE_BY" Type="bigint" />
     <Property Name="UPDATE_DATE" Type="datetime" />
+    <Property Name="CANGE_TYPE" Type="char" MaxLength="1" />
+    <Property Name="POSITION_ID" Type="bigint" />
   </EntityType>
   <EntityType Name="SALARY-GRADE">
     <Key>
@@ -350,6 +354,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_SALARY_SETUP_POSITIONAL_INFO">
+    <End Role="POSITIONAL_INFO" Type="Self.POSITIONAL_INFO" Multiplicity="0..1" />
+    <End Role="SALARY_SETUP" Type="Self.SALARY_SETUP" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="POSITIONAL_INFO">
+        <PropertyRef Name="POSITION_ID" />
+      </Principal>
+      <Dependent Role="SALARY_SETUP">
+        <PropertyRef Name="POSITION_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_TEAM_DETAILS_EMPLOYEE_INFO">
     <End Role="EMPLOYEE_INFO" Type="Self.EMPLOYEE_INFO" Multiplicity="1" />
     <End Role="TEAM_DETAILS" Type="Self.TEAM_DETAILS" Multiplicity="*" />
@@ -459,6 +475,10 @@
     </AssociationSet>
     <AssociationSet Name="FK_SALARY_SETUP_EMPLOYEE_INFO" Association="Self.FK_SALARY_SETUP_EMPLOYEE_INFO">
       <End Role="EMPLOYEE_INFO" EntitySet="EMPLOYEE_INFO" />
+      <End Role="SALARY_SETUP" EntitySet="SALARY_SETUP" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SALARY_SETUP_POSITIONAL_INFO" Association="Self.FK_SALARY_SETUP_POSITIONAL_INFO">
+      <End Role="POSITIONAL_INFO" EntitySet="POSITIONAL_INFO" />
       <End Role="SALARY_SETUP" EntitySet="SALARY_SETUP" />
     </AssociationSet>
     <AssociationSet Name="FK_TEAM_DETAILS_EMPLOYEE_INFO" Association="Self.FK_TEAM_DETAILS_EMPLOYEE_INFO">

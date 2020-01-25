@@ -14,9 +14,16 @@ namespace EMSApp.Models
     
     public partial class POSITIONAL_INFO
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public POSITIONAL_INFO()
+        {
+            this.SALARY_SETUP = new HashSet<SALARY_SETUP>();
+        }
+    
         public long POSITION_ID { get; set; }
         public string POSITION_TITLE { get; set; }
         public long EMPLOYEE_ID { get; set; }
+        public Nullable<decimal> BASIC_SALARY { get; set; }
         public string DUTY_TYPE { get; set; }
         public string RATE_TYPE { get; set; }
         public string PAY_FREQ { get; set; }
@@ -25,9 +32,11 @@ namespace EMSApp.Models
         public System.DateTime ACTION_DATE { get; set; }
         public Nullable<long> UPDATE_BY { get; set; }
         public Nullable<System.DateTime> UPDATE_DATE { get; set; }
-        public Nullable<decimal> BASIC_SALARY { get; set; }
+        public string CHANGE_TYPE { get; set; }
     
         public virtual DIVISION_INFO DIVISION_INFO { get; set; }
         public virtual EMPLOYEE_INFO EMPLOYEE_INFO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SALARY_SETUP> SALARY_SETUP { get; set; }
     }
 }

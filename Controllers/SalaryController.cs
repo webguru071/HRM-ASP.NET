@@ -46,19 +46,21 @@ namespace EMSApp.Controllers
                 {
                     ModelState.AddModelError("", "Salary Paid Date is Required!!");
                 }
-                else if (string.IsNullOrEmpty(salary.BASIC_SALARY.ToString()))
+                else if (string.IsNullOrEmpty(salary.GROSS_SALARY.ToString()))
                 {
                     ModelState.AddModelError("", "Salary is Required!!");
                 }
                 else
                 {
-                    salary.TOTAL = salary.BASIC_SALARY + salary.BONUS + salary.OTHERS;
+                    decimal bonus = salary.BONUS != null ? Convert.ToDecimal(salary.BONUS) : 0;
+                    decimal other = (salary.OTHERS != null) ? Convert.ToDecimal(salary.OTHERS) : 0;
+                    salary.TOTAL = salary.GROSS_SALARY + bonus + other;
                     if (salary.ACTION_BY.ToString() != null)
                     {
                         salary.ACTION_BY = Convert.ToInt64(Session["USER_ID"]);
                     }
                     salary.ACTION_DATE = DateTime.Now;
-                   
+
                     if (ModelState.IsValid)
                     {
                         db.SALARY_INFO.Add(salary);
@@ -102,17 +104,16 @@ namespace EMSApp.Controllers
                 {
                     ModelState.AddModelError("", "Salary Paid Date is Required!!");
                 }
-                else if (string.IsNullOrEmpty(salary.BASIC_SALARY.ToString()))
+                else if (string.IsNullOrEmpty(salary.GROSS_SALARY.ToString()))
                 {
                     ModelState.AddModelError("", "Salary is Required!!");
                 }
                 else
                 {
-                    salary.TOTAL = salary.BASIC_SALARY + salary.BONUS + salary.OTHERS;
-                    if (salary.UPDATE_BY.ToString() != null)
-                    {
-                        salary.UPDATE_BY = Convert.ToInt64(Session["USER_ID"]);
-                    }
+                    decimal bonus = salary.BONUS != null ? Convert.ToDecimal(salary.BONUS) : 0;
+                    decimal other = (salary.OTHERS != null) ? Convert.ToDecimal(salary.OTHERS) : 0;
+                    salary.TOTAL = salary.GROSS_SALARY + bonus + other;
+                    salary.UPDATE_BY = Convert.ToInt64(Session["USER_ID"]);
                     salary.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
                     salary.UPDATE_DATE = DateTime.Now;
                     if (ModelState.IsValid)
@@ -125,7 +126,7 @@ namespace EMSApp.Controllers
                 ViewBag.EMPLOYEE_ID = SetEmployee();
                 return View();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ViewBag.EMPLOYEE_ID = SetEmployee();
                 return View();
@@ -158,6 +159,20 @@ namespace EMSApp.Controllers
             List<SelectListItem> empList = new SelectList(db.EMPLOYEE_INFO, "ID", "EMPLOYEE_NAME").ToList();
             empList.Insert(0, (new SelectListItem { Text = "Select One", Value = "0" }));
             return empList;
+        }
+        public JsonResult GetEmpInfo(long id)
+        {
+            var data = db.SALARY_SETUP.Where(x => x.EMP_ID == id).FirstOrDefault();
+            Dictionary<string, string> listOfData = new Dictionary<string, string>();
+            if (data != null)
+            {
+                listOfData["GROSS_SALARY"] = data.GROSS_SALARY.ToString();
+            }
+            else
+            {
+                listOfData["GROSS_SALARY"] = "";
+            }
+            return Json(listOfData, JsonRequestBehavior.AllowGet);
         }
     }
 }

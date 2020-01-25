@@ -12,28 +12,20 @@
 </p>
 <table class="table">
     <tr>
+        <th>Action</th>
         <th>
-            @Html.DisplayNameFor(model => model.PAY_TYPE)
+            Employee
+        </th>
+
+        <th>
+            Payment On
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.GROSS_SALARY)
+            Salary
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ACTION_BY)
+            Benifites
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ACTION_DATE)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UPDATE_BY)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UPDATE_DATE)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EMPLOYEE_INFO.EMPLOYEE_NAME)
-        </th>
-        <th></th>
     </tr>
 
     @if (Model != null)
@@ -42,30 +34,27 @@
         {
             <tr>
                 <td>
+                    @Html.ActionLink("Delete", "Delete", new { id = item.SALARY_SET_ID })
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EMPLOYEE_INFO.EMPLOYEE_NAME)
+                </td>
+                <td>
+                    @if (item.PAY_TYPE == EMSApp.Helper.ConstantValue.TransactionSheetPayTypeCash)
+                    {
+                        item.PAY_TYPE = "Cash";
+                    }
+                    @if (item.PAY_TYPE == EMSApp.Helper.ConstantValue.TransactionSheetPayTypeBank)
+                    {
+                        item.PAY_TYPE = "Bank";
+                    }
                     @Html.DisplayFor(modelItem => item.PAY_TYPE)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.GROSS_SALARY)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ACTION_BY)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ACTION_DATE)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UPDATE_BY)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UPDATE_DATE)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EMPLOYEE_INFO.EMPLOYEE_NAME)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.SALARY_SET_ID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.SALARY_SET_ID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.SALARY_SET_ID })
+                    @Html.DisplayFor(modelItem => item.SALARY_GRADE_SETUP)
                 </td>
             </tr>
         }

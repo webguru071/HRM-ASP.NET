@@ -14,7 +14,7 @@ namespace EMSApp.Controllers
         // GET: Position
         public ActionResult Index()
         {
-            var data = db.POSITIONAL_INFO.ToList();
+            var data = db.POSITIONAL_INFO.Where(x=>x.CHANGE_TYPE==ConstantValue.TypeActive).ToList();
             return View(data);
         }
 
@@ -71,6 +71,7 @@ namespace EMSApp.Controllers
                     long userID = Convert.ToInt64(Session["USER_ID"]);
                     obj.ACTION_BY = userID;
                     obj.ACTION_DATE = DateTime.Now;
+                    obj.CHANGE_TYPE = ConstantValue.TypeActive;
                     if (ModelState.IsValid)
                     {
                         db.POSITIONAL_INFO.Add(obj);
@@ -137,13 +138,41 @@ namespace EMSApp.Controllers
                     obj.UPDATE_BY = Convert.ToInt64(Session["USER_ID"]);
                     obj.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
                     obj.UPDATE_DATE = DateTime.Now;
-
-                    if (ModelState.IsValid)
+                    if (obj.CHANGE_TYPE == ConstantValue.TypeDeactive)
                     {
-                        db.Entry(obj).State = EntityState.Modified;
-                        db.SaveChanges();
-                        Session["AD"] = null;
-                        return RedirectToAction("Index");
+                        obj.CHANGE_TYPE = ConstantValue.TypeDeactive;
+                        POSITIONAL_INFO newObj = new POSITIONAL_INFO();
+                        newObj = obj;
+                        newObj.ACTION_BY = Convert.ToInt64(obj.UPDATE_BY);
+                        newObj.ACTION_DATE = DateTime.Now;
+                        newObj.CHANGE_TYPE = ConstantValue.TypeActive;                        
+                        using (var dbContextTransaction = db.Database.BeginTransaction())
+                        {
+                            try
+                            {
+                                db.POSITIONAL_INFO.Add(newObj);
+                                db.SaveChanges();
+                                db.Entry(obj).State = EntityState.Modified;
+                                db.SaveChanges();
+                                dbContextTransaction.Commit();
+                                Session["AD"] = null;
+                                return RedirectToAction("Index");
+                            }
+                            catch (Exception ex)
+                            {
+                                dbContextTransaction.Rollback();
+                            }
+                        }                                                  
+                    }
+                    else
+                    {
+                        if (ModelState.IsValid)
+                        {
+                            db.Entry(obj).State = EntityState.Modified;
+                            db.SaveChanges();
+                            Session["AD"] = null;
+                            return RedirectToAction("Index");
+                        }
                     }
                 }
             }

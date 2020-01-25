@@ -34,7 +34,7 @@ namespace EMSApp.Helper
         public static string PayFreqTypeDaily = "d";
         public static string PayFreqTypeWeekly = "w";
         public static string PayFreqTypeBiWeekly = "b";
-        public static string PayFreqTypeMonthly = "m";
+        public static string PayFreqTypeMonthly = "m";        
         //Leave Application
         public static string LeaveStatusApproved = "a";
         public static string LeaveStatusPending = "p";
@@ -48,5 +48,8 @@ namespace EMSApp.Helper
         //Payroll
         public static string SalaryGradeAdd = "a";
         public static string SalaryGradeDeduct = "d";
+        //Activity Type
+        public static string TypeActive = "1";
+        public static string TypeDeactive = "0";
     }
 }
