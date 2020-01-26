@@ -11,8 +11,11 @@
     <table class="table">
         <tr>
             <th>
+                Action
+            </th>
+            <th>
                 Name
-            </th>           
+            </th>
             <th>
                 Contact
             </th>
@@ -22,9 +25,6 @@
             <th>
                 Joining Date
             </th>
-            <th>
-                Action
-            </th>
         </tr>
 
         @if (Model != null)
@@ -33,8 +33,11 @@
             {
                 <tr>
                     <td>
+                        @Html.ActionLink("View", "Edit", new { id = item.ID })
+                    </td>
+                    <td>
                         @Html.DisplayFor(modelItem => item.EMPLOYEE_NAME)
-                    </td>                    
+                    </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.CONTACT)
                     </td>
@@ -43,10 +46,6 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.JOINING_DATE)
-                    </td>
-
-                    <td>
-                        @Html.ActionLink("View", "Edit", new { id = item.ID }) 
                     </td>
                 </tr>
             }

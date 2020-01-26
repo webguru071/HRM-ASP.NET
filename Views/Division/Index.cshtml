@@ -11,12 +11,14 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.DIV_TITLE)
+            Action
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DEPARTMENT_INFO.DEPT_TITLE)
+            Department
         </th>
-        <th></th>
+        <th>
+            Division
+        </th>
     </tr>
 
     @if (Model != null)
@@ -25,15 +27,14 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.DIV_TITLE)
+                    @Html.ActionLink("Edit", "Edit", new { id = item.DIV_ID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.DIV_ID })
                 </td>
-
                 <td>
                     @Html.DisplayFor(modelItem => item.DEPARTMENT_INFO.DEPT_TITLE)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.DIV_ID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.DIV_ID })
+                    @Html.DisplayFor(modelItem => item.DIV_TITLE)
                 </td>
             </tr>
         }

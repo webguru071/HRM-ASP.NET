@@ -12,11 +12,10 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.NOTICE)
-        </th>
-        
-        <th>
             Action
+        </th>
+        <th>
+            Notice
         </th>
     </tr>
 
@@ -24,10 +23,10 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.NOTICE)
-            </td>                      
-            <td>
                 @Html.ActionLink("View", "Edit", new { id = item.ID })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NOTICE)
             </td>
         </tr>
     }

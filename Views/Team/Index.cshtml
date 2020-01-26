@@ -20,6 +20,9 @@
                     <table class="table">
                         <thead class=" text-primary">
                         <th>
+                            Action
+                        </th>
+                        <th>
                             Team Title
                         </th>
                         <th>
@@ -27,9 +30,6 @@
                         </th>
                         <th>
                             Remarks
-                        </th>
-                        <th>
-                            Action
                         </th>
                         </thead>
                         <tbody>
@@ -40,6 +40,9 @@
                                     {
                                     <tr>
                                         <td>
+                                            @Html.ActionLink("View", "Edit", new { id = item.ID })
+                                        </td>
+                                        <td>
                                             @Html.DisplayFor(modelItem => item.TEAM_TITLE)
                                         </td>
                                         <td>
@@ -47,10 +50,6 @@
                                         </td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.REMARKS)
-                                        </td>
-
-                                        <td>
-                                            @Html.ActionLink("View", "Edit", new { id = item.ID })
                                         </td>
                                     </tr>
                                 }

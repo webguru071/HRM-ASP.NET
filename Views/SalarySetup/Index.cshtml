@@ -16,7 +16,6 @@
         <th>
             Employee
         </th>
-
         <th>
             Payment On
         </th>
@@ -39,17 +38,20 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.EMPLOYEE_INFO.EMPLOYEE_NAME)
                 </td>
-                <td>
-                    @if (item.PAY_TYPE == EMSApp.Helper.ConstantValue.TransactionSheetPayTypeCash)
-                    {
-                        item.PAY_TYPE = "Cash";
-                    }
-                    @if (item.PAY_TYPE == EMSApp.Helper.ConstantValue.TransactionSheetPayTypeBank)
-                    {
-                        item.PAY_TYPE = "Bank";
-                    }
-                    @Html.DisplayFor(modelItem => item.PAY_TYPE)
-                </td>
+                @if (item.PAY_TYPE == EMSApp.Helper.ConstantValue.TransactionSheetPayTypeCash)
+                {
+                    <td>
+                        Cash
+                    </td>
+                }
+                @if (item.PAY_TYPE == EMSApp.Helper.ConstantValue.TransactionSheetPayTypeBank)
+                {
+                    <td>
+                        Bank
+                    </td>
+                }
+                @Html.DisplayFor(modelItem => item.PAY_TYPE)
+
                 <td>
                     @Html.DisplayFor(modelItem => item.GROSS_SALARY)
                 </td>

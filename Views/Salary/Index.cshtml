@@ -12,6 +12,9 @@
     <table class="table">
         <tr>
             <th>
+                Action
+            </th>
+            <th>
                 Employee
             </th>
             <th>
@@ -19,10 +22,6 @@
             </th>
             <th>
                 Total Salary
-            </th>
-
-            <th>
-                Action
             </th>
         </tr>
 
@@ -32,6 +31,9 @@
             {
                 <tr>
                     <td>
+                        @Html.ActionLink("View", "Edit", new { id = item.ID })
+                    </td>
+                    <td>
                         @Html.DisplayFor(modelItem => item.EMPLOYEE_INFO.EMPLOYEE_NAME)
                     </td>
                     <td>
@@ -39,10 +41,6 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.TOTAL)
-                    </td>
-
-                    <td>
-                        @Html.ActionLink("View", "Edit", new { id = item.ID })                       
                     </td>
                 </tr>
             }

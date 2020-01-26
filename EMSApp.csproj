@@ -1134,7 +1134,7 @@
     <Content Include="Content\assets\vendors\mdi\fonts\materialdesignicons-webfont.ttf" />
     <Content Include="Content\assets\vendors\mdi\fonts\materialdesignicons-webfont.woff" />
     <Content Include="Content\assets\vendors\mdi\fonts\materialdesignicons-webfont.woff2" />
-    <None Include="Properties\PublishProfiles\EMS.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -1223,6 +1223,7 @@
     <Content Include="Views\SalarySetup\Index.cshtml" />
     <Content Include="Views\SalarySetup\Edit.cshtml" />
     <Content Include="Views\SalarySetup\Delete.cshtml" />
+    <Content Include="Views\Leave\LeaveAppDelete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

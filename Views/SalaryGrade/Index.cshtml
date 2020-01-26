@@ -14,10 +14,10 @@
     <tr>
         <th>Action</th>
         <th>
-            @Html.DisplayNameFor(model => model.GRADE_TITLE)
+            Benifite
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.GRADE_TYPE)
+            Type
         </th>
     </tr>
 
@@ -31,17 +31,19 @@
             <td>
                 @Html.DisplayFor(modelItem => item.GRADE_TITLE)
             </td>
-            <td>
-                @if (item.GRADE_TYPE == EMSApp.Helper.ConstantValue.SalaryGradeAdd)
-                {
-                    item.GRADE_TYPE = "Addition";
-                }
-                @if (item.GRADE_TYPE == EMSApp.Helper.ConstantValue.SalaryGradeDeduct)
-                {
-                    item.GRADE_TYPE = "Deduction";
-                }
-                @Html.DisplayFor(modelItem => item.GRADE_TYPE)
-            </td>            
+            @if (item.GRADE_TYPE == EMSApp.Helper.ConstantValue.SalaryGradeAdd)
+            {
+                item.GRADE_TYPE = "Addition";
+                <td>
+                    Addition
+                </td>
+            }
+            @if (item.GRADE_TYPE == EMSApp.Helper.ConstantValue.SalaryGradeDeduct)
+            {
+                <td>
+                    Deduction
+                </td>
+            }
         </tr>
     }
 

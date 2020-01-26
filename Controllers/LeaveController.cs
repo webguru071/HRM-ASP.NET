@@ -128,16 +128,24 @@ namespace EMSApp.Controllers
         [HttpGet]
         public ActionResult LeaveAppIndex()
         {
-            if (Session["USER_LEVEL"].ToString() == ConstantValue.UserLevelAdmin)
+            if (Session["USER_ID"] != null)
             {
-                var data = db.LEAVE_APPLICATION.Where(x => x.STATUS == ConstantValue.LeaveStatusPending).ToList();
-                return View(data);
+                if (Session["USER_LEVEL"] == ConstantValue.UserLevelAdmin)
+                {
+                    var data = db.LEAVE_APPLICATION.Where(x => x.STATUS == ConstantValue.LeaveStatusPending).ToList();
+                    return View(data);
+                }
+                else
+                {
+                    long empId = Convert.ToInt64(Session["EMP_ID"]);
+                    var data = db.LEAVE_APPLICATION.Where(x => x.EMPLOYEE_ID == empId).ToList();
+                    return View(data);
+                }
             }
             else
             {
-                long empId = Convert.ToInt64(Session["EMP_ID"]);
-                var data = db.LEAVE_APPLICATION.Where(x => x.EMPLOYEE_ID == empId).ToList();
-                return View(data);
+                Redirect("~/Login/LogIn");
+                return View();
             }
         }
         [HttpGet]
