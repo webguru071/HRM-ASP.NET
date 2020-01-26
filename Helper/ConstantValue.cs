@@ -49,7 +49,7 @@ namespace EMSApp.Helper
         public static string SalaryGradeAdd = "a";
         public static string SalaryGradeDeduct = "d";
         //Activity Type
-        public static string TypeActive = "1";
-        public static string TypeDeactive = "0";
+        public static string TypeActive = "a";
+        public static string TypeDeactive = "d";
     }
 }

@@ -4,7 +4,7 @@ using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Json;
-using System.Web;
+using EMSApp.Services;
 using System.Web.Mvc;
 using EMSApp.Models;
 using EMSApp.Models.UserModel;
@@ -18,16 +18,14 @@ namespace EMSApp.Controllers
         // GET: SalarySetup
         public ActionResult Index()
         {
-            var data = db.SALARY_SETUP.ToList();
+            var data = db.SALARY_SETUP.Where(x => x.CANGE_TYPE == Helper.ConstantValue.TypeActive).ToList();
             return View(data);
         }
-
         // GET: SalarySetup/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
-
         // GET: SalarySetup/Create
         public ActionResult Create()
         {
@@ -35,7 +33,6 @@ namespace EMSApp.Controllers
             GetDataInBag();
             return View(data);
         }
-
         // POST: SalarySetup/Create
         [HttpPost]
         public ActionResult Create(FormCollection collection)
@@ -66,22 +63,22 @@ namespace EMSApp.Controllers
                     {
                         bool isNum = int.TryParse(key, out int n);
                         if (isNum)
-                        {                           
+                        {
                             long id = Convert.ToInt64(key);
                             decimal rateValue = 0;
                             decimal value = 0;
-                            if(int.TryParse(collection[key], out int i))
+                            if (int.TryParse(collection[key], out int i))
                             {
-                                value= Convert.ToDecimal(collection[key]);
+                                value = Convert.ToDecimal(collection[key]);
                             }
-                            
+
                             var data = db.SALARY_GRADE.Where(x => x.GRADE_ID == id).FirstOrDefault();
                             if (value != 0)
                             {
-                                gradeString = " " + data.GRADE_TITLE + ": " + value + "%" + "\n";
+                                gradeString = gradeString + data.GRADE_TITLE + ": " + value + "%" + "; ";
                                 rateValue = (basicSalary * value) / 100;
-                            }                           
-                           
+                            }
+
                             if (data.GRADE_TYPE == Helper.ConstantValue.SalaryGradeAdd)
                             {
 
@@ -90,10 +87,10 @@ namespace EMSApp.Controllers
                             else
                             {
                                 grossSalary = (grossSalary <= 0) ? basicSalary - rateValue : grossSalary - rateValue;
-                            }                            
+                            }
                         }
                     }
-                   
+
                     SALARY_SETUP setUp = new SALARY_SETUP();
                     setUp.EMP_ID = Convert.ToInt64(collection["EMP_ID"]);
                     setUp.PAY_TYPE = collection["PAY_TYPE"];
@@ -101,7 +98,7 @@ namespace EMSApp.Controllers
                     setUp.SALARY_GRADE_SETUP = gradeString;
                     setUp.ACTION_BY = Convert.ToInt64(Session["USER_ID"]);
                     setUp.ACTION_DATE = DateTime.Now;
-
+                    setUp.CANGE_TYPE = Helper.ConstantValue.TypeActive;
                     if (ModelState.IsValid)
                     {
                         db.SALARY_SETUP.Add(setUp);
@@ -109,30 +106,30 @@ namespace EMSApp.Controllers
                         return RedirectToAction("Index");
                     }
                 }
+                var dt = db.SALARY_GRADE.ToList();
                 GetDataInBag();
-                return View();
-
+                return View(dt);
             }
             catch (Exception ex)
             {
-                return View();
+                var dt = db.SALARY_GRADE.ToList();
+                GetDataInBag();
+                return View(dt);
             }
         }
-
         // GET: SalarySetup/Edit/5
         public ActionResult Edit(int id)
         {
             var dataGrade = db.SALARY_GRADE.ToList();
             var data = db.SALARY_SETUP.Where(x => x.SALARY_SET_ID == id).FirstOrDefault();
             GetDataInBag(data.EMP_ID, data.PAY_TYPE);
-            List<SalarySeupClass> empObj = JsonConvert.DeserializeObject<List< SalarySeupClass>>(data.SALARY_GRADE_SETUP);            
-           foreach(var obj in empObj)
+            List<SalarySeupClass> empObj = JsonConvert.DeserializeObject<List<SalarySeupClass>>(data.SALARY_GRADE_SETUP);
+            foreach (var obj in empObj)
             {
                 ViewData.Add(obj.GRADE_ID.ToString(), obj.GRADE_TITLE_VALUE);
             }
             return View(dataGrade);
         }
-
         // POST: SalarySetup/Edit/5
         [HttpPost]
         public ActionResult Edit(int newid, FormCollection collection)
@@ -204,24 +201,40 @@ namespace EMSApp.Controllers
                 return View();
             }
         }
-
         // GET: SalarySetup/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var dt = db.SALARY_SETUP.Where(x => x.SALARY_SET_ID == id && x.CANGE_TYPE == Helper.ConstantValue.TypeActive).FirstOrDefault();
+            Session["AD"] = dt.ACTION_DATE;
+            return View(dt);
         }
-
         // POST: SalarySetup/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id, SALARY_SETUP collection)
         {
             try
             {
                 // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
+                var dt = db.SALARY_SETUP.Where(x => x.SALARY_SET_ID == id && x.CANGE_TYPE == Helper.ConstantValue.TypeActive).FirstOrDefault();
+                if (dt != null)
+                {
+                    if (ModelState.IsValid)
+                    {
+                        ICombine service = new CombineServices();
+                        bool result = service.SalarySetupStatusChange(id: id, statusV: Helper.ConstantValue.TypeActive);
+                        if (result)
+                        {
+                            return RedirectToAction("Index");
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("", "Sorry!! Item Is Not Deleted!!!");
+                        }
+                    }
+                }
+                return View();
             }
-            catch
+            catch (Exception ex)
             {
                 return View();
             }
@@ -232,7 +245,7 @@ namespace EMSApp.Controllers
         }
         private List<SelectListItem> SetEmployee()
         {
-            List<SelectListItem> empList = new SelectList(db.EMPLOYEE_INFO, "ID", "EMPLOYEE_NAME").ToList();
+            List<SelectListItem> empList = new SelectList(db.EMPLOYEE_INFO.Where(x => x.IS_DELETED == Helper.ConstantValue.TypeActive), "ID", "EMPLOYEE_NAME").ToList();
             empList.Insert(0, (new SelectListItem { Text = "Select One", Value = "0" }));
             return empList;
         }
@@ -258,7 +271,7 @@ namespace EMSApp.Controllers
         }
         public JsonResult GetEmpInfo(long id)
         {
-            var data = db.POSITIONAL_INFO.Where(x => x.EMPLOYEE_ID == id).FirstOrDefault();
+            var data = db.POSITIONAL_INFO.Where(x => x.EMPLOYEE_ID == id && x.CHANGE_TYPE == Helper.ConstantValue.TypeActive).FirstOrDefault();
             Dictionary<string, string> listOfData = new Dictionary<string, string>();
             if (data != null)
             {

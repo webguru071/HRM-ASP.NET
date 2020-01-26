@@ -16,7 +16,6 @@ namespace EMSApp.Controllers
             var data = db.USER_INFO.Where(x => x.IS_DELETED == "a").ToList();
             return View(data);
         }
-
         // GET: User/Details/5
         public ActionResult Details(int id)
         {
@@ -115,7 +114,6 @@ namespace EMSApp.Controllers
                 return View();
             }
         }
-
         // GET: User/Edit/5
         public ActionResult Edit(int id)
         {
@@ -127,7 +125,6 @@ namespace EMSApp.Controllers
             ViewBag.IS_DELETED = new SelectList(SetStatusList(), "Value", "Text", data.IS_DELETED);
             return View(data);
         }
-
         // POST: User/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, USER_INFO user)
@@ -172,13 +169,11 @@ namespace EMSApp.Controllers
                 return View();
             }
         }
-
         // GET: User/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
-
         // POST: User/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)

@@ -18,20 +18,17 @@ namespace EMSApp.Controllers
             var data = db.TEAM_INFO.Where(x => x.STATUS == "a").ToList();
             return View(data);
         }
-
         // GET: Team/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
-
         // GET: Team/Create
         public ActionResult Create()
         {
             GetDataInBag();
             return View();
         }
-
         // POST: Team/Create
         [HttpPost]
         public ActionResult Create(TEAM_INFO team)
@@ -102,7 +99,6 @@ namespace EMSApp.Controllers
             GetDataInBag(data.TEAM_LEADER, data.STATUS);
             return View(data);
         }
-
         // POST: Team/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, TEAM_INFO team)
@@ -145,13 +141,11 @@ namespace EMSApp.Controllers
                 return View();
             }
         }
-
         // GET: Team/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
-
         // POST: Team/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
@@ -277,7 +271,6 @@ namespace EMSApp.Controllers
             ViewBag.TEAM_ID = new SelectList(SetTeam(), "Value", "Text", teamId);
             ViewBag.STATUS = new SelectList(SetStatusList(), "Value", "Text", status);
         }
-
         private List<SelectListItem> SetMember()
         {
             List<SelectListItem> empList = new SelectList(db.EMPLOYEE_INFO, "ID", "EMPLOYEE_NAME").ToList();

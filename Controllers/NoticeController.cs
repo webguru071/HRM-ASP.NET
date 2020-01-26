@@ -17,7 +17,6 @@ namespace EMSApp.Controllers
             var data = db.NOTICE_BOARD.Where(X=>X.STATUS=="a").ToList();
             return View(data);
         }
-
         // GET: Notice/Details/5
         public ActionResult Details(int id)
         {
@@ -43,7 +42,6 @@ namespace EMSApp.Controllers
             GetDataInBag();
             return View();
         }
-
         // POST: Notice/Create
         [HttpPost]
         public ActionResult Create(NOTICE_BOARD objNotice)
@@ -78,7 +76,6 @@ namespace EMSApp.Controllers
             }
             return View();
         }
-
         // GET: Notice/Edit/5
         public ActionResult Edit(int id)
         {
@@ -87,7 +84,6 @@ namespace EMSApp.Controllers
             GetDataInBag(data.STATUS);
             return View(data);
         }
-
         // POST: Notice/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, NOTICE_BOARD objNotice)
@@ -124,13 +120,11 @@ namespace EMSApp.Controllers
             }
             return View();
         }
-
         // GET: Notice/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
-
         // POST: Notice/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
@@ -138,7 +132,6 @@ namespace EMSApp.Controllers
             try
             {
                 // TODO: Add delete logic here
-
                 return RedirectToAction("Index");
             }
             catch

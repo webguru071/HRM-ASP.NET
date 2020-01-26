@@ -41,60 +41,103 @@
                             <p>Dashboard</p>
                         </a>
                     </li>
-                    <li class="nav-item ">
-                        <a class="nav-link" href="~/EmployeeProfile/Index">
-                            <i class="material-icons">person</i>
-                            <p>User Profile</p>
-                        </a>
-                    </li>
-                    <li class="nav-item ">
-                        <a class="nav-link" href="~/Notice/Index">
-                            <i class="material-icons">notifications</i>
-                            <p>Notice Board</p>
-                        </a>
-                    </li>
-                    <li class="nav-item ">
-                        <a class="nav-link" href="~/User/Index">
-                            <i class="material-icons">bubble_chart</i>
-                            <p>User</p>
-                        </a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link" href="javscript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="material-icons">bubble_chart</i>
-                            <p>
-                                Employee
-                            </p>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdownMenuLink" style="background-color:#202940">
-                            <a class="dropdown-item" href="~/Employee/Index">Add Employee</a>
-                            <a class="dropdown-item" href="~/Position/Index">Employee Position</a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link" href="javscript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="material-icons">bubble_chart</i>
-                            <p>
-                                Department
-                            </p>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdownMenuLink" style="background-color:#202940">
-                            <a class="dropdown-item" href="~/Department/Index">Department</a>
-                            <a class="dropdown-item" href="~/Division/Index">Division</a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link" href="javscript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="material-icons">bubble_chart</i>
-                            <p>
-                                Team
-                            </p>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdownMenuLink" style="background-color:#202940">
-                            <a class="dropdown-item" href="~/Team/Index">New Team</a>
-                            <a class="dropdown-item" href="~/Team/TeamMemberIndex">Add Member</a>
-                        </div>
-                    </li>
+                    @if (Session["USER_LEVEL"].ToString() == EMSApp.Helper.ConstantValue.UserLevelAdmin)
+                    {
+                        <li class="nav-item ">
+                            <a class="nav-link" href="~/Notice/Index">
+                                <i class="material-icons">notifications</i>
+                                <p>Notice Board</p>
+                            </a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link" href="~/User/Index">
+                                <i class="material-icons">bubble_chart</i>
+                                <p>User</p>
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="javscript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="material-icons">bubble_chart</i>
+                                <p>
+                                    Employee
+                                </p>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdownMenuLink" style="background-color:#202940">
+                                <a class="dropdown-item" href="~/Employee/Index">Add Employee</a>
+                                <a class="dropdown-item" href="~/Position/Index">Employee Position</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="javscript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="material-icons">bubble_chart</i>
+                                <p>
+                                    Department
+                                </p>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdownMenuLink" style="background-color:#202940">
+                                <a class="dropdown-item" href="~/Department/Index">Department</a>
+                                <a class="dropdown-item" href="~/Division/Index">Division</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="javscript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="material-icons">bubble_chart</i>
+                                <p>
+                                    Team
+                                </p>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdownMenuLink" style="background-color:#202940">
+                                <a class="dropdown-item" href="~/Team/Index">New Team</a>
+                                <a class="dropdown-item" href="~/Team/TeamMemberIndex">Add Member</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="javscript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="material-icons">bubble_chart</i>
+                                <p>
+                                    Expense
+                                </p>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdownMenuLink" style="background-color:#202940">
+                                <a class="dropdown-item" href="~/Expense/Index">Expenses Item</a>
+                                <a class="dropdown-item" href="~/Expense/ExpenseSheetIndex">Expenses List</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="javscript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="material-icons">bubble_chart</i>
+                                <p>
+                                    Income
+                                </p>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdownMenuLink" style="background-color:#202940">
+                                <a class="dropdown-item" href="~/Income/Index">Income Item</a>
+                                <a class="dropdown-item" href="~/Income/IncomeSheetIndex">Income List</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="javscript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="material-icons">bubble_chart</i>
+                                <p>
+                                    Salary
+                                </p>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdownMenuLink" style="background-color:#202940">
+                                <a class="dropdown-item" href="~/SalaryGrade/Index">Salary Grade</a>
+                                <a class="dropdown-item" href="~/SalarySetup/Index">Salary Setup</a>
+                                <a class="dropdown-item" href="~/Salary/Index">Salary Generate</a>
+                            </div>
+                        </li>
+                    }
+                    @if (Session["USER_LEVEL"].ToString() == EMSApp.Helper.ConstantValue.UserLevelEmployee)
+                    {
+                        <li class="nav-item ">
+                            <a class="nav-link" href="~/EmployeeProfile/Index">
+                                <i class="material-icons">person</i>
+                                <p>User Profile</p>
+                            </a>
+                        </li>
+                    }
                     <li class="nav-item dropdown">
                         <a class="nav-link" href="javscript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="material-icons">bubble_chart</i>
@@ -103,45 +146,11 @@
                             </p>
                         </a>
                         <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdownMenuLink" style="background-color:#202940">
-                            <a class="dropdown-item" href="~/Leave/Index">Leave Type</a>
+                            @if (Session["USER_LEVEL"].ToString() == EMSApp.Helper.ConstantValue.UserLevelAdmin)
+                            {
+                                <a class="dropdown-item" href="~/Leave/Index">Leave Type</a>
+                            }
                             <a class="dropdown-item" href="~/Leave/LeaveAppIndex">Leave Application</a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link" href="javscript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="material-icons">bubble_chart</i>
-                            <p>
-                                Expense
-                            </p>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdownMenuLink" style="background-color:#202940">
-                            <a class="dropdown-item" href="~/Expense/Index">Expenses Item</a>
-                            <a class="dropdown-item" href="~/Expense/ExpenseSheetIndex">Expenses List</a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link" href="javscript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="material-icons">bubble_chart</i>
-                            <p>
-                                Income
-                            </p>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdownMenuLink" style="background-color:#202940">
-                            <a class="dropdown-item" href="~/Income/Index">Income Item</a>
-                            <a class="dropdown-item" href="~/Income/IncomeSheetIndex">Income List</a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link" href="javscript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="material-icons">bubble_chart</i>
-                            <p>
-                                Salary
-                            </p>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdownMenuLink" style="background-color:#202940">
-                            <a class="dropdown-item" href="~/SalaryGrade/Index">Salary Grade</a>
-                            <a class="dropdown-item" href="~/SalarySetup/Index">Salary Setup</a>
-                            <a class="dropdown-item" href="~/Salary/Index">Salary Generate</a>
                         </div>
                     </li>
                     <li class="nav-item ">
@@ -179,7 +188,7 @@
             </nav>
             <!-- End Navbar -->
             <div class="content">
-                <div class="container-fluid" >
+                <div class="container-fluid">
                     @RenderBody()
                 </div>
             </div>

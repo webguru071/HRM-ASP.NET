@@ -15,19 +15,16 @@ namespace EMSApp.Controllers
         {
             return View();
         }
-
         // GET: Login/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
-
         // GET: Login/Create
         public ActionResult LogIn()
         {
             return View();
         }
-
         // POST: Login/Create
         [HttpPost]
         public ActionResult LogIn(USER_INFO user)
@@ -55,7 +52,6 @@ namespace EMSApp.Controllers
                 }
             }
             return View();
-
         }
         public ActionResult Logout()
         {
@@ -70,7 +66,6 @@ namespace EMSApp.Controllers
         {
             return View();
         }
-
         // POST: Login/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
@@ -86,13 +81,11 @@ namespace EMSApp.Controllers
                 return View();
             }
         }
-
         // GET: Login/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
-
         // POST: Login/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
@@ -100,7 +93,6 @@ namespace EMSApp.Controllers
             try
             {
                 // TODO: Add delete logic here
-
                 return RedirectToAction("Index");
             }
             catch

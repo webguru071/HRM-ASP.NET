@@ -17,19 +17,16 @@ namespace EMSApp.Controllers
             var data = db.LEAVE_TYPE.ToList();
             return View(data);
         }
-
         // GET: Leave/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
-
         // GET: Leave/Create
         public ActionResult Create()
         {
             return View();
         }
-
         // POST: Leave/Create
         [HttpPost]
         public ActionResult Create(LEAVE_TYPE collection)
@@ -61,7 +58,6 @@ namespace EMSApp.Controllers
             }
             return View();
         }
-
         // GET: Leave/Edit/5
         public ActionResult Edit(int id)
         {
@@ -69,7 +65,6 @@ namespace EMSApp.Controllers
             Session["AD"] = dt.ACTIVE_DATE;
             return View(dt);
         }
-
         // POST: Leave/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, LEAVE_TYPE collection)
@@ -81,7 +76,6 @@ namespace EMSApp.Controllers
                 {
                     ModelState.AddModelError("", "Please Add Leave Type");
                 }
-
                 else
                 {
                     collection.UPDATE_BY = Convert.ToInt64(Session["USER_ID"]);
@@ -110,7 +104,6 @@ namespace EMSApp.Controllers
             var dt = db.LEAVE_TYPE.Where(x => x.LEAVE_ID == id).FirstOrDefault();
             return View(dt);
         }
-
         // POST: Leave/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)

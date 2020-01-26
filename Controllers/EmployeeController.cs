@@ -14,25 +14,22 @@ namespace EMSApp.Controllers
         // GET: Employee
         public ActionResult Index()
         {
-            var data = db.EMPLOYEE_INFO.Where(x=>x.IS_DELETED=="a").ToList();
+            var data = db.EMPLOYEE_INFO.Where(x => x.IS_DELETED == "a").ToList();
             return View(data);
         }
-
         // GET: Employee/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
-
         // GET: Employee/Create
         public ActionResult Create()
         {
-           
+
             ViewBag.IS_DELETED = SetStatusList();
 
             return View();
         }
-
         // POST: Employee/Create
         [HttpPost]
         public ActionResult Create(EMPLOYEE_INFO emp)
@@ -41,7 +38,7 @@ namespace EMSApp.Controllers
             {
                 if (string.IsNullOrEmpty(emp.EMPLOYEE_NAME))
                 {
-                    ModelState.AddModelError("","Employee Name Required!!");
+                    ModelState.AddModelError("", "Employee Name Required!!");
                 }
                 else if (string.IsNullOrEmpty(emp.CONTACT))
                 {
@@ -54,9 +51,9 @@ namespace EMSApp.Controllers
                 else
                 {
                     // TODO: Add insert logic here
-                    
-                     emp.ACTION_BY = Convert.ToInt64(Session["USER_ID"]);
-                  
+
+                    emp.ACTION_BY = Convert.ToInt64(Session["USER_ID"]);
+
                     emp.ACTION_DATE = DateTime.Now;
                     if (ModelState.IsValid)
                     {
@@ -68,13 +65,12 @@ namespace EMSApp.Controllers
                 ViewBag.IS_DELETED = SetStatusList();
                 return View();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ViewBag.IS_DELETED = SetStatusList();
                 return View();
             }
         }
-
         //Set active status
         private List<SelectListItem> SetStatusList()
         {
@@ -86,7 +82,6 @@ namespace EMSApp.Controllers
             activeStatus.Insert(0, (new SelectListItem { Text = "Select One", Value = "" }));
             return activeStatus;
         }
-       
         // GET: Employee/Edit/5
         public ActionResult Edit(int id)
         {
@@ -96,7 +91,6 @@ namespace EMSApp.Controllers
             ViewBag.IS_DELETED = new SelectList(SetStatusList(), "Value", "Text", data.IS_DELETED);
             return View(data);
         }
-
         // POST: Employee/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, EMPLOYEE_INFO emp)
@@ -133,19 +127,17 @@ namespace EMSApp.Controllers
                 ViewBag.IS_DELETED = SetStatusList();
                 return View();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ViewBag.IS_DELETED = SetStatusList();
                 return View();
             }
         }
-
         // GET: Employee/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
-
         // POST: Employee/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)

@@ -18,19 +18,16 @@ namespace EMSApp.Controllers
             var data = db.SALARY_GRADE.ToList();
             return View(data);
         }
-
         // GET: SalaryGrade/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
-
         // GET: SalaryGrade/Create
         public ActionResult Create()
         {
             return View();
         }
-
         // POST: SalaryGrade/Create
         [HttpPost]
         public ActionResult Create(SALARY_GRADE collection)
@@ -66,7 +63,6 @@ namespace EMSApp.Controllers
             }
             return View();
         }
-
         // GET: SalaryGrade/Edit/5
         public ActionResult Edit(int id)
         {
@@ -74,7 +70,6 @@ namespace EMSApp.Controllers
             Session["AD"] = dt.ACTION_DATE;
             return View(dt);
         }
-
         // POST: SalaryGrade/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, SALARY_GRADE collection)
@@ -113,13 +108,11 @@ namespace EMSApp.Controllers
             }
             return View();
         }
-
         // GET: SalaryGrade/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
-
         // POST: SalaryGrade/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
@@ -127,7 +120,6 @@ namespace EMSApp.Controllers
             try
             {
                 // TODO: Add delete logic here
-
                 return RedirectToAction("Index");
             }
             catch

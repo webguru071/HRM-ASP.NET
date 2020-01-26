@@ -17,20 +17,17 @@ namespace EMSApp.Controllers
             var dt = db.DIVISION_INFO.ToList();
             return View(dt);
         }
-
         // GET: Division/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
-
         // GET: Division/Create
         public ActionResult Create()
         {
             GetDataInBag();
             return View();
         }    
-
         // POST: Division/Create
         [HttpPost]
         public ActionResult Create(DIVISION_INFO obj)
@@ -46,9 +43,8 @@ namespace EMSApp.Controllers
                     ModelState.AddModelError("", "Please Add Division Name");
                 }
                 else
-                {
-                    long userID = Convert.ToInt64(Session["USER_ID"]);
-                    obj.ACTION_BY = userID;
+                { 
+                    obj.ACTION_BY = Convert.ToInt64(Session["USER_ID"]);
                     obj.ACTION_DATE = DateTime.Now;
 
                     if (ModelState.IsValid)
@@ -67,7 +63,6 @@ namespace EMSApp.Controllers
             GetDataInBag();
             return View();
         }
-
         // GET: Division/Edit/5
         public ActionResult Edit(int id)
         {

@@ -19,5 +19,12 @@ namespace EMSApp.Services
             string leaderName = data.Rows[0]["EMPLOYEE_NAME"].ToString();
             return leaderName;
         }
+
+        public bool SalarySetupStatusChange(long id, string statusV)
+        {
+            string query = @"UPDATE SALARY_SETUP  SET CANGE_TYPE='"+ statusV + "' WHERE SALARY_SET_ID="+id;
+            bool result = dbHelper.ExecuteDML(query);
+            return result;
+        }
     }
 }

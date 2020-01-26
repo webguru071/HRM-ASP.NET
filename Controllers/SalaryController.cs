@@ -17,20 +17,17 @@ namespace EMSApp.Controllers
             var data = db.SALARY_INFO.ToList();
             return View(data);
         }
-
         // GET: Salary/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
-
         // GET: Salary/Create
         public ActionResult Create()
         {
             ViewBag.EMPLOYEE_ID = SetEmployee();
             return View();
         }
-
         // POST: Salary/Create
         [HttpPost]
         public ActionResult Create(SALARY_INFO salary)
@@ -77,7 +74,6 @@ namespace EMSApp.Controllers
                 return View();
             }
         }
-
         // GET: Salary/Edit/5
         public ActionResult Edit(int id)
         {
@@ -87,7 +83,6 @@ namespace EMSApp.Controllers
             ViewBag.EMPLOYEE_ID = new SelectList(SetEmployee(), "Value", "Text", data.EMPLOYEE_ID);
             return View(data);
         }
-
         // POST: Salary/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, SALARY_INFO salary)
@@ -138,7 +133,6 @@ namespace EMSApp.Controllers
         {
             return View();
         }
-
         // POST: Salary/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)

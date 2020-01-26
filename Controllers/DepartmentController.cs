@@ -29,7 +29,6 @@ namespace EMSApp.Controllers
         {
             return View();
         }
-
         // POST: Department/Create
         [HttpPost]
         public ActionResult Create(DEPARTMENT_INFO obj)
@@ -40,13 +39,10 @@ namespace EMSApp.Controllers
                 {
                     ModelState.AddModelError("", "Please Add Department Name");
                 }
-
                 else
                 {
-                    long userID = Convert.ToInt64(Session["USER_ID"]);
-                    obj.ACTION_BY = userID;
+                    obj.ACTION_BY = Convert.ToInt64(Session["USER_ID"]);
                     obj.ACTION_DATE = DateTime.Now;
-
                     if (ModelState.IsValid)
                     {
                         db.DEPARTMENT_INFO.Add(obj);
@@ -57,11 +53,10 @@ namespace EMSApp.Controllers
             }
             catch (Exception ex)
             {
-
+                return View();
             }
             return View();
         }
-
         // GET: Department/Edit/5
         public ActionResult Edit(int id)
         {
@@ -69,7 +64,6 @@ namespace EMSApp.Controllers
             Session["AD"] = dt.ACTION_DATE;
             return View(dt);
         }
-
         // POST: Department/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, DEPARTMENT_INFO obj)
@@ -80,10 +74,8 @@ namespace EMSApp.Controllers
                 {
                     ModelState.AddModelError("", "Please Add Department Name");
                 }
-
                 else
                 {
-                    long userID = Convert.ToInt64(Session["USER_ID"]);
                     obj.UPDATE_BY = Convert.ToInt64(Session["USER_ID"]);
                     obj.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
                     obj.UPDATE_DATE = DateTime.Now;
@@ -99,7 +91,7 @@ namespace EMSApp.Controllers
             }
             catch (Exception ex)
             {
-
+                return View();
             }
             return View();
         }
@@ -110,7 +102,6 @@ namespace EMSApp.Controllers
             var dt = db.DEPARTMENT_INFO.Where(x => x.DEPT_ID == id).FirstOrDefault();
             return View(dt);
         }
-
         // POST: Department/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)

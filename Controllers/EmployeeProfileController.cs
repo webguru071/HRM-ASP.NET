@@ -18,19 +18,16 @@ namespace EMSApp.Controllers
             var data = db.EMPLOYEE_INFO.Where(x => x.ID == empId && x.IS_DELETED == Helper.ConstantValue.UserStatusActive).FirstOrDefault();
             return View(data);
         }
-
         // GET: EmployeeProfile/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
-
         // GET: EmployeeProfile/Create
         public ActionResult Create()
         {
             return View();
         }
-
         // POST: EmployeeProfile/Create
         [HttpPost]
         public ActionResult Create(FormCollection collection)
@@ -46,7 +43,6 @@ namespace EMSApp.Controllers
                 return View();
             }
         }
-
         // GET: EmployeeProfile/Edit/5
         public ActionResult Edit(int id)
         {
@@ -56,7 +52,6 @@ namespace EMSApp.Controllers
             Session["ISD"] = data.IS_DELETED;
             return View(data);
         }
-
         // POST: EmployeeProfile/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, EMPLOYEE_INFO emp)
@@ -89,7 +84,6 @@ namespace EMSApp.Controllers
         {
             return View();
         }
-
         // POST: EmployeeProfile/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)

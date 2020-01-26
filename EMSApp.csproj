@@ -1222,6 +1222,7 @@
     <Content Include="Views\SalarySetup\Create.cshtml" />
     <Content Include="Views\SalarySetup\Index.cshtml" />
     <Content Include="Views\SalarySetup\Edit.cshtml" />
+    <Content Include="Views\SalarySetup\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

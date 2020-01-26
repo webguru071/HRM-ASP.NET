@@ -8,5 +8,6 @@ namespace EMSApp.Services
     public interface ICombine
     {
         string GetTeamLeaderById(long id);
+        bool SalarySetupStatusChange(long id, string statusV);
     }
 }

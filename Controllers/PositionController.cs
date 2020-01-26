@@ -17,20 +17,17 @@ namespace EMSApp.Controllers
             var data = db.POSITIONAL_INFO.Where(x=>x.CHANGE_TYPE==ConstantValue.TypeActive).ToList();
             return View(data);
         }
-
         // GET: Position/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
-
         // GET: Position/Create
         public ActionResult Create()
         {
             GetDataInBag();
             return View();
         }
-
         // POST: Position/Create
         [HttpPost]
         public ActionResult Create(POSITIONAL_INFO obj)
@@ -88,16 +85,15 @@ namespace EMSApp.Controllers
             GetDataInBag();
             return View();
         }
-
         // GET: Position/Edit/5
         public ActionResult Edit(int id)
         {
             var dt = db.POSITIONAL_INFO.Where(x => x.POSITION_ID == id).FirstOrDefault();
+            Session["DATA"] = dt;
             GetDataInBag(dt.EMPLOYEE_ID, dt.DIV_ID);
             Session["AD"] = dt.ACTION_DATE;
             return View(dt);
         }
-
         // POST: Position/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, POSITIONAL_INFO obj)
@@ -134,26 +130,38 @@ namespace EMSApp.Controllers
                     ModelState.AddModelError("", "Please Enter Basic Salary");
                 }
                 else
-                {
-                    obj.UPDATE_BY = Convert.ToInt64(Session["USER_ID"]);
-                    obj.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
-                    obj.UPDATE_DATE = DateTime.Now;
+                {                    
                     if (obj.CHANGE_TYPE == ConstantValue.TypeDeactive)
                     {
-                        obj.CHANGE_TYPE = ConstantValue.TypeDeactive;
+                        obj.POSITION_ID = 0;
+                        obj.ACTION_BY = Convert.ToInt64(Session["USER_ID"]);
+                        obj.ACTION_DATE = DateTime.Now;
+                        obj.CHANGE_TYPE = ConstantValue.TypeActive;
                         POSITIONAL_INFO newObj = new POSITIONAL_INFO();
-                        newObj = obj;
-                        newObj.ACTION_BY = Convert.ToInt64(obj.UPDATE_BY);
-                        newObj.ACTION_DATE = DateTime.Now;
-                        newObj.CHANGE_TYPE = ConstantValue.TypeActive;                        
+                        var data = (POSITIONAL_INFO)Session["DATA"];
+                        newObj.POSITION_ID = id;                        
+                        newObj.POSITION_TITLE = data.POSITION_TITLE;
+                        newObj.EMPLOYEE_ID = data.EMPLOYEE_ID;
+                        newObj.BASIC_SALARY = data.BASIC_SALARY;
+                        newObj.DUTY_TYPE = data.DUTY_TYPE;
+                        newObj.RATE_TYPE = data.RATE_TYPE;
+                        newObj.PAY_FREQ = data.PAY_FREQ;
+                        newObj.DIV_ID = data.DIV_ID;
+                        newObj.ACTION_BY = data.ACTION_BY;
+                        newObj.ACTION_DATE = data.ACTION_DATE;
+                        newObj.UPDATE_BY = Convert.ToInt64(Session["USER_ID"]);
+                        newObj.UPDATE_DATE = DateTime.Now;
+                        newObj.CHANGE_TYPE = ConstantValue.TypeDeactive;         
+                        
                         using (var dbContextTransaction = db.Database.BeginTransaction())
                         {
                             try
                             {
-                                db.POSITIONAL_INFO.Add(newObj);
+                                db.Entry(newObj).State = EntityState.Modified;
                                 db.SaveChanges();
-                                db.Entry(obj).State = EntityState.Modified;
-                                db.SaveChanges();
+
+                                db.POSITIONAL_INFO.Add(obj);
+                                db.SaveChanges();                                
                                 dbContextTransaction.Commit();
                                 Session["AD"] = null;
                                 return RedirectToAction("Index");
@@ -166,6 +174,9 @@ namespace EMSApp.Controllers
                     }
                     else
                     {
+                        obj.UPDATE_BY = Convert.ToInt64(Session["USER_ID"]);
+                        obj.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
+                        obj.UPDATE_DATE = DateTime.Now;
                         if (ModelState.IsValid)
                         {
                             db.Entry(obj).State = EntityState.Modified;
@@ -190,7 +201,6 @@ namespace EMSApp.Controllers
             var dt = db.POSITIONAL_INFO.Where(x => x.POSITION_ID == id).FirstOrDefault();
             return View(dt);
         }
-
         // POST: Position/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, POSITIONAL_INFO collection)
@@ -223,7 +233,6 @@ namespace EMSApp.Controllers
             empList.Insert(0, (new SelectListItem { Text = "Select One", Value = "0" }));
             return empList;
         }
-
         private List<SelectListItem> SetDiv()
         {
             List<SelectListItem> divtList = new SelectList(db.DIVISION_INFO, "DIV_ID", "DIV_TITLE").ToList();

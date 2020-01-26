@@ -19,19 +19,16 @@ namespace EMSApp.Controllers
             var data = db.TRANSACTION_ITEM.Where(x => x.TYPE == ConstantValue.TransactionTypeExpense).ToList();
             return View(data);
         }
-
         // GET: Expense/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
-
         // GET: Expense/Create
         public ActionResult Create()
         {
             return View();
         }
-
         // POST: Expense/Create
         [HttpPost]
         public ActionResult Create(TRANSACTION_ITEM collection)
@@ -62,7 +59,6 @@ namespace EMSApp.Controllers
                 return View();
             }
         }
-
         // GET: Expense/Edit/5
         public ActionResult Edit(int id)
         {
@@ -70,7 +66,6 @@ namespace EMSApp.Controllers
             Session["AD"] = data.ACTION_DATE;
             return View(data);
         }
-
         // POST: Expense/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, TRANSACTION_ITEM collection)
@@ -103,7 +98,6 @@ namespace EMSApp.Controllers
                 return View();
             }
         }
-
         // GET: Expense/Delete/5
         public ActionResult Delete(int id)
         {
@@ -145,7 +139,6 @@ namespace EMSApp.Controllers
             GetDataInBag();           
             return View();
         }
-
         private void GetDataInBag(long transId=0)
         {
             ViewBag.TRNS_ID = ViewBag.LEAVE_TYPE_ID = new SelectList(SetExpType(), "Value", "Text", transId);
@@ -157,7 +150,6 @@ namespace EMSApp.Controllers
             expTypeList.Insert(0, (new SelectListItem { Text = "Select One", Value = "0" }));
             return expTypeList;
         }
-
         [HttpPost]
         public ActionResult ExpenseSheetCreate(TRANSACTION_SHEET collection)
         {

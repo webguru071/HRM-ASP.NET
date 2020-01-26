@@ -18,19 +18,16 @@ namespace EMSApp.Controllers
             var data = db.TRANSACTION_ITEM.Where(x => x.TYPE == ConstantValue.TransactionTypeIncome).ToList();
             return View(data);
         }
-
         // GET: Income/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
-
         // GET: Income/Create
         public ActionResult Create()
         {
             return View();
         }
-
         // POST: Income/Create
         [HttpPost]
         public ActionResult Create(TRANSACTION_ITEM collection)
@@ -61,7 +58,6 @@ namespace EMSApp.Controllers
                 return View();
             }
         }
-
         // GET: Income/Edit/5
         public ActionResult Edit(int id)
         {
@@ -69,7 +65,6 @@ namespace EMSApp.Controllers
             Session["AD"] = data.ACTION_DATE;
             return View(data);
         }
-
         // POST: Income/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, TRANSACTION_ITEM collection)
@@ -102,14 +97,12 @@ namespace EMSApp.Controllers
                 return View();
             }
         }
-
         // GET: Income/Delete/5
         public ActionResult Delete(int id)
         {
             var dt = db.TRANSACTION_ITEM.Where(x => x.TRNS_ID == id && x.TYPE == ConstantValue.TransactionTypeIncome).FirstOrDefault();
             return View(dt);
         }
-
         // POST: Expense/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
@@ -131,7 +124,6 @@ namespace EMSApp.Controllers
             }
             return View();
         }
-
         [HttpGet]
         public ActionResult IncomeSheetIndex()
         {
@@ -144,7 +136,6 @@ namespace EMSApp.Controllers
             GetDataInBag();
             return View();
         }
-
         private void GetDataInBag(long transId = 0)
         {
             ViewBag.TRNS_ID = ViewBag.LEAVE_TYPE_ID = new SelectList(SetIncomeType(), "Value", "Text", transId);
@@ -156,7 +147,6 @@ namespace EMSApp.Controllers
             expTypeList.Insert(0, (new SelectListItem { Text = "Select One", Value = "0" }));
             return expTypeList;
         }
-
         [HttpPost]
         public ActionResult IncomeSheetCreate(TRANSACTION_SHEET collection)
         {
