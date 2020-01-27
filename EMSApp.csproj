@@ -51,6 +51,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <HintPath>packages\CrystalDecisions.CrystalReports.Engine.1.0.0\lib\CrystalDecisions.CrystalReports.Engine.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -145,10 +148,13 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AssetController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\DivisionController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\EmployeeProfileController.cs" />
+    <Compile Include="Controllers\EquipmentController.cs" />
+    <Compile Include="Controllers\EquipmentManageController.cs" />
     <Compile Include="Controllers\ExpenseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IncomeController.cs" />
@@ -156,6 +162,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\NoticeController.cs" />
     <Compile Include="Controllers\PositionController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\SalaryController.cs" />
     <Compile Include="Controllers\SalaryGradeController.cs" />
     <Compile Include="Controllers\SalarySetupController.cs" />
@@ -168,6 +175,12 @@
     <Compile Include="Helper\DBHelper.cs" />
     <Compile Include="Helper\JsonHelper.cs" />
     <Compile Include="Helper\ListValue.cs" />
+    <Compile Include="Models\ASSET_INFO.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ASSET_MANAGEMENT.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ATTENDANCE_DETAILS.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -181,6 +194,9 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EMPLOYEE_INFO.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EQUEPMENTS_INFO.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\LEAVE_APPLICATION.cs">
@@ -1224,10 +1240,23 @@
     <Content Include="Views\SalarySetup\Edit.cshtml" />
     <Content Include="Views\SalarySetup\Delete.cshtml" />
     <Content Include="Views\Leave\LeaveAppDelete.cshtml" />
+    <Content Include="Views\Home\Dashboard.cshtml" />
+    <Content Include="Views\Reports\EmployeeDemogReport.cshtml" />
+    <Content Include="Views\Asset\Index.cshtml" />
+    <Content Include="Views\Asset\Create.cshtml" />
+    <Content Include="Views\Asset\Edit.cshtml" />
+    <Content Include="Views\Asset\Delete.cshtml" />
+    <Content Include="Views\Equipment\Index.cshtml" />
+    <Content Include="Views\Equipment\Create.cshtml" />
+    <Content Include="Views\Equipment\Delete.cshtml" />
+    <Content Include="Views\Equipment\Edit.cshtml" />
+    <Content Include="Views\EquipmentManage\Index.cshtml" />
+    <Content Include="Views\EquipmentManage\Create.cshtml" />
+    <Content Include="Views\EquipmentManage\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Transaction\" />
+    <Folder Include="Report\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

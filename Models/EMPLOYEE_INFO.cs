@@ -17,6 +17,7 @@ namespace EMSApp.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public EMPLOYEE_INFO()
         {
+            this.ASSET_MANAGEMENT = new HashSet<ASSET_MANAGEMENT>();
             this.LEAVE_APPLICATION = new HashSet<LEAVE_APPLICATION>();
             this.POSITIONAL_INFO = new HashSet<POSITIONAL_INFO>();
             this.SALARY_INFO = new HashSet<SALARY_INFO>();
@@ -49,6 +50,8 @@ namespace EMSApp.Models
         public string NATIONALITY { get; set; }
         public string BLOOD_GROUP { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ASSET_MANAGEMENT> ASSET_MANAGEMENT { get; set; }
         public virtual EMPLOYEE_APPLICATION EMPLOYEE_APPLICATION { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LEAVE_APPLICATION> LEAVE_APPLICATION { get; set; }

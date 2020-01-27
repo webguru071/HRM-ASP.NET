@@ -45,14 +45,11 @@
                     if (item.STATUS != EMSApp.Helper.ConstantValue.LeaveStatusApproved)
                     {
                         <td>
-                            @Html.ActionLink("View", "Edit", new { id = item.LEAVE_APP_ID })|
-                            @Html.ActionLink("Delete", "Delete", new { id = item.LEAVE_APP_ID })
+                            @Html.ActionLink("View", "LeaveAppEdit", new { id = item.LEAVE_APP_ID })|
+                            @Html.ActionLink("Delete", "LeaveAppDelete", new { id = item.LEAVE_APP_ID })
                         </td>
                     }
-                    if (item.STATUS == EMSApp.Helper.ConstantValue.LeaveStatusPending)
-                    {
-                        <td></td>
-                    }
+                    
                 }
                 @if (Session["USER_LEVEL"].ToString() == EMSApp.Helper.ConstantValue.UserLevelEmployee)
                 {

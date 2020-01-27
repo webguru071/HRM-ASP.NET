@@ -130,7 +130,7 @@ namespace EMSApp.Controllers
         {
             if (Session["USER_ID"] != null)
             {
-                if (Session["USER_LEVEL"] == ConstantValue.UserLevelAdmin)
+                if (Convert.ToString(Session["USER_LEVEL"]) == ConstantValue.UserLevelAdmin)
                 {
                     var data = db.LEAVE_APPLICATION.Where(x => x.STATUS == ConstantValue.LeaveStatusPending).ToList();
                     return View(data);
@@ -169,10 +169,13 @@ namespace EMSApp.Controllers
             try
             {
                 // TODO: Add insert logic here
-                if (collection.EMPLOYEE_ID <= 0)
+                if(Convert.ToString(Session["USER_LEVEL"]) == ConstantValue.UserLevelAdmin)
                 {
-                    ModelState.AddModelError("", "Employee Name is Required!!");
-                }
+                    if (collection.EMPLOYEE_ID <= 0)
+                    {
+                        ModelState.AddModelError("", "Employee Name is Required!!");
+                    }
+                }               
                 else if (collection.LEAVE_TYPE_ID <= 0)
                 {
                     ModelState.AddModelError("", "Leave Type is Required!!");
@@ -188,7 +191,13 @@ namespace EMSApp.Controllers
                 }
                 else
                 {
-                    collection.STATUS = ConstantValue.LeaveStatusPending;
+                    if (Convert.ToString(Session["USER_LEVEL"]) == ConstantValue.UserLevelEmployee)
+                    {
+                        collection.EMPLOYEE_ID = Convert.ToInt64(Session["EMP_ID"]);
+                        collection.STATUS = ConstantValue.LeaveStatusPending;
+                        collection.APPROVED_START_DATE = null;
+                        collection.APPROVED_END_DATE = null;
+                    }
                     collection.ACTIVE_BY = Convert.ToInt64(Session["USER_ID"]);
                     collection.ACTIVE_DATE = DateTime.Now;
 
@@ -223,9 +232,16 @@ namespace EMSApp.Controllers
             try
             {
                 // TODO: Add insert logic here
-                if (collection.EMPLOYEE_ID <= 0)
+                if (Convert.ToString(Session["USER_LEVEL"]) == ConstantValue.UserLevelAdmin)
                 {
-                    ModelState.AddModelError("", "Employee Name is Required!!");
+                    if (collection.EMPLOYEE_ID <= 0)
+                    {
+                        ModelState.AddModelError("", "Employee Name is Required!!");
+                    }
+                    if (string.IsNullOrEmpty(collection.STATUS))
+                    {
+                        ModelState.AddModelError("", "Status is Required!!");
+                    }
                 }
                 else if (collection.LEAVE_TYPE_ID <= 0)
                 {
@@ -242,7 +258,12 @@ namespace EMSApp.Controllers
                 }
                 else
                 {
-                    collection.STATUS = ConstantValue.LeaveStatusPending;
+                    if(Convert.ToString(Session["USER_LEVEL"])== ConstantValue.UserLevelEmployee)
+                    {
+                        collection.STATUS = ConstantValue.LeaveStatusPending;
+                        collection.APPROVED_START_DATE = null;
+                        collection.APPROVED_END_DATE = null;
+                    }                   
                     collection.UPDATE_BY = Convert.ToInt64(Session["USER_ID"]);
                     collection.ACTIVE_DATE = Convert.ToDateTime(Session["AD"]);
                     collection.UPDATE_DATE = DateTime.Now;

@@ -25,11 +25,14 @@ namespace EMSApp.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<ASSET_INFO> ASSET_INFO { get; set; }
+        public virtual DbSet<ASSET_MANAGEMENT> ASSET_MANAGEMENT { get; set; }
         public virtual DbSet<ATTENDANCE_DETAILS> ATTENDANCE_DETAILS { get; set; }
         public virtual DbSet<DEPARTMENT_INFO> DEPARTMENT_INFO { get; set; }
         public virtual DbSet<DIVISION_INFO> DIVISION_INFO { get; set; }
         public virtual DbSet<EMPLOYEE_APPLICATION> EMPLOYEE_APPLICATION { get; set; }
         public virtual DbSet<EMPLOYEE_INFO> EMPLOYEE_INFO { get; set; }
+        public virtual DbSet<EQUEPMENTS_INFO> EQUEPMENTS_INFO { get; set; }
         public virtual DbSet<LEAVE_APPLICATION> LEAVE_APPLICATION { get; set; }
         public virtual DbSet<LEAVE_TYPE> LEAVE_TYPE { get; set; }
         public virtual DbSet<NOTICE_BOARD> NOTICE_BOARD { get; set; }

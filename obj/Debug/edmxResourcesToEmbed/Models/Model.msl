@@ -1,6 +1,35 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="EMSModelStoreContainer" CdmEntityContainer="EMSEntities">
+    <EntitySetMapping Name="ASSET_INFO">
+      <EntityTypeMapping TypeName="EMSModel.ASSET_INFO">
+        <MappingFragment StoreEntitySet="ASSET_INFO">
+          <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
+          <ScalarProperty Name="UPDATE_BY" ColumnName="UPDATE_BY" />
+          <ScalarProperty Name="ACTION_DATE" ColumnName="ACTION_DATE" />
+          <ScalarProperty Name="ACTION_BY" ColumnName="ACTION_BY" />
+          <ScalarProperty Name="REMARKS" ColumnName="REMARKS" />
+          <ScalarProperty Name="ASSET_TITLE" ColumnName="ASSET_TITLE" />
+          <ScalarProperty Name="ASSET_ID" ColumnName="ASSET_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ASSET_MANAGEMENT">
+      <EntityTypeMapping TypeName="EMSModel.ASSET_MANAGEMENT">
+        <MappingFragment StoreEntitySet="ASSET_MANAGEMENT">
+          <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+          <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
+          <ScalarProperty Name="UPDATE_BY" ColumnName="UPDATE_BY" />
+          <ScalarProperty Name="ACTION_DATE" ColumnName="ACTION_DATE" />
+          <ScalarProperty Name="ACTION_BY" ColumnName="ACTION_BY" />
+          <ScalarProperty Name="REMARKS" ColumnName="REMARKS" />
+          <ScalarProperty Name="DATE_ASSN" ColumnName="DATE_ASSN" />
+          <ScalarProperty Name="EQUP_ID" ColumnName="EQUP_ID" />
+          <ScalarProperty Name="EMP_ID" ColumnName="EMP_ID" />
+          <ScalarProperty Name="ASSET_ASSN_ID" ColumnName="ASSET_ASSN_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="ATTENDANCE_DETAILS">
       <EntityTypeMapping TypeName="EMSModel.ATTENDANCE_DETAILS">
         <MappingFragment StoreEntitySet="ATTENDANCE_DETAILS">
@@ -71,6 +100,21 @@
           <ScalarProperty Name="ADDRESS" ColumnName="ADDRESS" />
           <ScalarProperty Name="EMPLOYEE_NAME" ColumnName="EMPLOYEE_NAME" />
           <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EQUEPMENTS_INFO">
+      <EntityTypeMapping TypeName="EMSModel.EQUEPMENTS_INFO">
+        <MappingFragment StoreEntitySet="EQUEPMENTS_INFO">
+          <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
+          <ScalarProperty Name="UPDATE_BY" ColumnName="UPDATE_BY" />
+          <ScalarProperty Name="ACTION_DATE" ColumnName="ACTION_DATE" />
+          <ScalarProperty Name="ACTION_BY" ColumnName="ACTION_BY" />
+          <ScalarProperty Name="SERIAL_NO" ColumnName="SERIAL_NO" />
+          <ScalarProperty Name="MODEL_NO" ColumnName="MODEL_NO" />
+          <ScalarProperty Name="ASSET_ID" ColumnName="ASSET_ID" />
+          <ScalarProperty Name="EQP_TITLE" ColumnName="EQP_TITLE" />
+          <ScalarProperty Name="EQUEPMENT_ID" ColumnName="EQUEPMENT_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

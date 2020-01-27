@@ -1,0 +1,59 @@
+﻿@model IEnumerable<EMSApp.Models.ASSET_MANAGEMENT>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>Action</th>
+        <th>
+            @Html.DisplayNameFor(model => model.EMPLOYEE_INFO.EMPLOYEE_NAME)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.EQUP_ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DATE_ASSN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.REMARKS)
+        </th>
+
+    </tr>
+
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ASSET_ASSN_ID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ASSET_ASSN_ID })
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EMPLOYEE_INFO.EMPLOYEE_NAME)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.EQUP_ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DATE_ASSN)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.REMARKS)
+                </td>
+
+            </tr>
+        }
+    }
+
+</table>

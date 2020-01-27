@@ -5,6 +5,33 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="EMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ASSET_INFO">
+          <Key>
+            <PropertyRef Name="ASSET_ID" />
+          </Key>
+          <Property Name="ASSET_ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ASSET_TITLE" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="REMARKS" Type="nvarchar" MaxLength="50" />
+          <Property Name="ACTION_BY" Type="bigint" Nullable="false" />
+          <Property Name="ACTION_DATE" Type="datetime" Nullable="false" />
+          <Property Name="UPDATE_BY" Type="bigint" />
+          <Property Name="UPDATE_DATE" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ASSET_MANAGEMENT">
+          <Key>
+            <PropertyRef Name="ASSET_ASSN_ID" />
+          </Key>
+          <Property Name="ASSET_ASSN_ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EMP_ID" Type="bigint" Nullable="false" />
+          <Property Name="EQUP_ID" Type="bigint" Nullable="false" />
+          <Property Name="DATE_ASSN" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="REMARKS" Type="nvarchar" MaxLength="50" />
+          <Property Name="ACTION_BY" Type="bigint" Nullable="false" />
+          <Property Name="ACTION_DATE" Type="datetime" Nullable="false" />
+          <Property Name="UPDATE_BY" Type="bigint" />
+          <Property Name="UPDATE_DATE" Type="datetime" />
+          <Property Name="STATUS" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
         <EntityType Name="ATTENDANCE_DETAILS">
           <Key>
             <PropertyRef Name="ID" />
@@ -73,6 +100,20 @@
           <Property Name="NATIONALITY" Type="nvarchar" MaxLength="50" />
           <Property Name="BLOOD_GROUP" Type="char" MaxLength="2" />
         </EntityType>
+        <EntityType Name="EQUEPMENTS_INFO">
+          <Key>
+            <PropertyRef Name="EQUEPMENT_ID" />
+          </Key>
+          <Property Name="EQUEPMENT_ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EQP_TITLE" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ASSET_ID" Type="bigint" Nullable="false" />
+          <Property Name="MODEL_NO" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="SERIAL_NO" Type="nvarchar" MaxLength="50" />
+          <Property Name="ACTION_BY" Type="bigint" Nullable="false" />
+          <Property Name="ACTION_DATE" Type="datetime" Nullable="false" />
+          <Property Name="UPDATE_BY" Type="bigint" />
+          <Property Name="UPDATE_DATE" Type="datetime" />
+        </EntityType>
         <EntityType Name="LEAVE_APPLICATION">
           <Key>
             <PropertyRef Name="LEAVE_APP_ID" />
@@ -108,7 +149,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="NOTICE" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="NOTICE" Type="nvarchar" MaxLength="1000" Nullable="false" />
           <Property Name="ACTION_BY" Type="bigint" />
           <Property Name="ACTION_DATE" Type="datetime" Nullable="false" />
           <Property Name="UPDATE_BY" Type="bigint" />
@@ -263,6 +304,18 @@
           <Property Name="UPDATE_DATE" Type="datetime" />
           <Property Name="UPDATE_BY" Type="bigint" />
         </EntityType>
+        <Association Name="FK_ASSET_ASSIGNMENT_EMPLOYEE_INFO">
+          <End Role="EMPLOYEE_INFO" Type="Self.EMPLOYEE_INFO" Multiplicity="1" />
+          <End Role="ASSET_MANAGEMENT" Type="Self.ASSET_MANAGEMENT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLOYEE_INFO">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ASSET_MANAGEMENT">
+              <PropertyRef Name="EMP_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_DIVISION_INFO_DEPARTMENT_INFO">
           <End Role="DEPARTMENT_INFO" Type="Self.DEPARTMENT_INFO" Multiplicity="1" />
           <End Role="DIVISION_INFO" Type="Self.DIVISION_INFO" Multiplicity="*" />
@@ -284,6 +337,18 @@
             </Principal>
             <Dependent Role="EMPLOYEE_APPLICATION">
               <PropertyRef Name="APP_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EQUEPMENTS_INFO_EQUEPMENTS_INFO">
+          <End Role="ASSET_INFO" Type="Self.ASSET_INFO" Multiplicity="1" />
+          <End Role="EQUEPMENTS_INFO" Type="Self.EQUEPMENTS_INFO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSET_INFO">
+              <PropertyRef Name="ASSET_ID" />
+            </Principal>
+            <Dependent Role="EQUEPMENTS_INFO">
+              <PropertyRef Name="ASSET_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -432,11 +497,14 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="EMSModelStoreContainer">
+          <EntitySet Name="ASSET_INFO" EntityType="Self.ASSET_INFO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ASSET_MANAGEMENT" EntityType="Self.ASSET_MANAGEMENT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ATTENDANCE_DETAILS" EntityType="Self.ATTENDANCE_DETAILS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DEPARTMENT_INFO" EntityType="Self.DEPARTMENT_INFO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DIVISION_INFO" EntityType="Self.DIVISION_INFO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EMPLOYEE_APPLICATION" EntityType="Self.EMPLOYEE_APPLICATION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EMPLOYEE_INFO" EntityType="Self.EMPLOYEE_INFO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EQUEPMENTS_INFO" EntityType="Self.EQUEPMENTS_INFO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LEAVE_APPLICATION" EntityType="Self.LEAVE_APPLICATION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LEAVE_TYPE" EntityType="Self.LEAVE_TYPE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NOTICE_BOARD" EntityType="Self.NOTICE_BOARD" Schema="dbo" store:Type="Tables" />
@@ -450,6 +518,10 @@
           <EntitySet Name="TRANSACTION_ITEM" EntityType="Self.TRANSACTION_ITEM" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TRANSACTION_SHEET" EntityType="Self.TRANSACTION_SHEET" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="USER_INFO" EntityType="Self.USER_INFO" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ASSET_ASSIGNMENT_EMPLOYEE_INFO" Association="Self.FK_ASSET_ASSIGNMENT_EMPLOYEE_INFO">
+            <End Role="EMPLOYEE_INFO" EntitySet="EMPLOYEE_INFO" />
+            <End Role="ASSET_MANAGEMENT" EntitySet="ASSET_MANAGEMENT" />
+          </AssociationSet>
           <AssociationSet Name="FK_DIVISION_INFO_DEPARTMENT_INFO" Association="Self.FK_DIVISION_INFO_DEPARTMENT_INFO">
             <End Role="DEPARTMENT_INFO" EntitySet="DEPARTMENT_INFO" />
             <End Role="DIVISION_INFO" EntitySet="DIVISION_INFO" />
@@ -457,6 +529,10 @@
           <AssociationSet Name="FK_EMPLOYEE_APPLICATION_EMPLOYEE_INFO" Association="Self.FK_EMPLOYEE_APPLICATION_EMPLOYEE_INFO">
             <End Role="EMPLOYEE_INFO" EntitySet="EMPLOYEE_INFO" />
             <End Role="EMPLOYEE_APPLICATION" EntitySet="EMPLOYEE_APPLICATION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EQUEPMENTS_INFO_EQUEPMENTS_INFO" Association="Self.FK_EQUEPMENTS_INFO_EQUEPMENTS_INFO">
+            <End Role="ASSET_INFO" EntitySet="ASSET_INFO" />
+            <End Role="EQUEPMENTS_INFO" EntitySet="EQUEPMENTS_INFO" />
           </AssociationSet>
           <AssociationSet Name="FK_LEAVE_APPLICATION_EMPLOYEE_INFO" Association="Self.FK_LEAVE_APPLICATION_EMPLOYEE_INFO">
             <End Role="EMPLOYEE_INFO" EntitySet="EMPLOYEE_INFO" />
@@ -512,11 +588,14 @@
     <edmx:ConceptualModels>
       <Schema Namespace="EMSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="EMSEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ASSET_INFO" EntityType="EMSModel.ASSET_INFO" />
+          <EntitySet Name="ASSET_MANAGEMENT" EntityType="EMSModel.ASSET_MANAGEMENT" />
           <EntitySet Name="ATTENDANCE_DETAILS" EntityType="EMSModel.ATTENDANCE_DETAILS" />
           <EntitySet Name="DEPARTMENT_INFO" EntityType="EMSModel.DEPARTMENT_INFO" />
           <EntitySet Name="DIVISION_INFO" EntityType="EMSModel.DIVISION_INFO" />
           <EntitySet Name="EMPLOYEE_APPLICATION" EntityType="EMSModel.EMPLOYEE_APPLICATION" />
           <EntitySet Name="EMPLOYEE_INFO" EntityType="EMSModel.EMPLOYEE_INFO" />
+          <EntitySet Name="EQUEPMENTS_INFO" EntityType="EMSModel.EQUEPMENTS_INFO" />
           <EntitySet Name="LEAVE_APPLICATION" EntityType="EMSModel.LEAVE_APPLICATION" />
           <EntitySet Name="LEAVE_TYPE" EntityType="EMSModel.LEAVE_TYPE" />
           <EntitySet Name="NOTICE_BOARD" EntityType="EMSModel.NOTICE_BOARD" />
@@ -530,6 +609,14 @@
           <EntitySet Name="TRANSACTION_ITEM" EntityType="EMSModel.TRANSACTION_ITEM" />
           <EntitySet Name="TRANSACTION_SHEET" EntityType="EMSModel.TRANSACTION_SHEET" />
           <EntitySet Name="USER_INFO" EntityType="EMSModel.USER_INFO" />
+          <AssociationSet Name="FK_EQUEPMENTS_INFO_EQUEPMENTS_INFO" Association="EMSModel.FK_EQUEPMENTS_INFO_EQUEPMENTS_INFO">
+            <End Role="ASSET_INFO" EntitySet="ASSET_INFO" />
+            <End Role="EQUEPMENTS_INFO" EntitySet="EQUEPMENTS_INFO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ASSET_ASSIGNMENT_EMPLOYEE_INFO" Association="EMSModel.FK_ASSET_ASSIGNMENT_EMPLOYEE_INFO">
+            <End Role="EMPLOYEE_INFO" EntitySet="EMPLOYEE_INFO" />
+            <End Role="ASSET_MANAGEMENT" EntitySet="ASSET_MANAGEMENT" />
+          </AssociationSet>
           <AssociationSet Name="FK_DIVISION_INFO_DEPARTMENT_INFO" Association="EMSModel.FK_DIVISION_INFO_DEPARTMENT_INFO">
             <End Role="DEPARTMENT_INFO" EntitySet="DEPARTMENT_INFO" />
             <End Role="DIVISION_INFO" EntitySet="DIVISION_INFO" />
@@ -587,6 +674,35 @@
             <End Role="TRANSACTION_SHEET" EntitySet="TRANSACTION_SHEET" />
           </AssociationSet>
         </EntityContainer>
+        <EntityType Name="ASSET_INFO">
+          <Key>
+            <PropertyRef Name="ASSET_ID" />
+          </Key>
+          <Property Name="ASSET_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ASSET_TITLE" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="REMARKS" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ACTION_BY" Type="Int64" Nullable="false" />
+          <Property Name="ACTION_DATE" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UPDATE_BY" Type="Int64" />
+          <Property Name="UPDATE_DATE" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="EQUEPMENTS_INFO" Relationship="EMSModel.FK_EQUEPMENTS_INFO_EQUEPMENTS_INFO" FromRole="ASSET_INFO" ToRole="EQUEPMENTS_INFO" />
+        </EntityType>
+        <EntityType Name="ASSET_MANAGEMENT">
+          <Key>
+            <PropertyRef Name="ASSET_ASSN_ID" />
+          </Key>
+          <Property Name="ASSET_ASSN_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EMP_ID" Type="Int64" Nullable="false" />
+          <Property Name="EQUP_ID" Type="Int64" Nullable="false" />
+          <Property Name="DATE_ASSN" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="REMARKS" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ACTION_BY" Type="Int64" Nullable="false" />
+          <Property Name="ACTION_DATE" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UPDATE_BY" Type="Int64" />
+          <Property Name="UPDATE_DATE" Type="DateTime" Precision="3" />
+          <Property Name="STATUS" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="EMPLOYEE_INFO" Relationship="EMSModel.FK_ASSET_ASSIGNMENT_EMPLOYEE_INFO" FromRole="ASSET_MANAGEMENT" ToRole="EMPLOYEE_INFO" />
+        </EntityType>
         <EntityType Name="ATTENDANCE_DETAILS">
           <Key>
             <PropertyRef Name="ID" />
@@ -658,6 +774,7 @@
           <Property Name="MARITALA_STATUS" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="NATIONALITY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="BLOOD_GROUP" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="ASSET_MANAGEMENT" Relationship="EMSModel.FK_ASSET_ASSIGNMENT_EMPLOYEE_INFO" FromRole="EMPLOYEE_INFO" ToRole="ASSET_MANAGEMENT" />
           <NavigationProperty Name="EMPLOYEE_APPLICATION" Relationship="EMSModel.FK_EMPLOYEE_APPLICATION_EMPLOYEE_INFO" FromRole="EMPLOYEE_INFO" ToRole="EMPLOYEE_APPLICATION" />
           <NavigationProperty Name="LEAVE_APPLICATION" Relationship="EMSModel.FK_LEAVE_APPLICATION_EMPLOYEE_INFO" FromRole="EMPLOYEE_INFO" ToRole="LEAVE_APPLICATION" />
           <NavigationProperty Name="POSITIONAL_INFO" Relationship="EMSModel.FK_POSITIONAL_INFO_EMPLOYEE_INFO" FromRole="EMPLOYEE_INFO" ToRole="POSITIONAL_INFO" />
@@ -666,6 +783,21 @@
           <NavigationProperty Name="TEAM_DETAILS" Relationship="EMSModel.FK_TEAM_DETAILS_EMPLOYEE_INFO" FromRole="EMPLOYEE_INFO" ToRole="TEAM_DETAILS" />
           <NavigationProperty Name="TEAM_INFO" Relationship="EMSModel.FK_TEAM_EMPLOYEE_INFO" FromRole="EMPLOYEE_INFO" ToRole="TEAM_INFO" />
           <NavigationProperty Name="USER_INFO" Relationship="EMSModel.FK_USER_INFO_EMPLOYEE_INFO" FromRole="EMPLOYEE_INFO" ToRole="USER_INFO" />
+        </EntityType>
+        <EntityType Name="EQUEPMENTS_INFO">
+          <Key>
+            <PropertyRef Name="EQUEPMENT_ID" />
+          </Key>
+          <Property Name="EQUEPMENT_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EQP_TITLE" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ASSET_ID" Type="Int64" Nullable="false" />
+          <Property Name="MODEL_NO" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SERIAL_NO" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ACTION_BY" Type="Int64" Nullable="false" />
+          <Property Name="ACTION_DATE" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UPDATE_BY" Type="Int64" />
+          <Property Name="UPDATE_DATE" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ASSET_INFO" Relationship="EMSModel.FK_EQUEPMENTS_INFO_EQUEPMENTS_INFO" FromRole="EQUEPMENTS_INFO" ToRole="ASSET_INFO" />
         </EntityType>
         <EntityType Name="LEAVE_APPLICATION">
           <Key>
@@ -705,7 +837,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NOTICE" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NOTICE" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="ACTION_BY" Type="Int64" />
           <Property Name="ACTION_DATE" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UPDATE_BY" Type="Int64" />
@@ -873,6 +1005,30 @@
           <Property Name="UPDATE_BY" Type="Int64" />
           <NavigationProperty Name="EMPLOYEE_INFO" Relationship="EMSModel.FK_USER_INFO_EMPLOYEE_INFO" FromRole="USER_INFO" ToRole="EMPLOYEE_INFO" />
         </EntityType>
+        <Association Name="FK_EQUEPMENTS_INFO_EQUEPMENTS_INFO">
+          <End Type="EMSModel.ASSET_INFO" Role="ASSET_INFO" Multiplicity="1" />
+          <End Type="EMSModel.EQUEPMENTS_INFO" Role="EQUEPMENTS_INFO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSET_INFO">
+              <PropertyRef Name="ASSET_ID" />
+            </Principal>
+            <Dependent Role="EQUEPMENTS_INFO">
+              <PropertyRef Name="ASSET_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ASSET_ASSIGNMENT_EMPLOYEE_INFO">
+          <End Type="EMSModel.EMPLOYEE_INFO" Role="EMPLOYEE_INFO" Multiplicity="1" />
+          <End Type="EMSModel.ASSET_MANAGEMENT" Role="ASSET_MANAGEMENT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLOYEE_INFO">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ASSET_MANAGEMENT">
+              <PropertyRef Name="EMP_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_DIVISION_INFO_DEPARTMENT_INFO">
           <End Type="EMSModel.DEPARTMENT_INFO" Role="DEPARTMENT_INFO" Multiplicity="1" />
           <End Type="EMSModel.DIVISION_INFO" Role="DIVISION_INFO" Multiplicity="*" />
@@ -1047,6 +1203,35 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="EMSModelStoreContainer" CdmEntityContainer="EMSEntities">
+          <EntitySetMapping Name="ASSET_INFO">
+            <EntityTypeMapping TypeName="EMSModel.ASSET_INFO">
+              <MappingFragment StoreEntitySet="ASSET_INFO">
+                <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
+                <ScalarProperty Name="UPDATE_BY" ColumnName="UPDATE_BY" />
+                <ScalarProperty Name="ACTION_DATE" ColumnName="ACTION_DATE" />
+                <ScalarProperty Name="ACTION_BY" ColumnName="ACTION_BY" />
+                <ScalarProperty Name="REMARKS" ColumnName="REMARKS" />
+                <ScalarProperty Name="ASSET_TITLE" ColumnName="ASSET_TITLE" />
+                <ScalarProperty Name="ASSET_ID" ColumnName="ASSET_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ASSET_MANAGEMENT">
+            <EntityTypeMapping TypeName="EMSModel.ASSET_MANAGEMENT">
+              <MappingFragment StoreEntitySet="ASSET_MANAGEMENT">
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
+                <ScalarProperty Name="UPDATE_BY" ColumnName="UPDATE_BY" />
+                <ScalarProperty Name="ACTION_DATE" ColumnName="ACTION_DATE" />
+                <ScalarProperty Name="ACTION_BY" ColumnName="ACTION_BY" />
+                <ScalarProperty Name="REMARKS" ColumnName="REMARKS" />
+                <ScalarProperty Name="DATE_ASSN" ColumnName="DATE_ASSN" />
+                <ScalarProperty Name="EQUP_ID" ColumnName="EQUP_ID" />
+                <ScalarProperty Name="EMP_ID" ColumnName="EMP_ID" />
+                <ScalarProperty Name="ASSET_ASSN_ID" ColumnName="ASSET_ASSN_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="ATTENDANCE_DETAILS">
             <EntityTypeMapping TypeName="EMSModel.ATTENDANCE_DETAILS">
               <MappingFragment StoreEntitySet="ATTENDANCE_DETAILS">
@@ -1117,6 +1302,21 @@
                 <ScalarProperty Name="ADDRESS" ColumnName="ADDRESS" />
                 <ScalarProperty Name="EMPLOYEE_NAME" ColumnName="EMPLOYEE_NAME" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EQUEPMENTS_INFO">
+            <EntityTypeMapping TypeName="EMSModel.EQUEPMENTS_INFO">
+              <MappingFragment StoreEntitySet="EQUEPMENTS_INFO">
+                <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
+                <ScalarProperty Name="UPDATE_BY" ColumnName="UPDATE_BY" />
+                <ScalarProperty Name="ACTION_DATE" ColumnName="ACTION_DATE" />
+                <ScalarProperty Name="ACTION_BY" ColumnName="ACTION_BY" />
+                <ScalarProperty Name="SERIAL_NO" ColumnName="SERIAL_NO" />
+                <ScalarProperty Name="MODEL_NO" ColumnName="MODEL_NO" />
+                <ScalarProperty Name="ASSET_ID" ColumnName="ASSET_ID" />
+                <ScalarProperty Name="EQP_TITLE" ColumnName="EQP_TITLE" />
+                <ScalarProperty Name="EQUEPMENT_ID" ColumnName="EQUEPMENT_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

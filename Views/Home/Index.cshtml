@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<EMSApp.Models.LEAVE_APPLICATION>
+@{
     ViewBag.Title = "Home Page";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -13,7 +14,7 @@
                         </div>
                         <p class="card-category">Total User</p>
                         <h3 class="card-title">
-                           12
+                            12
                             <small>Count</small>
                         </h3>
                     </div>
@@ -46,5 +47,30 @@
                 </div>
             </div>
         </div>
+        <div class="clearfix"></div>
+        <div class="row">
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+                    <div class="panel-group" style="color:white;border:double;border-color:chocolate;margin:10px">
+                        <div class="panel panel-default" style="padding:10px;">
+                            <div class="panel-heading"><p style="font-weight:800;">@item.LEAVE_TYPE.LEAVE_TITLE</p></div>
+                            <div class="panel-body">
+                                <p href="@Url.Action("User","Index")">
+                                    Name: @item.EMPLOYEE_INFO.EMPLOYEE_NAME
+                                    <br />
+                                    Applied Date: @item.START_DATE to @item.END_DATE
+                                </p>
+                            </div>
+                            <div class="panel-footer">
+                                <a href="~/Leave/LeaveAppEdit/@item.LEAVE_APP_ID" class="btn btn-info pull-right">View</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+
     </div>
 </div>
