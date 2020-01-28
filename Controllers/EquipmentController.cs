@@ -75,7 +75,7 @@ namespace EMSApp.Controllers
         public ActionResult Edit(int id)
         {
             var dt = db.EQUEPMENTS_INFO.Where(x => x.EQUEPMENT_ID == id).FirstOrDefault();
-            GetDataInBag(dt.EQUEPMENT_ID);
+            GetDataInBag(dt.ASSET_ID);
             Session["AD"] = dt.ACTION_DATE;
             return View(dt);
         }
@@ -115,10 +115,10 @@ namespace EMSApp.Controllers
             }
             catch (Exception ex)
             {
-                GetDataInBag();
+                GetDataInBag(collection.ASSET_ID);
                 return View();
             }
-            GetDataInBag();
+            GetDataInBag(collection.ASSET_ID);
             return View();
         }
 

@@ -14,17 +14,18 @@ namespace EMSApp.Models
     
     public partial class ASSET_MANAGEMENT
     {
-        public long ASSET_ASSN_ID { get; set; }
+        public long ASSET_MNG_ID { get; set; }
         public long EMP_ID { get; set; }
         public long EQUP_ID { get; set; }
         public string DATE_ASSN { get; set; }
+        public string DATE_RTN { get; set; }
         public string REMARKS { get; set; }
         public long ACTION_BY { get; set; }
         public System.DateTime ACTION_DATE { get; set; }
         public Nullable<long> UPDATE_BY { get; set; }
         public Nullable<System.DateTime> UPDATE_DATE { get; set; }
-        public string STATUS { get; set; }
     
         public virtual EMPLOYEE_INFO EMPLOYEE_INFO { get; set; }
+        public virtual EQUEPMENTS_INFO EQUEPMENTS_INFO { get; set; }
     }
 }

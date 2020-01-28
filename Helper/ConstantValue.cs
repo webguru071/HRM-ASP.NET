@@ -51,5 +51,9 @@ namespace EMSApp.Helper
         //Activity Type
         public static string TypeActive = "a";
         public static string TypeDeactive = "d";
+        //Attendance
+        public static string AttendanceCheckIn = "i";
+        public static string AttendanceCheckOut = "o";
+
     }
 }

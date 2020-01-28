@@ -10,21 +10,15 @@ namespace EMSApp.Controllers
         EMSEntities db = new EMSEntities();
         public ActionResult Index()
         {
-            //var data=db.EMPLOYEE_APPLICATION.Where(x=>x.)
-            if(Convert.ToString(Session["USER_LEVEL"]) == Helper.ConstantValue.UserLevelAdmin)
-            {
-                var leaveApp = db.LEAVE_APPLICATION.Where(x => x.STATUS == Helper.ConstantValue.LeaveStatusPending).ToList();
-                return View(leaveApp);
-            }
-            else
-            {
-                Response.Redirect("~/Home/Dashboard");
-                return View();
-            }           
+            //Session["USER_LEVEL"] = Helper.ConstantValue.UserLevelAdmin;
+            //string name = Session["USER_NAME"].ToString();
+            var leaveApp = db.LEAVE_APPLICATION.Where(x => x.STATUS == Helper.ConstantValue.LeaveStatusPending).ToList();
+            return View(leaveApp);            
         }
         [HttpGet]
         public ActionResult Dashboard()
         {
+           // Session["USER_LEVEL"] = Helper.ConstantValue.UserLevelEmployee;
             var notific = db.NOTICE_BOARD.Where(x => x.STATUS == Helper.ConstantValue.TypeActive).ToList();
             return View(notific);
         }

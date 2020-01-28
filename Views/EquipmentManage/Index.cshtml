@@ -14,17 +14,20 @@
     <tr>
         <th>Action</th>
         <th>
-            @Html.DisplayNameFor(model => model.EMPLOYEE_INFO.EMPLOYEE_NAME)
+            Employee
         </th>
 
         <th>
-            @Html.DisplayNameFor(model => model.EQUP_ID)
+           Equipment
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DATE_ASSN)
+            Assigned
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.REMARKS)
+            Returned
+        </th>
+        <th>
+            Remarks
         </th>
 
     </tr>
@@ -33,26 +36,29 @@
     {
         foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ASSET_ASSN_ID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ASSET_ASSN_ID })
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EMPLOYEE_INFO.EMPLOYEE_NAME)
-                </td>
+<tr>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.ASSET_MNG_ID }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.ASSET_MNG_ID })
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.EMPLOYEE_INFO.EMPLOYEE_NAME)
+    </td>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.EQUP_ID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DATE_ASSN)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.REMARKS)
-                </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.EQUEPMENTS_INFO.EQP_TITLE)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.DATE_ASSN)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.DATE_RTN)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.REMARKS)
+    </td>
 
-            </tr>
+</tr>
         }
     }
 

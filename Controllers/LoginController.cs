@@ -27,13 +27,14 @@ namespace EMSApp.Controllers
         }
         // POST: Login/Create
         [HttpPost]
-        public ActionResult LogIn(USER_INFO user)
+        public ActionResult LogIn(FormCollection user)
         {
-            string userId = user.USER_ID;
-            string pass = user.PASSWORD;
-            if (string.IsNullOrEmpty(user.USER_ID) || string.IsNullOrEmpty(user.PASSWORD))
+            string userId = user["username"];
+            string pass = user["pass"];
+            if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(pass))
             {
                 ModelState.AddModelError("", "Please Give Proper User Id and Password!!");
+                return View();
             }
             else
             {
@@ -46,11 +47,14 @@ namespace EMSApp.Controllers
                     Session["EMP_ID"]=data.EMPLOYEE_ID;
                     if (data.USER_LEVEL == Helper.ConstantValue.UserLevelAdmin)
                     {
-                        Response.Redirect("~/Home/Index");
+                        //Response.Redirect("~/Home/Index");
+                        //Url.Action("Index", "Home");
+                        return RedirectToAction("Index", "Home");
                     }
                     else
                     {
-                        Response.Redirect("~/Home/Dashboard");
+                        //Response.Redirect("~/Home/Dashboard");
+                        return RedirectToAction("Dashboard", "Home");
                     }                    
                 }
                 else
@@ -58,8 +62,7 @@ namespace EMSApp.Controllers
                     ModelState.AddModelError("", "User Id and Password is Invalid!!!");
                     return View();
                 }
-            }
-            return View();
+            }            
         }
         public ActionResult Logout()
         {

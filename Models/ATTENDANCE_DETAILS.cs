@@ -14,8 +14,14 @@ namespace EMSApp.Models
     
     public partial class ATTENDANCE_DETAILS
     {
-        public long ID { get; set; }
+        public long ATNDNC_ID { get; set; }
         public long EMPLOYEE_ID { get; set; }
         public System.DateTime ATT_DATE { get; set; }
+        public Nullable<System.TimeSpan> CHECK_IN_TIME { get; set; }
+        public Nullable<System.TimeSpan> CHECK_OUT_TIME { get; set; }
+        public Nullable<int> SL_NO { get; set; }
+        public string STATUS { get; set; }
+    
+        public virtual EMPLOYEE_INFO EMPLOYEE_INFO { get; set; }
     }
 }

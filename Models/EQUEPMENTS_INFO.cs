@@ -14,6 +14,12 @@ namespace EMSApp.Models
     
     public partial class EQUEPMENTS_INFO
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public EQUEPMENTS_INFO()
+        {
+            this.ASSET_MANAGEMENT = new HashSet<ASSET_MANAGEMENT>();
+        }
+    
         public long EQUEPMENT_ID { get; set; }
         public string EQP_TITLE { get; set; }
         public long ASSET_ID { get; set; }
@@ -25,5 +31,7 @@ namespace EMSApp.Models
         public Nullable<System.DateTime> UPDATE_DATE { get; set; }
     
         public virtual ASSET_INFO ASSET_INFO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ASSET_MANAGEMENT> ASSET_MANAGEMENT { get; set; }
     }
 }

@@ -17,25 +17,29 @@
     <EntitySetMapping Name="ASSET_MANAGEMENT">
       <EntityTypeMapping TypeName="EMSModel.ASSET_MANAGEMENT">
         <MappingFragment StoreEntitySet="ASSET_MANAGEMENT">
-          <ScalarProperty Name="STATUS" ColumnName="STATUS" />
           <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
           <ScalarProperty Name="UPDATE_BY" ColumnName="UPDATE_BY" />
           <ScalarProperty Name="ACTION_DATE" ColumnName="ACTION_DATE" />
           <ScalarProperty Name="ACTION_BY" ColumnName="ACTION_BY" />
           <ScalarProperty Name="REMARKS" ColumnName="REMARKS" />
+          <ScalarProperty Name="DATE_RTN" ColumnName="DATE_RTN" />
           <ScalarProperty Name="DATE_ASSN" ColumnName="DATE_ASSN" />
           <ScalarProperty Name="EQUP_ID" ColumnName="EQUP_ID" />
           <ScalarProperty Name="EMP_ID" ColumnName="EMP_ID" />
-          <ScalarProperty Name="ASSET_ASSN_ID" ColumnName="ASSET_ASSN_ID" />
+          <ScalarProperty Name="ASSET_MNG_ID" ColumnName="ASSET_MNG_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="ATTENDANCE_DETAILS">
       <EntityTypeMapping TypeName="EMSModel.ATTENDANCE_DETAILS">
         <MappingFragment StoreEntitySet="ATTENDANCE_DETAILS">
+          <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+          <ScalarProperty Name="SL_NO" ColumnName="SL_NO" />
+          <ScalarProperty Name="CHECK_OUT_TIME" ColumnName="CHECK_OUT_TIME" />
+          <ScalarProperty Name="CHECK_IN_TIME" ColumnName="CHECK_IN_TIME" />
           <ScalarProperty Name="ATT_DATE" ColumnName="ATT_DATE" />
           <ScalarProperty Name="EMPLOYEE_ID" ColumnName="EMPLOYEE_ID" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ATNDNC_ID" ColumnName="ATNDNC_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

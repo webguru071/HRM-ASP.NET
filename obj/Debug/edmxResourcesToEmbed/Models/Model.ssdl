@@ -14,26 +14,30 @@
   </EntityType>
   <EntityType Name="ASSET_MANAGEMENT">
     <Key>
-      <PropertyRef Name="ASSET_ASSN_ID" />
+      <PropertyRef Name="ASSET_MNG_ID" />
     </Key>
-    <Property Name="ASSET_ASSN_ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ASSET_MNG_ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="EMP_ID" Type="bigint" Nullable="false" />
     <Property Name="EQUP_ID" Type="bigint" Nullable="false" />
     <Property Name="DATE_ASSN" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="DATE_RTN" Type="nvarchar" MaxLength="50" />
     <Property Name="REMARKS" Type="nvarchar" MaxLength="50" />
     <Property Name="ACTION_BY" Type="bigint" Nullable="false" />
     <Property Name="ACTION_DATE" Type="datetime" Nullable="false" />
     <Property Name="UPDATE_BY" Type="bigint" />
     <Property Name="UPDATE_DATE" Type="datetime" />
-    <Property Name="STATUS" Type="char" MaxLength="1" Nullable="false" />
   </EntityType>
   <EntityType Name="ATTENDANCE_DETAILS">
     <Key>
-      <PropertyRef Name="ID" />
+      <PropertyRef Name="ATNDNC_ID" />
     </Key>
-    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ATNDNC_ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="EMPLOYEE_ID" Type="bigint" Nullable="false" />
     <Property Name="ATT_DATE" Type="date" Nullable="false" />
+    <Property Name="CHECK_IN_TIME" Type="time" Precision="2" />
+    <Property Name="CHECK_OUT_TIME" Type="time" Precision="2" />
+    <Property Name="SL_NO" Type="int" />
+    <Property Name="STATUS" Type="char" MaxLength="1" />
   </EntityType>
   <EntityType Name="DEPARTMENT_INFO">
     <Key>
@@ -311,6 +315,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_ASSET_MANAGEMENT_EQUEPMENTS_INFO">
+    <End Role="EQUEPMENTS_INFO" Type="Self.EQUEPMENTS_INFO" Multiplicity="1" />
+    <End Role="ASSET_MANAGEMENT" Type="Self.ASSET_MANAGEMENT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EQUEPMENTS_INFO">
+        <PropertyRef Name="EQUEPMENT_ID" />
+      </Principal>
+      <Dependent Role="ASSET_MANAGEMENT">
+        <PropertyRef Name="EMP_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ATTENDANCE_DETAILS_EMPLOYEE_INFO">
+    <End Role="EMPLOYEE_INFO" Type="Self.EMPLOYEE_INFO" Multiplicity="1" />
+    <End Role="ATTENDANCE_DETAILS" Type="Self.ATTENDANCE_DETAILS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EMPLOYEE_INFO">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ATTENDANCE_DETAILS">
+        <PropertyRef Name="EMPLOYEE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_DIVISION_INFO_DEPARTMENT_INFO">
     <End Role="DEPARTMENT_INFO" Type="Self.DEPARTMENT_INFO" Multiplicity="1" />
     <End Role="DIVISION_INFO" Type="Self.DIVISION_INFO" Multiplicity="*" />
@@ -516,6 +544,14 @@
     <AssociationSet Name="FK_ASSET_ASSIGNMENT_EMPLOYEE_INFO" Association="Self.FK_ASSET_ASSIGNMENT_EMPLOYEE_INFO">
       <End Role="EMPLOYEE_INFO" EntitySet="EMPLOYEE_INFO" />
       <End Role="ASSET_MANAGEMENT" EntitySet="ASSET_MANAGEMENT" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ASSET_MANAGEMENT_EQUEPMENTS_INFO" Association="Self.FK_ASSET_MANAGEMENT_EQUEPMENTS_INFO">
+      <End Role="EQUEPMENTS_INFO" EntitySet="EQUEPMENTS_INFO" />
+      <End Role="ASSET_MANAGEMENT" EntitySet="ASSET_MANAGEMENT" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ATTENDANCE_DETAILS_EMPLOYEE_INFO" Association="Self.FK_ATTENDANCE_DETAILS_EMPLOYEE_INFO">
+      <End Role="EMPLOYEE_INFO" EntitySet="EMPLOYEE_INFO" />
+      <End Role="ATTENDANCE_DETAILS" EntitySet="ATTENDANCE_DETAILS" />
     </AssociationSet>
     <AssociationSet Name="FK_DIVISION_INFO_DEPARTMENT_INFO" Association="Self.FK_DIVISION_INFO_DEPARTMENT_INFO">
       <End Role="DEPARTMENT_INFO" EntitySet="DEPARTMENT_INFO" />
