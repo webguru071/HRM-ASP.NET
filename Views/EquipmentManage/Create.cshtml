@@ -1,69 +1,69 @@
 ﻿@model EMSApp.Models.ASSET_MANAGEMENT
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Asset Assign";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Create</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-<div class="form-horizontal">
-    <h4>ASSET_MANAGEMENT</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-        Employee
-        <div class="col-md-10">
-            @Html.DropDownList("EMP_ID", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.EMP_ID, "", new { @class = "text-danger" })
-        </div>
-    </div>   
-    <div class="form-group">
-        Equipment
-        <div class="col-md-10">
-            @Html.DropDownList("EQUP_ID", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.EQUP_ID, "", new { @class = "text-danger" })
+    <div class="form-horizontal" style="padding:15px">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Asset Assign</h4>
+                <form class="form-material m-t-40">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="form-group">
+                        Employee
+                        <div class="col-md-10">
+                            @Html.DropDownList("EMP_ID", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.EMP_ID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        Equipment
+                        <div class="col-md-10">
+                            @Html.DropDownList("EQUP_ID", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.EQUP_ID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        Assign Date
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.DATE_ASSN, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                            @Html.ValidationMessageFor(model => model.DATE_ASSN, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        Return Date
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.DATE_RTN, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                            @Html.ValidationMessageFor(model => model.DATE_ASSN, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        Remark
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.REMARKS, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.REMARKS, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary pull-right">Save</button>
+                </form>
+            </div>
         </div>
     </div>
 
-    <div class="form-group">
-        Assign Date
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.DATE_ASSN, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
-            @Html.ValidationMessageFor(model => model.DATE_ASSN, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        Return Date
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.DATE_RTN, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
-            @Html.ValidationMessageFor(model => model.DATE_ASSN, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        Remark
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.REMARKS, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.REMARKS, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
-        </div>
-    </div>
-</div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+

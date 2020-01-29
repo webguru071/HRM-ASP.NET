@@ -1,101 +1,114 @@
 ﻿@model EMSApp.Models.POSITIONAL_INFO
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Create Employee Position";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>Create</h2>
-
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-
 <div class="form-horizontal">
-
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(model => model.EMPLOYEE_ID, "EMPLOYEE_ID", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("EMPLOYEE_ID", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.EMPLOYEE_ID, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.DIV_ID, "DIV_ID", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("DIV_ID", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.DIV_ID, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.POSITION_TITLE, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.POSITION_TITLE, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.POSITION_TITLE, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.DUTY_TYPE, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("DUTY_TYPE", new SelectListItem[]
-                                            {
-                                                 new SelectListItem { Text = "Select One", Value="" },
-                                                new SelectListItem { Text = "Full Time", Value="f" },
-                                                new SelectListItem{ Text="Part Time",Value="p" },
-                                                new SelectListItem{ Text="Contructual",Value="c" },
-                                                new SelectListItem{ Text="Other", Value="o" },},
-                                                htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.DUTY_TYPE, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.RATE_TYPE, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("RATE_TYPE", new SelectListItem[]
-                                             {
-                                                  new SelectListItem { Text = "Select One", Value="" },
-                                                 new SelectListItem { Text = "Hourly", Value="h" },
-                                                 new SelectListItem{ Text="Salary",Value="s" },},
-                                                 htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.RATE_TYPE, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.PAY_FREQ, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("PAY_FREQ", new SelectListItem[]
-                                            {
-                                                 new SelectListItem { Text = "Select One", Value="" },
-                                                new SelectListItem { Text = "Daily", Value="d" },
-                                                new SelectListItem { Text = "Weekly", Value="w" },
-                                                new SelectListItem{ Text="Biweekly",Value="b" },
-                                                new SelectListItem{ Text="Monthly", Value="m" },},
-                                                htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.PAY_FREQ, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.BASIC_SALARY, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.BASIC_SALARY, new { htmlAttributes = new { @class = "form-control",@type="number" } })
-            @Html.ValidationMessageFor(model => model.BASIC_SALARY, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
+    <div class="form-horizontal" style="padding:15px">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Employee Position</h4>
+                <form class="form-material m-t-40">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                Employee
+                                <div class="col-md-10">
+                                    @Html.DropDownList("EMPLOYEE_ID", null, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.EMPLOYEE_ID, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                Division
+                                <div class="col-md-10">
+                                    @Html.DropDownList("DIV_ID", null, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.DIV_ID, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                               Position
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.POSITION_TITLE, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.POSITION_TITLE, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                Duty Type
+                                <div class="col-md-10">
+                                    @Html.DropDownList("DUTY_TYPE", new SelectListItem[]
+                                                                    {
+                                                                         new SelectListItem { Text = "Select One", Value="" },
+                                                                        new SelectListItem { Text = "Full Time", Value="f" },
+                                                                        new SelectListItem{ Text="Part Time",Value="p" },
+                                                                        new SelectListItem{ Text="Contructual",Value="c" },
+                                                                        new SelectListItem{ Text="Other", Value="o" },},
+                                                                        htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.DUTY_TYPE, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                               Salary Rate
+                                <div class="col-md-10">
+                                    @Html.DropDownList("RATE_TYPE", new SelectListItem[]
+                                                                     {
+                                                                          new SelectListItem { Text = "Select One", Value="" },
+                                                                         new SelectListItem { Text = "Hourly", Value="h" },
+                                                                         new SelectListItem{ Text="Salary",Value="s" },},
+                                                                         htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.RATE_TYPE, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                Payment Frequency
+                                <div class="col-md-10">
+                                    @Html.DropDownList("PAY_FREQ", new SelectListItem[]
+                                                                    {
+                                                                         new SelectListItem { Text = "Select One", Value="" },
+                                                                        new SelectListItem { Text = "Daily", Value="d" },
+                                                                        new SelectListItem { Text = "Weekly", Value="w" },
+                                                                        new SelectListItem{ Text="Biweekly",Value="b" },
+                                                                        new SelectListItem{ Text="Monthly", Value="m" },},
+                                                                        htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.PAY_FREQ, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                Basic Salary
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.BASIC_SALARY, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+                                    @Html.ValidationMessageFor(model => model.BASIC_SALARY, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>                     
+                    <button type="submit" class="btn btn-primary pull-right">Save</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

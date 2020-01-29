@@ -4,104 +4,76 @@
     ViewBag.Title = "Create New User";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<style>
-    #IS_DELETED {
-        background-color: #202940;
-    }
 
-    #USER_LEVEL {
-        background-color: #202940;
-    }
-
-    #empId {
-        background-color: #202940;
-    }
-</style>
 @using (Html.BeginForm())
 {
-    @Html.AntiForgeryToken()
-
-
-    <div class="form-horizontal">
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <hr />
-        <div class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-8">
-                        <div class="card">
-                            <div class="card-header card-header-primary">
-                                <h4 class="card-title"> Add User</h4>
-                            </div>
-                            <div class="card-body">
-                                <form>
-
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label class="bmd-label-floating">Employee Name</label>
-                                                @Html.DropDownList("EMPLOYEE_ID", null, htmlAttributes: new { @class = "form-control", @id = "empId", @onchange = "GetEmpInfo()" })
-                                                @Html.ValidationMessageFor(model => model.EMPLOYEE_ID, "", new { @class = "text-danger" })
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label class="bmd-label-floating">User Name</label>
-                                                @Html.EditorFor(model => model.USER_NAME, new { htmlAttributes = new { @class = "form-control" } })
-                                                @Html.ValidationMessageFor(model => model.USER_NAME, "", new { @class = "text-danger" })
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="bmd-label-floating">Contact</label>
-                                                @Html.EditorFor(model => model.CONTACT, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
-                                                @Html.ValidationMessageFor(model => model.CONTACT, "", new { @class = "text-danger" })
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="bmd-label-floating">User Id</label>
-                                                @Html.EditorFor(model => model.USER_ID, new { htmlAttributes = new { @class = "form-control" } })
-                                                @Html.ValidationMessageFor(model => model.USER_ID, "", new { @class = "text-danger" })
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="bmd-label-floating">Password</label>
-                                                @Html.EditorFor(model => model.PASSWORD, new { htmlAttributes = new { @class = "form-control", @type = "password" } })
-                                                @Html.ValidationMessageFor(model => model.PASSWORD, "", new { @class = "text-danger" })
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label class="bmd-label-floating">Status</label>
-                                                @Html.DropDownList("USER_LEVEL", null, htmlAttributes: new { @class = "form-control" })
-                                                @Html.ValidationMessageFor(model => model.USER_LEVEL, "", new { @class = "text-danger" })
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label class="bmd-label-floating">Status</label>
-                                                @Html.DropDownList("IS_DELETED", null, htmlAttributes: new { @class = "form-control " })
-                                                @Html.ValidationMessageFor(model => model.IS_DELETED, "", new { @class = "text-danger" })
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary pull-right">Save</button>
-                                    <div class="clearfix"></div>
-                                </form>
+    @Html.AntiForgeryToken() 
+    <div class="form-horizontal" style="padding:15px">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">User Details</h4>
+                <form class="form-material m-t-40">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">Employee Name</label>
+                                @Html.DropDownList("EMPLOYEE_ID", null, htmlAttributes: new { @class = "form-control", @id = "empId", @onchange = "GetEmpInfo()" })
+                                @Html.ValidationMessageFor(model => model.EMPLOYEE_ID, "", new { @class = "text-danger" })
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">User Name</label>
+                                @Html.EditorFor(model => model.USER_NAME, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.USER_NAME, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">Contact</label>
+                                @Html.EditorFor(model => model.CONTACT, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+                                @Html.ValidationMessageFor(model => model.CONTACT, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
 
-                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">User Id</label>
+                                @Html.EditorFor(model => model.USER_ID, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.USER_ID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">Password</label>
+                                @Html.EditorFor(model => model.PASSWORD, new { htmlAttributes = new { @class = "form-control", @type = "password" } })
+                                @Html.ValidationMessageFor(model => model.PASSWORD, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">Status</label>
+                                @Html.DropDownList("USER_LEVEL", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.USER_LEVEL, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">Status</label>
+                                @Html.DropDownList("IS_DELETED", null, htmlAttributes: new { @class = "form-control " })
+                                @Html.ValidationMessageFor(model => model.IS_DELETED, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary pull-right">Save</button>
+                </form>
             </div>
         </div>
     </div>
@@ -111,7 +83,7 @@
     <script type="text/javascript">
         function GetEmpInfo() {
             var id = $('#empId').val();
-           
+
             $.ajax({
                 url: "@Url.Action("GetEmpInfo", "User")",
                 type: "GET",

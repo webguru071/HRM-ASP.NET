@@ -1,55 +1,72 @@
 ﻿@model IEnumerable<EMSApp.Models.EQUEPMENTS_INFO>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Equipment List";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>Action</th>
-        <th>
-            Asset
-        </th>
-        <th>
-            Equipment
-        </th>
-        <th>
-            Model
-        </th>
-        <th>
-            Serial
-        </th>
-    </tr>
-
-    @if (Model != null)
-    {
-        foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.ActionLink("View", "Edit", new { id = item.EQUEPMENT_ID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.EQUEPMENT_ID })
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ASSET_INFO.ASSET_TITLE)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EQP_TITLE)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MODEL_NO)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SERIAL_NO)
-                </td>
-            </tr>
-        }
-    }
-
-</table>
+<div class="container-fluid" style="padding-top:15px">
+    <div class="row">
+        <div class="col-md-3">
+            <p class="btn btn-block btn-outline-success btn-md">
+                @Html.ActionLink("Create New", "Create")
+            </p>
+        </div>
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Equipment List</h4>
+                    <div class="table-responsive">
+                        <table class="table color-bordered-table primary-bordered-table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>
+                                        Asset
+                                    </th>
+                                    <th>
+                                        Equipment
+                                    </th>
+                                    <th>
+                                        Model
+                                    </th>
+                                    <th>
+                                        Serial
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                <tr>
+                                    <td>
+                                        @Html.ActionLink("View", "Edit", new { id = item.EQUEPMENT_ID })
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ASSET_INFO.ASSET_TITLE)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.EQP_TITLE)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.MODEL_NO)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SERIAL_NO)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.EQUEPMENT_ID })
+                                    </td>
+                                </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

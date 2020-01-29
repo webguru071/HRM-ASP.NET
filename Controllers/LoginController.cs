@@ -46,14 +46,11 @@ namespace EMSApp.Controllers
                     Session["USER_LEVEL"]=data.USER_LEVEL;
                     Session["EMP_ID"]=data.EMPLOYEE_ID;
                     if (data.USER_LEVEL == Helper.ConstantValue.UserLevelAdmin)
-                    {
-                        //Response.Redirect("~/Home/Index");
-                        //Url.Action("Index", "Home");
+                    {                        
                         return RedirectToAction("Index", "Home");
                     }
                     else
-                    {
-                        //Response.Redirect("~/Home/Dashboard");
+                    {                        
                         return RedirectToAction("Dashboard", "Home");
                     }                    
                 }

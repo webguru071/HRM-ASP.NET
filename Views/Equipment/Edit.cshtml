@@ -1,64 +1,56 @@
 ﻿@model EMSApp.Models.EQUEPMENTS_INFO
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edit Equipment Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>Edit</h2>
-
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
-<div class="form-horizontal">
-    <h4>EQUEPMENTS_INFO</h4>
-    <hr />
+<div class="form-horizontal" style="padding:15px">
+   
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.EQUEPMENT_ID)
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Equipment Details</h4>
+            <form class="form-material m-t-40">
+                <div class="form-group">
+                    Asset Type
+                    <div class="col-md-10">
+                        @Html.DropDownList("ASSET_ID", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ASSET_ID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    Equipment
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.EQP_TITLE, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.EQP_TITLE, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    Model No.
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.MODEL_NO, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.MODEL_NO, "", new { @class = "text-danger" })
+                    </div>
+                </div>
 
-    <div class="form-group">
-        Asset Type
-        <div class="col-md-10">
-            @Html.DropDownList("ASSET_ID", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.ASSET_ID, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    Serial No
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.SERIAL_NO, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.SERIAL_NO, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary pull-right">Save</button>
+            </form>
         </div>
-    </div>
-    <div class="form-group">
-        Equipment
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.EQP_TITLE, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.EQP_TITLE, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        Model No.
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.MODEL_NO, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.MODEL_NO, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        Serial No
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.SERIAL_NO, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.SERIAL_NO, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-default" />
-        </div>
-    </div>
+    </div>    
 </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

@@ -1,65 +1,79 @@
 ﻿@model IEnumerable<EMSApp.Models.SALARY_SETUP>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Gross Salary";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="container-fluid" style="padding-top:15px">
+    <div class="row">
+        <div class="col-md-3">
+            <p class="btn btn-block btn-outline-success btn-md">
+                @Html.ActionLink("Create New", "Create")
+            </p>
+        </div>
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Gross Salary Setup</h4>
+                    <div class="table-responsive">
+                        <table class="table color-bordered-table primary-bordered-table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>
+                                        Employee
+                                    </th>
+                                    <th>
+                                        Payment On
+                                    </th>
+                                    <th>
+                                        Salary
+                                    </th>
+                                    <th>
+                                        Benifites
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                <tr>
+                                    <td>
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.SALARY_SET_ID })
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.EMPLOYEE_INFO.EMPLOYEE_NAME)
+                                    </td>
+                                    @if (item.PAY_TYPE == EMSApp.Helper.ConstantValue.TransactionSheetPayTypeCash)
+                                    {
+                                        <td>
+                                            Cash
+                                        </td>
+                                    }
+                                    @if (item.PAY_TYPE == EMSApp.Helper.ConstantValue.TransactionSheetPayTypeBank)
+                                    {
+                                        <td>
+                                            Bank
+                                        </td>
+                                    }
+                                    @Html.DisplayFor(modelItem => item.PAY_TYPE)
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>Action</th>
-        <th>
-            Employee
-        </th>
-        <th>
-            Payment On
-        </th>
-        <th>
-            Salary
-        </th>
-        <th>
-            Benifites
-        </th>
-    </tr>
-
-    @if (Model != null)
-    {
-        foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.ActionLink("Delete", "Delete", new { id = item.SALARY_SET_ID })
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EMPLOYEE_INFO.EMPLOYEE_NAME)
-                </td>
-                @if (item.PAY_TYPE == EMSApp.Helper.ConstantValue.TransactionSheetPayTypeCash)
-                {
-                    <td>
-                        Cash
-                    </td>
-                }
-                @if (item.PAY_TYPE == EMSApp.Helper.ConstantValue.TransactionSheetPayTypeBank)
-                {
-                    <td>
-                        Bank
-                    </td>
-                }
-                @Html.DisplayFor(modelItem => item.PAY_TYPE)
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.GROSS_SALARY)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SALARY_GRADE_SETUP)
-                </td>
-            </tr>
-        }
-    }
-
-</table>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.GROSS_SALARY)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SALARY_GRADE_SETUP)
+                                    </td>
+                                </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

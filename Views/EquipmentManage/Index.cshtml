@@ -1,65 +1,79 @@
 ﻿@model IEnumerable<EMSApp.Models.ASSET_MANAGEMENT>
-
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Asset Management";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="container-fluid" style="padding-top:15px">
+    <div class="row">
+        <div class="col-md-3">
+            <p class="btn btn-block btn-outline-success btn-md">
+                @Html.ActionLink("Create New", "Create")
+            </p>
+        </div>
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Asset Management</h4>
+                    <div class="table-responsive">
+                        <table class="table color-bordered-table primary-bordered-table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>
+                                        Employee
+                                    </th>
 
-<h2>Index</h2>
+                                    <th>
+                                        Equipment
+                                    </th>
+                                    <th>
+                                        Assigned
+                                    </th>
+                                    <th>
+                                        Returned
+                                    </th>
+                                    <th>
+                                        Remarks
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                <tr>
+                                    <td>
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.ASSET_MNG_ID }) 
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.EMPLOYEE_INFO.EMPLOYEE_NAME)
+                                    </td>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>Action</th>
-        <th>
-            Employee
-        </th>
-
-        <th>
-           Equipment
-        </th>
-        <th>
-            Assigned
-        </th>
-        <th>
-            Returned
-        </th>
-        <th>
-            Remarks
-        </th>
-
-    </tr>
-
-    @if (Model != null)
-    {
-        foreach (var item in Model)
-        {
-<tr>
-    <td>
-        @Html.ActionLink("Edit", "Edit", new { id = item.ASSET_MNG_ID }) |
-        @Html.ActionLink("Delete", "Delete", new { id = item.ASSET_MNG_ID })
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.EMPLOYEE_INFO.EMPLOYEE_NAME)
-    </td>
-
-    <td>
-        @Html.DisplayFor(modelItem => item.EQUEPMENTS_INFO.EQP_TITLE)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.DATE_ASSN)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.DATE_RTN)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.REMARKS)
-    </td>
-
-</tr>
-        }
-    }
-
-</table>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.EQUEPMENTS_INFO.EQP_TITLE)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DATE_ASSN)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DATE_RTN)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.REMARKS)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.ASSET_MNG_ID })
+                                    </td>
+                                </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

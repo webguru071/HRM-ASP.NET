@@ -1,62 +1,57 @@
 ﻿@model IEnumerable<EMSApp.Models.TEAM_INFO>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Teams";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-
-<div class="row">
-    <p class="btn btn-warning pull-left">
-        @Html.ActionLink("Create New", "Create")
-    </p>
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header card-header-primary">
-                <h4 class="card-title ">All Teams</h4>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead class=" text-primary">
-                        <th>
-                            Action
-                        </th>
-                        <th>
-                            Team Title
-                        </th>
-                        <th>
-                            Team Leader
-                        </th>
-                        <th>
-                            Remarks
-                        </th>
-                        </thead>
-                        <tbody>
-                            <tr>
+<div class="container-fluid" style="padding-top:15px">
+    <div class="row">
+        <div class="col-md-3">
+            <p class="btn btn-block btn-outline-success btn-md">
+                @Html.ActionLink("Create New", "Create")
+            </p>
+        </div>
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Teams</h4>
+                    <div class="table-responsive">
+                        <table class="table color-bordered-table primary-bordered-table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>
+                                        Team Title
+                                    </th>
+                                    <th>
+                                        Team Leader
+                                    </th>
+                                    <th>
+                                        Remarks
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
                                 @if (Model != null)
                                 {
                                     foreach (var item in Model)
                                     {
-                                    <tr>
-                                        <td>
-                                            @Html.ActionLink("View", "Edit", new { id = item.ID })
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.TEAM_TITLE)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.EMPLOYEE_INFO.EMPLOYEE_NAME)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.REMARKS)
-                                        </td>
-                                    </tr>
+                                        <tr>
+                                            <td>
+                                                @Html.ActionLink("View", "Edit", new { id = item.ID })
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.TEAM_TITLE)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.EMPLOYEE_INFO.EMPLOYEE_NAME)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.REMARKS)
+                                            </td>
+                                        </tr>
+                                    }
                                 }
-
-                            }
-                                </tr>
-
                             </tbody>
                         </table>
                     </div>
@@ -64,3 +59,4 @@
             </div>
         </div>
     </div>
+</div>

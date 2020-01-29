@@ -1,73 +1,61 @@
 ﻿@model IEnumerable<EMSApp.Models.TEAM_DETAILS>
-
 @{
-    ViewBag.Title = "TeamMemberIndex";
+    ViewBag.Title = "Team Members";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-
-<div class="container">
-    <div class="container-fluid">
-
-        <div class="row">
-            <div class="col-md-12">
-                <p class="btn btn-warning pull-left">
-                    @Html.ActionLink("Create New", "TeamMember")
-                </p>
-            </div>
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header card-header-primary">
-                        <h4 class="card-title ">All Teams</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead class=" text-primary">
-                                <th>
-                                    Action
-                                </th>
-                                <th>
-                                    Team
-                                </th>
-                                <th>
-                                    Member
-                                </th>
-                                <th>
-                                    Remarks
-                                </th>
-                                </thead>
-                                <tbody>
-                                    @if (Model != null)
+<div class="container-fluid" style="padding-top:15px">
+    <div class="row">
+        <div class="col-md-3">
+            <p class="btn btn-block btn-outline-success btn-md">
+                @Html.ActionLink("Create New", "TeamMember")
+            </p>
+        </div>
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Team Members</h4>
+                    <div class="table-responsive">
+                        <table class="table color-bordered-table primary-bordered-table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>
+                                        Team
+                                    </th>
+                                    <th>
+                                        Member
+                                    </th>
+                                    <th>
+                                        Remarks
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null)
+                                {
+                                    foreach (var item in Model)
                                     {
-                                        foreach (var item in Model)
-                                        {
-                                            <tr>
-                                                <td>
-                                                    @Html.ActionLink("View", "TeamMemberEdit", new { id = item.ID })
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.TEAM_INFO.TEAM_TITLE)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.EMPLOYEE_INFO.EMPLOYEE_NAME)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.REMARKS)
-                                                </td>
-                                            </tr>
-                                        }
-
+                                        <tr>
+                                            <td>
+                                                @Html.ActionLink("View", "TeamMemberEdit", new { id = item.ID })
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.TEAM_INFO.TEAM_TITLE)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.EMPLOYEE_INFO.EMPLOYEE_NAME)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.REMARKS)
+                                            </td>
+                                        </tr>
                                     }
-
-
-                                </tbody>
-                            </table>
-                        </div>
+                                }
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>

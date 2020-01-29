@@ -45,7 +45,7 @@ namespace EMSApp.Controllers
                 else if (string.IsNullOrEmpty(collection["pass"]))
                 {
                     ModelState.AddModelError("", "Give Password for Confirmation!!");
-                }
+                }               
                 else
                 {
                     string pass = collection["pass"];
@@ -79,7 +79,8 @@ namespace EMSApp.Controllers
                         if (ModelState.IsValid)
                         {
                             db.ATTENDANCE_DETAILS.Add(attn);
-                            db.SaveChanges();                            
+                            db.SaveChanges();
+                            return RedirectToAction("Index");
                         }
                     }
                 }
