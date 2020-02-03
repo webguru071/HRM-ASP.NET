@@ -1,0 +1,87 @@
+﻿@model EMSApp.Models.TRANSACTION_SHEET
+
+@{
+    ViewBag.Title = "Edit Income Sources";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal" style="padding:15px">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Edit Income Sources</h4>
+                <hr />
+                <form class="form-material m-t-40">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="row p-t-20">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Date</label>
+                                @Html.EditorFor(model => model.DATE, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                                @Html.ValidationMessageFor(model => model.DATE, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Income</label>
+                                @Html.DropDownList("TRNS_ID", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.TRNS_ID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Voucher</label>
+                                @Html.EditorFor(model => model.VOUCHER_NO, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.VOUCHER_NO, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Amount</label>
+
+                                @Html.EditorFor(model => model.AMOUNT, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.AMOUNT, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Payment On</label>
+                                @Html.DropDownList("PAY_TYPE", new SelectListItem[]
+                                                                    {
+                                                                        new SelectListItem { Text = "Select One", Value="" },
+                                                                        new SelectListItem { Text = "Cash", Value="c" },
+                                                                        new SelectListItem{ Text="Bank",Value="b" },},
+                                                                        htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.PAY_TYPE, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Remarks</label>
+                                @Html.EditorFor(model => model.REMARKS, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.REMARKS, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <!--/span-->
+                    </div>
+                    <div class="form-actions">
+                        <div class="btn btn-secondary pull-center">
+                            @Html.ActionLink("Back to List", "IncomeSheetIndex")
+                        </div>
+                        <button type="submit" class="btn btn-primary pull-right">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+}
+
+

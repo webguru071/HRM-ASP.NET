@@ -221,7 +221,7 @@ namespace EMSApp.Controllers
                     if (ModelState.IsValid)
                     {
                         ICombine service = new CombineServices();
-                        bool result = service.SalarySetupStatusChange(id: id, statusV: Helper.ConstantValue.TypeActive);
+                        bool result = service.SalarySetupStatusChange(id: id, statusV: Helper.ConstantValue.UserStatusDeactive);
                         if (result)
                         {
                             return RedirectToAction("Index");

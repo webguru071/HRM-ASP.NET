@@ -169,14 +169,8 @@ namespace EMSApp.Controllers
             try
             {
                 // TODO: Add insert logic here
-                if(Convert.ToString(Session["USER_LEVEL"]) == ConstantValue.UserLevelAdmin)
-                {
-                    if (collection.EMPLOYEE_ID <= 0)
-                    {
-                        ModelState.AddModelError("", "Employee Name is Required!!");
-                    }
-                }               
-                else if (collection.LEAVE_TYPE_ID <= 0)
+
+                if (collection.LEAVE_TYPE_ID <= 0)
                 {
                     ModelState.AddModelError("", "Leave Type is Required!!");
                 }
@@ -191,21 +185,52 @@ namespace EMSApp.Controllers
                 }
                 else
                 {
-                    if (Convert.ToString(Session["USER_LEVEL"]) == ConstantValue.UserLevelEmployee)
+                    bool flag = true;
+                    if (Convert.ToString(Session["USER_LEVEL"]) == ConstantValue.UserLevelAdmin)
                     {
-                        collection.EMPLOYEE_ID = Convert.ToInt64(Session["EMP_ID"]);
-                        collection.STATUS = ConstantValue.LeaveStatusPending;
-                        collection.APPROVED_START_DATE = null;
-                        collection.APPROVED_END_DATE = null;
+                        if (collection.EMPLOYEE_ID <= 0)
+                        {
+                            flag = false;
+                            ModelState.AddModelError("", "Employee Name is Required!!");
+                        }
+                        else if (string.IsNullOrEmpty(collection.APPROVED_START_DATE))
+                        {
+                            flag = false;
+                            ModelState.AddModelError("", "Approved Leave Start Date is Required!!");
+                        }
+                        else if (string.IsNullOrEmpty(collection.APPROVED_END_DATE))
+                        {
+                            flag = false;
+                            ModelState.AddModelError("", "Approved Leave End Date is Required!!");
+                        }
+                        else if (string.IsNullOrEmpty(collection.STATUS))
+                        {
+                            flag = false;
+                            ModelState.AddModelError("", "Status is Required!!");
+                        }
+                        else
+                        {
+                            flag = true;
+                        }
                     }
-                    collection.ACTIVE_BY = Convert.ToInt64(Session["USER_ID"]);
-                    collection.ACTIVE_DATE = DateTime.Now;
-
-                    if (ModelState.IsValid)
+                    if (flag)
                     {
-                        db.LEAVE_APPLICATION.Add(collection);
-                        db.SaveChanges();
-                        return RedirectToAction("LeaveAppIndex");
+                        if (Convert.ToString(Session["USER_LEVEL"]) == ConstantValue.UserLevelEmployee)
+                        {
+                            collection.EMPLOYEE_ID = Convert.ToInt64(Session["EMP_ID"]);
+                            collection.STATUS = ConstantValue.LeaveStatusPending;
+                            collection.APPROVED_START_DATE = null;
+                            collection.APPROVED_END_DATE = null;
+                        }
+                        collection.ACTIVE_BY = Convert.ToInt64(Session["USER_ID"]);
+                        collection.ACTIVE_DATE = DateTime.Now;
+
+                        if (ModelState.IsValid)
+                        {
+                            db.LEAVE_APPLICATION.Add(collection);
+                            db.SaveChanges();
+                            return RedirectToAction("LeaveAppIndex");
+                        }
                     }
                 }
                 GetDataInBag(empId: collection.EMPLOYEE_ID);
@@ -232,18 +257,7 @@ namespace EMSApp.Controllers
             try
             {
                 // TODO: Add insert logic here
-                if (Convert.ToString(Session["USER_LEVEL"]) == ConstantValue.UserLevelAdmin)
-                {
-                    if (collection.EMPLOYEE_ID <= 0)
-                    {
-                        ModelState.AddModelError("", "Employee Name is Required!!");
-                    }
-                    if (string.IsNullOrEmpty(collection.STATUS))
-                    {
-                        ModelState.AddModelError("", "Status is Required!!");
-                    }
-                }
-                else if (collection.LEAVE_TYPE_ID <= 0)
+                if (collection.LEAVE_TYPE_ID <= 0)
                 {
                     ModelState.AddModelError("", "Leave Type is Required!!");
                 }
@@ -258,22 +272,53 @@ namespace EMSApp.Controllers
                 }
                 else
                 {
-                    if(Convert.ToString(Session["USER_LEVEL"])== ConstantValue.UserLevelEmployee)
+                    bool flag = true;
+                    if (Convert.ToString(Session["USER_LEVEL"]) == ConstantValue.UserLevelAdmin)
                     {
-                        collection.STATUS = ConstantValue.LeaveStatusPending;
-                        collection.APPROVED_START_DATE = null;
-                        collection.APPROVED_END_DATE = null;
-                    }                   
-                    collection.UPDATE_BY = Convert.ToInt64(Session["USER_ID"]);
-                    collection.ACTIVE_DATE = Convert.ToDateTime(Session["AD"]);
-                    collection.UPDATE_DATE = DateTime.Now;
+                        if (collection.EMPLOYEE_ID <= 0)
+                        {
+                            flag = false;
+                            ModelState.AddModelError("", "Employee Name is Required!!");
+                        }
+                        else if (string.IsNullOrEmpty(collection.APPROVED_START_DATE))
+                        {
+                            flag = false;
+                            ModelState.AddModelError("", "Approved Leave Start Date is Required!!");
+                        }
+                        else if (string.IsNullOrEmpty(collection.APPROVED_END_DATE))
+                        {
+                            flag = false;
+                            ModelState.AddModelError("", "Approved Leave End Date is Required!!");
+                        }
+                        else if (string.IsNullOrEmpty(collection.STATUS))
+                        {
+                            flag = false;
+                            ModelState.AddModelError("", "Status is Required!!");
+                        }
+                        else
+                        {
+                            flag = true;
+                        }
+                    }
+                    if (flag)
+                    {
+                        if (Convert.ToString(Session["USER_LEVEL"]) == ConstantValue.UserLevelEmployee)
+                        {
+                            collection.STATUS = ConstantValue.LeaveStatusPending;
+                            collection.APPROVED_START_DATE = null;
+                            collection.APPROVED_END_DATE = null;
+                        }
+                        collection.UPDATE_BY = Convert.ToInt64(Session["USER_ID"]);
+                        collection.ACTIVE_DATE = Convert.ToDateTime(Session["AD"]);
+                        collection.UPDATE_DATE = DateTime.Now;
 
-                    if (ModelState.IsValid)
-                    {
-                        db.Entry(collection).State = EntityState.Modified;
-                        db.SaveChanges();
-                        Session["AD"] = null;
-                        return RedirectToAction("LeaveAppIndex");
+                        if (ModelState.IsValid)
+                        {
+                            db.Entry(collection).State = EntityState.Modified;
+                            db.SaveChanges();
+                            Session["AD"] = null;
+                            return RedirectToAction("LeaveAppIndex");
+                        }
                     }
                 }
                 GetDataInBag(empId: collection.EMPLOYEE_ID);

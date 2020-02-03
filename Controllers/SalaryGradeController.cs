@@ -111,7 +111,8 @@ namespace EMSApp.Controllers
         // GET: SalaryGrade/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var dt = db.SALARY_GRADE.Where(x => x.GRADE_ID == id).FirstOrDefault();
+            return View(dt);
         }
         // POST: SalaryGrade/Delete/5
         [HttpPost]
@@ -120,12 +121,19 @@ namespace EMSApp.Controllers
             try
             {
                 // TODO: Add delete logic here
-                return RedirectToAction("Index");
+                var dt = db.SALARY_GRADE.Where(x => x.GRADE_ID == id).FirstOrDefault();
+                if (dt != null)
+                {
+                    db.SALARY_GRADE.Remove(dt);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
             }
-            catch
+            catch (Exception ex)
             {
                 return View();
             }
+            return View();
         }
     }
 }

@@ -1,55 +1,84 @@
 ﻿@model EMSApp.Models.LEAVE_APPLICATION
 
 @{
-    ViewBag.Title = "LeaveAppDelete";
+    ViewBag.Title = "Delete Leave Application";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
 
-<h2>LeaveAppDelete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>LEAVE_APPLICATION</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            Employee
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.EMPLOYEE_INFO.EMPLOYEE_NAME)
-        </dd>
-        <dt>
-            Leave Type
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.LEAVE_TYPE.LEAVE_TITLE)
-        </dd>
-        <dt>
-            Leave Start From
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.START_DATE)
-        </dd>
-        <dt>
-            Leave End On
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.END_DATE)
-        </dd>
-        <dt>
-            Remarks
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.REMARKS)
-        </dd>
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="btn btn-info pull-right">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "LeaveAppIndex")
+    <div class="card card-outline-danger">
+        <div class="card-header" style="padding:15px">
+            <h4 class="m-b-0 text-white">
+                Are you sure you want to delete this?
+            </h4>
         </div>
-    }
-</div>
+        <div class="card-body">
+            <form class="form-horizontal" role="form">
+                <div class="form-body">
+                    <h3 class="box-title">Employee Leave Application</h3>
+                    <hr class="m-t-0 m-b-40">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group row">
+                                <label class="control-label text-right col-md-3">Employee</label>
+                                <div class="col-md-9">
+                                    @Html.DisplayFor(model => model.EMPLOYEE_INFO.EMPLOYEE_NAME)
+                                </div>
+                            </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-4">
+                            <div class="form-group row">
+                                <label class="control-label text-right col-md-3">Leave</label>
+                                <div class="col-md-9">
+                                    @Html.DisplayFor(model => model.LEAVE_TYPE.LEAVE_TITLE)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group row">
+                                <label class="control-label text-right col-md-3">Leave Start</label>
+                                <div class="col-md-9">
+                                    @Html.DisplayFor(model => model.START_DATE)
+                                </div>
+                            </div>
+                        </div>
+                        <!--/span-->
+                    </div>
+                    <!--/row-->
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group row">
+                                <label class="control-label text-right col-md-3">Leave End</label>
+                                <div class="col-md-9">
+                                    @Html.DisplayFor(model => model.END_DATE)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group row">
+                                <label class="control-label text-right col-md-3">Remarks</label>
+                                <div class="col-md-9">
+                                    @Html.DisplayFor(model => model.REMARKS)
+                                </div>
+                            </div>
+                        </div>
+                        <!--/span-->
+
+                    </div>
+                    <!--/row-->
+                   
+                        <div class="form-actions">
+                            <div class="btn btn-secondary pull-center">
+                                @Html.ActionLink("Back to List", "LeaveAppIndex")
+                            </div>
+                            <button type="submit" class="btn btn-danger pull-right">Delete</button>
+                        </div>
+                    
+                </div>
+            </form>
+        </div>
+    </div>
+}

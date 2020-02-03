@@ -1,0 +1,363 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="../../Content/assets/images/favicon.png">
+    <title>@ViewBag.Title-HRM</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="~/Content/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- chartist CSS -->
+    <link href="~/Content/assets/plugins/chartist-js/dist/chartist.min.css" rel="stylesheet">
+    <link href="~/Content/assets/plugins/chartist-js/dist/chartist-init.css" rel="stylesheet">
+    <link href="~/Content/assets/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.css" rel="stylesheet">
+    <link href="~/Content/assets/plugins/css-chart/css-chart.css" rel="stylesheet">
+    <!--This page css - Morris CSS -->
+    <link href="~/Content/assets/plugins/c3-master/c3.min.css" rel="stylesheet">
+    <!-- Vector CSS -->
+    <link href="~/Content/assets/plugins/vectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link href="~/Content/material/css/style.css" rel="stylesheet">
+    <!-- You can change the theme colors from here -->
+    <link href="~/Content/material/css/colors/blue.css" id="theme" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:/ -->
+    <!--[if lt IE 9]>
+        <script src="https:/oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https:/oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body class="fix-header fix-sidebar card-no-border">
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+        </svg>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper">
+        <!-- ============================================================== -->
+        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        <header class="topbar">
+            <nav class="navbar top-navbar navbar-expand-md navbar-light">
+                <!-- ============================================================== -->
+                <!-- Logo -->
+                <!-- ============================================================== -->
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">
+                        <!-- Logo icon -->
+                        <b>
+                            <!--You can put here icon as well / <i class="wi wi-sunset"></i> /-->
+                            <!-- Dark Logo icon -->
+                            <img src="../../Content/assets/images/logo-icon.png" alt="homepage" class="dark-logo" />
+                            <!-- Light Logo icon -->
+                            <img src="../../Content/assets/images/logo-light-icon.png" alt="homepage" class="light-logo" />
+                        </b>
+                        <!--End Logo icon -->
+                        <!-- Logo text -->
+                        @*<span>
+                                 dark Logo text
+                                <img src="~/Content/assets/images/logo-text.png" alt="homepage" class="dark-logo" />
+                                 Light Logo text
+                                <img src="~/Content/assets/images/logo-light-text.png" class="light-logo" alt="homepage" />
+
+                            </span>*@
+                    </a>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Logo -->
+                <!-- ============================================================== -->
+                <div class="navbar-collapse">
+                    <!-- ============================================================== -->
+                    <!-- toggle and nav items -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav mr-auto mt-md-0">
+                        <!-- This is  -->
+                        <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="mdi mdi-menu"></i></a> </li>
+                        <li class="nav-item"> <a class="nav-link sidebartoggler hidden-sm-down text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="ti-menu"></i></a> </li>
+                        <!-- ============================================================== -->
+                        <!-- Search -->
+                        <!-- ============================================================== -->
+                       
+                        <!-- ============================================================== -->
+                        <!-- End Messages -->
+                        <!-- ============================================================== -->
+
+
+                    </ul>
+                    <!-- ============================================================== -->
+                    <!-- User profile and search -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav my-lg-0">
+                        <!-- ============================================================== -->
+                        <!-- Comment -->
+                        <!-- ============================================================== -->
+                       
+                        <!-- ============================================================== -->
+                        <!-- End Messages -->
+                        <!-- ============================================================== -->
+                        <!-- ============================================================== -->
+                        <!-- Profile -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../../Content/assets/images/users/1.jpg" alt="user" class="profile-pic" /></a>
+                            <div class="dropdown-menu dropdown-menu-right scale-up">
+                                <ul class="dropdown-user">
+                                    <li>
+                                        <div class="dw-user-box">
+                                            <div class="u-img"><img src="../../Content/assets/images/users/1.jpg" alt="user"></div>
+                                            <div class="u-text">
+                                                <h3>@Convert.ToString(Session["USER_NAME"])</h3>
+                                                @*<p class="text-muted">varun@gmail.com</p><a href="profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a>*@
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="~/EmployeeProfile/Index"><i class="ti-user"></i> My Profile</a></li>
+                                    <li><a href="@Url.Action("Logout","Login")"><i class="fa fa-power-off"></i> Logout</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <!-- ============================================================== -->
+                        <!-- Language -->
+                        <!-- ============================================================== -->
+                       
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- ============================================================== -->
+        <!-- End Topbar header -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <aside class="left-sidebar">
+            <!-- Sidebar scroll-->
+            <div class="scroll-sidebar">
+                <!-- User profile -->
+                <div class="user-profile" style="background: url(../../Content/assets/images/background/user-info.jpg) no-repeat;">
+                    <!-- User profile image -->
+                    <div class="profile-img"> <img src="../../Content/assets/images/users/profile.png" alt="user" /> </div>
+                    <!-- User profile text-->
+                    <div class="profile-text">
+                        <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">Dashboard For @Convert.ToString(Session["USER_NAME"])</a>
+                        <div class="dropdown-menu animated flipInY">
+                            <a href="#" class="dropdown-item"><i class="ti-user"></i> My Profile</a>
+                            <div class="dropdown-divider"></div> <a href="@Url.Action("Logout","Login")" class="dropdown-item"><i class="fa fa-power-off"></i> Logout</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- End User profile text-->
+                <!-- Sidebar navigation-->
+                <nav class="sidebar-nav">
+                    <ul id="sidebarnav">
+                        
+                        <li>
+                            <a class="waves-effect waves-dark" href="~/User/Index" aria-expanded="false"><i class="mdi mdi-key"></i><span class="hide-menu">User</span></a>
+                        </li>
+                        <li>
+                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-laptop-windows"></i><span class="hide-menu">Attendance</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="~/AttendanceManage/Create">Today's Attendance</a></li>
+                                <li><a href="~/AttendanceManage/Index">History</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span class="hide-menu"> Employee</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="~/Employee/Index">Add Employee</a></li>
+                                <li><a href="~/Position/Index">Employee Position</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-email"></i><span class="hide-menu">Department</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="~/Department/Index">Department</a></li>
+                                <li><a href="~/Division/Index">Division</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-chart-bubble"></i><span class="hide-menu">Team</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="~/Team/Index">New Team</a></li>
+                                <li><a href="~/Team/TeamMemberIndex">Add Member</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-chart-bubble"></i><span class="hide-menu">Asset</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="~/Asset/Index">Asset Type</a></li>
+                                <li><a href="~/Equipment/Index">Equipments</a></li>
+                                <li><a href="~/EquipmentManage/Index">Equipment Manage</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-chart-bubble"></i><span class="hide-menu">Expense</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="~/Expense/Index">Expenses Item</a></li>
+                                <li><a href="~/Expense/ExpenseSheetIndex">Expenses List</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-chart-bubble"></i><span class="hide-menu">Income</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="~/Income/Index">Income Item</a></li>
+                                <li><a href="~/Income/IncomeSheetIndex">Income List</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-chart-bubble"></i><span class="hide-menu">Salary</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="~/SalaryGrade/Index">Salary Grade</a></li>
+                                <li><a href="~/SalarySetup/Index">Salary Setup</a></li>
+                                <li><a href="~/Salary/Index">Salary Generate</a></li>
+                            </ul>
+                        </li>
+                        @*<li class="nav-devider"></li>*@
+                        <li>
+                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-book-open-variant"></i><span class="hide-menu">Reports</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li>
+                                    <a href="#" class="has-arrow">Employee</a>
+                                    <ul aria-expanded="false" class="collapse">
+                                        <li><a href="~/Position/Index">Demography</a></li>
+                                        <li><a href="~/Position/Index">Position</a></li>
+                                        <li><a href="~/Position/Index">Leaves</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="pages-faq.html">Faqs</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-file-chart"></i><span class="hide-menu">Leave</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="~/Leave/Index">Leave Type</a></li>
+                                <li><a href="~/Leave/LeaveAppIndex">Leave Application</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- End Sidebar navigation -->
+            </div>
+            <!-- End Sidebar scroll-->
+            <!-- Bottom points-->
+            <div class="sidebar-footer">
+                <!-- item-->
+                @*<a href="" class="link" data-toggle="tooltip" title="Settings"><i class="ti-settings"></i></a>*@
+                <!-- item-->
+                @*<a href="" class="link" data-toggle="tooltip" title="Email"><i class="mdi mdi-gmail"></i></a>*@
+                <!-- item-->
+                <a href="@Url.Action("Logout","Login")" class="link" data-toggle="tooltip" title="Logout"><i class="mdi mdi-power"></i></a>
+            </div>
+            <!-- End Bottom points-->
+        </aside>
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div class="page-wrapper">
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Bread crumb and right sidebar toggle -->
+                <!-- ============================================================== -->
+                
+                <!-- ============================================================== -->
+                <!-- End Bread crumb and right sidebar toggle -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+                @RenderBody()
+                <!-- ============================================================== -->
+                <!-- End PAge Content -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Right sidebar -->
+                <!-- ============================================================== -->
+                <!-- .right-sidebar -->
+               
+                <!-- ============================================================== -->
+                <!-- End Right sidebar -->
+                <!-- ============================================================== -->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+            <footer class="footer">
+                © @DateTime.Today.Year <a href="https://www.andit.co" target="_blank">And IT</a>
+            </footer>
+            <!-- ============================================================== -->
+            <!-- End footer -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Page wrapper  -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    @RenderSection("scripts", required: false)
+    <script src="~/Content/assets/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="~/Content/assets/plugins/bootstrap/js/popper.min.js"></script>
+    <script src="~/Content/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="~/Content/material/js/jquery.slimscroll.js"></script>
+    <!--Wave Effects -->
+    <script src="~/Content/material/js/waves.js"></script>
+    <!--Menu sidebar -->
+    <script src="~/Content/material/js/sidebarmenu.js"></script>
+    <!--stickey kit -->
+    <script src="~/Content/assets/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
+    <script src="~/Content/assets/plugins/sparkline/jquery.sparkline.min.js"></script>
+    <!--stickey kit -->
+    <script src="~/Content/assets/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
+    <script src="~/Content/assets/plugins/sparkline/jquery.sparkline.min.js"></script>
+    <script src="~/Content/assets/plugins/sparkline/jquery.sparkline.min.js"></script>
+    <!--Custom JavaScript -->
+    <script src="~/Content/material/js/custom.min.js"></script>
+    <!-- ============================================================== -->
+    <!-- This page plugins -->
+    <!-- ============================================================== -->
+    <!-- chartist chart -->
+    <script src="~/Content/assets/plugins/chartist-js/dist/chartist.min.js"></script>
+    <script src="~/Content/assets/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.min.js"></script>
+    <!--c3 JavaScript -->
+    <script src="~/Content/assets/plugins/d3/d3.min.js"></script>
+    <script src="~/Content/assets/plugins/c3-master/c3.min.js"></script>
+    <!-- Vector map JavaScript -->
+    <script src="~/Content/assets/plugins/vectormap/jquery-jvectormap-2.0.2.min.js"></script>
+    <script src="~/Content/assets/plugins/vectormap/jquery-jvectormap-us-aea-en.js"></script>
+    <script src="~/Content/material/js/dashboard2.js"></script>
+    <!-- ============================================================== -->
+    <!-- Style switcher -->
+    <!-- ============================================================== -->
+    <script src="~/Content/assets/plugins/styleswitcher/jQuery.style.switcher.js"></script>
+</body>
+
+</html>

@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<EMSApp.Models.EMPLOYEE_INFO>
 
 @{
-    ViewBag.Title = "Employees";
+    ViewBag.Title = "All Employees";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="container-fluid" style="padding-top:15px">
@@ -14,7 +14,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Employees</h4>
+                    <h4 class="card-title">All Employees</h4>
                     <div class="table-responsive">
                         <table class="table color-bordered-table primary-bordered-table">
                             <thead>
@@ -41,7 +41,7 @@
                                     {
                                         <tr>
                                             <td>
-                                                @Html.ActionLink("View", "Edit", new { id = item.ID })
+                                                @Html.ActionLink("Edit", "Edit", new { id = item.ID })
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.EMPLOYEE_NAME)

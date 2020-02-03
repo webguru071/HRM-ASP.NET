@@ -14,7 +14,7 @@ namespace EMSApp.Controllers
         // GET: Position
         public ActionResult Index()
         {
-            var data = db.POSITIONAL_INFO.Where(x=>x.CHANGE_TYPE==ConstantValue.TypeActive).ToList();
+            var data = db.POSITIONAL_INFO.Where(x => x.CHANGE_TYPE == ConstantValue.TypeActive).ToList();
             return View(data);
         }
         // GET: Position/Details/5
@@ -130,61 +130,19 @@ namespace EMSApp.Controllers
                     ModelState.AddModelError("", "Please Enter Basic Salary");
                 }
                 else
-                {                    
-                    if (obj.CHANGE_TYPE == ConstantValue.TypeDeactive)
+                {
+                    obj.CHANGE_TYPE = ConstantValue.TypeActive;
+                    obj.UPDATE_BY = Convert.ToInt64(Session["USER_ID"]);
+                    obj.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
+                    obj.UPDATE_DATE = DateTime.Now;
+                    if (ModelState.IsValid)
                     {
-                        obj.POSITION_ID = 0;
-                        obj.ACTION_BY = Convert.ToInt64(Session["USER_ID"]);
-                        obj.ACTION_DATE = DateTime.Now;
-                        obj.CHANGE_TYPE = ConstantValue.TypeActive;
-                        POSITIONAL_INFO newObj = new POSITIONAL_INFO();
-                        var data = (POSITIONAL_INFO)Session["DATA"];
-                        newObj.POSITION_ID = id;                        
-                        newObj.POSITION_TITLE = data.POSITION_TITLE;
-                        newObj.EMPLOYEE_ID = data.EMPLOYEE_ID;
-                        newObj.BASIC_SALARY = data.BASIC_SALARY;
-                        newObj.DUTY_TYPE = data.DUTY_TYPE;
-                        newObj.RATE_TYPE = data.RATE_TYPE;
-                        newObj.PAY_FREQ = data.PAY_FREQ;
-                        newObj.DIV_ID = data.DIV_ID;
-                        newObj.ACTION_BY = data.ACTION_BY;
-                        newObj.ACTION_DATE = data.ACTION_DATE;
-                        newObj.UPDATE_BY = Convert.ToInt64(Session["USER_ID"]);
-                        newObj.UPDATE_DATE = DateTime.Now;
-                        newObj.CHANGE_TYPE = ConstantValue.TypeDeactive;         
-                        
-                        using (var dbContextTransaction = db.Database.BeginTransaction())
-                        {
-                            try
-                            {
-                                db.Entry(newObj).State = EntityState.Modified;
-                                db.SaveChanges();
+                        db.Entry(obj).State = EntityState.Modified;
+                        db.SaveChanges();
+                        Session["AD"] = null;
+                        return RedirectToAction("Index");
+                    }
 
-                                db.POSITIONAL_INFO.Add(obj);
-                                db.SaveChanges();                                
-                                dbContextTransaction.Commit();
-                                Session["AD"] = null;
-                                return RedirectToAction("Index");
-                            }
-                            catch (Exception ex)
-                            {
-                                dbContextTransaction.Rollback();
-                            }
-                        }                                                  
-                    }
-                    else
-                    {
-                        obj.UPDATE_BY = Convert.ToInt64(Session["USER_ID"]);
-                        obj.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
-                        obj.UPDATE_DATE = DateTime.Now;
-                        if (ModelState.IsValid)
-                        {
-                            db.Entry(obj).State = EntityState.Modified;
-                            db.SaveChanges();
-                            Session["AD"] = null;
-                            return RedirectToAction("Index");
-                        }
-                    }
                 }
             }
             catch (Exception ex)

@@ -1,0 +1,71 @@
+﻿@model EMSApp.Models.EMPLOYEE_INFO
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+    <div>
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.ID })
+        </p>
+
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                Name
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.EMPLOYEE_NAME)
+            </dd>
+            
+            <dt>
+               Blood Group
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.BLOOD_GROUP)
+            </dd>            
+            <dt>
+               Contact
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CONTACT)
+            </dd>
+
+            <dt>
+                Email
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.EMAIL)
+            </dd>
+            <dt>
+                Address
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ADDRESS)
+            </dd>
+            <dt>
+               City
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CITY)
+            </dd>
+
+            <dt>
+               Postal Code
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.POSTAL_CODE)
+            </dd>
+
+        </dl>
+    </div>

@@ -1,0 +1,92 @@
+﻿@model IEnumerable<EMSApp.Models.TRANSACTION_SHEET>
+
+@{
+    ViewBag.Title = "Incomes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container-fluid" style="padding-top:15px">
+    <div class="row">
+        <div class="col-md-3">
+            <p class="btn btn-block btn-outline-success btn-md">
+                @Html.ActionLink("Create New", "IncomeSheetCreate")
+            </p>
+        </div>
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Incomes</h4>
+                    <div class="table-responsive">
+                        <table class="table color-bordered-table primary-bordered-table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>
+                                        Income
+                                    </th>
+                                    <th>
+                                        Voucher No
+                                    </th>
+                                    <th>
+                                        Amount
+                                    </th>
+                                    <th>
+                                        Payment On
+                                    </th>
+                                    <th>
+                                        Date
+                                    </th>
+                                    <th>
+                                        Remark
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                <tr>
+                                    <td>
+                                        @Html.ActionLink("Edit", "IncomeSheetEdit", new { id = item.TRNS_S_ID })
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TRANSACTION_ITEM.TRNS_TITLE)
+                                    </td>
+                                    <th>
+                                        @Html.DisplayFor(model => item.VOUCHER_NO)
+                                    </th>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.AMOUNT)
+                                    </td>
+                                    <td>
+                                        @if (item.PAY_TYPE == EMSApp.Helper.ConstantValue.TransactionSheetPayTypeBank)
+                                        {
+                                            item.PAY_TYPE = "Bank";
+                                        }
+                                        @if (item.PAY_TYPE == EMSApp.Helper.ConstantValue.TransactionSheetPayTypeCash)
+                                        {
+                                            item.PAY_TYPE = "Cash";
+                                        }
+                                        @Html.DisplayFor(modelItem => item.PAY_TYPE)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DATE)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.REMARKS)
+                                    </td>
+                                    <td>
+                                       @Html.ActionLink("Delete", "ExpenseSheetDelete", new { id = item.TRNS_S_ID })
+                                    </td>
+                                </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

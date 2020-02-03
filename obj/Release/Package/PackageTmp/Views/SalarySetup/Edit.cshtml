@@ -1,0 +1,73 @@
+﻿@model IEnumerable<EMSApp.Models.SALARY_GRADE>
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>SALARY_GRADE</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @*@Html.HiddenFor(model => model.GRADE_ID)*@
+
+        <div class="form-group">
+            <label>Employee Name</label>
+            <div class="col-md-10">
+                @Html.DropDownList("EMP_ID", null, htmlAttributes: new { @class = "form-control", @id = "EMP_ID", @onchange = "GetEmpInfo()" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Pay Type</label>
+            <div class="col-md-10">
+                <input value="Basic Salary" class="form-control" type="text" />
+                <input id="BASIC_SALARY" name="BASIC_SALARY" readonly="readonly" class="form-control" type="text" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Pay Type </label>
+            <div class="col-md-10">
+                @Html.DropDownList("PAY_TYPE", new SelectListItem[]
+                                                {
+                                                     new SelectListItem { Text = "Select One", Value="" },
+                                                    new SelectListItem { Text = "Cash", Value=EMSApp.Helper.ConstantValue.TransactionSheetPayTypeCash },
+                                                    new SelectListItem{ Text="Bank",Value=EMSApp.Helper.ConstantValue.TransactionSheetPayTypeBank },},
+                                                    htmlAttributes: new { @class = "form-control" })
+            </div>
+        </div>
+        @if (Model != null)
+        {
+            int count = 1;
+            foreach (var item in Model)
+            {
+                if (count == 1)
+                {
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            @Html.DisplayFor(modelItem => item.GRADE_TITLE) (%)
+                            <input id="Text1" name=@item.GRADE_ID  class="form-control" type="text" />
+                        </div>
+                    </div>
+                }
+            }
+        }
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

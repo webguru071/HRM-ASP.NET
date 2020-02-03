@@ -1,0 +1,69 @@
+﻿@model IEnumerable<EMSApp.Models.SALARY_GRADE>
+@{
+    ViewBag.Title = "Salary Benifits";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container-fluid" style="padding-top:15px">
+    <div class="row">
+        <div class="col-md-3">
+            <p class="btn btn-block btn-outline-success btn-md">
+                @Html.ActionLink("Create New", "Create")
+            </p>
+        </div>
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Salary Benifits</h4>
+                    <div class="table-responsive">
+                        <table class="table color-bordered-table primary-bordered-table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>
+                                        Benifite
+                                    </th>
+                                    <th>
+                                        Type
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.ActionLink("Edit", "Edit", new { id = item.GRADE_ID })
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.GRADE_TITLE)
+                                            </td>
+                                            @if (item.GRADE_TYPE == EMSApp.Helper.ConstantValue.SalaryGradeAdd)
+                                            {
+                                                item.GRADE_TYPE = "Addition";
+                                                <td>
+                                                    Addition
+                                                </td>
+                                            }
+                                            @if (item.GRADE_TYPE == EMSApp.Helper.ConstantValue.SalaryGradeDeduct)
+                                            {
+                                                <td>
+                                                    Deduction
+                                                </td>
+                                            }
+                                            <td>
+                                                @Html.ActionLink("Delete", "Delete", new { id = item.GRADE_ID })
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

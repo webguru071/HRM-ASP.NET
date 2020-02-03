@@ -44,6 +44,22 @@ namespace EMSApp.Controllers
                 {
                     ModelState.AddModelError("", "Contact is Required!!");
                 }
+                else if (string.IsNullOrEmpty(emp.ADDRESS))
+                {
+                    ModelState.AddModelError("", "Address is Required!!");
+                }
+                else if (string.IsNullOrEmpty(emp.GENDER))
+                {
+                    ModelState.AddModelError("", "Gender is Required!!");
+                }
+                else if (string.IsNullOrEmpty(emp.DOB))
+                {
+                    ModelState.AddModelError("", "Date of Birth is Required!!");
+                }
+                else if (string.IsNullOrEmpty(emp.MARITALA_STATUS))
+                {
+                    ModelState.AddModelError("", "Marital Status is Required!!");
+                }
                 else if (string.IsNullOrEmpty(emp.IS_DELETED))
                 {
                     ModelState.AddModelError("", "Employee Status is Required!!");
@@ -53,7 +69,6 @@ namespace EMSApp.Controllers
                     // TODO: Add insert logic here
 
                     emp.ACTION_BY = Convert.ToInt64(Session["USER_ID"]);
-
                     emp.ACTION_DATE = DateTime.Now;
                     if (ModelState.IsValid)
                     {
@@ -104,6 +119,22 @@ namespace EMSApp.Controllers
                 else if (string.IsNullOrEmpty(emp.CONTACT))
                 {
                     ModelState.AddModelError("", "Contact is Required!!");
+                }
+                else if (string.IsNullOrEmpty(emp.ADDRESS))
+                {
+                    ModelState.AddModelError("", "Address is Required!!");
+                }
+                else if (string.IsNullOrEmpty(emp.GENDER))
+                {
+                    ModelState.AddModelError("", "Gender is Required!!");
+                }
+                else if (string.IsNullOrEmpty(emp.DOB))
+                {
+                    ModelState.AddModelError("", "Date of Birth is Required!!");
+                }
+                else if (string.IsNullOrEmpty(emp.MARITALA_STATUS))
+                {
+                    ModelState.AddModelError("", "Marital Status is Required!!");
                 }
                 else if (string.IsNullOrEmpty(emp.IS_DELETED))
                 {

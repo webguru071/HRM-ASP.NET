@@ -1,0 +1,58 @@
+﻿@model EMSApp.Models.TEAM_INFO
+
+@{
+
+
+    ViewBag.Title = "New Team";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal" style="padding:15px">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Team Details</h4>
+                <form class="form-material m-t-40">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">Team Title</label>
+                                @Html.EditorFor(model => model.TEAM_TITLE, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.TEAM_TITLE, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">Team Leader</label>
+                                @Html.DropDownList("TEAM_LEADER", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.TEAM_LEADER, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">Status</label>
+                                @Html.DropDownList("STATUS", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.STATUS, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">Remarks</label>
+                                @Html.EditorFor(model => model.REMARKS, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.REMARKS, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>      
+                    <button type="submit" class="btn btn-primary pull-right">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+}
+
+

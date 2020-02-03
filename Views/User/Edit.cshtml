@@ -1,7 +1,7 @@
 ﻿@model EMSApp.Models.USER_INFO
 
 @{
-    ViewBag.Title = "View User";
+    ViewBag.Title = "Edit User";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @using (Html.BeginForm())
@@ -71,7 +71,12 @@
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary pull-right">Update</button>
+                    <div class="form-actions">
+                        <div class="btn btn-secondary pull-center">
+                            @Html.ActionLink("Back to List", "Index")
+                        </div>
+                        <button type="submit" class="btn btn-primary pull-right">Delete</button>
+                    </div>
                 </form>
             </div>
         </div>

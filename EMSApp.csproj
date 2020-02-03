@@ -251,6 +251,7 @@
     <Compile Include="Models\TRANSACTION_SHEET.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UserModel\AttendanceClass.cs" />
     <Compile Include="Models\UserModel\NoticeBoard.cs" />
     <Compile Include="Models\UserModel\PositionalInfo.cs" />
     <Compile Include="Models\UserModel\SalarySeupClass.cs" />
@@ -4441,6 +4442,8 @@
     <Content Include="Views\AttendanceManage\Create.cshtml" />
     <Content Include="Views\Login\LogIn.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\SalaryGrade\Delete.cshtml" />
+    <Content Include="Views\Reports\AttendanceReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="542d0dff45874b8c9ee6298c96dbdeca" Name="Diagram1">
+        <EntityTypeShape EntityType="EMSModel.ASSET_INFO" Width="1.5" PointX="1.5" PointY="29" />
+        <EntityTypeShape EntityType="EMSModel.ASSET_MANAGEMENT" Width="1.5" PointX="3" PointY="20.625" />
+        <EntityTypeShape EntityType="EMSModel.ATTENDANCE_DETAILS" Width="1.5" PointX="3" PointY="44.125" />
+        <EntityTypeShape EntityType="EMSModel.DEPARTMENT_INFO" Width="1.5" PointX="1.5" PointY="33" />
+        <EntityTypeShape EntityType="EMSModel.DIVISION_INFO" Width="1.5" PointX="3.75" PointY="32.875" />
+        <EntityTypeShape EntityType="EMSModel.EMPLOYEE_APPLICATION" Width="1.5" PointX="3" PointY="41.375" />
+        <EntityTypeShape EntityType="EMSModel.EMPLOYEE_INFO" Width="1.5" PointX="0.75" PointY="16.625" />
+        <EntityTypeShape EntityType="EMSModel.EQUEPMENTS_INFO" Width="1.5" PointX="0.75" PointY="24.75" />
+        <EntityTypeShape EntityType="EMSModel.LEAVE_APPLICATION" Width="1.5" PointX="8" PointY="15.375" />
+        <EntityTypeShape EntityType="EMSModel.LEAVE_TYPE" Width="1.5" PointX="5.75" PointY="12" />
+        <EntityTypeShape EntityType="EMSModel.NOTICE_BOARD" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="EMSModel.POSITIONAL_INFO" Width="1.5" PointX="6" PointY="20.25" />
+        <EntityTypeShape EntityType="EMSModel.SALARY_INFO" Width="1.5" PointX="3" PointY="15.25" />
+        <EntityTypeShape EntityType="EMSModel.SALARY_SETUP" Width="1.5" PointX="8.25" PointY="20.75" />
+        <EntityTypeShape EntityType="EMSModel.SALARY_GRADE" Width="1.5" PointX="0.75" PointY="5.75" />
+        <EntityTypeShape EntityType="EMSModel.sysdiagram" Width="1.5" PointX="2.75" PointY="5.75" />
+        <EntityTypeShape EntityType="EMSModel.TEAM_DETAILS" Width="1.5" PointX="5.25" PointY="16" />
+        <EntityTypeShape EntityType="EMSModel.TEAM_INFO" Width="1.5" PointX="3" PointY="11.375" />
+        <EntityTypeShape EntityType="EMSModel.TRANSACTION_ITEM" Width="1.5" PointX="0.75" PointY="1.5" />
+        <EntityTypeShape EntityType="EMSModel.TRANSACTION_SHEET" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="EMSModel.USER_INFO" Width="1.5" PointX="3" PointY="37.125" />
+        <AssociationConnector Association="EMSModel.FK_EQUEPMENTS_INFO_EQUEPMENTS_INFO" />
+        <AssociationConnector Association="EMSModel.FK_ASSET_ASSIGNMENT_EMPLOYEE_INFO" />
+        <AssociationConnector Association="EMSModel.FK_ASSET_MANAGEMENT_EQUEPMENTS_INFO" />
+        <AssociationConnector Association="EMSModel.FK_ATTENDANCE_DETAILS_EMPLOYEE_INFO" />
+        <AssociationConnector Association="EMSModel.FK_DIVISION_INFO_DEPARTMENT_INFO" />
+        <AssociationConnector Association="EMSModel.FK_POSITIONAL_INFO_DIVISION_INFO" />
+        <AssociationConnector Association="EMSModel.FK_EMPLOYEE_APPLICATION_EMPLOYEE_INFO" />
+        <AssociationConnector Association="EMSModel.FK_LEAVE_APPLICATION_EMPLOYEE_INFO" />
+        <AssociationConnector Association="EMSModel.FK_POSITIONAL_INFO_EMPLOYEE_INFO" />
+        <AssociationConnector Association="EMSModel.FK_SALARY_INFO_EMPLOYEE_INFO" />
+        <AssociationConnector Association="EMSModel.FK_SALARY_SETUP_EMPLOYEE_INFO" />
+        <AssociationConnector Association="EMSModel.FK_TEAM_DETAILS_EMPLOYEE_INFO" />
+        <AssociationConnector Association="EMSModel.FK_TEAM_EMPLOYEE_INFO" />
+        <AssociationConnector Association="EMSModel.FK_USER_INFO_EMPLOYEE_INFO" />
+        <AssociationConnector Association="EMSModel.FK_LEAVE_APPLICATION_LEAVE_APPLICATION" />
+        <AssociationConnector Association="EMSModel.FK_SALARY_SETUP_POSITIONAL_INFO" />
+        <AssociationConnector Association="EMSModel.FK_TEAM_DETAILS_TEAM" />
+        <AssociationConnector Association="EMSModel.FK_TRANSACTION_SHEET_TRANSACTION_ITEM" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

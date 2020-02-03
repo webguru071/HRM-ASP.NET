@@ -5,95 +5,101 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Leave Application Add</h2>
-
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
+    <div class="form-horizontal" style="padding:15px">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">New Leave Application</h4>
+                <hr />
+                <form class="form-material m-t-40">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="row p-t-20">
 
-    <div class="form-horizontal">
+                        @if (Session["USER_LEVEL"].ToString() == EMSApp.Helper.ConstantValue.UserLevelAdmin)
+                        {
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Employee</label>
+                                    @Html.DropDownList("EMPLOYEE_ID", null, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.EMPLOYEE_ID, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label"> Approved Leave Start</label>
+                                    @Html.EditorFor(model => model.APPROVED_START_DATE, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                                    @Html.ValidationMessageFor(model => model.APPROVED_START_DATE, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Approved Leave End</label>
+                                    @Html.EditorFor(model => model.APPROVED_END_DATE, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                                    @Html.ValidationMessageFor(model => model.APPROVED_END_DATE, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    Application Status
 
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @if (Session["USER_LEVEL"].ToString() == EMSApp.Helper.ConstantValue.UserLevelAdmin)
-        {
-            <div class="form-group">
-                Employee
-                <div class="col-md-10">
-                    @Html.DropDownList("EMPLOYEE_ID", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.EMPLOYEE_ID, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-group">
-                Approved Leave Start
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.APPROVED_START_DATE, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
-                    @Html.ValidationMessageFor(model => model.APPROVED_START_DATE, "", new { @class = "text-danger" })
-                </div>
-            </div>
+                                    @Html.DropDownList("STATUS", new SelectListItem[]
+                                                               {
+                                                                    new SelectListItem { Text = "Select One", Value="" },
+                                                                   new SelectListItem { Text = "Pending", Value=EMSApp.Helper.ConstantValue.LeaveStatusPending },
+                                                                   new SelectListItem { Text = "Approved", Value=EMSApp.Helper.ConstantValue.LeaveStatusApproved },
+                                                                   new SelectListItem{ Text="Cancel",Value=EMSApp.Helper.ConstantValue.LeaveStatusCanceled },},
+                                                                   htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.STATUS, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        }
 
-            <div class="form-group">
-                Approved Leave End
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.APPROVED_END_DATE, new { htmlAttributes = new { @class = "form-control", @type = "date"} })
-                    @Html.ValidationMessageFor(model => model.APPROVED_END_DATE, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-group">
-                Application Status
-                <div class="col-md-10">
-                    @Html.DropDownList("STATUS", new SelectListItem[]
-                                               {
-                                                    new SelectListItem { Text = "Select One", Value="" },
-                                                   new SelectListItem { Text = "Pending", Value=EMSApp.Helper.ConstantValue.LeaveStatusPending },
-                                                   new SelectListItem { Text = "Approved", Value=EMSApp.Helper.ConstantValue.LeaveStatusApproved },
-                                                   new SelectListItem{ Text="Cancel",Value=EMSApp.Helper.ConstantValue.LeaveStatusCanceled },},
-                                                   htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.STATUS, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        }
-
-        <div class="form-group">
-            Leave Type
-            <div class="col-md-10">
-                @Html.DropDownList("LEAVE_TYPE_ID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.LEAVE_TYPE_ID, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            Applied Leave Start
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.START_DATE, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
-                @Html.ValidationMessageFor(model => model.START_DATE, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            Applied Leave End
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.END_DATE, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
-                @Html.ValidationMessageFor(model => model.END_DATE, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            Remarks
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.REMARKS, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.REMARKS, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                        <!--/span-->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Leave Type</label>
+                                @Html.DropDownList("LEAVE_TYPE_ID", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.LEAVE_TYPE_ID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Applied Leave Start</label>
+                                @Html.EditorFor(model => model.START_DATE, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                                @Html.ValidationMessageFor(model => model.START_DATE, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label"> Applied Leave End</label>
+                                @Html.EditorFor(model => model.END_DATE, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                                @Html.ValidationMessageFor(model => model.END_DATE, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Remarks</label>
+                                @Html.EditorFor(model => model.REMARKS, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.REMARKS, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <!--/span-->
+                    </div>
+                    <div class="form-actions">
+                        <div class="btn btn-secondary pull-center">
+                            @Html.ActionLink("Back to List", "LeaveAppIndex")
+                        </div>
+                        <button type="submit" class="btn btn-primary pull-right">Save</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 }
 
-<div class="btn btn-info pull-right">
-    @Html.ActionLink("Back to List", "LeaveAppIndex")
-</div>
 
