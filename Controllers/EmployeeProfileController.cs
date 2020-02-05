@@ -5,18 +5,27 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using EMSApp.Models;
+using EMSApp.Services;
 
 namespace EMSApp.Controllers
 {
     public class EmployeeProfileController : Controller
     {
         EMSEntities db = new EMSEntities();
+        ICombine service = new CombineServices();
+
         // GET: EmployeeProfile
         public ActionResult Index()
         {
             long empId = Convert.ToInt64(Session["EMP_ID"]);
-            var data = db.EMPLOYEE_INFO.Where(x => x.ID == empId && x.IS_DELETED == Helper.ConstantValue.UserStatusActive).FirstOrDefault();
-            return View(data);
+            if (empId > 0)            {
+                var data = db.EMPLOYEE_INFO.Where(x => x.ID == empId && x.IS_DELETED == Helper.ConstantValue.UserStatusActive).FirstOrDefault();
+                return View(data);
+            }
+            else
+            {
+                return View();
+            }
         }
         // GET: EmployeeProfile/Details/5
         public ActionResult Details(int id)

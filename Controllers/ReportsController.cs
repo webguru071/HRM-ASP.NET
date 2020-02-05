@@ -20,7 +20,18 @@ namespace EMSApp.Controllers
         [HttpGet]
         public ActionResult EmployeeDemogReport()
         {
-            return View();
+            ViewBag.EMPLOYEE_ID = SetEmployee();
+            var data = service.GetDeptWiseData();
+            return View(data);
+        }
+        [HttpPost]
+        public ActionResult EmployeeDemogReport(FormCollection collection)
+        {
+            string status = collection["IS_DELETED"];
+            long empId = Convert.ToInt64(collection["EMPLOYEE_ID"]);
+            var data = service.GetDeptWiseData(status: status, empId: empId);            
+            ViewBag.EMPLOYEE_ID = SetEmployee();
+            return View(data);
         }
         [HttpGet]
         public ActionResult AttendanceReport()
@@ -42,7 +53,28 @@ namespace EMSApp.Controllers
         private List<SelectListItem> SetEmployee()
         {
             List<SelectListItem> empList = new SelectList(db.EMPLOYEE_INFO, "ID", "EMPLOYEE_NAME").ToList();
-            empList.Insert(0, (new SelectListItem { Text = "Select One", Value = "0" }));
+            empList.Insert(0, (new SelectListItem { Text = "Select Employee", Value = "0" }));
+            return empList;
+        }
+        [HttpGet]
+        public ActionResult DepartmentWiseReport()
+        {
+            ViewBag.DEPT_ID = SetDepartment();
+            return View();
+        }
+        [HttpPost]
+        public ActionResult DepartmentWiseReport(FormCollection collection)
+        {
+            string status = collection["IS_DELETED"];
+            long deptId = Convert.ToInt64(collection["DEPT_ID"]);
+            var data = service.GetDeptWiseData(status:status,deptId:deptId);
+            ViewBag.DEPT_ID = SetDepartment();
+            return View(data);
+        }
+        private List<SelectListItem> SetDepartment()
+        {
+            List<SelectListItem> empList = new SelectList(db.DEPARTMENT_INFO, "DEPT_ID", "DEPT_TITLE").ToList();
+            empList.Insert(0, (new SelectListItem { Text = "Select Department", Value = "0" }));
             return empList;
         }
     }

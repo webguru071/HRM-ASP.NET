@@ -16,7 +16,7 @@ namespace EMSApp.Models
     {
         public long ID { get; set; }
         public string NOTICE { get; set; }
-        public Nullable<long> ACTION_BY { get; set; }
+        public long ACTION_BY { get; set; }
         public System.DateTime ACTION_DATE { get; set; }
         public Nullable<long> UPDATE_BY { get; set; }
         public Nullable<System.DateTime> UPDATE_DATE { get; set; }

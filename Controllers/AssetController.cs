@@ -10,6 +10,10 @@ namespace EMSApp.Controllers
 {
     public class AssetController : Controller
     {
+        public AssetController()
+        {
+
+        }
         EMSEntities db = new EMSEntities();
         // GET: Asset
         public ActionResult Index()

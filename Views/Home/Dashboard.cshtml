@@ -3,35 +3,39 @@
     ViewBag.Title = "Dashboard";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="container">
-    <div class="container-fluid">
-
-        @if (Model != null)
-        {
-            foreach (var item in Model)
-            {
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <h3 class="card-title">Special title treatment</h3>
-                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                            <a href="#" class="btn btn-success">Go somewhere</a>
-                        </div>
+<div class="container-fluid" style="padding-top:15px">
+    <div class="row">       
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Notice Board</h4>
+                    <div class="table-responsive">
+                        <table class="table color-bordered-table primary-bordered-table">
+                            <thead>
+                                <tr>                                    
+                                    <th>
+                                        Notice
+                                    </th>                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.NOTICE)
+                                            </td>
+                                            
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-                <div class="row" style="margin:10px">
-                    <div class="col-md-12" style="color:white;border:double;border-color: cadetblue;">
-                        <div class=" panel panel-danger" style="padding:10px;">
-                            <div class="panel-body">
-                                <p>
-                                    <b style="font-weight:800">Notice: </b> @item.NOTICE
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            }
-        }
-
+            </div>
+        </div>
     </div>
 </div>

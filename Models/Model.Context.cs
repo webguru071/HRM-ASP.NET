@@ -40,7 +40,6 @@ namespace EMSApp.Models
         public virtual DbSet<SALARY_INFO> SALARY_INFO { get; set; }
         public virtual DbSet<SALARY_SETUP> SALARY_SETUP { get; set; }
         public virtual DbSet<SALARY_GRADE> SALARY_GRADE { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<TEAM_DETAILS> TEAM_DETAILS { get; set; }
         public virtual DbSet<TEAM_INFO> TEAM_INFO { get; set; }
         public virtual DbSet<TRANSACTION_ITEM> TRANSACTION_ITEM { get; set; }

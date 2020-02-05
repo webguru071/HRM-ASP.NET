@@ -10,6 +10,14 @@ namespace EMSApp.Controllers
 {
     public class LeaveController : Controller
     {
+        //public LeaveController()
+        //{
+        //    long id = Convert.ToInt64(Session["USER_ID"]);
+        //    if (id<=0)
+        //    {
+        //        RedirectToAction("LogIn", "Login");
+        //    }
+        //}
         EMSEntities db = new EMSEntities();
         // GET: Leave
         public ActionResult Index()
@@ -179,10 +187,7 @@ namespace EMSApp.Controllers
                 {
                     ModelState.AddModelError("", "Leave Start Date is Required!!");
                 }
-                else if (string.IsNullOrEmpty(collection.END_DATE))
-                {
-                    ModelState.AddModelError("", "Leave End Date is Required!!");
-                }
+                
                 else
                 {
                     bool flag = true;
@@ -197,12 +202,7 @@ namespace EMSApp.Controllers
                         {
                             flag = false;
                             ModelState.AddModelError("", "Approved Leave Start Date is Required!!");
-                        }
-                        else if (string.IsNullOrEmpty(collection.APPROVED_END_DATE))
-                        {
-                            flag = false;
-                            ModelState.AddModelError("", "Approved Leave End Date is Required!!");
-                        }
+                        }                        
                         else if (string.IsNullOrEmpty(collection.STATUS))
                         {
                             flag = false;
@@ -266,10 +266,7 @@ namespace EMSApp.Controllers
                 {
                     ModelState.AddModelError("", "Leave Start Date is Required!!");
                 }
-                else if (string.IsNullOrEmpty(collection.END_DATE))
-                {
-                    ModelState.AddModelError("", "Leave End Date is Required!!");
-                }
+                
                 else
                 {
                     bool flag = true;
@@ -280,21 +277,16 @@ namespace EMSApp.Controllers
                             flag = false;
                             ModelState.AddModelError("", "Employee Name is Required!!");
                         }
-                        else if (string.IsNullOrEmpty(collection.APPROVED_START_DATE))
-                        {
-                            flag = false;
-                            ModelState.AddModelError("", "Approved Leave Start Date is Required!!");
-                        }
-                        else if (string.IsNullOrEmpty(collection.APPROVED_END_DATE))
-                        {
-                            flag = false;
-                            ModelState.AddModelError("", "Approved Leave End Date is Required!!");
-                        }
                         else if (string.IsNullOrEmpty(collection.STATUS))
                         {
                             flag = false;
                             ModelState.AddModelError("", "Status is Required!!");
                         }
+                        else if (string.IsNullOrEmpty(collection.APPROVED_START_DATE) && collection.STATUS != ConstantValue.LeaveStatusCanceled)
+                        {
+                            flag = false;
+                            ModelState.AddModelError("", "Approved Leave Start Date is Required!!");
+                        } 
                         else
                         {
                             flag = true;

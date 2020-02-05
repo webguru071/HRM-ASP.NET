@@ -82,21 +82,20 @@
     <EntitySetMapping Name="EMPLOYEE_INFO">
       <EntityTypeMapping TypeName="EMSModel.EMPLOYEE_INFO">
         <MappingFragment StoreEntitySet="EMPLOYEE_INFO">
-          <ScalarProperty Name="BLOOD_GROUP" ColumnName="BLOOD_GROUP" />
           <ScalarProperty Name="NATIONALITY" ColumnName="NATIONALITY" />
           <ScalarProperty Name="MARITALA_STATUS" ColumnName="MARITALA_STATUS" />
-          <ScalarProperty Name="GENDER" ColumnName="GENDER" />
-          <ScalarProperty Name="DOB" ColumnName="DOB" />
-          <ScalarProperty Name="POSTAL_CODE" ColumnName="POSTAL_CODE" />
-          <ScalarProperty Name="CITY" ColumnName="CITY" />
           <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
           <ScalarProperty Name="UPDATE_BY" ColumnName="UPDATE_BY" />
           <ScalarProperty Name="ACTION_DATE" ColumnName="ACTION_DATE" />
           <ScalarProperty Name="ACTION_BY" ColumnName="ACTION_BY" />
-          <ScalarProperty Name="DESIGNATION" ColumnName="DESIGNATION" />
           <ScalarProperty Name="RESIGNING_DATE" ColumnName="RESIGNING_DATE" />
           <ScalarProperty Name="JOINING_DATE" ColumnName="JOINING_DATE" />
           <ScalarProperty Name="IS_DELETED" ColumnName="IS_DELETED" />
+          <ScalarProperty Name="BLOOD_GROUP" ColumnName="BLOOD_GROUP" />
+          <ScalarProperty Name="GENDER" ColumnName="GENDER" />
+          <ScalarProperty Name="DOB" ColumnName="DOB" />
+          <ScalarProperty Name="POSTAL_CODE" ColumnName="POSTAL_CODE" />
+          <ScalarProperty Name="CITY" ColumnName="CITY" />
           <ScalarProperty Name="IMAGE" ColumnName="IMAGE" />
           <ScalarProperty Name="NID" ColumnName="NID" />
           <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
@@ -232,17 +231,6 @@
           <ScalarProperty Name="GRADE_TYPE" ColumnName="GRADE_TYPE" />
           <ScalarProperty Name="GRADE_TITLE" ColumnName="GRADE_TITLE" />
           <ScalarProperty Name="GRADE_ID" ColumnName="GRADE_ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="sysdiagrams">
-      <EntityTypeMapping TypeName="EMSModel.sysdiagram">
-        <MappingFragment StoreEntitySet="sysdiagrams">
-          <ScalarProperty Name="definition" ColumnName="definition" />
-          <ScalarProperty Name="version" ColumnName="version" />
-          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-          <ScalarProperty Name="name" ColumnName="name" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

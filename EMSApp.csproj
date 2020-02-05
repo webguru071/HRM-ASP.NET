@@ -236,9 +236,6 @@
     <Compile Include="Models\SALARY_SETUP.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\sysdiagram.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\TEAM_DETAILS.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -252,6 +249,7 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserModel\AttendanceClass.cs" />
+    <Compile Include="Models\UserModel\EmployeeReport.cs" />
     <Compile Include="Models\UserModel\NoticeBoard.cs" />
     <Compile Include="Models\UserModel\PositionalInfo.cs" />
     <Compile Include="Models\UserModel\SalarySeupClass.cs" />
@@ -4444,6 +4442,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\SalaryGrade\Delete.cshtml" />
     <Content Include="Views\Reports\AttendanceReport.cshtml" />
+    <Content Include="Views\Reports\DepartmentWiseReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

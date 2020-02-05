@@ -35,21 +35,20 @@ namespace EMSApp.Models
         public string EMAIL { get; set; }
         public string NID { get; set; }
         public string IMAGE { get; set; }
+        public string CITY { get; set; }
+        public string POSTAL_CODE { get; set; }
+        public string DOB { get; set; }
+        public string GENDER { get; set; }
+        public string BLOOD_GROUP { get; set; }
         public string IS_DELETED { get; set; }
         public string JOINING_DATE { get; set; }
         public string RESIGNING_DATE { get; set; }
-        public string DESIGNATION { get; set; }
-        public Nullable<long> ACTION_BY { get; set; }
+        public long ACTION_BY { get; set; }
         public System.DateTime ACTION_DATE { get; set; }
         public Nullable<long> UPDATE_BY { get; set; }
         public Nullable<System.DateTime> UPDATE_DATE { get; set; }
-        public string CITY { get; set; }
-        public Nullable<int> POSTAL_CODE { get; set; }
-        public string DOB { get; set; }
-        public string GENDER { get; set; }
         public string MARITALA_STATUS { get; set; }
         public string NATIONALITY { get; set; }
-        public string BLOOD_GROUP { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ASSET_MANAGEMENT> ASSET_MANAGEMENT { get; set; }

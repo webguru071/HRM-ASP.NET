@@ -105,6 +105,19 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    Status
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("CHANGE_TYPE", new SelectListItem[]
+                                                    {
+                                                         new SelectListItem { Text = "Select Status", Value="" },
+                                                        new SelectListItem { Text = "Active", Value=EMSApp.Helper.ConstantValue.UserStatusActive },
+                                                        new SelectListItem{ Text="Deactive",Value=EMSApp.Helper.ConstantValue.UserStatusDeactive },},
+                                                        htmlAttributes: new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-actions">
                             <div class="btn btn-secondary pull-center">
@@ -116,7 +129,7 @@
                 </div>
             </div>
         </div>
-    </div>   
+    </div>
 }
 
 

@@ -1,0 +1,113 @@
+﻿@model IEnumerable<EMSApp.Models.UserModel.EmployeeReport>
+
+@{
+    ViewBag.Title = "Department Wise Employee Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="col-md-12" style="padding-top:15px">
+        <div class="card card-body">
+            <h3 class="box-title m-b-0">Filters</h3>
+            <hr />
+            <div class="row">
+                <div class="col-md-4">
+                    @Html.DropDownList("DEPT_ID", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownList("IS_DELETED", new SelectListItem[]
+                     {
+                                     new SelectListItem { Text = "Select Status", Value="" },
+                                    new SelectListItem { Text = "Active", Value=EMSApp.Helper.ConstantValue.UserStatusActive },
+                                    new SelectListItem{ Text="Deactive",Value=EMSApp.Helper.ConstantValue.UserStatusDeactive },},
+                         htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-success waves-effect waves-light m-t-10 pull-right">Search</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">Departmentwise Employee Report</h3>
+                <div class="color-bordered-table success-bordered-table">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Department
+                                </th>
+                                <th>
+                                    Division
+                                </th>
+                                <th>
+                                    Designation
+                                </th>
+                                <th>
+                                    Employee
+                                </th>
+                                <th>
+                                    Contact
+                                </th>
+                                <th>
+                                    Email
+                                </th>
+                                <th>
+                                    Joining Date
+                                </th>
+                                <th>
+                                    Resigning Date
+                                </th>
+                                <th>
+                                    Status
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null)
+                            {
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.DEPT_TITLE)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.DIV_TITLE)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.POSITION_TITLE)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.EMPLOYEE_NAME)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.CONTACT)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.EMAIL)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.JOINING_DATE)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.RESIGNING_DATE)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.STATUS)
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}

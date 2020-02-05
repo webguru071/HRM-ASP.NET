@@ -19,7 +19,7 @@ namespace EMSApp.Controllers
         public ActionResult Dashboard()
         {
            // Session["USER_LEVEL"] = Helper.ConstantValue.UserLevelEmployee;
-            var notific = db.NOTICE_BOARD.Where(x => x.STATUS == Helper.ConstantValue.TypeActive).ToList();
+            var notific = db.NOTICE_BOARD.Where(x => x.STATUS == Helper.ConstantValue.TypeActive).OrderByDescending(x=>x.ACTION_DATE).ToList();
             return View(notific);
         }
     }

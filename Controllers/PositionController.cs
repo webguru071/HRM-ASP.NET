@@ -131,7 +131,7 @@ namespace EMSApp.Controllers
                 }
                 else
                 {
-                    obj.CHANGE_TYPE = ConstantValue.TypeActive;
+                    //obj.CHANGE_TYPE = ConstantValue.TypeActive;
                     obj.UPDATE_BY = Convert.ToInt64(Session["USER_ID"]);
                     obj.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
                     obj.UPDATE_DATE = DateTime.Now;

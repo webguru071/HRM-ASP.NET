@@ -23,7 +23,7 @@ namespace EMSApp.Models
         public long POSITION_ID { get; set; }
         public string POSITION_TITLE { get; set; }
         public long EMPLOYEE_ID { get; set; }
-        public Nullable<decimal> BASIC_SALARY { get; set; }
+        public decimal BASIC_SALARY { get; set; }
         public string DUTY_TYPE { get; set; }
         public string RATE_TYPE { get; set; }
         public string PAY_FREQ { get; set; }

@@ -71,6 +71,9 @@
                                     Sign In
                                 </button>
                             </div>*@
+                    <div class="d-block" style="font-size:18px;font-weight:800;padding-top:15px">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    </div>
                         <div class="form-group">
                             <div class="container-login100-form-btn m-t-17">
                                 <input type="submit" value="Sign In" class="login100-form-btn" />
@@ -80,7 +83,7 @@
                 </div>
             </div>
         </div>
-        
+
     }
     @*===============================================================================================*@
     <script src="~/Content/Login/vendor/jquery/jquery-3.2.1.min.js"></script>

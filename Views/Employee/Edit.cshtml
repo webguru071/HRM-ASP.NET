@@ -145,7 +145,7 @@
                         <div class="col-md-4">
                             <div class="form-group ">
                                 <label class="bmd-label-floating">Resigning Date</label>
-                                @Html.EditorFor(model => model.RESIGNING_DATE, new { htmlAttributes = new { @class = "form-control datepicker" } })
+                                @Html.EditorFor(model => model.RESIGNING_DATE, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
                                 @Html.ValidationMessageFor(model => model.RESIGNING_DATE, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -171,7 +171,7 @@
                         <div class="btn btn-secondary pull-center">
                             @Html.ActionLink("Back to List", "Index")
                         </div>
-                        <button type="submit" class="btn btn-primary pull-right">Delete</button>
+                        <button type="submit" class="btn btn-primary pull-right">Update</button>
                     </div>
                 </form>
             </div>

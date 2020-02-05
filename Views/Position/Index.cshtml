@@ -31,7 +31,7 @@
                                     <th>
                                         Basic Salary
                                     </th>
-                                    <th></th>
+                                    @*<th></th>*@
                                 </tr>
                             </thead>
                             <tbody>
@@ -55,9 +55,9 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.BASIC_SALARY)
                                     </td>
-                                    <td>
+                                    @*<td>
                                         @Html.ActionLink("Delete", "Delete", new { id = item.POSITION_ID })
-                                    </td>
+                                    </td>*@
                                 </tr>
                                     }
                                 }
