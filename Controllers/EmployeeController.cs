@@ -91,8 +91,8 @@ namespace EMSApp.Controllers
         {
             var activeStatus = new List<SelectListItem>
             {
-                new SelectListItem{ Text="Active", Value = "a" },
-                new SelectListItem{ Text="Deactive", Value = "d" }
+                new SelectListItem{ Text="Active", Value = Helper.ConstantValue.TypeActive },
+                new SelectListItem{ Text="Deactive", Value = Helper.ConstantValue.TypeDeactive }
             };
             activeStatus.Insert(0, (new SelectListItem { Text = "Select One", Value = "" }));
             return activeStatus;

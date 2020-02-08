@@ -4,17 +4,19 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using EMSApp.Models;
+using EMSApp.Services;
 
 namespace EMSApp.Controllers
 {
     public class AttendanceManageController : Controller
     {
         EMSEntities db = new EMSEntities();
+        ICombine service = new CombineServices();
         // GET: AttendanceManage
         public ActionResult Index()
         {
             long empId = Convert.ToInt64(Session["EMP_ID"]);
-            var data = db.ATTENDANCE_DETAILS.Where(x=>x.EMPLOYEE_ID== empId).OrderBy(x => x.ATT_DATE).ToList();
+            var data = service.GetAttendanceData(empId:empId);
             return View(data);
         }
 
@@ -27,7 +29,7 @@ namespace EMSApp.Controllers
         // GET: AttendanceManage/Create
         public ActionResult Create()
         {
-           
+
             return View();
         }
 
@@ -37,15 +39,15 @@ namespace EMSApp.Controllers
         {
             try
             {
-                // TODO: Add insert logic here
-                if (string.IsNullOrEmpty(collection["STATUS"]))
+                // TODO: Add insert logic here                
+                if (string.IsNullOrEmpty(collection["checkIn"]) && string.IsNullOrEmpty(collection["checkOut"]))
                 {
                     ModelState.AddModelError("", "Attendance Status is Required!!");
                 }
                 else if (string.IsNullOrEmpty(collection["pass"]))
                 {
                     ModelState.AddModelError("", "Give Password for Confirmation!!");
-                }               
+                }
                 else
                 {
                     string pass = collection["pass"];
@@ -54,27 +56,28 @@ namespace EMSApp.Controllers
                     if (data.PASSWORD != pass)
                     {
                         ModelState.AddModelError("", "Password is Not Matched!!");
-                        return View();
+                        return View(collection);
                     }
                     else
                     {
                         ATTENDANCE_DETAILS attn = new ATTENDANCE_DETAILS();
                         attn.EMPLOYEE_ID = Convert.ToInt64(data.EMPLOYEE_ID);
                         attn.ATT_DATE = DateTime.Today.Date;
-                        attn.STATUS = Convert.ToString(collection["STATUS"]);
-                        int count = db.ATTENDANCE_DETAILS.Where(x => x.EMPLOYEE_ID == attn.EMPLOYEE_ID && x.STATUS == attn.STATUS && x.ATT_DATE==attn.ATT_DATE).Count();
-                        attn.SL_NO = count +1;
-                        if (Convert.ToString(collection["STATUS"]) == Helper.ConstantValue.AttendanceCheckIn)
+                        attn.STATUS = (string.IsNullOrEmpty(collection["checkIn"])) ? Helper.ConstantValue.AttendanceCheckOut : Helper.ConstantValue.AttendanceCheckIn;
+                        int count = db.ATTENDANCE_DETAILS.Where(x => x.EMPLOYEE_ID == attn.EMPLOYEE_ID && x.STATUS == attn.STATUS && x.ATT_DATE == attn.ATT_DATE).Count();
+                        attn.SL_NO = count + 1;
+                        if (!string.IsNullOrEmpty(collection["checkIn"]))
                         {
-                            attn.CHECK_IN_TIME = DateTime.Now.TimeOfDay;                            
+                            attn.CHECK_IN_TIME = DateTime.Now.TimeOfDay;
                         }
-                        else if (Convert.ToString(collection["STATUS"]) == Helper.ConstantValue.AttendanceCheckOut)
+                        else if (!string.IsNullOrEmpty(collection["checkOut"]))
                         {
                             attn.CHECK_OUT_TIME = DateTime.Now.TimeOfDay;
                         }
                         else
                         {
-
+                            ModelState.AddModelError("", "Please Give Proper Information");
+                            return View(collection);
                         }
                         if (ModelState.IsValid)
                         {
@@ -84,16 +87,16 @@ namespace EMSApp.Controllers
                         }
                     }
                 }
-               
-                return View();
+
+                return View(collection);
             }
             catch (Exception ex)
             {
-                
+
                 return View();
             }
         }
-          
+
         // GET: AttendanceManage/Edit/5
         public ActionResult Edit(int id)
         {

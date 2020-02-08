@@ -35,7 +35,6 @@ namespace EMSApp.Models
         public virtual DbSet<EQUEPMENTS_INFO> EQUEPMENTS_INFO { get; set; }
         public virtual DbSet<LEAVE_APPLICATION> LEAVE_APPLICATION { get; set; }
         public virtual DbSet<LEAVE_TYPE> LEAVE_TYPE { get; set; }
-        public virtual DbSet<NOTICE_BOARD> NOTICE_BOARD { get; set; }
         public virtual DbSet<POSITIONAL_INFO> POSITIONAL_INFO { get; set; }
         public virtual DbSet<SALARY_INFO> SALARY_INFO { get; set; }
         public virtual DbSet<SALARY_SETUP> SALARY_SETUP { get; set; }
@@ -45,5 +44,6 @@ namespace EMSApp.Models
         public virtual DbSet<TRANSACTION_ITEM> TRANSACTION_ITEM { get; set; }
         public virtual DbSet<TRANSACTION_SHEET> TRANSACTION_SHEET { get; set; }
         public virtual DbSet<USER_INFO> USER_INFO { get; set; }
+        public virtual DbSet<NOTICE_BOARD> NOTICE_BOARD { get; set; }
     }
 }

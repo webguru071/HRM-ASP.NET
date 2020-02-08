@@ -13,7 +13,7 @@
             <hr />
             <div class="row">
                 <div class="col-md-4">
-                    @Html.DropDownList("EMPLOYEE_ID", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.DropDownList("EMPLOYEE_ID", null, htmlAttributes: new { @class = "form-control", @onchange = @"form.submit();"})
                 </div>
                 <div class="col-md-4">
                     @Html.DropDownList("IS_DELETED", new SelectListItem[]
@@ -21,12 +21,12 @@
                                      new SelectListItem { Text = "Select Status", Value="" },
                                     new SelectListItem { Text = "Active", Value=EMSApp.Helper.ConstantValue.UserStatusActive },
                                     new SelectListItem{ Text="Deactive",Value=EMSApp.Helper.ConstantValue.UserStatusDeactive },},
-                         htmlAttributes: new { @class = "form-control" })
+                         htmlAttributes: new { @class = "form-control",onchange = @"form.submit();" })
                 </div>
-                <div class="col-md-12">
+                @*<div class="col-md-12">
                     <button type="submit" class="btn btn-success waves-effect waves-light m-t-10 pull-right">Search</button>
 
-                </div>
+                </div>*@
             </div>
         </div>
     </div>
@@ -36,12 +36,12 @@
         {
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="card card-outline-info">
+                    <div class="card card-outline-success">
                         <div class="card-header">
                             <h4 class="m-b-0 text-white">Employee All Details</h4>
                         </div>
                         <div class="card-body">
-                            <form action="#" class="form-horizontal">
+                            <form role="form" class="form-horizontal">
                                 <div class="form-body">
                                     <h3 class="box-title">Person Info</h3>
                                     <hr class="m-t-0 m-b-40">
@@ -50,7 +50,7 @@
                                             <div class="form-group row">
                                                 <label class="control-label text-right col-md-3">Name</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" readonly="readonly" value="@item.EMPLOYEE_NAME">
+                                                      <p class="form-control-static">@item.EMPLOYEE_NAME</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -59,7 +59,7 @@
                                             <div class="form-group has row">
                                                 <label class="control-label text-right col-md-3">Address</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control form-control" readonly="readonly" value="@item.ADDRESS">
+                                                    <p class="form-control-static">@item.ADDRESS</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -71,7 +71,7 @@
                                             <div class="form-group row">
                                                 <label class="control-label text-right col-md-3">Contact</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" readonly="readonly" value="@item.CONTACT">
+                                                    <p class="form-control-static">@item.CONTACT</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -80,7 +80,7 @@
                                             <div class="form-group has row">
                                                 <label class="control-label text-right col-md-3">Email</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control form-control" readonly="readonly" value="@item.EMAIL">
+                                                    <p class="form-control-static">@item.EMAIL</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -93,7 +93,7 @@
                                             <div class="form-group has row">
                                                 <label class="control-label text-right col-md-3">Date of Birth</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control form-control" readonly="readonly" value="@item.DOB">
+                                                    <p class="form-control-static">@item.DOB</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -102,7 +102,7 @@
                                             <div class="form-group row">
                                                 <label class="control-label text-right col-md-3">NID</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" readonly="readonly" value="@item.NID">
+                                                    <p class="form-control-static">@item.NID</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -115,7 +115,7 @@
                                             <div class="form-group row">
                                                 <label class="control-label text-right col-md-3">City</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" readonly="readonly" value="@item.CITY">
+                                                    <p class="form-control-static">@item.CITY</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -124,7 +124,7 @@
                                             <div class="form-group has row">
                                                 <label class="control-label text-right col-md-3">Postal Code</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control form-control" readonly="readonly" value="@item.POSTAL_CODE">
+                                                    <p class="form-control-static">@item.POSTAL_CODE</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -136,7 +136,7 @@
                                             <div class="form-group row">
                                                 <label class="control-label text-right col-md-3">Gender</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" readonly="readonly" value="@item.GENDER_TEXT">
+                                                    <p class="form-control-static">@item.GENDER_TEXT</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -145,7 +145,7 @@
                                             <div class="form-group has row">
                                                 <label class="control-label text-right col-md-3">Marital Status</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control form-control" readonly="readonly" value="@item.MARITALA_STATUS_TEXT">
+                                                    <p class="form-control-static">@item.MARITALA_STATUS_TEXT</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -157,7 +157,7 @@
                                             <div class="form-group row">
                                                 <label class="control-label text-right col-md-3">Nationality</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" readonly="readonly" value="@item.NATIONALITY">
+                                                    <p class="form-control-static">@item.NATIONALITY</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -166,7 +166,7 @@
                                             <div class="form-group has row">
                                                 <label class="control-label text-right col-md-3">Blood Group</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control form-control" readonly="readonly" value="@item.BLOOD_GROUP">
+                                                    <p class="form-control-static">@item.BLOOD_GROUP</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -180,7 +180,7 @@
                                             <div class="form-group row">
                                                 <label class="control-label text-right col-md-3">Department</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" readonly="readonly" value="@item.DEPT_TITLE">
+                                                    <p class="form-control-static">@item.DEPT_TITLE</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -189,7 +189,7 @@
                                             <div class="form-group has row">
                                                 <label class="control-label text-right col-md-3">Division</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control form-control" readonly="readonly" value="@item.DIV_TITLE">
+                                                    <p class="form-control-static">@item.DIV_TITLE</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -201,7 +201,7 @@
                                             <div class="form-group row">
                                                 <label class="control-label text-right col-md-3">Designation</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" readonly="readonly" value="@item.POSITION_TITLE">
+                                                    <p class="form-control-static">@item.POSITION_TITLE</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -210,7 +210,7 @@
                                             <div class="form-group has row">
                                                 <label class="control-label text-right col-md-3">Duty</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control form-control" readonly="readonly" value="@item.DUTY_TYPE_TEXT">
+                                                    <p class="form-control-static">@item.DUTY_TYPE_TEXT</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -222,7 +222,7 @@
                                             <div class="form-group row">
                                                 <label class="control-label text-right col-md-3">Rate Type</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" readonly="readonly" value="@item.RATE_TYPE_TEXT">
+                                                    <p class="form-control-static">@item.EMPLOYEE_NAME</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -231,7 +231,7 @@
                                             <div class="form-group has row">
                                                 <label class="control-label text-right col-md-3">Payment Frequency</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control form-control" readonly="readonly" value="@item.PAY_FREQ_TEXT">
+                                                    <p class="form-control-static">@item.PAY_FREQ_TEXT</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -244,7 +244,7 @@
                                             <div class="form-group has row">
                                                 <label class="control-label text-right col-md-3">Joinning Date</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control form-control" readonly="readonly" value="@item.JOINING_DATE">
+                                                    <p class="form-control-static">@item.JOINING_DATE</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -253,7 +253,7 @@
                                             <div class="form-group row">
                                                 <label class="control-label text-right col-md-3">Resigning Date</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" readonly="readonly" value="@item.RESIGNING_DATE">
+                                                    <p class="form-control-static">@item.RESIGNING_DATE</p>
                                                 </div>
                                             </div>
                                         </div>

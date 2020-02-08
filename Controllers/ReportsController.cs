@@ -29,7 +29,7 @@ namespace EMSApp.Controllers
         {
             string status = collection["IS_DELETED"];
             long empId = Convert.ToInt64(collection["EMPLOYEE_ID"]);
-            var data = service.GetDeptWiseData(status: status, empId: empId);            
+            var data = service.GetDeptWiseData(status: status, empId: empId);
             ViewBag.EMPLOYEE_ID = SetEmployee();
             return View(data);
         }
@@ -67,7 +67,7 @@ namespace EMSApp.Controllers
         {
             string status = collection["IS_DELETED"];
             long deptId = Convert.ToInt64(collection["DEPT_ID"]);
-            var data = service.GetDeptWiseData(status:status,deptId:deptId);
+            var data = service.GetDeptWiseData(status: status, deptId: deptId);
             ViewBag.DEPT_ID = SetDepartment();
             return View(data);
         }
@@ -76,6 +76,36 @@ namespace EMSApp.Controllers
             List<SelectListItem> empList = new SelectList(db.DEPARTMENT_INFO, "DEPT_ID", "DEPT_TITLE").ToList();
             empList.Insert(0, (new SelectListItem { Text = "Select Department", Value = "0" }));
             return empList;
+        }
+        [HttpGet]
+        public ActionResult AllEmployeeSalaryReport()
+        {
+            var data = service.GetSalaryWithBenifitsData();
+            ViewBag.EMPLOYEE_ID = SetEmployee();
+            return View(data);
+        }
+        [HttpPost]
+        public ActionResult AllEmployeeSalaryReport(FormCollection collection)
+        {
+            string status = collection["CANGE_TYPE"];
+            long deptId = Convert.ToInt64(collection["DEPT_ID"]);
+            var data = service.GetSalaryWithBenifitsData();
+            ViewBag.EMPLOYEE_ID = SetEmployee();
+            return View(data);
+        }
+        [HttpGet]
+        public ActionResult EmployeeSalaryReport()
+        {           
+            ViewBag.EMPLOYEE_ID = SetEmployee();
+            return View();
+        }
+        [HttpPost]
+        public ActionResult EmployeeSalaryReport(FormCollection collection)
+        {
+            long Id = Convert.ToInt64(collection["EMPLOYEE_ID"]);
+            var data = db.SALARY_INFO.Where(x=>x.EMPLOYEE_ID==Id).OrderByDescending(x=>x.SALARY_PAID).ToList();
+            ViewBag.EMPLOYEE_ID = SetEmployee();
+            return View(data);
         }
     }
 }

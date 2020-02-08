@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using EMSApp.Helper;
@@ -12,6 +13,7 @@ namespace EMSApp.Services
     public class CombineServices : ICombine
     {
         DBHelper dbHelper = new DBHelper();
+        ConverterHelper converter = new ConverterHelper();
         public List<EmployeeReport> GetDeptWiseData(string status = "", long deptId = 0, long empId = 0)
         {           
             string iDFilter = (deptId <= 0) ? "" : " AND DII.DEPT_ID=" + deptId;
@@ -129,10 +131,9 @@ namespace EMSApp.Services
                     AttendanceClass pInfo = new AttendanceClass();
                     pInfo.EMPLOYEE_NAME = Convert.ToString(dRow["EMPLOYEE_NAME"]);
                     DateTime dateAtt = Convert.ToDateTime(dRow["ATT_DATE"]);
-                    pInfo.ATT_DATE = dateAtt.ToString("yyyy-MM-dd");
-                    pInfo.CHECK_IN_TIME = Convert.ToString(dRow["CHECK_IN_TIME"]);
-                    pInfo.CHECK_IN_TIME = Convert.ToString(dRow["CHECK_IN_TIME"]);
-                    pInfo.CHECK_OUT_TIME = Convert.ToString(dRow["CHECK_OUT_TIME"]);
+                    pInfo.ATT_DATE = dateAtt.ToString("dd-MM-yyyy");                    
+                    pInfo.CHECK_IN_TIME =converter.GetFormatted12HTime( Convert.ToString(dRow["CHECK_IN_TIME"]));
+                    pInfo.CHECK_OUT_TIME = converter.GetFormatted12HTime(Convert.ToString(dRow["CHECK_OUT_TIME"]));
                     dataList.Add(pInfo);
                 }
             }
@@ -151,8 +152,36 @@ namespace EMSApp.Services
         public bool SalarySetupStatusChange(long id, string statusV)
         {
             string query = @"UPDATE SALARY_SETUP  SET CANGE_TYPE='" + statusV + "' WHERE SALARY_SET_ID=" + id;
-            bool result = dbHelper.ExecuteDML(query);
+            bool result = dbHelper.ExecuteDML(query);            
             return result;
-        }        
+        }
+
+        public List<SalaryInfo> GetSalaryWithBenifitsData(string status = "")
+        {
+            string statusFilter = (string.IsNullOrEmpty(status)) ? "" : " AND EI.IS_DELETED='" + status + "' ";
+            string query = @"SELECT SS.*,PI.*,EI.* FROM SALARY_SETUP SS
+                            INNER JOIN EMPLOYEE_INFO EI ON SS.EMP_ID=EI.ID
+                            INNER JOIN POSITIONAL_INFO PI ON PI.EMPLOYEE_ID=SS.EMP_ID";
+            DataTable data = dbHelper.GetDataTable(query);
+            return GetSalaryBenifitDataInList(data);
+        }
+
+        private List<SalaryInfo> GetSalaryBenifitDataInList(DataTable data)
+        {
+            List<SalaryInfo> dataList = new List<SalaryInfo>();
+            if (data != null)
+            {
+                foreach (DataRow dRow in data.Rows)
+                {
+                    SalaryInfo pInfo = new SalaryInfo();
+                    pInfo.EMPLOYEE_NAME = Convert.ToString(dRow["EMPLOYEE_NAME"]);
+                    pInfo.BASIC_SALARY = Convert.ToDecimal(dRow["BASIC_SALARY"]);
+                    pInfo.GROSS_SALARY = Convert.ToDecimal(dRow["GROSS_SALARY"]);
+                    pInfo.SALARY_GRADE_SETUP = Convert.ToString(dRow["SALARY_GRADE_SETUP"]);
+                    dataList.Add(pInfo);
+                }
+            }
+            return dataList;
+        }
     }
 }

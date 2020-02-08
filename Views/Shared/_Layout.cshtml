@@ -64,16 +64,19 @@
                             <img src="../../Content/assets/images/logo-icon.png" alt="homepage" class="dark-logo" />
                             <!-- Light Logo icon -->
                             <img src="../../Content/assets/images/logo-light-icon.png" alt="homepage" class="light-logo" />
-                        </b>
+                            
+                        </b>                        
+                            
+                        
                         <!--End Logo icon -->
                         <!-- Logo text -->
                         @*<span>
-                                 dark Logo text
-                                <img src="~/Content/assets/images/logo-text.png" alt="homepage" class="dark-logo" />
-                                 Light Logo text
-                                <img src="~/Content/assets/images/logo-light-text.png" class="light-logo" alt="homepage" />
+             dark Logo text
+            <img src="~/Content/assets/images/logo-text.png" alt="homepage" class="dark-logo" />
+             Light Logo text
+            <img src="~/Content/assets/images/logo-light-text.png" class="light-logo" alt="homepage" />
 
-                            </span>*@
+        </span>*@
                     </a>
                 </div>
                 <!-- ============================================================== -->
@@ -93,7 +96,6 @@
                         <!-- ============================================================== -->
                         <!-- End Messages -->
                         <!-- ============================================================== -->
-
 
                     </ul>
                     <!-- ============================================================== -->
@@ -151,7 +153,7 @@
                     <div class="profile-img"> <img src="../../Content/assets/images/users/profile.png" alt="user" /> </div>
                     <!-- User profile text-->
                     <div class="profile-text">
-                        <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">Dashboard For @Convert.ToString(Session["USER_NAME"])</a>
+                        <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">@Convert.ToString(Session["USER_NAME"])</a>
                         <div class="dropdown-menu animated flipInY">
                             <a href="#" class="dropdown-item"><i class="ti-user"></i> My Profile</a>
                             <div class="dropdown-divider"></div> <a href="@Url.Action("Logout","Login")" class="dropdown-item"><i class="fa fa-power-off"></i> Logout</a>
@@ -165,6 +167,25 @@
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
+                        @try
+                        {
+                            if (levelU == EMSApp.Helper.ConstantValue.UserLevelAdmin)
+                            {
+                                <li>
+                                    <a class="waves-effect waves-dark" href="~/Home/Index" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Dashboard</span></a>
+                                </li>
+                            }
+                            if (levelU == EMSApp.Helper.ConstantValue.UserLevelEmployee)
+                            {
+                                <li>
+                                    <a class="waves-effect waves-dark" href="~/Home/Dashboard" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Dashboard</span></a>
+                                </li>
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Url.Action("LogIn", "Login");
+                        }
                         <li>
                             <a class="waves-effect waves-dark" href="~/EmployeeProfile/Index" aria-expanded="false"><i class="mdi mdi-account"></i><span class="hide-menu">My Profile</span></a>
                         </li>
@@ -244,6 +265,13 @@
                                                 <li><a href="~/Reports/DepartmentWiseReport">Department</a></li>
                                                 <li><a href="~/Reports/EmployeeLeaveReport">Leaves</a></li>
                                                 <li><a href="~/Reports/AttendanceReport">Attendance</a></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi "></i><span class="hide-menu">Salary</span></a>
+                                            <ul aria-expanded="false" class="collapse">
+                                                <li><a href="~/Reports/AllEmployeeSalaryReport">All Employee</a></li>
+                                                <li><a href="~/Reports/EmployeeSalaryReport">Employee Wise </a></li>
                                             </ul>
                                         </li>
                                         @*<li><a href="~/Notice/Index">Notice</a></li>*@

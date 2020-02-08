@@ -14,7 +14,7 @@
             <hr />
             <div class="row">
                 <div class="col-md-4">
-                    @Html.DropDownList("DEPT_ID", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.DropDownList("DEPT_ID", null, htmlAttributes: new { @class = "form-control",onchange = @"form.submit();" })
                 </div>
                 <div class="col-md-4">
                     @Html.DropDownList("IS_DELETED", new SelectListItem[]
@@ -22,11 +22,11 @@
                                      new SelectListItem { Text = "Select Status", Value="" },
                                     new SelectListItem { Text = "Active", Value=EMSApp.Helper.ConstantValue.UserStatusActive },
                                     new SelectListItem{ Text="Deactive",Value=EMSApp.Helper.ConstantValue.UserStatusDeactive },},
-                         htmlAttributes: new { @class = "form-control" })
+                         htmlAttributes: new { @class = "form-control" ,onchange = @"form.submit();"})
                 </div>
-                <div class="col-md-4">
+                @*<div class="col-md-4">
                     <button type="submit" class="btn btn-success waves-effect waves-light m-t-10 pull-right">Search</button>
-                </div>
+                </div>*@
             </div>
         </div>
     </div>

@@ -34,8 +34,8 @@
     <Property Name="ATNDNC_ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="EMPLOYEE_ID" Type="bigint" Nullable="false" />
     <Property Name="ATT_DATE" Type="date" Nullable="false" />
-    <Property Name="CHECK_IN_TIME" Type="time" Precision="2" />
-    <Property Name="CHECK_OUT_TIME" Type="time" Precision="2" />
+    <Property Name="CHECK_IN_TIME" Type="time" Precision="0" />
+    <Property Name="CHECK_OUT_TIME" Type="time" Precision="0" />
     <Property Name="SL_NO" Type="int" />
     <Property Name="STATUS" Type="char" MaxLength="1" />
   </EntityType>
@@ -153,6 +153,8 @@
     <Property Name="UPDATE_BY" Type="bigint" />
     <Property Name="UPDATE_DATE" Type="datetime" />
     <Property Name="STATUS" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="DEPT_ID" Type="bigint" />
+    <Property Name="DIV_ID" Type="bigint" />
   </EntityType>
   <EntityType Name="POSITIONAL_INFO">
     <Key>

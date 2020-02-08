@@ -43,7 +43,7 @@ namespace EMSApp.Controllers
         }
         private List<SelectListItem> SetEmployee()
         {
-            List<SelectListItem> empList = new SelectList(db.EMPLOYEE_INFO, "ID", "EMPLOYEE_NAME").ToList();
+            List<SelectListItem> empList = new SelectList(db.EMPLOYEE_INFO.Where(x=>x.IS_DELETED==Helper.ConstantValue.UserStatusActive), "ID", "EMPLOYEE_NAME").ToList();
             empList.Insert(0, (new SelectListItem { Text = "Select One", Value = "0" }));
             return empList;
         }
@@ -166,8 +166,10 @@ namespace EMSApp.Controllers
             }
             catch (Exception ex)
             {
-                return View();
+                
             }
+            GetDataInBag();
+            return View();
         }
         // GET: User/Delete/5
         public ActionResult Delete(int id)

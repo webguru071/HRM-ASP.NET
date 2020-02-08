@@ -39,8 +39,8 @@
           <Property Name="ATNDNC_ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EMPLOYEE_ID" Type="bigint" Nullable="false" />
           <Property Name="ATT_DATE" Type="date" Nullable="false" />
-          <Property Name="CHECK_IN_TIME" Type="time" Precision="2" />
-          <Property Name="CHECK_OUT_TIME" Type="time" Precision="2" />
+          <Property Name="CHECK_IN_TIME" Type="time" Precision="0" />
+          <Property Name="CHECK_OUT_TIME" Type="time" Precision="0" />
           <Property Name="SL_NO" Type="int" />
           <Property Name="STATUS" Type="char" MaxLength="1" />
         </EntityType>
@@ -158,6 +158,8 @@
           <Property Name="UPDATE_BY" Type="bigint" />
           <Property Name="UPDATE_DATE" Type="datetime" />
           <Property Name="STATUS" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="DEPT_ID" Type="bigint" />
+          <Property Name="DIV_ID" Type="bigint" />
         </EntityType>
         <EntityType Name="POSITIONAL_INFO">
           <Key>
@@ -622,7 +624,6 @@
           <EntitySet Name="EQUEPMENTS_INFO" EntityType="EMSModel.EQUEPMENTS_INFO" />
           <EntitySet Name="LEAVE_APPLICATION" EntityType="EMSModel.LEAVE_APPLICATION" />
           <EntitySet Name="LEAVE_TYPE" EntityType="EMSModel.LEAVE_TYPE" />
-          <EntitySet Name="NOTICE_BOARD" EntityType="EMSModel.NOTICE_BOARD" />
           <EntitySet Name="POSITIONAL_INFO" EntityType="EMSModel.POSITIONAL_INFO" />
           <EntitySet Name="SALARY_INFO" EntityType="EMSModel.SALARY_INFO" />
           <EntitySet Name="SALARY_SETUP" EntityType="EMSModel.SALARY_SETUP" />
@@ -704,6 +705,7 @@
             <End Role="TRANSACTION_ITEM" EntitySet="TRANSACTION_ITEM" />
             <End Role="TRANSACTION_SHEET" EntitySet="TRANSACTION_SHEET" />
           </AssociationSet>
+          <EntitySet Name="NOTICE_BOARD" EntityType="EMSModel.NOTICE_BOARD" />
         </EntityContainer>
         <EntityType Name="ASSET_INFO">
           <Key>
@@ -742,8 +744,8 @@
           <Property Name="ATNDNC_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EMPLOYEE_ID" Type="Int64" Nullable="false" />
           <Property Name="ATT_DATE" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="CHECK_IN_TIME" Type="Time" Precision="2" />
-          <Property Name="CHECK_OUT_TIME" Type="Time" Precision="2" />
+          <Property Name="CHECK_IN_TIME" Type="Time" Precision="0" />
+          <Property Name="CHECK_OUT_TIME" Type="Time" Precision="0" />
           <Property Name="SL_NO" Type="Int32" />
           <Property Name="STATUS" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="EMPLOYEE_INFO" Relationship="EMSModel.FK_ATTENDANCE_DETAILS_EMPLOYEE_INFO" FromRole="ATTENDANCE_DETAILS" ToRole="EMPLOYEE_INFO" />
@@ -869,18 +871,6 @@
           <Property Name="UPDATE_BY" Type="Int64" />
           <Property Name="UPDATE_DATE" Type="DateTime" Precision="3" />
           <NavigationProperty Name="LEAVE_APPLICATION" Relationship="EMSModel.FK_LEAVE_APPLICATION_LEAVE_APPLICATION" FromRole="LEAVE_TYPE" ToRole="LEAVE_APPLICATION" />
-        </EntityType>
-        <EntityType Name="NOTICE_BOARD">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NOTICE" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="ACTION_BY" Type="Int64" Nullable="false" />
-          <Property Name="ACTION_DATE" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UPDATE_BY" Type="Int64" />
-          <Property Name="UPDATE_DATE" Type="DateTime" Precision="3" />
-          <Property Name="STATUS" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
         </EntityType>
         <EntityType Name="POSITIONAL_INFO">
           <Key>
@@ -1249,6 +1239,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="NOTICE_BOARD">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NOTICE" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="ACTION_BY" Type="Int64" Nullable="false" />
+          <Property Name="ACTION_DATE" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UPDATE_BY" Type="Int64" />
+          <Property Name="UPDATE_DATE" Type="DateTime" Precision="3" />
+          <Property Name="STATUS" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="DEPT_ID" Type="Int64" />
+          <Property Name="DIV_ID" Type="Int64" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1407,19 +1411,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="NOTICE_BOARD">
-            <EntityTypeMapping TypeName="EMSModel.NOTICE_BOARD">
-              <MappingFragment StoreEntitySet="NOTICE_BOARD">
-                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
-                <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
-                <ScalarProperty Name="UPDATE_BY" ColumnName="UPDATE_BY" />
-                <ScalarProperty Name="ACTION_DATE" ColumnName="ACTION_DATE" />
-                <ScalarProperty Name="ACTION_BY" ColumnName="ACTION_BY" />
-                <ScalarProperty Name="NOTICE" ColumnName="NOTICE" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="POSITIONAL_INFO">
             <EntityTypeMapping TypeName="EMSModel.POSITIONAL_INFO">
               <MappingFragment StoreEntitySet="POSITIONAL_INFO">
@@ -1563,6 +1554,21 @@
                 <ScalarProperty Name="CONTACT" ColumnName="CONTACT" />
                 <ScalarProperty Name="USER_NAME" ColumnName="USER_NAME" />
                 <ScalarProperty Name="EMPLOYEE_ID" ColumnName="EMPLOYEE_ID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NOTICE_BOARD">
+            <EntityTypeMapping TypeName="EMSModel.NOTICE_BOARD">
+              <MappingFragment StoreEntitySet="NOTICE_BOARD">
+                <ScalarProperty Name="DIV_ID" ColumnName="DIV_ID" />
+                <ScalarProperty Name="DEPT_ID" ColumnName="DEPT_ID" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
+                <ScalarProperty Name="UPDATE_BY" ColumnName="UPDATE_BY" />
+                <ScalarProperty Name="ACTION_DATE" ColumnName="ACTION_DATE" />
+                <ScalarProperty Name="ACTION_BY" ColumnName="ACTION_BY" />
+                <ScalarProperty Name="NOTICE" ColumnName="NOTICE" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

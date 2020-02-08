@@ -153,19 +153,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="NOTICE_BOARD">
-      <EntityTypeMapping TypeName="EMSModel.NOTICE_BOARD">
-        <MappingFragment StoreEntitySet="NOTICE_BOARD">
-          <ScalarProperty Name="STATUS" ColumnName="STATUS" />
-          <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
-          <ScalarProperty Name="UPDATE_BY" ColumnName="UPDATE_BY" />
-          <ScalarProperty Name="ACTION_DATE" ColumnName="ACTION_DATE" />
-          <ScalarProperty Name="ACTION_BY" ColumnName="ACTION_BY" />
-          <ScalarProperty Name="NOTICE" ColumnName="NOTICE" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="POSITIONAL_INFO">
       <EntityTypeMapping TypeName="EMSModel.POSITIONAL_INFO">
         <MappingFragment StoreEntitySet="POSITIONAL_INFO">
@@ -309,6 +296,21 @@
           <ScalarProperty Name="CONTACT" ColumnName="CONTACT" />
           <ScalarProperty Name="USER_NAME" ColumnName="USER_NAME" />
           <ScalarProperty Name="EMPLOYEE_ID" ColumnName="EMPLOYEE_ID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NOTICE_BOARD">
+      <EntityTypeMapping TypeName="EMSModel.NOTICE_BOARD">
+        <MappingFragment StoreEntitySet="NOTICE_BOARD">
+          <ScalarProperty Name="DIV_ID" ColumnName="DIV_ID" />
+          <ScalarProperty Name="DEPT_ID" ColumnName="DEPT_ID" />
+          <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+          <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
+          <ScalarProperty Name="UPDATE_BY" ColumnName="UPDATE_BY" />
+          <ScalarProperty Name="ACTION_DATE" ColumnName="ACTION_DATE" />
+          <ScalarProperty Name="ACTION_BY" ColumnName="ACTION_BY" />
+          <ScalarProperty Name="NOTICE" ColumnName="NOTICE" />
           <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>

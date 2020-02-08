@@ -13,5 +13,6 @@ namespace EMSApp.Services
         bool SalarySetupStatusChange(long id, string statusV);
         List<AttendanceClass> GetAttendanceData(string fromDate="",string toDate="",long empId=0);
         List<EmployeeReport> GetDeptWiseData(string status="",long deptId=0, long empId = 0);
+        List<SalaryInfo> GetSalaryWithBenifitsData(string status="");
     }
 }

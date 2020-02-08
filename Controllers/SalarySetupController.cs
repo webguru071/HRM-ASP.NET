@@ -93,6 +93,7 @@ namespace EMSApp.Controllers
 
                     SALARY_SETUP setUp = new SALARY_SETUP();
                     setUp.EMP_ID = Convert.ToInt64(collection["EMP_ID"]);
+                    setUp.POSITION_ID = Convert.ToInt64(Session["POSITION_ID"]);
                     setUp.PAY_TYPE = collection["PAY_TYPE"];
                     setUp.GROSS_SALARY = grossSalary;
                     setUp.SALARY_GRADE_SETUP = gradeString;
@@ -276,6 +277,7 @@ namespace EMSApp.Controllers
             if (data != null)
             {
                 listOfData["BASIC_SALARY"] = data.BASIC_SALARY.ToString();
+                Session["POSITION_ID"] = data.POSITION_ID;
             }
             else
             {

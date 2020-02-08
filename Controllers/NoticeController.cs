@@ -14,7 +14,7 @@ namespace EMSApp.Controllers
         // GET: Notice
         public ActionResult Index()
         {
-            var data = db.NOTICE_BOARD.Where(X=>X.STATUS=="a").ToList();
+            var data = db.NOTICE_BOARD.Where(X => X.STATUS == "a").ToList();
             return View(data);
         }
         // GET: Notice/Details/5
@@ -22,20 +22,7 @@ namespace EMSApp.Controllers
         {
             return View();
         }
-        private void GetDataInBag(string status = "")
-        {          
-            ViewBag.STATUS = new SelectList(SetStatusList(), "Value", "Text", status);
-        }
-        private List<SelectListItem> SetStatusList()
-        {
-            var activeStatus = new List<SelectListItem>
-            {
-                new SelectListItem{ Text="Active", Value = "a" },
-                new SelectListItem{ Text="Deactive", Value = "d" }
-            };
-            activeStatus.Insert(0, (new SelectListItem { Text = "Select One", Value = "" }));
-            return activeStatus;
-        }
+
         // GET: Notice/Create
         public ActionResult Create()
         {
@@ -72,16 +59,17 @@ namespace EMSApp.Controllers
             }
             catch (Exception ex)
             {
-                GetDataInBag();
+
             }
-            return View();
+            GetDataInBag(objNotice.STATUS, Convert.ToInt64(objNotice.DEPT_ID), Convert.ToInt64(objNotice.DIV_ID));
+            return View(objNotice);
         }
         // GET: Notice/Edit/5
         public ActionResult Edit(int id)
         {
             var data = db.NOTICE_BOARD.Where(x => x.ID == id).FirstOrDefault();
             Session["AD"] = data.ACTION_DATE;
-            GetDataInBag(data.STATUS);
+            GetDataInBag(data.STATUS, dept: Convert.ToInt64(data.DEPT_ID), div: Convert.ToInt64(data.DIV_ID));
             return View(data);
         }
         // POST: Notice/Edit/5
@@ -100,7 +88,6 @@ namespace EMSApp.Controllers
                 }
                 else
                 {
-                    long userID = Convert.ToInt64(Session["USER_ID"]);
                     objNotice.UPDATE_BY = Convert.ToInt64(Session["USER_ID"]);
                     objNotice.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
                     objNotice.UPDATE_DATE = DateTime.Now;
@@ -116,8 +103,9 @@ namespace EMSApp.Controllers
             }
             catch (Exception ex)
             {
-                GetDataInBag(objNotice.STATUS);
+
             }
+            GetDataInBag(objNotice.STATUS, Convert.ToInt64(objNotice.DEPT_ID), Convert.ToInt64(objNotice.DIV_ID));
             return View();
         }
         // GET: Notice/Delete/5
@@ -138,6 +126,49 @@ namespace EMSApp.Controllers
             {
                 return View();
             }
+        }
+        private void GetDataInBag(string status = "", long dept = 0, long div = 0)
+        {
+            List<SelectListItem> deptList = new SelectList(db.DEPARTMENT_INFO, "DEPT_ID", "DEPT_TITLE").ToList();
+            deptList.Insert(0, (new SelectListItem { Text = "All Department", Value = "0" }));
+            ViewBag.DEPT_ID = new SelectList(deptList, "Value", "Text", dept);
+            var iniText = new List<SelectListItem>
+            {
+                new SelectListItem{ Text="Select One", Value = ""}
+            };
+            if (dept > 0)
+            {
+                List<SelectListItem> division = new SelectList(db.DIVISION_INFO.Where(x => x.DEPT_ID == dept), "DIV_ID", "DIV_TITLE").ToList();
+                division.Insert(0, (new SelectListItem { Text = "Select One", Value = "0" }));
+                ViewBag.DIV_ID = new SelectList(division, "Value", "Text", div);
+                //ViewBag.TEAM_ID = iniText;
+            }
+            else
+            {
+                ViewBag.DIV_ID = iniText;
+                // ViewBag.TEAM_ID = iniText;
+            }
+            ViewBag.STATUS = new SelectList(SetStatusList(), "Value", "Text", status);
+        }
+        private List<SelectListItem> SetStatusList()
+        {
+            var activeStatus = new List<SelectListItem>
+            {
+                new SelectListItem{ Text="Active", Value = Helper.ConstantValue.TypeActive },
+                new SelectListItem{ Text="Deactive", Value = Helper.ConstantValue.TypeDeactive }
+            };
+            activeStatus.Insert(0, (new SelectListItem { Text = "Select One", Value = "" }));
+            return activeStatus;
+        }
+        public JsonResult GetDivision(int deptId)
+        {
+            List<SelectListItem> division = new SelectList(db.DIVISION_INFO.Where(x => x.DEPT_ID == deptId), "DIV_ID", "DIV_TITLE").ToList();
+            return Json(new SelectList(division, "Value", "Text"), JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetTeam(int divId)
+        {
+            List<SelectListItem> division = new SelectList(db.TEAM_INFO, "DIV_ID", "DIV_TITLE").ToList();
+            return Json(new SelectList(division, "Value", "Text"), JsonRequestBehavior.AllowGet);
         }
     }
 }

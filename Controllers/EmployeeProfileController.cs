@@ -58,7 +58,7 @@ namespace EMSApp.Controllers
             var data = db.EMPLOYEE_INFO.Where(x => x.ID == id && x.IS_DELETED == Helper.ConstantValue.UserStatusActive).FirstOrDefault();
             Session["AD"] = data.ACTION_DATE;
             Session["NAME"] = data.EMPLOYEE_NAME;
-            Session["ISD"] = data.IS_DELETED;
+            Session["data"] = data;
             return View(data);
         }
         // POST: EmployeeProfile/Edit/5

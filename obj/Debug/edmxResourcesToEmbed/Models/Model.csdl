@@ -11,7 +11,6 @@
     <EntitySet Name="EQUEPMENTS_INFO" EntityType="EMSModel.EQUEPMENTS_INFO" />
     <EntitySet Name="LEAVE_APPLICATION" EntityType="EMSModel.LEAVE_APPLICATION" />
     <EntitySet Name="LEAVE_TYPE" EntityType="EMSModel.LEAVE_TYPE" />
-    <EntitySet Name="NOTICE_BOARD" EntityType="EMSModel.NOTICE_BOARD" />
     <EntitySet Name="POSITIONAL_INFO" EntityType="EMSModel.POSITIONAL_INFO" />
     <EntitySet Name="SALARY_INFO" EntityType="EMSModel.SALARY_INFO" />
     <EntitySet Name="SALARY_SETUP" EntityType="EMSModel.SALARY_SETUP" />
@@ -93,6 +92,7 @@
       <End Role="TRANSACTION_ITEM" EntitySet="TRANSACTION_ITEM" />
       <End Role="TRANSACTION_SHEET" EntitySet="TRANSACTION_SHEET" />
     </AssociationSet>
+    <EntitySet Name="NOTICE_BOARD" EntityType="EMSModel.NOTICE_BOARD" />
   </EntityContainer>
   <EntityType Name="ASSET_INFO">
     <Key>
@@ -131,8 +131,8 @@
     <Property Name="ATNDNC_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="EMPLOYEE_ID" Type="Int64" Nullable="false" />
     <Property Name="ATT_DATE" Type="DateTime" Nullable="false" Precision="0" />
-    <Property Name="CHECK_IN_TIME" Type="Time" Precision="2" />
-    <Property Name="CHECK_OUT_TIME" Type="Time" Precision="2" />
+    <Property Name="CHECK_IN_TIME" Type="Time" Precision="0" />
+    <Property Name="CHECK_OUT_TIME" Type="Time" Precision="0" />
     <Property Name="SL_NO" Type="Int32" />
     <Property Name="STATUS" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
     <NavigationProperty Name="EMPLOYEE_INFO" Relationship="EMSModel.FK_ATTENDANCE_DETAILS_EMPLOYEE_INFO" FromRole="ATTENDANCE_DETAILS" ToRole="EMPLOYEE_INFO" />
@@ -258,18 +258,6 @@
     <Property Name="UPDATE_BY" Type="Int64" />
     <Property Name="UPDATE_DATE" Type="DateTime" Precision="3" />
     <NavigationProperty Name="LEAVE_APPLICATION" Relationship="EMSModel.FK_LEAVE_APPLICATION_LEAVE_APPLICATION" FromRole="LEAVE_TYPE" ToRole="LEAVE_APPLICATION" />
-  </EntityType>
-  <EntityType Name="NOTICE_BOARD">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="NOTICE" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
-    <Property Name="ACTION_BY" Type="Int64" Nullable="false" />
-    <Property Name="ACTION_DATE" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="UPDATE_BY" Type="Int64" />
-    <Property Name="UPDATE_DATE" Type="DateTime" Precision="3" />
-    <Property Name="STATUS" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
   </EntityType>
   <EntityType Name="POSITIONAL_INFO">
     <Key>
@@ -638,4 +626,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="NOTICE_BOARD">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NOTICE" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="ACTION_BY" Type="Int64" Nullable="false" />
+    <Property Name="ACTION_DATE" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UPDATE_BY" Type="Int64" />
+    <Property Name="UPDATE_DATE" Type="DateTime" Precision="3" />
+    <Property Name="STATUS" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="DEPT_ID" Type="Int64" />
+    <Property Name="DIV_ID" Type="Int64" />
+  </EntityType>
 </Schema>
