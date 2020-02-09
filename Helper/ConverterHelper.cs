@@ -7,6 +7,13 @@ namespace EMSApp.Helper
 {
     public class ConverterHelper
     {
+        public bool CheckLogin()
+        {
+            if (HttpContext.Current.Session["USER_ID"]==null)
+                return false;
+            else
+                return true;
+        }
         public long GetLoggedUserID()
         {
             long id = Convert.ToInt64(HttpContext.Current.Session["USER_ID"]);
@@ -19,7 +26,7 @@ namespace EMSApp.Helper
         }
         public string GetLoggedUserLevel()
         {
-            string level = Convert.ToString(HttpContext.Current.Session["USER_LEVEL"]);            
+            string level = Convert.ToString(HttpContext.Current.Session["USER_LEVEL"]);
             return level;
         }
         public string GetLoggedEmployeeName()

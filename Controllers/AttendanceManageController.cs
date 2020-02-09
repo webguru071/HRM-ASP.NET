@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using EMSApp.Helper;
 using EMSApp.Models;
 using EMSApp.Services;
 
@@ -10,14 +11,22 @@ namespace EMSApp.Controllers
 {
     public class AttendanceManageController : Controller
     {
+        ConverterHelper converter = new ConverterHelper();
         EMSEntities db = new EMSEntities();
         ICombine service = new CombineServices();
         // GET: AttendanceManage
         public ActionResult Index()
         {
-            long empId = Convert.ToInt64(Session["EMP_ID"]);
-            var data = service.GetAttendanceData(empId:empId);
-            return View(data);
+            if (converter.CheckLogin())
+            {
+                long empId = converter.GetLoggedEmployeeID();
+                var data = service.GetAttendanceData(empId: empId);
+                return View(data);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }           
         }
 
         // GET: AttendanceManage/Details/5
@@ -29,8 +38,14 @@ namespace EMSApp.Controllers
         // GET: AttendanceManage/Create
         public ActionResult Create()
         {
-
-            return View();
+            if (converter.CheckLogin())
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }            
         }
 
         // POST: AttendanceManage/Create

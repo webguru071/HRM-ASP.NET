@@ -1,4 +1,5 @@
-﻿using EMSApp.Models;
+﻿using EMSApp.Helper;
+using EMSApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -10,12 +11,21 @@ namespace EMSApp.Controllers
 {
     public class DivisionController : Controller
     {
-        EMSEntities db = new EMSEntities();
+        EMSEntities db = new EMSEntities(); 
+        ConverterHelper converter = new ConverterHelper();
         // GET: Division
         public ActionResult Index()
         {
-            var dt = db.DIVISION_INFO.ToList();
-            return View(dt);
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            {
+                var dt = db.DIVISION_INFO.ToList();
+                return View(dt);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+            
         }
         // GET: Division/Details/5
         public ActionResult Details(int id)
@@ -25,8 +35,16 @@ namespace EMSApp.Controllers
         // GET: Division/Create
         public ActionResult Create()
         {
-            GetDataInBag();
-            return View();
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            {
+                GetDataInBag();
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+            
         }    
         // POST: Division/Create
         [HttpPost]
@@ -44,7 +62,7 @@ namespace EMSApp.Controllers
                 }
                 else
                 { 
-                    obj.ACTION_BY = Convert.ToInt64(Session["USER_ID"]);
+                    obj.ACTION_BY = converter.GetLoggedUserID();
                     obj.ACTION_DATE = DateTime.Now;
 
                     if (ModelState.IsValid)
@@ -66,10 +84,18 @@ namespace EMSApp.Controllers
         // GET: Division/Edit/5
         public ActionResult Edit(int id)
         {
-            var dt = db.DIVISION_INFO.Where(x => x.DIV_ID == id).FirstOrDefault();
-            GetDataInBag(dt.DEPT_ID);
-            Session["AD"] = dt.ACTION_DATE;
-            return View(dt);
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            {
+                var dt = db.DIVISION_INFO.Where(x => x.DIV_ID == id).FirstOrDefault();
+                GetDataInBag(dt.DEPT_ID);
+                Session["AD"] = dt.ACTION_DATE;
+                return View(dt);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+           
         }
 
         // POST: Division/Edit/5
@@ -87,9 +113,8 @@ namespace EMSApp.Controllers
                     ModelState.AddModelError("", "Please Add Division Name");
                 }
                 else
-                {
-                    long userID = Convert.ToInt64(Session["USER_ID"]);
-                    obj.UPDATE_BY = Convert.ToInt64(Session["USER_ID"]);
+                {                    
+                    obj.UPDATE_BY = converter.GetLoggedUserID();
                     obj.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
                     obj.UPDATE_DATE = DateTime.Now;
 
@@ -114,8 +139,15 @@ namespace EMSApp.Controllers
         // GET: Division/Delete/5
         public ActionResult Delete(int id)
         {
-            var dt = db.DIVISION_INFO.Where(x => x.DIV_ID == id).FirstOrDefault();
-            return View(dt);
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            {
+                var dt = db.DIVISION_INFO.Where(x => x.DIV_ID == id).FirstOrDefault();
+                return View(dt);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }            
         }
 
         // POST: Division/Delete/5

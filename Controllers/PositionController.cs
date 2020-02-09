@@ -11,11 +11,21 @@ namespace EMSApp.Controllers
     public class PositionController : Controller
     {
         EMSEntities db = new EMSEntities();
+        ConverterHelper converter = new ConverterHelper();
+
         // GET: Position
         public ActionResult Index()
         {
-            var data = db.POSITIONAL_INFO.Where(x => x.CHANGE_TYPE == ConstantValue.TypeActive).ToList();
-            return View(data);
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            {
+                var data = db.POSITIONAL_INFO.Where(x => x.CHANGE_TYPE == ConstantValue.TypeActive).ToList();
+                return View(data);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+            
         }
         // GET: Position/Details/5
         public ActionResult Details(int id)
@@ -25,8 +35,16 @@ namespace EMSApp.Controllers
         // GET: Position/Create
         public ActionResult Create()
         {
-            GetDataInBag();
-            return View();
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            {
+                GetDataInBag();
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+            
         }
         // POST: Position/Create
         [HttpPost]
@@ -65,7 +83,7 @@ namespace EMSApp.Controllers
                 }
                 else
                 {
-                    long userID = Convert.ToInt64(Session["USER_ID"]);
+                    long userID = converter.GetLoggedUserID();
                     obj.ACTION_BY = userID;
                     obj.ACTION_DATE = DateTime.Now;
                     obj.CHANGE_TYPE = ConstantValue.TypeActive;
@@ -88,11 +106,19 @@ namespace EMSApp.Controllers
         // GET: Position/Edit/5
         public ActionResult Edit(int id)
         {
-            var dt = db.POSITIONAL_INFO.Where(x => x.POSITION_ID == id).FirstOrDefault();
-            Session["DATA"] = dt;
-            GetDataInBag(dt.EMPLOYEE_ID, dt.DIV_ID);
-            Session["AD"] = dt.ACTION_DATE;
-            return View(dt);
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            {
+                var dt = db.POSITIONAL_INFO.Where(x => x.POSITION_ID == id).FirstOrDefault();
+                Session["DATA"] = dt;
+                GetDataInBag(dt.EMPLOYEE_ID, dt.DIV_ID);
+                Session["AD"] = dt.ACTION_DATE;
+                return View(dt);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+            
         }
         // POST: Position/Edit/5
         [HttpPost]
@@ -132,7 +158,7 @@ namespace EMSApp.Controllers
                 else
                 {
                     //obj.CHANGE_TYPE = ConstantValue.TypeActive;
-                    obj.UPDATE_BY = Convert.ToInt64(Session["USER_ID"]);
+                    obj.UPDATE_BY = converter.GetLoggedUserID();
                     obj.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
                     obj.UPDATE_DATE = DateTime.Now;
                     if (ModelState.IsValid)
@@ -156,8 +182,16 @@ namespace EMSApp.Controllers
         // GET: Position/Delete/5
         public ActionResult Delete(int id)
         {
-            var dt = db.POSITIONAL_INFO.Where(x => x.POSITION_ID == id).FirstOrDefault();
-            return View(dt);
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            {
+                var dt = db.POSITIONAL_INFO.Where(x => x.POSITION_ID == id).FirstOrDefault();
+                return View(dt);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+           
         }
         // POST: Position/Delete/5
         [HttpPost]

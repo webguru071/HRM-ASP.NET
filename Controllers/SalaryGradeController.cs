@@ -12,11 +12,21 @@ namespace EMSApp.Controllers
     public class SalaryGradeController : Controller
     {
         EMSEntities db = new EMSEntities();
+        ConverterHelper converter = new ConverterHelper();
+
         // GET: SalaryGrade
         public ActionResult Index()
         {
-            var data = db.SALARY_GRADE.ToList();
-            return View(data);
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            {
+                var data = db.SALARY_GRADE.ToList();
+                return View(data);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+            
         }
         // GET: SalaryGrade/Details/5
         public ActionResult Details(int id)
@@ -26,7 +36,15 @@ namespace EMSApp.Controllers
         // GET: SalaryGrade/Create
         public ActionResult Create()
         {
-            return View();
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+           
         }
         // POST: SalaryGrade/Create
         [HttpPost]
@@ -46,7 +64,7 @@ namespace EMSApp.Controllers
                 }
                 else
                 {
-                    collection.ACTION_BY = Convert.ToInt64(Session["USER_ID"]);
+                    collection.ACTION_BY = converter.GetLoggedUserID();
                     collection.ACTION_DATE = DateTime.Now;
                     if (ModelState.IsValid)
                     {
@@ -66,9 +84,17 @@ namespace EMSApp.Controllers
         // GET: SalaryGrade/Edit/5
         public ActionResult Edit(int id)
         {
-            var dt = db.SALARY_GRADE.Where(x => x.GRADE_ID == id).FirstOrDefault();
-            Session["AD"] = dt.ACTION_DATE;
-            return View(dt);
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            {
+                var dt = db.SALARY_GRADE.Where(x => x.GRADE_ID == id).FirstOrDefault();
+                Session["AD"] = dt.ACTION_DATE;
+                return View(dt);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+            
         }
         // POST: SalaryGrade/Edit/5
         [HttpPost]
@@ -88,7 +114,7 @@ namespace EMSApp.Controllers
                 }
                 else
                 {
-                    collection.UPDATE_BY = Convert.ToInt64(Session["USER_ID"]);
+                    collection.UPDATE_BY = converter.GetLoggedUserID();
                     collection.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
                     collection.UPDATE_DATE = DateTime.Now;
 
@@ -111,8 +137,16 @@ namespace EMSApp.Controllers
         // GET: SalaryGrade/Delete/5
         public ActionResult Delete(int id)
         {
-            var dt = db.SALARY_GRADE.Where(x => x.GRADE_ID == id).FirstOrDefault();
-            return View(dt);
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            {
+                var dt = db.SALARY_GRADE.Where(x => x.GRADE_ID == id).FirstOrDefault();
+                return View(dt);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+            
         }
         // POST: SalaryGrade/Delete/5
         [HttpPost]

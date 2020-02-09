@@ -5,17 +5,28 @@ using System.Web;
 using EMSApp.Models;
 using System.Web.Mvc;
 using System.Data.Entity;
+using EMSApp.Helper;
 
 namespace EMSApp.Controllers
 {
     public class EmployeeController : Controller
     {
         EMSEntities db = new EMSEntities();
+        ConverterHelper converter = new ConverterHelper();
+
         // GET: Employee
         public ActionResult Index()
         {
-            var data = db.EMPLOYEE_INFO.Where(x => x.IS_DELETED == "a").ToList();
-            return View(data);
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            {
+                var data = db.EMPLOYEE_INFO.Where(x => x.IS_DELETED == ConstantValue.TypeActive).ToList();
+                return View(data);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+            
         }
         // GET: Employee/Details/5
         public ActionResult Details(int id)
@@ -25,10 +36,16 @@ namespace EMSApp.Controllers
         // GET: Employee/Create
         public ActionResult Create()
         {
-
-            ViewBag.IS_DELETED = SetStatusList();
-
-            return View();
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            {
+                ViewBag.IS_DELETED = SetStatusList();
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+            
         }
         // POST: Employee/Create
         [HttpPost]
@@ -68,7 +85,7 @@ namespace EMSApp.Controllers
                 {
                     // TODO: Add insert logic here
 
-                    emp.ACTION_BY = Convert.ToInt64(Session["USER_ID"]);
+                    emp.ACTION_BY = converter.GetLoggedUserID();
                     emp.ACTION_DATE = DateTime.Now;
                     if (ModelState.IsValid)
                     {
@@ -100,11 +117,19 @@ namespace EMSApp.Controllers
         // GET: Employee/Edit/5
         public ActionResult Edit(int id)
         {
-            var data = db.EMPLOYEE_INFO.Where(x => x.ID == id).FirstOrDefault();
-            Session["AD"] = data.ACTION_DATE;
-            //Session["AT"] = data.ACTION_BY;
-            ViewBag.IS_DELETED = new SelectList(SetStatusList(), "Value", "Text", data.IS_DELETED);
-            return View(data);
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            {
+                var data = db.EMPLOYEE_INFO.Where(x => x.ID == id).FirstOrDefault();
+                Session["AD"] = data.ACTION_DATE;
+                //Session["AT"] = data.ACTION_BY;
+                ViewBag.IS_DELETED = new SelectList(SetStatusList(), "Value", "Text", data.IS_DELETED);
+                return View(data);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+            
         }
         // POST: Employee/Edit/5
         [HttpPost]
@@ -144,7 +169,7 @@ namespace EMSApp.Controllers
                 {
                     // TODO: Add insert logic here
 
-                    emp.UPDATE_BY = Convert.ToInt64(Session["USER_ID"]);
+                    emp.UPDATE_BY = converter.GetLoggedUserID();
                     emp.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
                     emp.UPDATE_DATE = DateTime.Now;
                     if (ModelState.IsValid)

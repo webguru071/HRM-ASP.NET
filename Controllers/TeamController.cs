@@ -1,4 +1,5 @@
-﻿using EMSApp.Models;
+﻿using EMSApp.Helper;
+using EMSApp.Models;
 using EMSApp.Services;
 using System;
 using System.Collections.Generic;
@@ -12,11 +13,21 @@ namespace EMSApp.Controllers
     {
         EMSEntities db = new EMSEntities();
         ICombine service = new CombineServices();
+        ConverterHelper converter = new ConverterHelper();
+
         // GET: Team
         public ActionResult Index()
         {
-            var data = db.TEAM_INFO.Where(x => x.STATUS == "a").ToList();
-            return View(data);
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            {
+                var data = db.TEAM_INFO.Where(x => x.STATUS == ConstantValue.TypeActive).ToList();
+                return View(data);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+           
         }
         // GET: Team/Details/5
         public ActionResult Details(int id)
@@ -26,8 +37,16 @@ namespace EMSApp.Controllers
         // GET: Team/Create
         public ActionResult Create()
         {
-            GetDataInBag();
-            return View();
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            {
+                GetDataInBag();
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+            
         }
         // POST: Team/Create
         [HttpPost]
@@ -50,7 +69,7 @@ namespace EMSApp.Controllers
                 }
                 else
                 {
-                    team.ACTION_BY = Convert.ToInt64(Session["USER_ID"]);
+                    team.ACTION_BY = converter.GetLoggedUserID();
                     team.ACTION_DATE = DateTime.Now;
 
                     if (ModelState.IsValid)
@@ -93,11 +112,19 @@ namespace EMSApp.Controllers
         // GET: Team/Edit/5
         public ActionResult Edit(int id)
         {
-            var data = db.TEAM_INFO.Where(x => x.ID == id).FirstOrDefault();
-            Session["AD"] = data.ACTION_DATE;
-            Session["AT"] = data.ACTION_BY;
-            GetDataInBag(data.TEAM_LEADER, data.STATUS);
-            return View(data);
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            {
+                var data = db.TEAM_INFO.Where(x => x.ID == id).FirstOrDefault();
+                Session["AD"] = data.ACTION_DATE;
+                Session["AT"] = data.ACTION_BY;
+                GetDataInBag(data.TEAM_LEADER, data.STATUS);
+                return View(data);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+            
         }
         // POST: Team/Edit/5
         [HttpPost]
@@ -120,7 +147,7 @@ namespace EMSApp.Controllers
                 }
                 else
                 {
-                    team.UPDATE_BY = Convert.ToInt64(Session["USER_ID"]);
+                    team.UPDATE_BY = converter.GetLoggedUserID();
                     team.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
                     team.UPDATE_DATE = DateTime.Now;
 
@@ -164,14 +191,30 @@ namespace EMSApp.Controllers
         [HttpGet]
         public ActionResult TeamMemberIndex()
         {
-            var data = db.TEAM_DETAILS.Where(x => x.STATUS == "a").OrderBy(x => x.TEAM_ID).ToList();
-            return View(data);
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            {
+                var data = db.TEAM_DETAILS.Where(x => x.STATUS == "a").OrderBy(x => x.TEAM_ID).ToList();
+                return View(data);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+          
         }
         [HttpGet]
         public ActionResult TeamMember()
         {
-            GetDataInBagForMember();
-            return View();
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            {
+                GetDataInBagForMember();
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+            
         }
         [HttpPost]
         public ActionResult TeamMember(TEAM_DETAILS details)
@@ -193,7 +236,7 @@ namespace EMSApp.Controllers
                 }
                 else
                 {
-                    long userID = Convert.ToInt64(Session["USER_ID"]);
+                    long userID = converter.GetLoggedUserID();
                     details.ACTION_BY = userID;
                     details.ACTION_DATE = DateTime.Now;
 
@@ -217,11 +260,19 @@ namespace EMSApp.Controllers
         [HttpGet]
         public ActionResult TeamMemberEdit(int id)
         {
-            var data = db.TEAM_DETAILS.Where(x => x.ID == id).FirstOrDefault();
-            Session["AD"] = data.ACTION_DATE;
-            Session["AT"] = data.ACTION_BY;
-            GetDataInBagForMember(data.TEAM_ID, data.MEMBER, data.STATUS);
-            return View(data);
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            {
+                var data = db.TEAM_DETAILS.Where(x => x.ID == id).FirstOrDefault();
+                Session["AD"] = data.ACTION_DATE;
+                Session["AT"] = data.ACTION_BY;
+                GetDataInBagForMember(data.TEAM_ID, data.MEMBER, data.STATUS);
+                return View(data);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+            
         }
         [HttpPost]
         public ActionResult TeamMemberEdit(int id, TEAM_DETAILS details)
@@ -243,8 +294,8 @@ namespace EMSApp.Controllers
                 }
                 else
                 {
-                    long userID = Convert.ToInt64(Session["USER_ID"]);
-                    details.UPDATE_BY = Convert.ToInt64(Session["USER_ID"]);
+                    long userID = converter.GetLoggedUserID();
+                    details.UPDATE_BY = converter.GetLoggedUserID();
                     details.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
                     details.UPDATE_DATE = DateTime.Now;
 

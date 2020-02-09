@@ -13,11 +13,20 @@ namespace EMSApp.Controllers
     public class ExpenseController : Controller
     {
         EMSEntities db = new EMSEntities();
+        ConverterHelper converter = new ConverterHelper();
         // GET: Expense
         public ActionResult Index()
         {
-            var data = db.TRANSACTION_ITEM.Where(x => x.TYPE == ConstantValue.TransactionTypeExpense).ToList();
-            return View(data);
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            {
+                var data = db.TRANSACTION_ITEM.Where(x => x.TYPE == ConstantValue.TransactionTypeExpense).ToList();
+                return View(data);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+           
         }
         // GET: Expense/Details/5
         public ActionResult Details(int id)
@@ -27,7 +36,15 @@ namespace EMSApp.Controllers
         // GET: Expense/Create
         public ActionResult Create()
         {
-            return View();
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+           
         }
         // POST: Expense/Create
         [HttpPost]
@@ -43,7 +60,7 @@ namespace EMSApp.Controllers
                 else
                 {
                     collection.TYPE = ConstantValue.TransactionTypeExpense;
-                    collection.ACTION_BY = Convert.ToInt64(Session["USER_ID"]);
+                    collection.ACTION_BY =converter.GetLoggedUserID();
                     collection.ACTION_DATE = DateTime.Now;
                     if (ModelState.IsValid)
                     {
@@ -62,9 +79,17 @@ namespace EMSApp.Controllers
         // GET: Expense/Edit/5
         public ActionResult Edit(int id)
         {
-            var data = db.TRANSACTION_ITEM.Where(x => x.TRNS_ID == id && x.TYPE == ConstantValue.TransactionTypeExpense).FirstOrDefault();
-            Session["AD"] = data.ACTION_DATE;
-            return View(data);
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            {
+                var data = db.TRANSACTION_ITEM.Where(x => x.TRNS_ID == id && x.TYPE == ConstantValue.TransactionTypeExpense).FirstOrDefault();
+                Session["AD"] = data.ACTION_DATE;
+                return View(data);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+            
         }
         // POST: Expense/Edit/5
         [HttpPost]
@@ -80,7 +105,7 @@ namespace EMSApp.Controllers
                 else
                 {
                     collection.TYPE = ConstantValue.TransactionTypeExpense;
-                    collection.UPDATE_BY = Convert.ToInt64(Session["USER_ID"]);
+                    collection.UPDATE_BY =             converter.GetLoggedUserID();
                     collection.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
                     collection.UPDATE_DATE = DateTime.Now;
                     if (ModelState.IsValid)
@@ -130,14 +155,30 @@ namespace EMSApp.Controllers
         [HttpGet]
         public ActionResult ExpenseSheetIndex()
         {
-            var data = db.TRANSACTION_SHEET.Where(x => x.TYPE == ConstantValue.TransactionTypeExpense).ToList();
-            return View(data);
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            {
+                var data = db.TRANSACTION_SHEET.Where(x => x.TYPE == ConstantValue.TransactionTypeExpense).ToList();
+                return View(data);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+            
         }
         [HttpGet]
         public ActionResult ExpenseSheetCreate()
         {
-            GetDataInBag();           
-            return View();
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            {
+                GetDataInBag();
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+            
         }
         private void GetDataInBag(long transId=0)
         {
@@ -175,7 +216,7 @@ namespace EMSApp.Controllers
                 else
                 {
                     collection.TYPE = ConstantValue.TransactionTypeExpense;
-                    collection.ACTION_BY = Convert.ToInt64(Session["USER_ID"]);
+                    collection.ACTION_BY =             converter.GetLoggedUserID();
                     collection.ACTION_DATE = DateTime.Now;
                     if (ModelState.IsValid)
                     {
@@ -196,10 +237,18 @@ namespace EMSApp.Controllers
         [HttpGet]
         public ActionResult ExpenseSheetEdit(long id)
         {
-            var data = db.TRANSACTION_SHEET.Where(x => x.TRNS_S_ID == id && x.TYPE == ConstantValue.TransactionTypeExpense).FirstOrDefault();
-            Session["AD"] = data.ACTION_DATE;
-            GetDataInBag(data.TRNS_ID);
-            return View(data);
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            {
+                var data = db.TRANSACTION_SHEET.Where(x => x.TRNS_S_ID == id && x.TYPE == ConstantValue.TransactionTypeExpense).FirstOrDefault();
+                Session["AD"] = data.ACTION_DATE;
+                GetDataInBag(data.TRNS_ID);
+                return View(data);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+            
         }
         [HttpPost]
         public ActionResult ExpenseSheetEdit(long id,TRANSACTION_SHEET collection)
@@ -226,7 +275,7 @@ namespace EMSApp.Controllers
                 else
                 {
                     collection.TYPE = ConstantValue.TransactionTypeExpense;
-                    collection.UPDATE_BY = Convert.ToInt64(Session["USER_ID"]);
+                    collection.UPDATE_BY =             converter.GetLoggedUserID();
                     collection.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
                     collection.UPDATE_DATE = DateTime.Now;
                     if (ModelState.IsValid)
@@ -249,15 +298,23 @@ namespace EMSApp.Controllers
         [HttpGet]
         public ActionResult ExpenseSheetDelete(int id)
         {
-            var dt = db.TRANSACTION_SHEET.Where(x => x.TRNS_S_ID == id && x.TYPE == ConstantValue.TransactionTypeExpense).FirstOrDefault();
-            return View(dt);
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            {
+                var dt = db.TRANSACTION_SHEET.Where(x => x.TRNS_S_ID == id && x.TYPE == ConstantValue.TransactionTypeExpense).FirstOrDefault();
+                return View(dt);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+           
         }
 
         // POST: Expense/Delete/5
         [HttpPost]
         public ActionResult ExpenseSheetDelete(int id, FormCollection collection)
         {
-            try
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
             {
                 // TODO: Add delete logic here
                 var dt = db.TRANSACTION_SHEET.Where(x => x.TRNS_S_ID == id && x.TYPE == ConstantValue.TransactionTypeExpense).FirstOrDefault();
@@ -268,7 +325,7 @@ namespace EMSApp.Controllers
                     return RedirectToAction("ExpenseSheetIndex");
                 }
             }
-            catch (Exception ex)
+            else
             {
                 return View();
             }

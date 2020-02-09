@@ -1,4 +1,5 @@
-﻿using EMSApp.Models;
+﻿using EMSApp.Helper;
+using EMSApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -11,11 +12,21 @@ namespace EMSApp.Controllers
     public class NoticeController : Controller
     {
         EMSEntities db = new EMSEntities();
+        ConverterHelper converter = new ConverterHelper();
+
         // GET: Notice
         public ActionResult Index()
         {
-            var data = db.NOTICE_BOARD.Where(X => X.STATUS == "a").ToList();
-            return View(data);
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            {
+                var data = db.NOTICE_BOARD.Where(X => X.STATUS == "a").ToList();
+                return View(data);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+            
         }
         // GET: Notice/Details/5
         public ActionResult Details(int id)
@@ -26,8 +37,16 @@ namespace EMSApp.Controllers
         // GET: Notice/Create
         public ActionResult Create()
         {
-            GetDataInBag();
-            return View();
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            {
+                GetDataInBag();
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+            
         }
         // POST: Notice/Create
         [HttpPost]
@@ -45,7 +64,7 @@ namespace EMSApp.Controllers
                 }
                 else
                 {
-                    long userID = Convert.ToInt64(Session["USER_ID"]);
+                    long userID = converter.GetLoggedUserID();
                     objNotice.ACTION_BY = userID;
                     objNotice.ACTION_DATE = DateTime.Now;
 
@@ -67,10 +86,17 @@ namespace EMSApp.Controllers
         // GET: Notice/Edit/5
         public ActionResult Edit(int id)
         {
-            var data = db.NOTICE_BOARD.Where(x => x.ID == id).FirstOrDefault();
-            Session["AD"] = data.ACTION_DATE;
-            GetDataInBag(data.STATUS, dept: Convert.ToInt64(data.DEPT_ID), div: Convert.ToInt64(data.DIV_ID));
-            return View(data);
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            {
+                var data = db.NOTICE_BOARD.Where(x => x.ID == id).FirstOrDefault();
+                Session["AD"] = data.ACTION_DATE;
+                GetDataInBag(data.STATUS, dept: Convert.ToInt64(data.DEPT_ID), div: Convert.ToInt64(data.DIV_ID));
+                return View(data);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }           
         }
         // POST: Notice/Edit/5
         [HttpPost]
@@ -88,7 +114,7 @@ namespace EMSApp.Controllers
                 }
                 else
                 {
-                    objNotice.UPDATE_BY = Convert.ToInt64(Session["USER_ID"]);
+                    objNotice.UPDATE_BY = converter.GetLoggedUserID();
                     objNotice.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
                     objNotice.UPDATE_DATE = DateTime.Now;
 

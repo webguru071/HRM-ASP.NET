@@ -1,9 +1,11 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿
 @{
-    ViewBag.Title = "Error ";
+    ViewBag.Title = "Unauthorized Access";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,14 +14,14 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="../../Content/assets/images/favicon.png">
-    
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
+    <title>Material Pro Admin Template - The Most Complete & Trusted Bootstrap 4 Admin Template</title>
     <!-- Bootstrap Core CSS -->
-    <link href="../Content/assets/plugins/bootstrap/css/bootstrap-reboot.css" rel="stylesheet">
+    <link href="../assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href="../Content/material/css/style.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
     <!-- You can change the theme colors from here -->
-    <link href="../Content/material/css/colors/blue.css" id="theme" rel="stylesheet">
+    <link href="css/colors/blue.css" id="theme" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -35,10 +37,10 @@
     <section id="wrapper" class="error-page">
         <div class="error-box">
             <div class="error-body text-center">
-                <h1>404</h1>
-                <h3 class="text-uppercase">Page Not Found !</h3>
-                @*<p class="text-muted m-t-30 m-b-30">YOU SEEM TO BE TRYING TO FIND HIS WAY HOME</p>*@
-                @*<a href="index.html" class="btn btn-info btn-rounded waves-effect waves-light m-b-40">Back to home</a>*@
+                <h1>403</h1>
+                <h3 class="text-uppercase">Forbiddon Error!</h3>
+                <p class="text-muted m-t-30 m-b-30">YOU DON'T HAVE PERMISSION TO ACCESS ON THIS SERVER.</p>
+                <a href="index.html" class="btn btn-info btn-rounded waves-effect waves-light m-b-40">Back to home</a>
             </div>
             <footer class="footer text-center">© 2017 Material Pro.</footer>
         </div>
@@ -49,12 +51,13 @@
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
-    <script src="~/Content/assets/plugins/jquery/jquery.min.js"></script>
+    <script src="../assets/plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap tether Core JavaScript -->
-    <script src="../Content/assets/plugins/bootstrap/js/popper.min.js"></script>
-    <script src="../Content/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../assets/plugins/bootstrap/js/popper.min.js"></script>
+    <script src="../assets/plugins/bootstrap/js/bootstrap.min.js"></script>
     <!--Wave Effects -->
-    <script src="../Content/material/js/waves.js"></script>
+    <script src="js/waves.js"></script>
 </body>
 
 </html>
+

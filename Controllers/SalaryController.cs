@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using EMSApp.Helper;
 using EMSApp.Models;
 
 namespace EMSApp.Controllers
@@ -11,11 +12,19 @@ namespace EMSApp.Controllers
     public class SalaryController : Controller
     {
         EMSEntities db = new EMSEntities();
+        ConverterHelper converter = new ConverterHelper();
         // GET: Salary
         public ActionResult Index()
         {
-            var data = db.SALARY_INFO.ToList();
-            return View(data);
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            {
+                var data = db.SALARY_INFO.ToList();
+                return View(data);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }            
         }
         // GET: Salary/Details/5
         public ActionResult Details(int id)
@@ -25,8 +34,15 @@ namespace EMSApp.Controllers
         // GET: Salary/Create
         public ActionResult Create()
         {
-            ViewBag.EMPLOYEE_ID = SetEmployee();
-            return View();
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            {
+                ViewBag.EMPLOYEE_ID = SetEmployee();
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }           
         }
         // POST: Salary/Create
         [HttpPost]
@@ -54,7 +70,7 @@ namespace EMSApp.Controllers
                     salary.TOTAL = salary.GROSS_SALARY + bonus + other;
                     if (salary.ACTION_BY.ToString() != null)
                     {
-                        salary.ACTION_BY = Convert.ToInt64(Session["USER_ID"]);
+                        salary.ACTION_BY = converter.GetLoggedUserID();
                     }
                     salary.ACTION_DATE = DateTime.Now;
 
@@ -77,11 +93,18 @@ namespace EMSApp.Controllers
         // GET: Salary/Edit/5
         public ActionResult Edit(int id)
         {
-            var data = db.SALARY_INFO.Where(x => x.ID == id).FirstOrDefault();
-            Session["AD"] = data.ACTION_DATE;
-            //Session["AT"] = data.ACTION_BY;
-            ViewBag.EMPLOYEE_ID = new SelectList(SetEmployee(), "Value", "Text", data.EMPLOYEE_ID);
-            return View(data);
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            {
+                var data = db.SALARY_INFO.Where(x => x.ID == id).FirstOrDefault();
+                Session["AD"] = data.ACTION_DATE;
+                //Session["AT"] = data.ACTION_BY;
+                ViewBag.EMPLOYEE_ID = new SelectList(SetEmployee(), "Value", "Text", data.EMPLOYEE_ID);
+                return View(data);
+            }
+           else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }            
         }
         // POST: Salary/Edit/5
         [HttpPost]
@@ -108,7 +131,7 @@ namespace EMSApp.Controllers
                     decimal bonus = salary.BONUS != null ? Convert.ToDecimal(salary.BONUS) : 0;
                     decimal other = (salary.OTHERS != null) ? Convert.ToDecimal(salary.OTHERS) : 0;
                     salary.TOTAL = salary.GROSS_SALARY + bonus + other;
-                    salary.UPDATE_BY = Convert.ToInt64(Session["USER_ID"]);
+                    salary.UPDATE_BY = converter.GetLoggedUserID();
                     salary.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
                     salary.UPDATE_DATE = DateTime.Now;
                     if (ModelState.IsValid)

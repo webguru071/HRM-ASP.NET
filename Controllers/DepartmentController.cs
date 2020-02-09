@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using EMSApp.Helper;
 using EMSApp.Models;
 
 namespace EMSApp.Controllers
@@ -11,11 +12,21 @@ namespace EMSApp.Controllers
     public class DepartmentController : Controller
     {
         EMSEntities db = new EMSEntities();
+        ConverterHelper converter = new ConverterHelper();
+
         // GET: Department
         public ActionResult Index()
         {
-            var data = db.DEPARTMENT_INFO.ToList();
-            return View(data);
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            {
+                var data = db.DEPARTMENT_INFO.ToList();
+                return View(data);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+          
         }
 
         // GET: Department/Details/5
@@ -27,7 +38,15 @@ namespace EMSApp.Controllers
         // GET: Department/Create
         public ActionResult Create()
         {
-            return View();
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+            
         }
         // POST: Department/Create
         [HttpPost]
@@ -41,7 +60,7 @@ namespace EMSApp.Controllers
                 }
                 else
                 {
-                    obj.ACTION_BY = Convert.ToInt64(Session["USER_ID"]);
+                    obj.ACTION_BY =            converter.GetLoggedUserID();
                     obj.ACTION_DATE = DateTime.Now;
                     if (ModelState.IsValid)
                     {
@@ -60,9 +79,16 @@ namespace EMSApp.Controllers
         // GET: Department/Edit/5
         public ActionResult Edit(int id)
         {
-            var dt = db.DEPARTMENT_INFO.Where(x => x.DEPT_ID == id).FirstOrDefault();
-            Session["AD"] = dt.ACTION_DATE;
-            return View(dt);
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            {
+                var dt = db.DEPARTMENT_INFO.Where(x => x.DEPT_ID == id).FirstOrDefault();
+                Session["AD"] = dt.ACTION_DATE;
+                return View(dt);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }           
         }
         // POST: Department/Edit/5
         [HttpPost]
@@ -76,7 +102,7 @@ namespace EMSApp.Controllers
                 }
                 else
                 {
-                    obj.UPDATE_BY = Convert.ToInt64(Session["USER_ID"]);
+                    obj.UPDATE_BY =            converter.GetLoggedUserID();
                     obj.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
                     obj.UPDATE_DATE = DateTime.Now;
 
@@ -99,8 +125,17 @@ namespace EMSApp.Controllers
         // GET: Department/Delete/5
         public ActionResult Delete(int id)
         {
-            var dt = db.DEPARTMENT_INFO.Where(x => x.DEPT_ID == id).FirstOrDefault();
-            return View(dt);
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            {
+                var dt = db.DEPARTMENT_INFO.Where(x => x.DEPT_ID == id).FirstOrDefault();
+                return View(dt);
+            }
+           else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+
+            
         }
         // POST: Department/Delete/5
         [HttpPost]

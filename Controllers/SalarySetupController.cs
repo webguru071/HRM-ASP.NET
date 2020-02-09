@@ -9,17 +9,27 @@ using System.Web.Mvc;
 using EMSApp.Models;
 using EMSApp.Models.UserModel;
 using Newtonsoft.Json;
+using EMSApp.Helper;
 
 namespace EMSApp.Controllers
 {
     public class SalarySetupController : Controller
     {
         EMSEntities db = new EMSEntities();
+        ConverterHelper converter = new ConverterHelper();
+
         // GET: SalarySetup
         public ActionResult Index()
         {
-            var data = db.SALARY_SETUP.Where(x => x.CANGE_TYPE == Helper.ConstantValue.TypeActive).ToList();
-            return View(data);
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            {
+                var data = db.SALARY_SETUP.Where(x => x.CANGE_TYPE == Helper.ConstantValue.TypeActive).ToList();
+                return View(data);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }            
         }
         // GET: SalarySetup/Details/5
         public ActionResult Details(int id)
@@ -29,9 +39,16 @@ namespace EMSApp.Controllers
         // GET: SalarySetup/Create
         public ActionResult Create()
         {
-            var data = db.SALARY_GRADE.ToList();
-            GetDataInBag();
-            return View(data);
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            {
+                var data = db.SALARY_GRADE.ToList();
+                GetDataInBag();
+                return View(data);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }           
         }
         // POST: SalarySetup/Create
         [HttpPost]
@@ -92,12 +109,12 @@ namespace EMSApp.Controllers
                     }
 
                     SALARY_SETUP setUp = new SALARY_SETUP();
-                    setUp.EMP_ID = Convert.ToInt64(collection["EMP_ID"]);
+                    setUp.EMP_ID = converter.GetLoggedEmployeeID();
                     setUp.POSITION_ID = Convert.ToInt64(Session["POSITION_ID"]);
                     setUp.PAY_TYPE = collection["PAY_TYPE"];
                     setUp.GROSS_SALARY = grossSalary;
                     setUp.SALARY_GRADE_SETUP = gradeString;
-                    setUp.ACTION_BY = Convert.ToInt64(Session["USER_ID"]);
+                    setUp.ACTION_BY = converter.GetLoggedUserID();
                     setUp.ACTION_DATE = DateTime.Now;
                     setUp.CANGE_TYPE = Helper.ConstantValue.TypeActive;
                     if (ModelState.IsValid)
@@ -121,15 +138,22 @@ namespace EMSApp.Controllers
         // GET: SalarySetup/Edit/5
         public ActionResult Edit(int id)
         {
-            var dataGrade = db.SALARY_GRADE.ToList();
-            var data = db.SALARY_SETUP.Where(x => x.SALARY_SET_ID == id).FirstOrDefault();
-            GetDataInBag(data.EMP_ID, data.PAY_TYPE);
-            List<SalarySeupClass> empObj = JsonConvert.DeserializeObject<List<SalarySeupClass>>(data.SALARY_GRADE_SETUP);
-            foreach (var obj in empObj)
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
             {
-                ViewData.Add(obj.GRADE_ID.ToString(), obj.GRADE_TITLE_VALUE);
+                var dataGrade = db.SALARY_GRADE.ToList();
+                var data = db.SALARY_SETUP.Where(x => x.SALARY_SET_ID == id).FirstOrDefault();
+                GetDataInBag(data.EMP_ID, data.PAY_TYPE);
+                List<SalarySeupClass> empObj = JsonConvert.DeserializeObject<List<SalarySeupClass>>(data.SALARY_GRADE_SETUP);
+                foreach (var obj in empObj)
+                {
+                    ViewData.Add(obj.GRADE_ID.ToString(), obj.GRADE_TITLE_VALUE);
+                }
+                return View(dataGrade);
             }
-            return View(dataGrade);
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }            
         }
         // POST: SalarySetup/Edit/5
         [HttpPost]
@@ -179,11 +203,11 @@ namespace EMSApp.Controllers
                     }
                     string jSonString = GetJsonString(list);
                     SALARY_SETUP setUp = new SALARY_SETUP();
-                    setUp.EMP_ID = Convert.ToInt64(collection["EMP_ID"]);
+                    setUp.EMP_ID = converter.GetLoggedEmployeeID();
                     setUp.PAY_TYPE = collection["PAY_TYPE"];
                     setUp.GROSS_SALARY = grossSalary;
                     setUp.SALARY_GRADE_SETUP = jSonString;
-                    setUp.UPDATE_BY = Convert.ToInt64(Session["USER_ID"]);
+                    setUp.UPDATE_BY = converter.GetLoggedUserID();
                     setUp.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
                     setUp.UPDATE_DATE = DateTime.Now;
                     if (ModelState.IsValid)
@@ -205,9 +229,16 @@ namespace EMSApp.Controllers
         // GET: SalarySetup/Delete/5
         public ActionResult Delete(int id)
         {
-            var dt = db.SALARY_SETUP.Where(x => x.SALARY_SET_ID == id && x.CANGE_TYPE == Helper.ConstantValue.TypeActive).FirstOrDefault();
-            Session["AD"] = dt.ACTION_DATE;
-            return View(dt);
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            {
+                var dt = db.SALARY_SETUP.Where(x => x.SALARY_SET_ID == id && x.CANGE_TYPE == Helper.ConstantValue.TypeActive).FirstOrDefault();
+                Session["AD"] = dt.ACTION_DATE;
+                return View(dt);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }          
         }
         // POST: SalarySetup/Delete/5
         [HttpPost]

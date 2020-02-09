@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using EMSApp.Helper;
 using EMSApp.Models;
 using EMSApp.Services;
 
@@ -12,6 +13,8 @@ namespace EMSApp.Controllers
     {
         EMSEntities db = new EMSEntities();
         ICombine service = new CombineServices();
+        ConverterHelper converter = new ConverterHelper();
+
         // GET: Reports
         public ActionResult Index()
         {
@@ -20,35 +23,66 @@ namespace EMSApp.Controllers
         [HttpGet]
         public ActionResult EmployeeDemogReport()
         {
-            ViewBag.EMPLOYEE_ID = SetEmployee();
-            var data = service.GetDeptWiseData();
-            return View(data);
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            {
+                ViewBag.EMPLOYEE_ID = SetEmployee();
+                var data = service.GetDeptWiseData();
+                return View(data);
+            }
+           else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }            
         }
         [HttpPost]
         public ActionResult EmployeeDemogReport(FormCollection collection)
         {
-            string status = collection["IS_DELETED"];
-            long empId = Convert.ToInt64(collection["EMPLOYEE_ID"]);
-            var data = service.GetDeptWiseData(status: status, empId: empId);
-            ViewBag.EMPLOYEE_ID = SetEmployee();
-            return View(data);
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            {
+                string status = collection["IS_DELETED"];
+                long empId = converter.GetLoggedEmployeeID();
+                var data = service.GetDeptWiseData(status: status, empId: empId);
+                ViewBag.EMPLOYEE_ID = SetEmployee();
+                return View(data);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+           
         }
         [HttpGet]
         public ActionResult AttendanceReport()
         {
-            var data = service.GetAttendanceData();
-            ViewBag.EMPLOYEE_ID = SetEmployee();
-            return View(data);
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            {
+                var data = service.GetAttendanceData();
+                ViewBag.EMPLOYEE_ID = SetEmployee();
+                return View(data);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+           
         }
         [HttpPost]
         public ActionResult AttendanceReport(FormCollection collection)
         {
-            string fromDate = collection["fromDate"];
-            string toDate = collection["toDate"];
-            long empId = Convert.ToInt64(collection["EMPLOYEE_ID"]);
-            var data = service.GetAttendanceData(fromDate: fromDate, toDate: toDate, empId: empId);
-            ViewBag.EMPLOYEE_ID = SetEmployee();
-            return View(data);
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            {
+                string fromDate = collection["fromDate"];
+                string toDate = collection["toDate"];
+                long empId = converter.GetLoggedEmployeeID();
+                var data = service.GetAttendanceData(fromDate: fromDate, toDate: toDate, empId: empId);
+                ViewBag.EMPLOYEE_ID = SetEmployee();
+                return View(data);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+            
         }
         private List<SelectListItem> SetEmployee()
         {
@@ -59,17 +93,33 @@ namespace EMSApp.Controllers
         [HttpGet]
         public ActionResult DepartmentWiseReport()
         {
-            ViewBag.DEPT_ID = SetDepartment();
-            return View();
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            {
+                ViewBag.DEPT_ID = SetDepartment();
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+            
         }
         [HttpPost]
         public ActionResult DepartmentWiseReport(FormCollection collection)
         {
-            string status = collection["IS_DELETED"];
-            long deptId = Convert.ToInt64(collection["DEPT_ID"]);
-            var data = service.GetDeptWiseData(status: status, deptId: deptId);
-            ViewBag.DEPT_ID = SetDepartment();
-            return View(data);
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            {
+                string status = collection["IS_DELETED"];
+                long deptId = Convert.ToInt64(collection["DEPT_ID"]);
+                var data = service.GetDeptWiseData(status: status, deptId: deptId);
+                ViewBag.DEPT_ID = SetDepartment();
+                return View(data);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+            
         }
         private List<SelectListItem> SetDepartment()
         {
@@ -80,32 +130,64 @@ namespace EMSApp.Controllers
         [HttpGet]
         public ActionResult AllEmployeeSalaryReport()
         {
-            var data = service.GetSalaryWithBenifitsData();
-            ViewBag.EMPLOYEE_ID = SetEmployee();
-            return View(data);
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            {
+                var data = service.GetSalaryWithBenifitsData();
+                ViewBag.EMPLOYEE_ID = SetEmployee();
+                return View(data);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+            
         }
         [HttpPost]
         public ActionResult AllEmployeeSalaryReport(FormCollection collection)
         {
-            string status = collection["CANGE_TYPE"];
-            long deptId = Convert.ToInt64(collection["DEPT_ID"]);
-            var data = service.GetSalaryWithBenifitsData();
-            ViewBag.EMPLOYEE_ID = SetEmployee();
-            return View(data);
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            {
+                string status = collection["CANGE_TYPE"];
+                long deptId = Convert.ToInt64(collection["DEPT_ID"]);
+                var data = service.GetSalaryWithBenifitsData();
+                ViewBag.EMPLOYEE_ID = SetEmployee();
+                return View(data);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+            
         }
         [HttpGet]
         public ActionResult EmployeeSalaryReport()
-        {           
-            ViewBag.EMPLOYEE_ID = SetEmployee();
-            return View();
+        {
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            {
+                ViewBag.EMPLOYEE_ID = SetEmployee();
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+           
         }
         [HttpPost]
         public ActionResult EmployeeSalaryReport(FormCollection collection)
         {
-            long Id = Convert.ToInt64(collection["EMPLOYEE_ID"]);
-            var data = db.SALARY_INFO.Where(x=>x.EMPLOYEE_ID==Id).OrderByDescending(x=>x.SALARY_PAID).ToList();
-            ViewBag.EMPLOYEE_ID = SetEmployee();
-            return View(data);
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            {
+                long Id=converter.GetLoggedEmployeeID();
+                var data = db.SALARY_INFO.Where(x => x.EMPLOYEE_ID == Id).OrderByDescending(x => x.SALARY_PAID).ToList();
+                ViewBag.EMPLOYEE_ID = SetEmployee();
+                return View(data);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+           
         }
     }
 }

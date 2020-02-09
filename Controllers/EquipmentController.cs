@@ -1,4 +1,5 @@
-﻿using EMSApp.Models;
+﻿using EMSApp.Helper;
+using EMSApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -11,11 +12,21 @@ namespace EMSApp.Controllers
     public class EquipmentController : Controller
     {
         EMSEntities db = new EMSEntities();
+        ConverterHelper converter = new ConverterHelper();
+
         // GET: Equipment
         public ActionResult Index()
         {
-            var data = db.EQUEPMENTS_INFO.ToList();
-            return View(data);
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            {
+                var data = db.EQUEPMENTS_INFO.ToList();
+                return View(data);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+            
         }
 
         // GET: Equipment/Details/5
@@ -27,8 +38,16 @@ namespace EMSApp.Controllers
         // GET: Equipment/Create
         public ActionResult Create()
         {
-            GetDataInBag();
-            return View();
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            {
+                GetDataInBag();
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+            
         }
 
         // POST: Equipment/Create
@@ -51,7 +70,7 @@ namespace EMSApp.Controllers
                 }
                 else
                 {
-                    collection.ACTION_BY = Convert.ToInt64(Session["USER_ID"]);
+                    collection.ACTION_BY = converter.GetLoggedUserID();
                     collection.ACTION_DATE = DateTime.Now;
 
                     if (ModelState.IsValid)
@@ -74,10 +93,18 @@ namespace EMSApp.Controllers
         // GET: Equipment/Edit/5
         public ActionResult Edit(int id)
         {
-            var dt = db.EQUEPMENTS_INFO.Where(x => x.EQUEPMENT_ID == id).FirstOrDefault();
-            GetDataInBag(dt.ASSET_ID);
-            Session["AD"] = dt.ACTION_DATE;
-            return View(dt);
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            {
+                var dt = db.EQUEPMENTS_INFO.Where(x => x.EQUEPMENT_ID == id).FirstOrDefault();
+                GetDataInBag(dt.ASSET_ID);
+                Session["AD"] = dt.ACTION_DATE;
+                return View(dt);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+            
         }
 
         // POST: Equipment/Edit/5
@@ -100,7 +127,7 @@ namespace EMSApp.Controllers
                 }
                 else
                 {
-                    collection.UPDATE_BY = Convert.ToInt64(Session["USER_ID"]);
+                    collection.UPDATE_BY = converter.GetLoggedUserID();
                     collection.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
                     collection.UPDATE_DATE = DateTime.Now;
 
@@ -125,8 +152,16 @@ namespace EMSApp.Controllers
         // GET: Equipment/Delete/5
         public ActionResult Delete(int id)
         {
-            var dt = db.EQUEPMENTS_INFO.Where(x => x.EQUEPMENT_ID == id).FirstOrDefault();
-            return View(dt);
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            {
+                var dt = db.EQUEPMENTS_INFO.Where(x => x.EQUEPMENT_ID == id).FirstOrDefault();
+                return View(dt);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+            
         }
 
         // POST: Equipment/Delete/5

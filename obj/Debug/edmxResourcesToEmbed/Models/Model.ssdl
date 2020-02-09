@@ -120,7 +120,7 @@
     <Property Name="LEAVE_TYPE_ID" Type="bigint" Nullable="false" />
     <Property Name="EMPLOYEE_ID" Type="bigint" Nullable="false" />
     <Property Name="START_DATE" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="END_DATE" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="END_DATE" Type="nvarchar" MaxLength="50" />
     <Property Name="APPROVED_START_DATE" Type="nvarchar" MaxLength="50" />
     <Property Name="APPROVED_END_DATE" Type="nvarchar" MaxLength="50" />
     <Property Name="STATUS" Type="char" MaxLength="1" Nullable="false" />
@@ -148,13 +148,13 @@
     </Key>
     <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="NOTICE" Type="nvarchar" MaxLength="1000" Nullable="false" />
+    <Property Name="DEPT_ID" Type="bigint" />
+    <Property Name="DIV_ID" Type="bigint" />
     <Property Name="ACTION_BY" Type="bigint" Nullable="false" />
     <Property Name="ACTION_DATE" Type="datetime" Nullable="false" />
     <Property Name="UPDATE_BY" Type="bigint" />
     <Property Name="UPDATE_DATE" Type="datetime" />
     <Property Name="STATUS" Type="char" MaxLength="1" Nullable="false" />
-    <Property Name="DEPT_ID" Type="bigint" />
-    <Property Name="DIV_ID" Type="bigint" />
   </EntityType>
   <EntityType Name="POSITIONAL_INFO">
     <Key>

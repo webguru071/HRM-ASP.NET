@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using EMSApp.Helper;
 using EMSApp.Models;
 
 namespace EMSApp.Controllers
@@ -11,11 +12,21 @@ namespace EMSApp.Controllers
     public class EquipmentManageController : Controller
     {
         EMSEntities db = new EMSEntities();
+        ConverterHelper converter = new ConverterHelper();
+
         // GET: EquipmentManage
         public ActionResult Index()
         {
-            var data = db.ASSET_MANAGEMENT.ToList();
-            return View(data);
+           if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            {
+                var data = db.ASSET_MANAGEMENT.ToList();
+                return View(data);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+            
         }
 
         // GET: EquipmentManage/Details/5
@@ -27,8 +38,16 @@ namespace EMSApp.Controllers
         // GET: EquipmentManage/Create
         public ActionResult Create()
         {
-            GetDataInBag();
-            return View();
+           if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            {
+                GetDataInBag();
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+            
         }
         // POST: EquipmentManage/Create
         [HttpPost]
@@ -50,7 +69,7 @@ namespace EMSApp.Controllers
                 }
                 else
                 {
-                    collection.ACTION_BY = Convert.ToInt64(Session["USER_ID"]);
+                    collection.ACTION_BY = converter.GetLoggedUserID();
                     collection.ACTION_DATE = DateTime.Now;
 
                     if (ModelState.IsValid)
@@ -73,10 +92,18 @@ namespace EMSApp.Controllers
         // GET: EquipmentManage/Edit/5
         public ActionResult Edit(int id)
         {
-            var dt = db.ASSET_MANAGEMENT.Where(x => x.ASSET_MNG_ID == id).FirstOrDefault();
-            GetDataInBag(dt.EMP_ID,dt.EQUP_ID);
-            Session["AD"] = dt.ACTION_DATE;
-            return View(dt);
+           if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            {
+                var dt = db.ASSET_MANAGEMENT.Where(x => x.ASSET_MNG_ID == id).FirstOrDefault();
+                GetDataInBag(dt.EMP_ID, dt.EQUP_ID);
+                Session["AD"] = dt.ACTION_DATE;
+                return View(dt);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+            
         }
 
         // POST: EquipmentManage/Edit/5
@@ -99,7 +126,7 @@ namespace EMSApp.Controllers
                 }
                 else
                 {
-                    collection.UPDATE_BY = Convert.ToInt64(Session["USER_ID"]);
+                    collection.UPDATE_BY = converter.GetLoggedUserID();
                     collection.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
                     collection.UPDATE_DATE = DateTime.Now;
 
@@ -124,8 +151,15 @@ namespace EMSApp.Controllers
         // GET: EquipmentManage/Delete/5
         public ActionResult Delete(int id)
         {
-            var dt = db.ASSET_MANAGEMENT.Where(x => x.ASSET_MNG_ID == id).FirstOrDefault();
-            return View(dt);
+           if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            {
+                var dt = db.ASSET_MANAGEMENT.Where(x => x.ASSET_MNG_ID == id).FirstOrDefault();
+                return View(dt);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
         }
 
         // POST: EquipmentManage/Delete/5

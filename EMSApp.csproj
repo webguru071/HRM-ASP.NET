@@ -4444,6 +4444,7 @@
     <Content Include="Views\Reports\DepartmentWiseReport.cshtml" />
     <Content Include="Views\Reports\AllEmployeeSalaryReport.cshtml" />
     <Content Include="Views\Reports\EmployeeSalaryReport.cshtml" />
+    <Content Include="Views\Shared\Error403.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

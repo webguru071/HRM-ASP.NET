@@ -5,21 +5,26 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using EMSApp.Helper;
 
 namespace EMSApp.Controllers
 {
     public class AssetController : Controller
     {
-        public AssetController()
-        {
-
-        }
+        ConverterHelper converter = new ConverterHelper();
         EMSEntities db = new EMSEntities();
         // GET: Asset
         public ActionResult Index()
         {
-            var data = db.ASSET_INFO.ToList();
-            return View(data);
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            {
+                var data = db.ASSET_INFO.ToList();
+                return View(data);
+            }
+            else
+            {
+                return RedirectToAction("LogIn","Login");
+            }           
         }
         // GET: Asset/Details/5
         public ActionResult Details(int id)
@@ -30,7 +35,15 @@ namespace EMSApp.Controllers
         // GET: Asset/Create
         public ActionResult Create()
         {
-            return View();
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+            
         }
 
         // POST: Asset/Create
@@ -45,7 +58,7 @@ namespace EMSApp.Controllers
                 }
                 else
                 {
-                    collection.ACTION_BY = Convert.ToInt64(Session["USER_ID"]);
+                    collection.ACTION_BY = converter.GetLoggedUserID();
                     collection.ACTION_DATE = DateTime.Now;
                     if (ModelState.IsValid)
                     {
@@ -65,9 +78,17 @@ namespace EMSApp.Controllers
         // GET: Asset/Edit/5
         public ActionResult Edit(int id)
         {
-            var data = db.ASSET_INFO.Where(x=>x.ASSET_ID==id).FirstOrDefault();
-            Session["AD"] = data.ACTION_DATE;
-            return View(data);
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            {
+                var data = db.ASSET_INFO.Where(x => x.ASSET_ID == id).FirstOrDefault();
+                Session["AD"] = data.ACTION_DATE;
+                return View(data);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+           
         }
 
         // POST: Asset/Edit/5
@@ -82,7 +103,7 @@ namespace EMSApp.Controllers
                 }
                 else
                 {
-                    collection.UPDATE_BY = Convert.ToInt64(Session["USER_ID"]);
+                    collection.UPDATE_BY = converter.GetLoggedUserID();
                     collection.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
                     collection.UPDATE_DATE = DateTime.Now;
 
@@ -105,8 +126,15 @@ namespace EMSApp.Controllers
         // GET: Asset/Delete/5
         public ActionResult Delete(int id)
         {
-            var data = db.ASSET_INFO.Where(x => x.ASSET_ID == id).FirstOrDefault();
-            return View(data);
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            {
+                var data = db.ASSET_INFO.Where(x => x.ASSET_ID == id).FirstOrDefault();
+                return View(data);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }               
         }
 
         // POST: Asset/Delete/5

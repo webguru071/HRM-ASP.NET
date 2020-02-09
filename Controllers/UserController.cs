@@ -1,4 +1,5 @@
-﻿using EMSApp.Models;
+﻿using EMSApp.Helper;
+using EMSApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -10,11 +11,21 @@ namespace EMSApp.Controllers
     public class UserController : Controller
     {
         EMSEntities db = new EMSEntities();
+        ConverterHelper converter = new ConverterHelper();
+
         // GET: User
         public ActionResult Index()
         {
-            var data = db.USER_INFO.Where(x => x.IS_DELETED == "a").ToList();
-            return View(data);
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            {
+                var data = db.USER_INFO.Where(x => x.IS_DELETED == "a").ToList();
+                return View(data);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+            
         }
         // GET: User/Details/5
         public ActionResult Details(int id)
@@ -50,8 +61,16 @@ namespace EMSApp.Controllers
         // GET: User/Create
         public ActionResult Create()
         {
-            GetDataInBag();
-            return View();
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            {
+                GetDataInBag();
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+            
         }
         private void GetDataInBag()
         {
@@ -86,7 +105,7 @@ namespace EMSApp.Controllers
                     {
                         if (user.ACTION_BY.ToString() != null)
                         {
-                            user.ACTION_BY = Convert.ToInt64(Session["USER_ID"]);
+                            user.ACTION_BY = converter.GetLoggedUserID();
                         }
                         user.ACTION_DATE = DateTime.Now;
                         if (user.EMPLOYEE_ID == 0)
@@ -117,13 +136,21 @@ namespace EMSApp.Controllers
         // GET: User/Edit/5
         public ActionResult Edit(int id)
         {
-            var data = db.USER_INFO.Where(x => x.ID == id).FirstOrDefault();
-            Session["AD"] = data.ACTION_DATE;
-            Session["AT"] = data.ACTION_BY;
-            ViewBag.EMPLOYEE_ID = new SelectList(SetEmployee(), "Value", "Text", data.EMPLOYEE_ID);
-            ViewBag.USER_LEVEL = new SelectList(SetUserLevel(), "Value", "Text", data.USER_LEVEL);
-            ViewBag.IS_DELETED = new SelectList(SetStatusList(), "Value", "Text", data.IS_DELETED);
-            return View(data);
+            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            {
+                var data = db.USER_INFO.Where(x => x.ID == id).FirstOrDefault();
+                Session["AD"] = data.ACTION_DATE;
+                Session["AT"] = data.ACTION_BY;
+                ViewBag.EMPLOYEE_ID = new SelectList(SetEmployee(), "Value", "Text", data.EMPLOYEE_ID);
+                ViewBag.USER_LEVEL = new SelectList(SetUserLevel(), "Value", "Text", data.USER_LEVEL);
+                ViewBag.IS_DELETED = new SelectList(SetStatusList(), "Value", "Text", data.IS_DELETED);
+                return View(data);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+            
         }
         // POST: User/Edit/5
         [HttpPost]
@@ -146,7 +173,7 @@ namespace EMSApp.Controllers
                 }
                 else
                 {
-                    user.UPDATE_BY = Convert.ToInt64(Session["USER_ID"]);
+                    user.UPDATE_BY = converter.GetLoggedUserID();
                     user.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
                     user.UPDATE_DATE = DateTime.Now;
                     if (user.EMPLOYEE_ID == 0)

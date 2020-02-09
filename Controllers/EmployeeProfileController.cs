@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using EMSApp.Helper;
 using EMSApp.Models;
 using EMSApp.Services;
 
@@ -13,19 +14,29 @@ namespace EMSApp.Controllers
     {
         EMSEntities db = new EMSEntities();
         ICombine service = new CombineServices();
+        ConverterHelper converter = new ConverterHelper();
 
         // GET: EmployeeProfile
         public ActionResult Index()
         {
-            long empId = Convert.ToInt64(Session["EMP_ID"]);
-            if (empId > 0)            {
-                var data = db.EMPLOYEE_INFO.Where(x => x.ID == empId && x.IS_DELETED == Helper.ConstantValue.UserStatusActive).FirstOrDefault();
-                return View(data);
+            if (converter.CheckLogin())
+            {
+                long empId = converter.GetLoggedEmployeeID();
+                if (empId > 0)
+                {
+                    var data = db.EMPLOYEE_INFO.Where(x => x.ID == empId && x.IS_DELETED == Helper.ConstantValue.UserStatusActive).FirstOrDefault();
+                    return View(data);
+                }
+                else
+                {
+                    return View();
+                }
             }
             else
             {
-                return View();
+                return RedirectToAction("LogIn", "Login");
             }
+            
         }
         // GET: EmployeeProfile/Details/5
         public ActionResult Details(int id)
@@ -35,7 +46,15 @@ namespace EMSApp.Controllers
         // GET: EmployeeProfile/Create
         public ActionResult Create()
         {
-            return View();
+            if (converter.CheckLogin())
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+          
         }
         // POST: EmployeeProfile/Create
         [HttpPost]
@@ -55,11 +74,27 @@ namespace EMSApp.Controllers
         // GET: EmployeeProfile/Edit/5
         public ActionResult Edit(int id)
         {
-            var data = db.EMPLOYEE_INFO.Where(x => x.ID == id && x.IS_DELETED == Helper.ConstantValue.UserStatusActive).FirstOrDefault();
-            Session["AD"] = data.ACTION_DATE;
-            Session["NAME"] = data.EMPLOYEE_NAME;
-            Session["data"] = data;
-            return View(data);
+            if (converter.CheckLogin())
+            {
+                long empId = converter.GetLoggedEmployeeID();
+                if (empId == id)
+                {
+                    var data = db.EMPLOYEE_INFO.Where(x => x.IS_DELETED == Helper.ConstantValue.UserStatusActive && x.ID == empId).FirstOrDefault();
+                    Session["AD"] = data.ACTION_DATE;
+                    Session["NAME"] = data.EMPLOYEE_NAME;
+                    Session["data"] = data;
+                    return View(data);
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+            
         }
         // POST: EmployeeProfile/Edit/5
         [HttpPost]
@@ -68,9 +103,9 @@ namespace EMSApp.Controllers
             try
             {
                 // TODO: Add update logic here
-                emp.EMPLOYEE_NAME = Convert.ToString(Session["NAME"]);
+                emp.EMPLOYEE_NAME = converter.GetLoggedEmployeeName();
                 emp.IS_DELETED = Convert.ToString(Session["ISD"]);
-                emp.UPDATE_BY = Convert.ToInt64(Session["USER_ID"]);
+                emp.UPDATE_BY = converter.GetLoggedUserID();
                 emp.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
                 emp.UPDATE_DATE = DateTime.Now;
                 if (ModelState.IsValid)
