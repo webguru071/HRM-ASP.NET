@@ -34,8 +34,8 @@
     <Property Name="ATNDNC_ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="EMPLOYEE_ID" Type="bigint" Nullable="false" />
     <Property Name="ATT_DATE" Type="date" Nullable="false" />
-    <Property Name="CHECK_IN_TIME" Type="time" Precision="2" />
-    <Property Name="CHECK_OUT_TIME" Type="time" Precision="2" />
+    <Property Name="CHECK_IN_TIME" Type="time" Precision="0" />
+    <Property Name="CHECK_OUT_TIME" Type="time" Precision="0" />
     <Property Name="SL_NO" Type="int" />
     <Property Name="STATUS" Type="char" MaxLength="1" />
   </EntityType>
@@ -83,21 +83,20 @@
     <Property Name="EMAIL" Type="varchar" MaxLength="50" />
     <Property Name="NID" Type="nvarchar" MaxLength="50" />
     <Property Name="IMAGE" Type="nvarchar" MaxLength="500" />
+    <Property Name="CITY" Type="nvarchar" MaxLength="50" />
+    <Property Name="POSTAL_CODE" Type="nvarchar" MaxLength="50" />
+    <Property Name="DOB" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="GENDER" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="BLOOD_GROUP" Type="char" MaxLength="3" />
     <Property Name="IS_DELETED" Type="char" MaxLength="1" Nullable="false" />
     <Property Name="JOINING_DATE" Type="nvarchar" MaxLength="50" />
     <Property Name="RESIGNING_DATE" Type="nvarchar" MaxLength="50" />
-    <Property Name="DESIGNATION" Type="nvarchar" MaxLength="50" />
-    <Property Name="ACTION_BY" Type="bigint" />
+    <Property Name="ACTION_BY" Type="bigint" Nullable="false" />
     <Property Name="ACTION_DATE" Type="datetime" Nullable="false" />
     <Property Name="UPDATE_BY" Type="bigint" />
     <Property Name="UPDATE_DATE" Type="datetime" />
-    <Property Name="CITY" Type="nvarchar" MaxLength="50" />
-    <Property Name="POSTAL_CODE" Type="int" />
-    <Property Name="DOB" Type="nvarchar" MaxLength="50" />
-    <Property Name="GENDER" Type="char" MaxLength="1" />
     <Property Name="MARITALA_STATUS" Type="char" MaxLength="1" />
     <Property Name="NATIONALITY" Type="nvarchar" MaxLength="50" />
-    <Property Name="BLOOD_GROUP" Type="char" MaxLength="2" />
   </EntityType>
   <EntityType Name="EQUEPMENTS_INFO">
     <Key>
@@ -121,7 +120,7 @@
     <Property Name="LEAVE_TYPE_ID" Type="bigint" Nullable="false" />
     <Property Name="EMPLOYEE_ID" Type="bigint" Nullable="false" />
     <Property Name="START_DATE" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="END_DATE" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="END_DATE" Type="nvarchar" MaxLength="50" />
     <Property Name="APPROVED_START_DATE" Type="nvarchar" MaxLength="50" />
     <Property Name="APPROVED_END_DATE" Type="nvarchar" MaxLength="50" />
     <Property Name="STATUS" Type="char" MaxLength="1" Nullable="false" />
@@ -149,7 +148,9 @@
     </Key>
     <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="NOTICE" Type="nvarchar" MaxLength="1000" Nullable="false" />
-    <Property Name="ACTION_BY" Type="bigint" />
+    <Property Name="DEPT_ID" Type="bigint" />
+    <Property Name="DIV_ID" Type="bigint" />
+    <Property Name="ACTION_BY" Type="bigint" Nullable="false" />
     <Property Name="ACTION_DATE" Type="datetime" Nullable="false" />
     <Property Name="UPDATE_BY" Type="bigint" />
     <Property Name="UPDATE_DATE" Type="datetime" />
@@ -162,7 +163,7 @@
     <Property Name="POSITION_ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="POSITION_TITLE" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="EMPLOYEE_ID" Type="bigint" Nullable="false" />
-    <Property Name="BASIC_SALARY" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="BASIC_SALARY" Type="decimal" Precision="18" Scale="2" Nullable="false" />
     <Property Name="DUTY_TYPE" Type="char" MaxLength="1" Nullable="false" />
     <Property Name="RATE_TYPE" Type="char" MaxLength="1" Nullable="false" />
     <Property Name="PAY_FREQ" Type="char" MaxLength="1" Nullable="false" />
@@ -171,7 +172,7 @@
     <Property Name="ACTION_DATE" Type="datetime" Nullable="false" />
     <Property Name="UPDATE_BY" Type="bigint" />
     <Property Name="UPDATE_DATE" Type="datetime" />
-    <Property Name="CHANGE_TYPE" Type="char" MaxLength="1" />
+    <Property Name="CHANGE_TYPE" Type="char" MaxLength="1" Nullable="false" />
   </EntityType>
   <EntityType Name="SALARY_INFO">
     <Key>
@@ -218,16 +219,6 @@
     <Property Name="ACTION_DATE" Type="datetime" Nullable="false" />
     <Property Name="UPDATE_BY" Type="bigint" />
     <Property Name="UPDATE_DATE" Type="datetime" />
-  </EntityType>
-  <EntityType Name="sysdiagrams">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="principal_id" Type="int" Nullable="false" />
-    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="version" Type="int" />
-    <Property Name="definition" Type="varbinary(max)" />
   </EntityType>
   <EntityType Name="TEAM_DETAILS">
     <Key>
@@ -323,7 +314,7 @@
         <PropertyRef Name="EQUEPMENT_ID" />
       </Principal>
       <Dependent Role="ASSET_MANAGEMENT">
-        <PropertyRef Name="EMP_ID" />
+        <PropertyRef Name="EQUP_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -535,7 +526,6 @@
     <EntitySet Name="SALARY_INFO" EntityType="Self.SALARY_INFO" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SALARY_SETUP" EntityType="Self.SALARY_SETUP" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SALARY-GRADE" EntityType="Self.SALARY-GRADE" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TEAM_DETAILS" EntityType="Self.TEAM_DETAILS" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TEAM_INFO" EntityType="Self.TEAM_INFO" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TRANSACTION_ITEM" EntityType="Self.TRANSACTION_ITEM" Schema="dbo" store:Type="Tables" />

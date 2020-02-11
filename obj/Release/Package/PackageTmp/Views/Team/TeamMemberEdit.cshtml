@@ -25,7 +25,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="bmd-label-floating">Team Leader</label>
+                                <label class="bmd-label-floating">Team Member</label>
                                 <input id="leaderName" type="text" class="form-control" />
                             </div>
                         </div>
@@ -54,7 +54,12 @@
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary pull-right">Save</button>
+                    <div class="form-actions">
+                        <div class="btn btn-secondary pull-center">
+                            @Html.ActionLink("Back to List", "TeamMemberIndex")
+                        </div>
+                        <button type="submit" class="btn btn-primary pull-right">Update</button>
+                    </div>
                 </form>
             </div>
         </div>

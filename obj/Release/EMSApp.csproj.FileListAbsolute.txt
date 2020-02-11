@@ -266,4 +266,3 @@ F:\Projects\And IT\MVC\HRM-ASP.NET\obj\Release\EMSApp.csprojAssemblyReference.ca
 F:\Projects\And IT\MVC\HRM-ASP.NET\obj\Release\EMSApp.csproj.CopyComplete
 F:\Projects\And IT\MVC\HRM-ASP.NET\obj\Release\EMSApp.dll
 F:\Projects\And IT\MVC\HRM-ASP.NET\obj\Release\EMSApp.pdb
-F:\Projects\And IT\MVC\HRM-ASP.NET\bin\CrystalDecisions.CrystalReports.Engine.dll

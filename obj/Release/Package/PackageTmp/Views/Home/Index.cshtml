@@ -3,74 +3,57 @@
     ViewBag.Title = "Home Page";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="container">
-    <div class="container-fluid">
+    <div class="container-fluid" style="padding-top:15px">
         <div class="row">
-            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
-                <div class="card card-stats">
-                    <div class="card-header card-header-warning card-header-icon">
-                        <div class="card-icon">
-                            <i class="material-icons">person</i>
-                        </div>
-                        <p class="card-category">Total User</p>
-                        <h3 class="card-title">
-                            12
-                            <small>Count</small>
-                        </h3>
-                    </div>
-                    <div class="card-footer">
-                        <div class="stats">
-                            <i class="material-icons text-info">info</i>
-                            <a href="#pablo" class="info-link">More Info...</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
-                <div class="card card-stats">
-                    <div class="card-header card-header-warning card-header-icon">
-                        <div class="card-icon">
-                            <i class="material-icons">person</i>
-                        </div>
-                        <p class="card-category">Total Employee</p>
-                        <h3 class="card-title">
-                            10
-                            <small>Count</small>
-                        </h3>
-                    </div>
-                    <div class="card-footer">
-                        <div class="stats">
-                            <i class="material-icons text-info">info</i>
-                            <a href="#pablo" class="info-link">More Info...</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="clearfix"></div>
-        <div class="row">
-            @if (Model != null)
-            {
-                foreach (var item in Model)
-                {
-                    <div class="panel-group" style="color:white;border:double;border-color:chocolate;margin:10px">
-                        <div class="panel panel-default" style="padding:10px;">
-                            <div class="panel-heading"><p style="font-weight:800;">@item.LEAVE_TYPE.LEAVE_TITLE</p></div>
-                            <div class="panel-body">
-                                <p href="@Url.Action("User","Index")">
-                                    Name: @item.EMPLOYEE_INFO.EMPLOYEE_NAME
-                                    <br />
-                                    Applied Date: @item.START_DATE to @item.END_DATE
-                                </p>
-                            </div>
-                            <div class="panel-footer">
-                                <a href="~/Leave/LeaveAppEdit/@item.LEAVE_APP_ID" class="btn btn-info pull-right">View</a>
-                            </div>
-                        </div>
-                    </div>
-                }
-            }
-        </div>
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Leave Application</h4>
+                        <div class="table-responsive">
+                            <table class="table color-bordered-table primary-bordered-table">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Employee
+                                        </th>
+                                        <th>
+                                            Leave Type
+                                        </th>
+                                        <th>
+                                            Applied For 
+                                        </th>
+                                        <th>
+                                            
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model != null)
+                                    {
+                                        foreach (var item in Model)
+                                        {
+                                    <tr>
+                                        <td>
+                                            @item.EMPLOYEE_INFO.EMPLOYEE_NAME
+                                        </td>
+                                        <td>
+                                            @item.START_DATE to @item.END_DATE
+                                        </td>
+                                        <td>
+                                            @item.LEAVE_TYPE.LEAVE_TITLE
+                                        </td>
+                                        <td>
+                                            <a href="~/Leave/LeaveAppEdit/@item.LEAVE_APP_ID" class="btn btn-success">View</a>
+                                        </td>
 
+                                    </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>

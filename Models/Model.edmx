@@ -92,7 +92,7 @@
           <Property Name="POSTAL_CODE" Type="nvarchar" MaxLength="50" />
           <Property Name="DOB" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="GENDER" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="BLOOD_GROUP" Type="char" MaxLength="2" />
+          <Property Name="BLOOD_GROUP" Type="char" MaxLength="3" />
           <Property Name="IS_DELETED" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="JOINING_DATE" Type="nvarchar" MaxLength="50" />
           <Property Name="RESIGNING_DATE" Type="nvarchar" MaxLength="50" />
@@ -802,7 +802,7 @@
           <Property Name="POSTAL_CODE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="DOB" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="GENDER" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="BLOOD_GROUP" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="BLOOD_GROUP" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
           <Property Name="IS_DELETED" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="JOINING_DATE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="RESIGNING_DATE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />

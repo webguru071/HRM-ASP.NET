@@ -14,7 +14,7 @@
                 <h4 class="card-title">New Income Sources</h4>
                 <hr />
                 <form class="form-material m-t-40">
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="alert alert-danger" style="font-weight:900">@Html.ValidationSummary(true, "", new { @class = "text-danger" })</div>
                     <div class="row p-t-20">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -76,7 +76,7 @@
                             @Html.ActionLink("Back to List", "IncomeSheetIndex")
                         </div>
                         <button type="submit" class="btn btn-primary pull-right">Save</button>
-                    </div>                    
+                    </div>
                 </form>
             </div>
         </div>

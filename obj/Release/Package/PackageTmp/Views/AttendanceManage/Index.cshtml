@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EMSApp.Models.ATTENDANCE_DETAILS>
+﻿@model IEnumerable<EMSApp.Models.UserModel.AttendanceClass>
 
 @{
     ViewBag.Title = "Attendance History";
@@ -15,6 +15,9 @@
                             <thead>
                                 <tr>
                                     <th>
+                                        Name
+                                    </th>
+                                    <th>
                                         Date
                                     </th>
                                     <th>
@@ -30,17 +33,22 @@
                                 {
                                     foreach (var item in Model)
                                     {
-                                        <tr>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.ATT_DATE)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.CHECK_IN_TIME)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.CHECK_OUT_TIME)
-                                            </td>
-                                        </tr>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.EMPLOYEE_NAME)
+
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ATT_DATE)
+
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CHECK_IN_TIME)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CHECK_OUT_TIME)
+                                    </td>
+                                </tr>
                                     }
                                 }
                             </tbody>

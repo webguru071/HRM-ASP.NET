@@ -103,7 +103,7 @@ namespace EMSApp.Controllers
                     }
                 }
 
-                return View(collection);
+                return View();
             }
             catch (Exception ex)
             {

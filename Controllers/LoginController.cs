@@ -41,10 +41,12 @@ namespace EMSApp.Controllers
                 var data = db.USER_INFO.Where(x => x.USER_ID == userId && x.PASSWORD == pass).FirstOrDefault();
                 if (data != null)
                 {
+                    var empData = db.EMPLOYEE_INFO.Where(x => x.ID == data.EMPLOYEE_ID && x.IS_DELETED == Helper.ConstantValue.TypeActive).FirstOrDefault();
                     Session["USER_ID"] = data.ID;
                     Session["USER_NAME"] = data.USER_NAME;
                     Session["USER_LEVEL"]=data.USER_LEVEL;
                     Session["EMP_ID"]=data.EMPLOYEE_ID;
+                    Session["IMAGE"]=empData.IMAGE;
                     if (data.USER_LEVEL == Helper.ConstantValue.UserLevelAdmin)
                     {                        
                         return RedirectToAction("Index", "Home");

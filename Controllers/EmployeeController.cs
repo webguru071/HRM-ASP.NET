@@ -6,6 +6,7 @@ using EMSApp.Models;
 using System.Web.Mvc;
 using System.Data.Entity;
 using EMSApp.Helper;
+using System.IO;
 
 namespace EMSApp.Controllers
 {
@@ -49,7 +50,7 @@ namespace EMSApp.Controllers
         }
         // POST: Employee/Create
         [HttpPost]
-        public ActionResult Create(EMPLOYEE_INFO emp)
+        public ActionResult Create(EMPLOYEE_INFO emp, HttpPostedFileBase uploadFile)
         {
             try
             {
@@ -84,7 +85,13 @@ namespace EMSApp.Controllers
                 else
                 {
                     // TODO: Add insert logic here
-
+                    if (uploadFile != null && uploadFile.ContentLength > 0)
+                    {
+                        var fileName = Path.GetFileName(uploadFile.FileName);
+                        var path = Path.Combine(Server.MapPath("/Uploads"), fileName);
+                        uploadFile.SaveAs(path);
+                        emp.IMAGE = "../../Uploads/" + fileName; ;
+                    }
                     emp.ACTION_BY = converter.GetLoggedUserID();
                     emp.ACTION_DATE = DateTime.Now;
                     if (ModelState.IsValid)
@@ -133,7 +140,7 @@ namespace EMSApp.Controllers
         }
         // POST: Employee/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, EMPLOYEE_INFO emp)
+        public ActionResult Edit(int id, EMPLOYEE_INFO emp, HttpPostedFileBase uploadFile)
         {
             try
             {
@@ -168,7 +175,13 @@ namespace EMSApp.Controllers
                 else
                 {
                     // TODO: Add insert logic here
-
+                    if (uploadFile != null && uploadFile.ContentLength > 0)
+                    {
+                        var fileName = Path.GetFileName(uploadFile.FileName);
+                        var path = Path.Combine(Server.MapPath("/Uploads"), fileName);
+                        uploadFile.SaveAs(path);
+                        emp.IMAGE = "../../Uploads/" + fileName; ;
+                    }
                     emp.UPDATE_BY = converter.GetLoggedUserID();
                     emp.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
                     emp.UPDATE_DATE = DateTime.Now;

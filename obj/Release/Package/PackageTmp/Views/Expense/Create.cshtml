@@ -21,7 +21,12 @@
                             @Html.ValidationMessageFor(model => model.TRNS_TITLE, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary pull-right">Save</button>
+                    <div class="form-actions">
+                        <div class="btn btn-secondary pull-center">
+                            @Html.ActionLink("Back to List", "Index")
+                        </div>
+                        <button type="submit" class="btn btn-primary pull-right">Save</button>
+                    </div>
                 </form>
             </div>
         </div>

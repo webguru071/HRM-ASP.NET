@@ -4,6 +4,10 @@
     ViewBag.Title = "Delete Income Source";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
     <div class="card card-outline-danger">
         <div class="card-header" style="padding:15px">
             <h4 class="m-b-0 text-white">
@@ -27,18 +31,16 @@
                         <!--/span-->
                     </div>
                     <!--/row-->
-                    @using (Html.BeginForm())
-                    {
-                        @Html.AntiForgeryToken()
-
+                 
                         <div class="form-actions">
                             <div class="btn btn-secondary pull-center">
                                 @Html.ActionLink("Back to List", "Index")
                             </div>
                             <button type="submit" class="btn btn-danger pull-right">Delete</button>
                         </div>
-                    }
+                    
                 </div>
             </form>
         </div>
     </div>
+}

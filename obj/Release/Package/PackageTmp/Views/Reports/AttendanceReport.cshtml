@@ -1,0 +1,74 @@
+﻿@model IEnumerable<EMSApp.Models.UserModel.AttendanceClass>
+@{
+    ViewBag.Title = "AttendanceReport";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="col-md-12" style="padding-top:15px">
+        <div class="card card-body">
+            <h3 class="box-title m-b-0">Filters</h3>
+            <hr />
+            <div class="row">
+                <div class="col-md-4">
+                    <input type="date" class="form-control" placeholder="From" name="fromDate" id="fromDate">
+                </div>
+                <div class="col-md-4">
+                    <input type="date" class="form-control" placeholder="To" name="toDate" id="toDate">
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownList("EMPLOYEE_ID", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-success waves-effect waves-light m-t-10 pull-right">Search</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">Attandence View</h3>
+
+                <div class="color-bordered-table success-bordered-table">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Employee Name</th>
+                                <th>Date</th>
+                                <th>Check In</th>
+                                <th>Check Out</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null)
+                            {
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.EMPLOYEE_NAME)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ATT_DATE)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.CHECK_IN_TIME)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.CHECK_OUT_TIME)
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

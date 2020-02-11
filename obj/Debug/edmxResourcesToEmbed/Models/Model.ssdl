@@ -87,7 +87,7 @@
     <Property Name="POSTAL_CODE" Type="nvarchar" MaxLength="50" />
     <Property Name="DOB" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="GENDER" Type="char" MaxLength="1" Nullable="false" />
-    <Property Name="BLOOD_GROUP" Type="char" MaxLength="2" />
+    <Property Name="BLOOD_GROUP" Type="char" MaxLength="3" />
     <Property Name="IS_DELETED" Type="char" MaxLength="1" Nullable="false" />
     <Property Name="JOINING_DATE" Type="nvarchar" MaxLength="50" />
     <Property Name="RESIGNING_DATE" Type="nvarchar" MaxLength="50" />

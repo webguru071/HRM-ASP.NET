@@ -54,7 +54,7 @@ namespace EMSApp.Controllers
             {
                 if (string.IsNullOrEmpty(collection.ASSET_TITLE))
                 {
-                    ModelState.AddModelError("", "Asset Type Name is Required!!");
+                    ModelState.AddModelError("", "Asset Category is Required!!");
                 }
                 else
                 {
@@ -99,7 +99,7 @@ namespace EMSApp.Controllers
             {
                 if (string.IsNullOrEmpty(collection.ASSET_TITLE))
                 {
-                    ModelState.AddModelError("", "Asset Type Name is Required!!");
+                    ModelState.AddModelError("", "Asset Category is Required!!");
                 }
                 else
                 {

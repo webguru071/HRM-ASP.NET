@@ -7,7 +7,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-
+    @Html.HiddenFor(model => model.TRNS_S_ID)
     <div class="form-horizontal" style="padding:15px">
         <div class="card">
             <div class="card-body">
@@ -75,7 +75,7 @@
                         <div class="btn btn-secondary pull-center">
                             @Html.ActionLink("Back to List", "IncomeSheetIndex")
                         </div>
-                        <button type="submit" class="btn btn-primary pull-right">Save</button>
+                        <button type="submit" class="btn btn-primary pull-right">Update</button>
                     </div>
                 </form>
             </div>

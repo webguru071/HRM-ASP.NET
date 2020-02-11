@@ -288,7 +288,7 @@ namespace EMSApp.Controllers
             if (converter.CheckLogin())
             {
                 var data = db.LEAVE_APPLICATION.Where(x => x.LEAVE_APP_ID == id && x.STATUS != ConstantValue.LeaveStatusApproved).FirstOrDefault();
-                long empId = converter.GetLoggedEmployeeID();;
+                //long empId = converter.GetLoggedEmployeeID();
                 Session["AD"] = data.ACTIVE_DATE;
                 GetDataInBag(data.EMPLOYEE_ID, data.LEAVE_TYPE_ID);
                 return View(data);

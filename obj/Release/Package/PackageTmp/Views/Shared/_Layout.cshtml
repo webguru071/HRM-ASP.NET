@@ -38,6 +38,14 @@
     <!-- ============================================================== -->
     <!-- Preloader - style you can find in spinners.css -->
     <!-- ============================================================== -->
+    @{
+        string imagePath = "../../Content/assets/images/users/1.jpg";
+        string uLevel = (Convert.ToString(Session["USER_LEVEL"]) == EMSApp.Helper.ConstantValue.UserLevelAdmin ? "Admin" : "Employee");
+        if (Session["IMAGE"] != null)
+        {
+            imagePath = Convert.ToString(Session["IMAGE"]);
+        }
+    }
     <div class="preloader">
         <svg class="circular" viewBox="25 25 50 50">
             <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
@@ -64,7 +72,10 @@
                             <img src="../../Content/assets/images/logo-icon.png" alt="homepage" class="dark-logo" />
                             <!-- Light Logo icon -->
                             <img src="../../Content/assets/images/logo-light-icon.png" alt="homepage" class="light-logo" />
+
                         </b>
+
+
                         <!--End Logo icon -->
                         <!-- Logo text -->
                         @*<span>
@@ -90,11 +101,9 @@
                         <!-- ============================================================== -->
                         <!-- Search -->
                         <!-- ============================================================== -->
-                       
                         <!-- ============================================================== -->
                         <!-- End Messages -->
                         <!-- ============================================================== -->
-
 
                     </ul>
                     <!-- ============================================================== -->
@@ -104,23 +113,23 @@
                         <!-- ============================================================== -->
                         <!-- Comment -->
                         <!-- ============================================================== -->
-                       
                         <!-- ============================================================== -->
                         <!-- End Messages -->
                         <!-- ============================================================== -->
                         <!-- ============================================================== -->
                         <!-- Profile -->
                         <!-- ============================================================== -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../../Content/assets/images/users/1.jpg" alt="user" class="profile-pic" /></a>
+                        <li class="nav-item dropdown">                           
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="@imagePath" alt="user" class="profile-pic" /></a>
+
                             <div class="dropdown-menu dropdown-menu-right scale-up">
                                 <ul class="dropdown-user">
                                     <li>
                                         <div class="dw-user-box">
-                                            <div class="u-img"><img src="../../Content/assets/images/users/1.jpg" alt="user"></div>
+                                            <div class="u-img"><img src="@imagePath" alt="user"></div>
                                             <div class="u-text">
                                                 <h3>@Convert.ToString(Session["USER_NAME"])</h3>
-                                                @*<p class="text-muted">varun@gmail.com</p><a href="profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a>*@
+                                                <p class="text-muted">Logged in as a @uLevel</p><a href="~/EmployeeProfile/Index" class="btn btn-rounded btn-danger btn-sm">View Profile</a>
                                             </div>
                                         </div>
                                     </li>
@@ -133,7 +142,7 @@
                         <!-- ============================================================== -->
                         <!-- Language -->
                         <!-- ============================================================== -->
-                       
+
                     </ul>
                 </div>
             </nav>
@@ -150,10 +159,10 @@
                 <!-- User profile -->
                 <div class="user-profile" style="background: url(../../Content/assets/images/background/user-info.jpg) no-repeat;">
                     <!-- User profile image -->
-                    <div class="profile-img"> <img src="../../Content/assets/images/users/profile.png" alt="user" /> </div>
+                    <div class="profile-img"> <img src="@imagePath" alt="user" /> </div>
                     <!-- User profile text-->
                     <div class="profile-text">
-                        <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">Dashboard For @Convert.ToString(Session["USER_NAME"])</a>
+                        <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">@Convert.ToString(Session["USER_NAME"])</a>
                         <div class="dropdown-menu animated flipInY">
                             <a href="#" class="dropdown-item"><i class="ti-user"></i> My Profile</a>
                             <div class="dropdown-divider"></div> <a href="@Url.Action("Logout","Login")" class="dropdown-item"><i class="fa fa-power-off"></i> Logout</a>
@@ -161,12 +170,33 @@
                     </div>
                 </div>
                 <!-- End User profile text-->
+                @{
+                    string levelU = Convert.ToString(Session["USER_LEVEL"]);
+                }
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
-                        
+                        @try
+                        {
+                            if (levelU == EMSApp.Helper.ConstantValue.UserLevelAdmin)
+                            {
+                                <li>
+                                    <a class="waves-effect waves-dark" href="~/Home/Index" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Dashboard</span></a>
+                                </li>
+                            }
+                            if (levelU == EMSApp.Helper.ConstantValue.UserLevelEmployee)
+                            {
+                                <li>
+                                    <a class="waves-effect waves-dark" href="~/Home/Dashboard" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Dashboard</span></a>
+                                </li>
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Url.Action("LogIn", "Login");
+                        }
                         <li>
-                            <a class="waves-effect waves-dark" href="~/User/Index" aria-expanded="false"><i class="mdi mdi-key"></i><span class="hide-menu">User</span></a>
+                            <a class="waves-effect waves-dark" href="~/EmployeeProfile/Index" aria-expanded="false"><i class="mdi mdi-account"></i><span class="hide-menu">My Profile</span></a>
                         </li>
                         <li>
                             <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-laptop-windows"></i><span class="hide-menu">Attendance</span></a>
@@ -175,76 +205,111 @@
                                 <li><a href="~/AttendanceManage/Index">History</a></li>
                             </ul>
                         </li>
-                        <li>
-                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span class="hide-menu"> Employee</span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="~/Employee/Index">Add Employee</a></li>
-                                <li><a href="~/Position/Index">Employee Position</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-email"></i><span class="hide-menu">Department</span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="~/Department/Index">Department</a></li>
-                                <li><a href="~/Division/Index">Division</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-chart-bubble"></i><span class="hide-menu">Team</span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="~/Team/Index">New Team</a></li>
-                                <li><a href="~/Team/TeamMemberIndex">Add Member</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-chart-bubble"></i><span class="hide-menu">Asset</span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="~/Asset/Index">Asset Type</a></li>
-                                <li><a href="~/Equipment/Index">Equipments</a></li>
-                                <li><a href="~/EquipmentManage/Index">Equipment Manage</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-chart-bubble"></i><span class="hide-menu">Expense</span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="~/Expense/Index">Expenses Item</a></li>
-                                <li><a href="~/Expense/ExpenseSheetIndex">Expenses List</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-chart-bubble"></i><span class="hide-menu">Income</span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="~/Income/Index">Income Item</a></li>
-                                <li><a href="~/Income/IncomeSheetIndex">Income List</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-chart-bubble"></i><span class="hide-menu">Salary</span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="~/SalaryGrade/Index">Salary Grade</a></li>
-                                <li><a href="~/SalarySetup/Index">Salary Setup</a></li>
-                                <li><a href="~/Salary/Index">Salary Generate</a></li>
-                            </ul>
-                        </li>
-                        @*<li class="nav-devider"></li>*@
-                        <li>
-                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-book-open-variant"></i><span class="hide-menu">Reports</span></a>
-                            <ul aria-expanded="false" class="collapse">
+                        @try
+                        {
+                            if (levelU == EMSApp.Helper.ConstantValue.UserLevelAdmin)
+                            {
                                 <li>
-                                    <a href="#" class="has-arrow">Employee</a>
+                                    <a class="waves-effect waves-dark" href="~/User/Index" aria-expanded="false"><i class="mdi mdi-key"></i><span class="hide-menu">User</span></a>
+                                </li>
+                                <li>
+                                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-nature-people"></i><span class="hide-menu"> Employee</span></a>
                                     <ul aria-expanded="false" class="collapse">
-                                        <li><a href="~/Position/Index">Demography</a></li>
-                                        <li><a href="~/Position/Index">Position</a></li>
-                                        <li><a href="~/Position/Index">Leaves</a></li>
+                                        <li><a href="~/Employee/Index">Add Employee</a></li>
+                                        <li><a href="~/Position/Index">Employee Position</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="pages-faq.html">Faqs</a></li>
-                            </ul>
-                        </li>
+                                <li>
+                                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span class="hide-menu">Department</span></a>
+                                    <ul aria-expanded="false" class="collapse">
+                                        <li><a href="~/Department/Index">Department</a></li>
+                                        <li><a href="~/Division/Index">Division</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-group"></i><span class="hide-menu">Team</span></a>
+                                    <ul aria-expanded="false" class="collapse">
+                                        <li><a href="~/Team/Index">New Team</a></li>
+                                        <li><a href="~/Team/TeamMemberIndex">Add Member</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-elevation-rise"></i><span class="hide-menu">Asset</span></a>
+                                    <ul aria-expanded="false" class="collapse">
+                                        <li><a href="~/Asset/Index">Asset Type</a></li>
+                                        <li><a href="~/Equipment/Index">Equipments</a></li>
+                                        <li><a href="~/EquipmentManage/Index">Equipment Manage</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-minus-box-outline"></i><span class="hide-menu">Expense</span></a>
+                                    <ul aria-expanded="false" class="collapse">
+                                        <li><a href="~/Expense/Index">Expenses Item</a></li>
+                                        <li><a href="~/Expense/ExpenseSheetIndex">Expenses List</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-plus-box"></i><span class="hide-menu">Income</span></a>
+                                    <ul aria-expanded="false" class="collapse">
+                                        <li><a href="~/Income/Index">Income Item</a></li>
+                                        <li><a href="~/Income/IncomeSheetIndex">Income List</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-file-chart"></i><span class="hide-menu">Salary</span></a>
+                                    <ul aria-expanded="false" class="collapse">
+                                        <li><a href="~/SalaryGrade/Index">Benifits</a></li>
+                                        <li><a href="~/SalarySetup/Index">Salary Setup</a></li>
+                                        <li><a href="~/Salary/Index">Salary Pay</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-book-open-variant"></i><span class="hide-menu">Reports</span></a>
+                                    <ul aria-expanded="false" class="collapse">
+                                        <li>
+                                            <a href="#" class="has-arrow">Employee</a>
+                                            <ul aria-expanded="false" class="collapse">
+                                                <li><a href="~/Reports/EmployeeDemogReport">Demography</a></li>
+                                                <li><a href="~/Reports/PositionWiseReport">Position</a></li>
+                                                <li><a href="~/Reports/DepartmentWiseReport">Department</a></li>
+                                                <li><a href="~/Reports/EmployeeLeaveReport">Leaves</a></li>
+                                                <li><a href="~/Reports/AttendanceReport">Attendance</a></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi "></i><span class="hide-menu">Salary</span></a>
+                                            <ul aria-expanded="false" class="collapse">
+                                                <li><a href="~/Reports/AllEmployeeSalaryReport">All Employee</a></li>
+                                                <li><a href="~/Reports/EmployeeSalaryReport">Employee Wise </a></li>
+                                            </ul>
+                                        </li>
+                                        @*<li><a href="~/Notice/Index">Notice</a></li>*@
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a class="waves-effect waves-dark" href="~/Notice/Index" aria-expanded="false"><i class="mdi mdi-key"></i><span class="hide-menu">Notice</span></a>
+                                </li>
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Url.Action("LogIn", "Login");
+                        }
+
                         <li>
-                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-file-chart"></i><span class="hide-menu">Leave</span></a>
+                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-airplane"></i><span class="hide-menu">Leave</span></a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="~/Leave/Index">Leave Type</a></li>
+                                @try
+                                {
+                                    if (levelU == EMSApp.Helper.ConstantValue.UserLevelAdmin)
+                                    {
+                                        <li><a href="~/Leave/Index">Leave Type</a></li>
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+                                    Url.Action("LogIn", "Login");
+                                }
                                 <li><a href="~/Leave/LeaveAppIndex">Leave Application</a></li>
                             </ul>
                         </li>
@@ -278,7 +343,6 @@
                 <!-- ============================================================== -->
                 <!-- Bread crumb and right sidebar toggle -->
                 <!-- ============================================================== -->
-                
                 <!-- ============================================================== -->
                 <!-- End Bread crumb and right sidebar toggle -->
                 <!-- ============================================================== -->
@@ -293,7 +357,6 @@
                 <!-- Right sidebar -->
                 <!-- ============================================================== -->
                 <!-- .right-sidebar -->
-               
                 <!-- ============================================================== -->
                 <!-- End Right sidebar -->
                 <!-- ============================================================== -->
@@ -361,3 +424,4 @@
 </body>
 
 </html>
+

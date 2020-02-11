@@ -16,7 +16,6 @@
     <EntitySet Name="SALARY_INFO" EntityType="EMSModel.SALARY_INFO" />
     <EntitySet Name="SALARY_SETUP" EntityType="EMSModel.SALARY_SETUP" />
     <EntitySet Name="SALARY_GRADE" EntityType="EMSModel.SALARY_GRADE" />
-    <EntitySet Name="sysdiagrams" EntityType="EMSModel.sysdiagram" />
     <EntitySet Name="TEAM_DETAILS" EntityType="EMSModel.TEAM_DETAILS" />
     <EntitySet Name="TEAM_INFO" EntityType="EMSModel.TEAM_INFO" />
     <EntitySet Name="TRANSACTION_ITEM" EntityType="EMSModel.TRANSACTION_ITEM" />
@@ -132,8 +131,8 @@
     <Property Name="ATNDNC_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="EMPLOYEE_ID" Type="Int64" Nullable="false" />
     <Property Name="ATT_DATE" Type="DateTime" Nullable="false" Precision="0" />
-    <Property Name="CHECK_IN_TIME" Type="Time" Precision="2" />
-    <Property Name="CHECK_OUT_TIME" Type="Time" Precision="2" />
+    <Property Name="CHECK_IN_TIME" Type="Time" Precision="0" />
+    <Property Name="CHECK_OUT_TIME" Type="Time" Precision="0" />
     <Property Name="SL_NO" Type="Int32" />
     <Property Name="STATUS" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
     <NavigationProperty Name="EMPLOYEE_INFO" Relationship="EMSModel.FK_ATTENDANCE_DETAILS_EMPLOYEE_INFO" FromRole="ATTENDANCE_DETAILS" ToRole="EMPLOYEE_INFO" />
@@ -186,21 +185,20 @@
     <Property Name="EMAIL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="NID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="IMAGE" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="CITY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="POSTAL_CODE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DOB" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="GENDER" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="BLOOD_GROUP" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
     <Property Name="IS_DELETED" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
     <Property Name="JOINING_DATE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="RESIGNING_DATE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="DESIGNATION" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="ACTION_BY" Type="Int64" />
+    <Property Name="ACTION_BY" Type="Int64" Nullable="false" />
     <Property Name="ACTION_DATE" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="UPDATE_BY" Type="Int64" />
     <Property Name="UPDATE_DATE" Type="DateTime" Precision="3" />
-    <Property Name="CITY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="POSTAL_CODE" Type="Int32" />
-    <Property Name="DOB" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="GENDER" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
     <Property Name="MARITALA_STATUS" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
     <Property Name="NATIONALITY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="BLOOD_GROUP" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
     <NavigationProperty Name="ASSET_MANAGEMENT" Relationship="EMSModel.FK_ASSET_ASSIGNMENT_EMPLOYEE_INFO" FromRole="EMPLOYEE_INFO" ToRole="ASSET_MANAGEMENT" />
     <NavigationProperty Name="ATTENDANCE_DETAILS" Relationship="EMSModel.FK_ATTENDANCE_DETAILS_EMPLOYEE_INFO" FromRole="EMPLOYEE_INFO" ToRole="ATTENDANCE_DETAILS" />
     <NavigationProperty Name="EMPLOYEE_APPLICATION" Relationship="EMSModel.FK_EMPLOYEE_APPLICATION_EMPLOYEE_INFO" FromRole="EMPLOYEE_INFO" ToRole="EMPLOYEE_APPLICATION" />
@@ -236,7 +234,7 @@
     <Property Name="LEAVE_TYPE_ID" Type="Int64" Nullable="false" />
     <Property Name="EMPLOYEE_ID" Type="Int64" Nullable="false" />
     <Property Name="START_DATE" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="END_DATE" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="END_DATE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="APPROVED_START_DATE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="APPROVED_END_DATE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="STATUS" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
@@ -267,7 +265,9 @@
     </Key>
     <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="NOTICE" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
-    <Property Name="ACTION_BY" Type="Int64" />
+    <Property Name="DEPT_ID" Type="Int64" />
+    <Property Name="DIV_ID" Type="Int64" />
+    <Property Name="ACTION_BY" Type="Int64" Nullable="false" />
     <Property Name="ACTION_DATE" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="UPDATE_BY" Type="Int64" />
     <Property Name="UPDATE_DATE" Type="DateTime" Precision="3" />
@@ -280,7 +280,7 @@
     <Property Name="POSITION_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="POSITION_TITLE" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="EMPLOYEE_ID" Type="Int64" Nullable="false" />
-    <Property Name="BASIC_SALARY" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="BASIC_SALARY" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
     <Property Name="DUTY_TYPE" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
     <Property Name="RATE_TYPE" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
     <Property Name="PAY_FREQ" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
@@ -289,7 +289,7 @@
     <Property Name="ACTION_DATE" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="UPDATE_BY" Type="Int64" />
     <Property Name="UPDATE_DATE" Type="DateTime" Precision="3" />
-    <Property Name="CHANGE_TYPE" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="CHANGE_TYPE" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
     <NavigationProperty Name="DIVISION_INFO" Relationship="EMSModel.FK_POSITIONAL_INFO_DIVISION_INFO" FromRole="POSITIONAL_INFO" ToRole="DIVISION_INFO" />
     <NavigationProperty Name="EMPLOYEE_INFO" Relationship="EMSModel.FK_POSITIONAL_INFO_EMPLOYEE_INFO" FromRole="POSITIONAL_INFO" ToRole="EMPLOYEE_INFO" />
     <NavigationProperty Name="SALARY_SETUP" Relationship="EMSModel.FK_SALARY_SETUP_POSITIONAL_INFO" FromRole="POSITIONAL_INFO" ToRole="SALARY_SETUP" />
@@ -342,16 +342,6 @@
     <Property Name="ACTION_DATE" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="UPDATE_BY" Type="Int64" />
     <Property Name="UPDATE_DATE" Type="DateTime" Precision="3" />
-  </EntityType>
-  <EntityType Name="sysdiagram">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-    <Property Name="principal_id" Type="Int32" Nullable="false" />
-    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="version" Type="Int32" />
-    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
   </EntityType>
   <EntityType Name="TEAM_DETAILS">
     <Key>
@@ -466,7 +456,7 @@
         <PropertyRef Name="EQUEPMENT_ID" />
       </Principal>
       <Dependent Role="ASSET_MANAGEMENT">
-        <PropertyRef Name="EMP_ID" />
+        <PropertyRef Name="EQUP_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

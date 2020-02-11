@@ -9,6 +9,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.ASSET_ID)
     <div class="form-horizontal" style="padding:15px">
         <div class="card">
             <div class="card-body">
@@ -31,7 +32,12 @@
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary pull-right">Save</button>
+                    <div class="form-actions">
+                        <div class="btn btn-secondary pull-center">
+                            @Html.ActionLink("Back to List", "Index")
+                        </div>
+                        <button type="submit" class="btn btn-primary pull-right">Update</button>
+                    </div>
                 </form>
             </div>
         </div>

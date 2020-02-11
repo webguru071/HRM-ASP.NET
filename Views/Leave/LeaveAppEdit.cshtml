@@ -15,7 +15,7 @@
               <h4 class="card-title">New Leave Application</h4>
               <hr />
               <form class="form-material m-t-40">
-                  @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                  <div class="alert alert-danger" style="font-weight:900">@Html.ValidationSummary(true, "", new { @class = "text-danger" })</div>
                   <div class="row p-t-20">
                       @Html.HiddenFor(model => model.LEAVE_APP_ID)
                       @if (Session["USER_LEVEL"].ToString() == EMSApp.Helper.ConstantValue.UserLevelAdmin)

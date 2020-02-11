@@ -10,8 +10,7 @@
     @Html.AntiForgeryToken()
 
 <div class="form-horizontal">
-
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })   
+ 
     <div class="form-horizontal" style="padding:15px">
         <div class="card">
             <div class="card-body">
@@ -66,7 +65,12 @@
                             @Html.ValidationMessageFor(model => model.REMARKS, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary pull-right">Save</button>
+                    <div class="form-actions">
+                        <div class="btn btn-secondary pull-center">
+                            @Html.ActionLink("Back to List", "ExpenseSheetIndex")
+                        </div>
+                        <button type="submit" class="btn btn-primary pull-right">Save</button>
+                    </div>
                 </form>
             </div>
         </div>

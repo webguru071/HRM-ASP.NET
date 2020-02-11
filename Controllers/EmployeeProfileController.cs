@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -82,7 +83,7 @@ namespace EMSApp.Controllers
                     var data = db.EMPLOYEE_INFO.Where(x => x.IS_DELETED == Helper.ConstantValue.UserStatusActive && x.ID == empId).FirstOrDefault();
                     Session["AD"] = data.ACTION_DATE;
                     Session["NAME"] = data.EMPLOYEE_NAME;
-                    Session["data"] = data;
+                    Session["ISD"] = data.IS_DELETED;
                     return View(data);
                 }
                 else
@@ -98,7 +99,7 @@ namespace EMSApp.Controllers
         }
         // POST: EmployeeProfile/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, EMPLOYEE_INFO emp)
+        public ActionResult Edit(int id, EMPLOYEE_INFO emp, HttpPostedFileBase uploadFile)
         {
             try
             {
@@ -108,11 +109,19 @@ namespace EMSApp.Controllers
                 emp.UPDATE_BY = converter.GetLoggedUserID();
                 emp.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
                 emp.UPDATE_DATE = DateTime.Now;
+                if (uploadFile != null && uploadFile.ContentLength > 0)
+                {
+                    var fileName = Path.GetFileName(uploadFile.FileName);
+                    var path = Path.Combine(Server.MapPath("/Uploads"), fileName);
+                    uploadFile.SaveAs(path);
+                    emp.IMAGE = "../../Uploads/" + fileName; ;
+                }
                 if (ModelState.IsValid)
                 {
                     db.Entry(emp).State = EntityState.Modified;
                     db.SaveChanges();
                     Session["AD"] = null;
+                    Session["IMAGE"] = emp.IMAGE;
                     return RedirectToAction("Index");
                 }
             }

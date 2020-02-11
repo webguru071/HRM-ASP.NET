@@ -8,39 +8,126 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-<div class="form-horizontal">
-    <h4>NOTICE_BOARD</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.ID)
+    <div class="form-horizontal" style="padding:15px">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title text-blue">Notice For</h3>
+                <hr />
+                <form class="form-material m-t-40">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="row p-t-20">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Department</label>
+                                <div class="col-md-10">
+                                    @Html.DropDownList("DEPT_ID", null, htmlAttributes: new { @class = "form-control", @OnChange = "GetDivision()" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Division</label>
+                                <div class="col-md-10">
+                                    @Html.DropDownList("DIV_ID", null, htmlAttributes: new
+                                    {
+                                        @class = "form-control"@*, @OnChange = "GetTeam()"*@})
+                                </div>
+                            </div>
+                        </div>
+                        @*<div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label">Team</label>
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("TEAM_ID", null, htmlAttributes: new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>*@
+                    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.NOTICE, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.NOTICE, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.NOTICE, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="col-md-10">
-        <div class="form-group">
-            <label class="bmd-label-floating">Status</label>
-            @Html.DropDownList("STATUS", null, htmlAttributes: new { @class = "form-control " })
-            @Html.ValidationMessageFor(model => model.STATUS, "", new { @class = "text-danger" })
-        </div>
-    </div>
+                    <h3 class="card-title text-blue">New Notice</h3>
+                    <hr />
 
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Update" class="btn btn-default" />
+                    <div class="row p-t-20">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Notice</label>
+                                @Html.EditorFor(model => model.NOTICE, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.NOTICE, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Status</label>
+                                <div class="col-md-10">
+                                    @Html.DropDownList("STATUS", null, htmlAttributes: new { @class = "form-control " })
+                                    @Html.ValidationMessageFor(model => model.STATUS, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <!--/span-->
+                    </div>
+                </form>
+                <div class="form-actions">
+                    <div class="btn btn-secondary pull-center">
+                        @Html.ActionLink("Back to List", "Index")
+                    </div>
+                    <button type="submit" class="btn btn-primary pull-right">Save</button>
+                </div>
+            </div>
         </div>
+
     </div>
-</div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+         @*function GetTeam() {
+            var divId = $('#DIV_ID').val();
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("GetTeam", "Notice")",
+                data: { divId: divId },
+                success: function (listOfData) {
+                    $('#TEAM_ID option').remove();
+                       var _val = 0;
+                            var _valData = 'SELECT ONE';
+                            $("#TEAM_ID").append('<option value="' + _val + '">' + _valData + '</option>');
+                            $.each(listOfData, function (i, data) {
+                                $("#TEAM_ID").append('<option value="'
+                                                           + data.Value + '">'
+                                                     + data.Text + '</option>');
+                            });
+                },
+                error: function (result) {
+                    alert("Error");
+                }
+            });
+        }*@
+         function GetDivision(){
+            var deptId = $('#DEPT_ID').val();
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("GetDivision", "Notice")",
+                data: { deptId: deptId },
+                success: function (listOfData) {
+                    $('#DIV_ID option').remove();
+                       var _val = 0;
+                            var _valData = 'SELECT ONE';
+                            $("#DIV_ID").append('<option value="' + _val + '">' + _valData + '</option>');
+                            $.each(listOfData, function (i, data) {
+                                $("#DIV_ID").append('<option value="'
+                                                           + data.Value + '">'
+                                                     + data.Text + '</option>');
+                            });
+                },
+                error: function (result) {
+                    alert("Error");
+                }
+            });
+        }
+    </script>
+}
 
 
