@@ -109,7 +109,7 @@ namespace EMSApp.Controllers
                     }
 
                     SALARY_SETUP setUp = new SALARY_SETUP();
-                    setUp.EMP_ID = converterHelper.GetLoggedEmployeeID();
+                    setUp.EMP_ID = Convert.ToInt64(collection["EMP_ID"]);
                     setUp.POSITION_ID = Convert.ToInt64(Session["POSITION_ID"]);
                     setUp.PAY_TYPE = collection["PAY_TYPE"];
                     setUp.GROSS_SALARY = grossSalary;

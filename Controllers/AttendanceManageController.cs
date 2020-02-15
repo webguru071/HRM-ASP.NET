@@ -59,6 +59,10 @@ namespace EMSApp.Controllers
                 {
                     ModelState.AddModelError("", "Attendance Status is Required!!");
                 }
+                if (!string.IsNullOrEmpty(collection["checkIn"]) && !string.IsNullOrEmpty(collection["checkOut"]))
+                {
+                    ModelState.AddModelError("", "Select Only One Status!!");
+                }
                 else if (string.IsNullOrEmpty(collection["pass"]))
                 {
                     ModelState.AddModelError("", "Give Password for Confirmation!!");

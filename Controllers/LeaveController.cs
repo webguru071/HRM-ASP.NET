@@ -256,7 +256,7 @@ namespace EMSApp.Controllers
                     {
                         if (converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelEmployee)
                         {
-                            collection.EMPLOYEE_ID = converterHelper.GetLoggedEmployeeID();;
+                            collection.EMPLOYEE_ID = converterHelper.GetLoggedEmployeeID();
                             collection.STATUS = ConstantValue.LeaveStatusPending;
                             collection.APPROVED_START_DATE = null;
                             collection.APPROVED_END_DATE = null;
@@ -344,6 +344,7 @@ namespace EMSApp.Controllers
                     {
                         if (Convert.ToString(Session["USER_LEVEL"]) == ConstantValue.UserLevelEmployee)
                         {
+                            collection.EMPLOYEE_ID = converterHelper.GetLoggedEmployeeID(); 
                             collection.STATUS = ConstantValue.LeaveStatusPending;
                             collection.APPROVED_START_DATE = null;
                             collection.APPROVED_END_DATE = null;
