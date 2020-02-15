@@ -14,7 +14,7 @@
                 <h4 class="card-title">New Benifit</h4>
                 <hr />
                 <form class="form-material m-t-40">
-                    <div class="alert alert-danger" style="font-weight:900">@Html.ValidationSummary(true, "", new { @class = "text-danger" })</div>
+                    <div class="" style="font-weight:900">@Html.ValidationSummary(true, "", new { @class = "text-danger alert alert-danger" })</div>
                     <div class="row p-t-20">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -31,8 +31,8 @@
                                     @Html.DropDownList("GRADE_TYPE", new SelectListItem[]
                                                                   {
                                                                        new SelectListItem { Text = "Select One", Value="" },
-                                                                      new SelectListItem { Text = "Add", Value="a" },
-                                                                      new SelectListItem{ Text="Deduction",Value="d" },},
+                                                                      new SelectListItem { Text = "Add", Value=EMSApp.Helper.ConstantValue.SalaryGradeAdd },
+                                                                      new SelectListItem{ Text="Deduction",Value=EMSApp.Helper.ConstantValue.SalaryGradeDeduct },},
                                                                       htmlAttributes: new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.GRADE_TYPE, "", new { @class = "text-danger" })
                                 </div>

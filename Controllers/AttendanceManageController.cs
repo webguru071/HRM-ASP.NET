@@ -11,15 +11,15 @@ namespace EMSApp.Controllers
 {
     public class AttendanceManageController : Controller
     {
-        ConverterHelper converter = new ConverterHelper();
+        ConverterHelper converterHelper = new ConverterHelper();
         EMSEntities db = new EMSEntities();
         ICombine service = new CombineServices();
         // GET: AttendanceManage
         public ActionResult Index()
         {
-            if (converter.CheckLogin())
+            if (converterHelper.CheckLogin())
             {
-                long empId = converter.GetLoggedEmployeeID();
+                long empId = converterHelper.GetLoggedEmployeeID();
                 var data = service.GetAttendanceData(empId: empId);
                 return View(data);
             }
@@ -38,7 +38,7 @@ namespace EMSApp.Controllers
         // GET: AttendanceManage/Create
         public ActionResult Create()
         {
-            if (converter.CheckLogin())
+            if (converterHelper.CheckLogin())
             {
                 return View();
             }

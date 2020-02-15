@@ -12,12 +12,12 @@ namespace EMSApp.Controllers
     public class SalaryGradeController : Controller
     {
         EMSEntities db = new EMSEntities();
-        ConverterHelper converter = new ConverterHelper();
+        ConverterHelper converterHelper = new ConverterHelper();
 
         // GET: SalaryGrade
         public ActionResult Index()
         {
-            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
             {
                 var data = db.SALARY_GRADE.ToList();
                 return View(data);
@@ -36,7 +36,7 @@ namespace EMSApp.Controllers
         // GET: SalaryGrade/Create
         public ActionResult Create()
         {
-            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
             {
                 return View();
             }
@@ -64,7 +64,7 @@ namespace EMSApp.Controllers
                 }
                 else
                 {
-                    collection.ACTION_BY = converter.GetLoggedUserID();
+                    collection.ACTION_BY = converterHelper.GetLoggedUserID();
                     collection.ACTION_DATE = DateTime.Now;
                     if (ModelState.IsValid)
                     {
@@ -84,7 +84,7 @@ namespace EMSApp.Controllers
         // GET: SalaryGrade/Edit/5
         public ActionResult Edit(int id)
         {
-            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
             {
                 var dt = db.SALARY_GRADE.Where(x => x.GRADE_ID == id).FirstOrDefault();
                 Session["AD"] = dt.ACTION_DATE;
@@ -114,7 +114,7 @@ namespace EMSApp.Controllers
                 }
                 else
                 {
-                    collection.UPDATE_BY = converter.GetLoggedUserID();
+                    collection.UPDATE_BY = converterHelper.GetLoggedUserID();
                     collection.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
                     collection.UPDATE_DATE = DateTime.Now;
 
@@ -137,7 +137,7 @@ namespace EMSApp.Controllers
         // GET: SalaryGrade/Delete/5
         public ActionResult Delete(int id)
         {
-            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
             {
                 var dt = db.SALARY_GRADE.Where(x => x.GRADE_ID == id).FirstOrDefault();
                 return View(dt);

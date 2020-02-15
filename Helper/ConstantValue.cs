@@ -15,8 +15,8 @@ namespace EMSApp.Helper
         public static string UserStatusActive = "a";
         public static string UserStatusDeactive = "d";
         //User
-        public static string UserLevelAdmin="a";
-        public static string UserLevelEmployee="e";
+        public static string UserLevelAdmin = "a";
+        public static string UserLevelEmployee = "e";
         //Employee 
         public static string GenderMale = "m";
         public static string GenderFemale = "f";
@@ -34,7 +34,7 @@ namespace EMSApp.Helper
         public static string PayFreqTypeDaily = "d";
         public static string PayFreqTypeWeekly = "w";
         public static string PayFreqTypeBiWeekly = "b";
-        public static string PayFreqTypeMonthly = "m";        
+        public static string PayFreqTypeMonthly = "m";
         //Leave Application
         public static string LeaveStatusApproved = "a";
         public static string LeaveStatusPending = "p";
@@ -45,6 +45,8 @@ namespace EMSApp.Helper
         //Transaction Sheet
         public static string TransactionSheetPayTypeCash = "c";
         public static string TransactionSheetPayTypeBank = "b";
+        public static string TransactionSheetTransTypePurchase = "p";
+        public static string TransactionSheetTransTypeSell = "s";
         //Payroll
         public static string SalaryGradeAdd = "a";
         public static string SalaryGradeDeduct = "d";
@@ -54,6 +56,11 @@ namespace EMSApp.Helper
         //Attendance
         public static string AttendanceCheckIn = "i";
         public static string AttendanceCheckOut = "o";
-
+        //Vendor
+        public static string VendorTypeSupplier = "s";
+        public static string VendorTypeBuyer = "b";
+        //Stock
+        public static string StockForAdd = "a";
+        public static string StockForDeduct = "d";
     }
 }

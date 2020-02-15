@@ -11,12 +11,12 @@ namespace EMSApp.Controllers
     public class UserController : Controller
     {
         EMSEntities db = new EMSEntities();
-        ConverterHelper converter = new ConverterHelper();
+        ConverterHelper converterHelper = new ConverterHelper();
 
         // GET: User
         public ActionResult Index()
         {
-            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
             {
                 var data = db.USER_INFO.Where(x => x.IS_DELETED == "a").ToList();
                 return View(data);
@@ -61,7 +61,7 @@ namespace EMSApp.Controllers
         // GET: User/Create
         public ActionResult Create()
         {
-            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
             {
                 GetDataInBag();
                 return View();
@@ -105,7 +105,7 @@ namespace EMSApp.Controllers
                     {
                         if (user.ACTION_BY.ToString() != null)
                         {
-                            user.ACTION_BY = converter.GetLoggedUserID();
+                            user.ACTION_BY = converterHelper.GetLoggedUserID();
                         }
                         user.ACTION_DATE = DateTime.Now;
                         if (user.EMPLOYEE_ID == 0)
@@ -136,7 +136,7 @@ namespace EMSApp.Controllers
         // GET: User/Edit/5
         public ActionResult Edit(int id)
         {
-            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
             {
                 var data = db.USER_INFO.Where(x => x.ID == id).FirstOrDefault();
                 Session["AD"] = data.ACTION_DATE;
@@ -173,7 +173,7 @@ namespace EMSApp.Controllers
                 }
                 else
                 {
-                    user.UPDATE_BY = converter.GetLoggedUserID();
+                    user.UPDATE_BY = converterHelper.GetLoggedUserID();
                     user.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
                     user.UPDATE_DATE = DateTime.Now;
                     if (user.EMPLOYEE_ID == 0)

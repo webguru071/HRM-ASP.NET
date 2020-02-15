@@ -11,12 +11,12 @@ namespace EMSApp.Controllers
 {
     public class AssetController : Controller
     {
-        ConverterHelper converter = new ConverterHelper();
+        ConverterHelper converterHelper = new ConverterHelper();
         EMSEntities db = new EMSEntities();
         // GET: Asset
         public ActionResult Index()
         {
-            if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
             {
                 var data = db.ASSET_INFO.ToList();
                 return View(data);
@@ -35,7 +35,7 @@ namespace EMSApp.Controllers
         // GET: Asset/Create
         public ActionResult Create()
         {
-            if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
             {
                 return View();
             }
@@ -58,7 +58,7 @@ namespace EMSApp.Controllers
                 }
                 else
                 {
-                    collection.ACTION_BY = converter.GetLoggedUserID();
+                    collection.ACTION_BY = converterHelper.GetLoggedUserID();
                     collection.ACTION_DATE = DateTime.Now;
                     if (ModelState.IsValid)
                     {
@@ -78,7 +78,7 @@ namespace EMSApp.Controllers
         // GET: Asset/Edit/5
         public ActionResult Edit(int id)
         {
-            if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
             {
                 var data = db.ASSET_INFO.Where(x => x.ASSET_ID == id).FirstOrDefault();
                 Session["AD"] = data.ACTION_DATE;
@@ -103,7 +103,7 @@ namespace EMSApp.Controllers
                 }
                 else
                 {
-                    collection.UPDATE_BY = converter.GetLoggedUserID();
+                    collection.UPDATE_BY = converterHelper.GetLoggedUserID();
                     collection.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
                     collection.UPDATE_DATE = DateTime.Now;
 
@@ -126,7 +126,7 @@ namespace EMSApp.Controllers
         // GET: Asset/Delete/5
         public ActionResult Delete(int id)
         {
-            if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
             {
                 var data = db.ASSET_INFO.Where(x => x.ASSET_ID == id).FirstOrDefault();
                 return View(data);

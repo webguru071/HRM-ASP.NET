@@ -1,6 +1,6 @@
 // Contextual backgrounds
 
-// [converter] $parent hack
+// [converterHelper] $parent hack
 @mixin bg-variant($parent, $color) {
   #{$parent} {
     background-color: $color;

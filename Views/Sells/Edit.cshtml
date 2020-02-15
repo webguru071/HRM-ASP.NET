@@ -1,0 +1,108 @@
+﻿@model EMSApp.Models.INV_INFO
+
+@{
+    ViewBag.Title = "Edit Sells";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.HiddenFor(model=>model.INV_ID)
+        <div class="form-horizontal" style="padding:15px">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">New Sell</h4>
+                    <form class="form-material m-t-40">
+                        <div class="" style="font-weight:900">@Html.ValidationSummary(true, "", new { @class = "text-danger alert alert-danger" })</div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    Category
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("ASSET_ID", null, htmlAttributes: new { @class = "form-control", @onchange = "GetProduct()", @id = "assetId" })
+                                        @Html.ValidationMessageFor(model => model.VENDOR_ID, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    Product
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("EQP_ID", null, htmlAttributes: new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.VENDOR_ID, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    Customer
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("VENDOR_ID", null, htmlAttributes: new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.VENDOR_ID, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    Date
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.DATE, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                                        @Html.ValidationMessageFor(model => model.DATE, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    Unit
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.UNIT, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.UNIT, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <div class="btn btn-secondary pull-center">
+                                @Html.ActionLink("Back to List", "Index")
+                            </div>
+                            <button type="submit" class="btn btn-primary pull-right">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        function GetProduct() {
+            var assetId = $('#assetId').val();
+
+            $.ajax({
+                url: "@Url.Action("SetEquipment", "Sells")",
+                type: "GET",
+                dataType: "JSON",
+                data: { assetId: assetId },
+                success: function (listOfData) {
+                    $('#EQP_ID option').remove();
+                       var _val = 0;
+                            var _valData = 'Select One';
+                            //$("#EQP_ID").append('<option value="' + _val + '">' + _valData + '</option>');
+                            $.each(listOfData, function (i, data) {
+                                $("#EQP_ID").append('<option value="'
+                                                           + data.Value + '">'
+                                                     + data.Text + '</option>');
+                            });
+                },
+                error: function (data) {
+                    alert("Error");
+                }
+
+            });
+        }
+    </script>
+}

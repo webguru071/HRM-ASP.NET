@@ -1,0 +1,78 @@
+﻿@model IEnumerable<EMSApp.Models.VENDOR_INFO>
+
+@{
+    ViewBag.Title = "Clients";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid" style="padding-top:15px">
+    <div class="row">
+        <div class="col-md-3">
+            <p class="btn btn-block btn-outline-success btn-md">
+                @Html.ActionLink("Create New", "CreateBuyer")
+            </p>
+        </div>
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Client List</h4>
+                    <div class="table-responsive">
+                        <table class="table color-bordered-table primary-bordered-table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>
+                                        Client
+                                    </th>
+                                    <th>
+                                        Address
+                                    </th>
+                                    <th>
+                                        Contact
+                                    </th>
+                                    <th>
+                                        Status
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.ActionLink("Edit", "EditBuyer", new { id = item.VENDOR_ID })
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.VENDOR_NAME)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ADDRESS)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.CONTACT)
+                                            </td>
+                                            @if (item.STATUS == EMSApp.Helper.ConstantValue.TypeActive)
+                                            {
+                                                <td>
+                                                    Active
+                                                </td>
+                                            }
+                                            @if (item.STATUS == EMSApp.Helper.ConstantValue.TypeDeactive)
+                                            {
+                                                <td>
+                                                    Deactive
+                                                </td>
+                                            }
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

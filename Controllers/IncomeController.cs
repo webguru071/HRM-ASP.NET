@@ -12,12 +12,12 @@ namespace EMSApp.Controllers
     public class IncomeController : Controller
     {
         EMSEntities db = new EMSEntities();
-        ConverterHelper converter = new ConverterHelper();
+        ConverterHelper converterHelper = new ConverterHelper();
 
         // GET: Income
         public ActionResult Index()
         {
-            if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
             {
                 var data = db.TRANSACTION_ITEM.Where(x => x.TYPE == ConstantValue.TransactionTypeIncome).ToList();
                 return View(data);
@@ -36,7 +36,7 @@ namespace EMSApp.Controllers
         // GET: Income/Create
         public ActionResult Create()
         {
-            if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
             {
                 return View();
             }
@@ -60,7 +60,7 @@ namespace EMSApp.Controllers
                 else
                 {
                     collection.TYPE = ConstantValue.TransactionTypeIncome;
-                    collection.ACTION_BY = converter.GetLoggedUserID();
+                    collection.ACTION_BY = converterHelper.GetLoggedUserID();
                     collection.ACTION_DATE = DateTime.Now;
                     if (ModelState.IsValid)
                     {
@@ -79,7 +79,7 @@ namespace EMSApp.Controllers
         // GET: Income/Edit/5
         public ActionResult Edit(int id)
         {
-            if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
             {
                 var data = db.TRANSACTION_ITEM.Where(x => x.TRNS_ID == id && x.TYPE == ConstantValue.TransactionTypeIncome).FirstOrDefault();
                 Session["AD"] = data.ACTION_DATE;
@@ -105,7 +105,7 @@ namespace EMSApp.Controllers
                 else
                 {
                     collection.TYPE = ConstantValue.TransactionTypeIncome;
-                    collection.UPDATE_BY = converter.GetLoggedUserID();
+                    collection.UPDATE_BY = converterHelper.GetLoggedUserID();
                     collection.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
                     collection.UPDATE_DATE = DateTime.Now;
                     if (ModelState.IsValid)
@@ -126,7 +126,7 @@ namespace EMSApp.Controllers
         // GET: Income/Delete/5
         public ActionResult Delete(int id)
         {
-            if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
             {
                 var dt = db.TRANSACTION_ITEM.Where(x => x.TRNS_ID == id && x.TYPE == ConstantValue.TransactionTypeIncome).FirstOrDefault();
                 return View(dt);
@@ -161,7 +161,7 @@ namespace EMSApp.Controllers
         [HttpGet]
         public ActionResult IncomeSheetIndex()
         {
-            if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
             {
                 var data = db.TRANSACTION_SHEET.Where(x => x.TYPE == ConstantValue.TransactionTypeIncome).ToList();
                 return View(data);
@@ -175,7 +175,7 @@ namespace EMSApp.Controllers
         [HttpGet]
         public ActionResult IncomeSheetCreate()
         {
-            if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
             {
                 GetDataInBag();
                 return View();
@@ -222,7 +222,7 @@ namespace EMSApp.Controllers
                 else
                 {
                     collection.TYPE = ConstantValue.TransactionTypeIncome;
-                    collection.ACTION_BY = converter.GetLoggedUserID();
+                    collection.ACTION_BY = converterHelper.GetLoggedUserID();
                     collection.ACTION_DATE = DateTime.Now;
                     if (ModelState.IsValid)
                     {
@@ -243,11 +243,11 @@ namespace EMSApp.Controllers
         [HttpGet]
         public ActionResult IncomeSheetEdit(long id)
         {
-            if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
             {
                 var data = db.TRANSACTION_SHEET.Where(x => x.TRNS_S_ID == id && x.TYPE == ConstantValue.TransactionTypeIncome).FirstOrDefault();
                 Session["AD"] = data.ACTION_DATE;
-                GetDataInBag(data.TRNS_ID);
+                GetDataInBag(Convert.ToInt64( data.TRNS_ID));
                 return View(data);
             }
             else
@@ -281,7 +281,7 @@ namespace EMSApp.Controllers
                 else
                 {
                     collection.TYPE = ConstantValue.TransactionTypeIncome;
-                    collection.UPDATE_BY = converter.GetLoggedUserID();
+                    collection.UPDATE_BY = converterHelper.GetLoggedUserID();
                     collection.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
                     collection.UPDATE_DATE = DateTime.Now;
                     if (ModelState.IsValid)
@@ -292,19 +292,21 @@ namespace EMSApp.Controllers
                         return RedirectToAction("IncomeSheetIndex");
                     }
                 }
-                GetDataInBag(collection.TRNS_ID);
+                long trnsId = Convert.ToInt64(collection.TRNS_ID);
+                GetDataInBag(trnsId);
                 return View();
             }
             catch (Exception ex)
             {
-                GetDataInBag(collection.TRNS_ID);
+                long trnsId = Convert.ToInt64(collection.TRNS_ID);
+                GetDataInBag(trnsId);
                 return View();
             }
         }
         [HttpGet]
         public ActionResult ExpenseSheetDelete(int id)
         {
-            if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
             {
                 var dt = db.TRANSACTION_SHEET.Where(x => x.TRNS_S_ID == id && x.TYPE == ConstantValue.TransactionTypeIncome).FirstOrDefault();
                 return View(dt);

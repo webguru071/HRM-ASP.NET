@@ -13,7 +13,7 @@ namespace EMSApp.Services
     public class CombineServices : ICombine
     {
         DBHelper dbHelper = new DBHelper();
-        ConverterHelper converter = new ConverterHelper();
+        ConverterHelper converterHelper = new ConverterHelper();
         public List<EmployeeReport> GetDeptWiseData(string status = "", long deptId = 0, long empId = 0)
         {           
             string iDFilter = (deptId <= 0) ? "" : " AND DII.DEPT_ID=" + deptId;
@@ -132,8 +132,8 @@ namespace EMSApp.Services
                     pInfo.EMPLOYEE_NAME = Convert.ToString(dRow["EMPLOYEE_NAME"]);
                     DateTime dateAtt = Convert.ToDateTime(dRow["ATT_DATE"]);
                     pInfo.ATT_DATE = dateAtt.ToString("dd-MM-yyyy");                    
-                    pInfo.CHECK_IN_TIME =converter.GetFormatted12HTime( Convert.ToString(dRow["CHECK_IN_TIME"]));
-                    pInfo.CHECK_OUT_TIME = converter.GetFormatted12HTime(Convert.ToString(dRow["CHECK_OUT_TIME"]));
+                    pInfo.CHECK_IN_TIME =converterHelper.GetFormatted12HTime( Convert.ToString(dRow["CHECK_IN_TIME"]));
+                    pInfo.CHECK_OUT_TIME = converterHelper.GetFormatted12HTime(Convert.ToString(dRow["CHECK_OUT_TIME"]));
                     dataList.Add(pInfo);
                 }
             }

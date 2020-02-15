@@ -19,8 +19,8 @@
   display: none;
 
   &.in      { display: block; }
-  // [converter] extracted tr&.in to tr.collapse.in
-  // [converter] extracted tbody&.in to tbody.collapse.in
+  // [converterHelper] extracted tr&.in to tr.collapse.in
+  // [converterHelper] extracted tbody&.in to tbody.collapse.in
 }
 
 tr.collapse.in    { display: table-row; }

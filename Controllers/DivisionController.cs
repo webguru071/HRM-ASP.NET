@@ -12,11 +12,11 @@ namespace EMSApp.Controllers
     public class DivisionController : Controller
     {
         EMSEntities db = new EMSEntities(); 
-        ConverterHelper converter = new ConverterHelper();
+        ConverterHelper converterHelper = new ConverterHelper();
         // GET: Division
         public ActionResult Index()
         {
-            if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
             {
                 var dt = db.DIVISION_INFO.ToList();
                 return View(dt);
@@ -35,7 +35,7 @@ namespace EMSApp.Controllers
         // GET: Division/Create
         public ActionResult Create()
         {
-            if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
             {
                 GetDataInBag();
                 return View();
@@ -62,7 +62,7 @@ namespace EMSApp.Controllers
                 }
                 else
                 { 
-                    obj.ACTION_BY = converter.GetLoggedUserID();
+                    obj.ACTION_BY = converterHelper.GetLoggedUserID();
                     obj.ACTION_DATE = DateTime.Now;
 
                     if (ModelState.IsValid)
@@ -84,7 +84,7 @@ namespace EMSApp.Controllers
         // GET: Division/Edit/5
         public ActionResult Edit(int id)
         {
-            if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
             {
                 var dt = db.DIVISION_INFO.Where(x => x.DIV_ID == id).FirstOrDefault();
                 GetDataInBag(dt.DEPT_ID);
@@ -114,7 +114,7 @@ namespace EMSApp.Controllers
                 }
                 else
                 {                    
-                    obj.UPDATE_BY = converter.GetLoggedUserID();
+                    obj.UPDATE_BY = converterHelper.GetLoggedUserID();
                     obj.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
                     obj.UPDATE_DATE = DateTime.Now;
 
@@ -139,7 +139,7 @@ namespace EMSApp.Controllers
         // GET: Division/Delete/5
         public ActionResult Delete(int id)
         {
-            if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
             {
                 var dt = db.DIVISION_INFO.Where(x => x.DIV_ID == id).FirstOrDefault();
                 return View(dt);

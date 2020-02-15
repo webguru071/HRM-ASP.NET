@@ -9,6 +9,7 @@
     <EntitySet Name="EMPLOYEE_APPLICATION" EntityType="EMSModel.EMPLOYEE_APPLICATION" />
     <EntitySet Name="EMPLOYEE_INFO" EntityType="EMSModel.EMPLOYEE_INFO" />
     <EntitySet Name="EQUEPMENTS_INFO" EntityType="EMSModel.EQUEPMENTS_INFO" />
+    <EntitySet Name="INV_INFO" EntityType="EMSModel.INV_INFO" />
     <EntitySet Name="LEAVE_APPLICATION" EntityType="EMSModel.LEAVE_APPLICATION" />
     <EntitySet Name="LEAVE_TYPE" EntityType="EMSModel.LEAVE_TYPE" />
     <EntitySet Name="NOTICE_BOARD" EntityType="EMSModel.NOTICE_BOARD" />
@@ -16,11 +17,13 @@
     <EntitySet Name="SALARY_INFO" EntityType="EMSModel.SALARY_INFO" />
     <EntitySet Name="SALARY_SETUP" EntityType="EMSModel.SALARY_SETUP" />
     <EntitySet Name="SALARY_GRADE" EntityType="EMSModel.SALARY_GRADE" />
+    <EntitySet Name="STOCK_INFO" EntityType="EMSModel.STOCK_INFO" />
     <EntitySet Name="TEAM_DETAILS" EntityType="EMSModel.TEAM_DETAILS" />
     <EntitySet Name="TEAM_INFO" EntityType="EMSModel.TEAM_INFO" />
     <EntitySet Name="TRANSACTION_ITEM" EntityType="EMSModel.TRANSACTION_ITEM" />
     <EntitySet Name="TRANSACTION_SHEET" EntityType="EMSModel.TRANSACTION_SHEET" />
     <EntitySet Name="USER_INFO" EntityType="EMSModel.USER_INFO" />
+    <EntitySet Name="VENDOR_INFO" EntityType="EMSModel.VENDOR_INFO" />
     <AssociationSet Name="FK_EQUEPMENTS_INFO_EQUEPMENTS_INFO" Association="EMSModel.FK_EQUEPMENTS_INFO_EQUEPMENTS_INFO">
       <End Role="ASSET_INFO" EntitySet="ASSET_INFO" />
       <End Role="EQUEPMENTS_INFO" EntitySet="EQUEPMENTS_INFO" />
@@ -76,6 +79,22 @@
     <AssociationSet Name="FK_USER_INFO_EMPLOYEE_INFO" Association="EMSModel.FK_USER_INFO_EMPLOYEE_INFO">
       <End Role="EMPLOYEE_INFO" EntitySet="EMPLOYEE_INFO" />
       <End Role="USER_INFO" EntitySet="USER_INFO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_INV_INFO_INV_INFO" Association="EMSModel.FK_INV_INFO_INV_INFO">
+      <End Role="EQUEPMENTS_INFO" EntitySet="EQUEPMENTS_INFO" />
+      <End Role="INV_INFO" EntitySet="INV_INFO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_STOCK_INFO_EQUEPMENTS_INFO" Association="EMSModel.FK_STOCK_INFO_EQUEPMENTS_INFO">
+      <End Role="EQUEPMENTS_INFO" EntitySet="EQUEPMENTS_INFO" />
+      <End Role="STOCK_INFO" EntitySet="STOCK_INFO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_INV_INFO_VENDOR_INFO" Association="EMSModel.FK_INV_INFO_VENDOR_INFO">
+      <End Role="VENDOR_INFO" EntitySet="VENDOR_INFO" />
+      <End Role="INV_INFO" EntitySet="INV_INFO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_STOCK_INFO_INV_INFO" Association="EMSModel.FK_STOCK_INFO_INV_INFO">
+      <End Role="INV_INFO" EntitySet="INV_INFO" />
+      <End Role="STOCK_INFO" EntitySet="STOCK_INFO" />
     </AssociationSet>
     <AssociationSet Name="FK_LEAVE_APPLICATION_LEAVE_APPLICATION" Association="EMSModel.FK_LEAVE_APPLICATION_LEAVE_APPLICATION">
       <End Role="LEAVE_TYPE" EntitySet="LEAVE_TYPE" />
@@ -217,14 +236,35 @@
     <Property Name="EQUEPMENT_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="EQP_TITLE" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="ASSET_ID" Type="Int64" Nullable="false" />
-    <Property Name="MODEL_NO" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MODEL_NO" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="SERIAL_NO" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="ACTION_BY" Type="Int64" Nullable="false" />
     <Property Name="ACTION_DATE" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="UPDATE_BY" Type="Int64" />
     <Property Name="UPDATE_DATE" Type="DateTime" Precision="3" />
+    <Property Name="ASSET_FOR" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
     <NavigationProperty Name="ASSET_INFO" Relationship="EMSModel.FK_EQUEPMENTS_INFO_EQUEPMENTS_INFO" FromRole="EQUEPMENTS_INFO" ToRole="ASSET_INFO" />
     <NavigationProperty Name="ASSET_MANAGEMENT" Relationship="EMSModel.FK_ASSET_MANAGEMENT_EQUEPMENTS_INFO" FromRole="EQUEPMENTS_INFO" ToRole="ASSET_MANAGEMENT" />
+    <NavigationProperty Name="INV_INFO" Relationship="EMSModel.FK_INV_INFO_INV_INFO" FromRole="EQUEPMENTS_INFO" ToRole="INV_INFO" />
+    <NavigationProperty Name="STOCK_INFO" Relationship="EMSModel.FK_STOCK_INFO_EQUEPMENTS_INFO" FromRole="EQUEPMENTS_INFO" ToRole="STOCK_INFO" />
+  </EntityType>
+  <EntityType Name="INV_INFO">
+    <Key>
+      <PropertyRef Name="INV_ID" />
+    </Key>
+    <Property Name="INV_ID" Type="Int64" Nullable="false" />
+    <Property Name="EQP_ID" Type="Int64" Nullable="false" />
+    <Property Name="VENDOR_ID" Type="Int64" Nullable="false" />
+    <Property Name="UNIT" Type="Int32" Nullable="false" />
+    <Property Name="DATE" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="STOCK_TYPE" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="ACTION_DATE" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ACTION_BY" Type="Int64" Nullable="false" />
+    <Property Name="UPDATE_BY" Type="Int64" />
+    <Property Name="UPDATE_DATE" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="EQUEPMENTS_INFO" Relationship="EMSModel.FK_INV_INFO_INV_INFO" FromRole="INV_INFO" ToRole="EQUEPMENTS_INFO" />
+    <NavigationProperty Name="VENDOR_INFO" Relationship="EMSModel.FK_INV_INFO_VENDOR_INFO" FromRole="INV_INFO" ToRole="VENDOR_INFO" />
+    <NavigationProperty Name="STOCK_INFO" Relationship="EMSModel.FK_STOCK_INFO_INV_INFO" FromRole="INV_INFO" ToRole="STOCK_INFO" />
   </EntityType>
   <EntityType Name="LEAVE_APPLICATION">
     <Key>
@@ -343,6 +383,23 @@
     <Property Name="UPDATE_BY" Type="Int64" />
     <Property Name="UPDATE_DATE" Type="DateTime" Precision="3" />
   </EntityType>
+  <EntityType Name="STOCK_INFO">
+    <Key>
+      <PropertyRef Name="STOCK_ID" />
+    </Key>
+    <Property Name="STOCK_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EQP_ID" Type="Int64" Nullable="false" />
+    <Property Name="UNIT" Type="Int32" Nullable="false" />
+    <Property Name="STOCK_TYPE" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="STOCK_FOR" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="ACTION_BY" Type="Int64" Nullable="false" />
+    <Property Name="ACTION_DATE" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UPDATE_BY" Type="Int64" />
+    <Property Name="UPDATE_DATE" Type="DateTime" Precision="3" />
+    <Property Name="INV_ID" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="EQUEPMENTS_INFO" Relationship="EMSModel.FK_STOCK_INFO_EQUEPMENTS_INFO" FromRole="STOCK_INFO" ToRole="EQUEPMENTS_INFO" />
+    <NavigationProperty Name="INV_INFO" Relationship="EMSModel.FK_STOCK_INFO_INV_INFO" FromRole="STOCK_INFO" ToRole="INV_INFO" />
+  </EntityType>
   <EntityType Name="TEAM_DETAILS">
     <Key>
       <PropertyRef Name="ID" />
@@ -397,13 +454,13 @@
     <Property Name="TRNS_ID" Type="Int64" Nullable="false" />
     <Property Name="AMOUNT" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
     <Property Name="PAY_TYPE" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="VOUCHER_NO" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TYPE" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
     <Property Name="REMARKS" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="ACTION_BY" Type="Int64" Nullable="false" />
     <Property Name="ACTION_DATE" Type="DateTime" Precision="3" />
     <Property Name="UPDATE_BY" Type="Int64" />
     <Property Name="UPDATE_DATE" Type="DateTime" Precision="3" />
-    <Property Name="TYPE" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-    <Property Name="VOUCHER_NO" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="TRANSACTION_ITEM" Relationship="EMSModel.FK_TRANSACTION_SHEET_TRANSACTION_ITEM" FromRole="TRANSACTION_SHEET" ToRole="TRANSACTION_ITEM" />
   </EntityType>
   <EntityType Name="USER_INFO">
@@ -423,6 +480,22 @@
     <Property Name="UPDATE_DATE" Type="DateTime" Precision="3" />
     <Property Name="UPDATE_BY" Type="Int64" />
     <NavigationProperty Name="EMPLOYEE_INFO" Relationship="EMSModel.FK_USER_INFO_EMPLOYEE_INFO" FromRole="USER_INFO" ToRole="EMPLOYEE_INFO" />
+  </EntityType>
+  <EntityType Name="VENDOR_INFO">
+    <Key>
+      <PropertyRef Name="VENDOR_ID" />
+    </Key>
+    <Property Name="VENDOR_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="VENDOR_NAME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ADDRESS" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="CONTACT" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="VENDOR_TYPE" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="ACTION_BY" Type="Int64" Nullable="false" />
+    <Property Name="ACTION_DATE" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UPDATE_BY" Type="Int64" />
+    <Property Name="UPDATE_DATE" Type="DateTime" Precision="3" />
+    <Property Name="STATUS" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+    <NavigationProperty Name="INV_INFO" Relationship="EMSModel.FK_INV_INFO_VENDOR_INFO" FromRole="VENDOR_INFO" ToRole="INV_INFO" />
   </EntityType>
   <Association Name="FK_EQUEPMENTS_INFO_EQUEPMENTS_INFO">
     <End Type="EMSModel.ASSET_INFO" Role="ASSET_INFO" Multiplicity="1" />
@@ -589,6 +662,54 @@
       </Principal>
       <Dependent Role="USER_INFO">
         <PropertyRef Name="EMPLOYEE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_INV_INFO_INV_INFO">
+    <End Type="EMSModel.EQUEPMENTS_INFO" Role="EQUEPMENTS_INFO" Multiplicity="1" />
+    <End Type="EMSModel.INV_INFO" Role="INV_INFO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EQUEPMENTS_INFO">
+        <PropertyRef Name="EQUEPMENT_ID" />
+      </Principal>
+      <Dependent Role="INV_INFO">
+        <PropertyRef Name="EQP_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_STOCK_INFO_EQUEPMENTS_INFO">
+    <End Type="EMSModel.EQUEPMENTS_INFO" Role="EQUEPMENTS_INFO" Multiplicity="1" />
+    <End Type="EMSModel.STOCK_INFO" Role="STOCK_INFO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EQUEPMENTS_INFO">
+        <PropertyRef Name="EQUEPMENT_ID" />
+      </Principal>
+      <Dependent Role="STOCK_INFO">
+        <PropertyRef Name="EQP_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_INV_INFO_VENDOR_INFO">
+    <End Type="EMSModel.VENDOR_INFO" Role="VENDOR_INFO" Multiplicity="1" />
+    <End Type="EMSModel.INV_INFO" Role="INV_INFO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="VENDOR_INFO">
+        <PropertyRef Name="VENDOR_ID" />
+      </Principal>
+      <Dependent Role="INV_INFO">
+        <PropertyRef Name="VENDOR_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_STOCK_INFO_INV_INFO">
+    <End Type="EMSModel.INV_INFO" Role="INV_INFO" Multiplicity="1" />
+    <End Type="EMSModel.STOCK_INFO" Role="STOCK_INFO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="INV_INFO">
+        <PropertyRef Name="INV_ID" />
+      </Principal>
+      <Dependent Role="STOCK_INFO">
+        <PropertyRef Name="INV_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

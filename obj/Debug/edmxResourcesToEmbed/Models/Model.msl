@@ -109,6 +109,7 @@
     <EntitySetMapping Name="EQUEPMENTS_INFO">
       <EntityTypeMapping TypeName="EMSModel.EQUEPMENTS_INFO">
         <MappingFragment StoreEntitySet="EQUEPMENTS_INFO">
+          <ScalarProperty Name="ASSET_FOR" ColumnName="ASSET_FOR" />
           <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
           <ScalarProperty Name="UPDATE_BY" ColumnName="UPDATE_BY" />
           <ScalarProperty Name="ACTION_DATE" ColumnName="ACTION_DATE" />
@@ -118,6 +119,22 @@
           <ScalarProperty Name="ASSET_ID" ColumnName="ASSET_ID" />
           <ScalarProperty Name="EQP_TITLE" ColumnName="EQP_TITLE" />
           <ScalarProperty Name="EQUEPMENT_ID" ColumnName="EQUEPMENT_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="INV_INFO">
+      <EntityTypeMapping TypeName="EMSModel.INV_INFO">
+        <MappingFragment StoreEntitySet="INV_INFO">
+          <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
+          <ScalarProperty Name="UPDATE_BY" ColumnName="UPDATE_BY" />
+          <ScalarProperty Name="ACTION_BY" ColumnName="ACTION_BY" />
+          <ScalarProperty Name="ACTION_DATE" ColumnName="ACTION_DATE" />
+          <ScalarProperty Name="STOCK_TYPE" ColumnName="STOCK_TYPE" />
+          <ScalarProperty Name="DATE" ColumnName="DATE" />
+          <ScalarProperty Name="UNIT" ColumnName="UNIT" />
+          <ScalarProperty Name="VENDOR_ID" ColumnName="VENDOR_ID" />
+          <ScalarProperty Name="EQP_ID" ColumnName="EQP_ID" />
+          <ScalarProperty Name="INV_ID" ColumnName="INV_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -236,6 +253,22 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="STOCK_INFO">
+      <EntityTypeMapping TypeName="EMSModel.STOCK_INFO">
+        <MappingFragment StoreEntitySet="STOCK_INFO">
+          <ScalarProperty Name="INV_ID" ColumnName="INV_ID" />
+          <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
+          <ScalarProperty Name="UPDATE_BY" ColumnName="UPDATE_BY" />
+          <ScalarProperty Name="ACTION_DATE" ColumnName="ACTION_DATE" />
+          <ScalarProperty Name="ACTION_BY" ColumnName="ACTION_BY" />
+          <ScalarProperty Name="STOCK_FOR" ColumnName="STOCK_FOR" />
+          <ScalarProperty Name="STOCK_TYPE" ColumnName="STOCK_TYPE" />
+          <ScalarProperty Name="UNIT" ColumnName="UNIT" />
+          <ScalarProperty Name="EQP_ID" ColumnName="EQP_ID" />
+          <ScalarProperty Name="STOCK_ID" ColumnName="STOCK_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="TEAM_DETAILS">
       <EntityTypeMapping TypeName="EMSModel.TEAM_DETAILS">
         <MappingFragment StoreEntitySet="TEAM_DETAILS">
@@ -282,13 +315,13 @@
     <EntitySetMapping Name="TRANSACTION_SHEET">
       <EntityTypeMapping TypeName="EMSModel.TRANSACTION_SHEET">
         <MappingFragment StoreEntitySet="TRANSACTION_SHEET">
-          <ScalarProperty Name="VOUCHER_NO" ColumnName="VOUCHER_NO" />
-          <ScalarProperty Name="TYPE" ColumnName="TYPE" />
           <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
           <ScalarProperty Name="UPDATE_BY" ColumnName="UPDATE_BY" />
           <ScalarProperty Name="ACTION_DATE" ColumnName="ACTION_DATE" />
           <ScalarProperty Name="ACTION_BY" ColumnName="ACTION_BY" />
           <ScalarProperty Name="REMARKS" ColumnName="REMARKS" />
+          <ScalarProperty Name="TYPE" ColumnName="TYPE" />
+          <ScalarProperty Name="VOUCHER_NO" ColumnName="VOUCHER_NO" />
           <ScalarProperty Name="PAY_TYPE" ColumnName="PAY_TYPE" />
           <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
           <ScalarProperty Name="TRNS_ID" ColumnName="TRNS_ID" />
@@ -312,6 +345,22 @@
           <ScalarProperty Name="USER_NAME" ColumnName="USER_NAME" />
           <ScalarProperty Name="EMPLOYEE_ID" ColumnName="EMPLOYEE_ID" />
           <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VENDOR_INFO">
+      <EntityTypeMapping TypeName="EMSModel.VENDOR_INFO">
+        <MappingFragment StoreEntitySet="VENDOR_INFO">
+          <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+          <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
+          <ScalarProperty Name="UPDATE_BY" ColumnName="UPDATE_BY" />
+          <ScalarProperty Name="ACTION_DATE" ColumnName="ACTION_DATE" />
+          <ScalarProperty Name="ACTION_BY" ColumnName="ACTION_BY" />
+          <ScalarProperty Name="VENDOR_TYPE" ColumnName="VENDOR_TYPE" />
+          <ScalarProperty Name="CONTACT" ColumnName="CONTACT" />
+          <ScalarProperty Name="ADDRESS" ColumnName="ADDRESS" />
+          <ScalarProperty Name="VENDOR_NAME" ColumnName="VENDOR_NAME" />
+          <ScalarProperty Name="VENDOR_ID" ColumnName="VENDOR_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

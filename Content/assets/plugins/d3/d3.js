@@ -5199,14 +5199,14 @@ var entries = function(map) {
   return entries;
 };
 
-function objectConverter(columns) {
+function objectconverterHelper(columns) {
   return new Function("d", "return {" + columns.map(function(name, i) {
     return JSON.stringify(name) + ": d[" + i + "]";
   }).join(",") + "}");
 }
 
-function customConverter(columns, f) {
-  var object = objectConverter(columns);
+function customconverterHelper(columns, f) {
+  var object = objectconverterHelper(columns);
   return function(row, i) {
     return f(object(row), i, columns);
   };
@@ -5235,7 +5235,7 @@ var dsv = function(delimiter) {
   function parse(text, f) {
     var convert, columns, rows = parseRows(text, function(row, i) {
       if (convert) return convert(row, i - 1);
-      columns = row, convert = f ? customConverter(row, f) : objectConverter(row);
+      columns = row, convert = f ? customconverterHelper(row, f) : objectconverterHelper(row);
     });
     rows.columns = columns;
     return rows;

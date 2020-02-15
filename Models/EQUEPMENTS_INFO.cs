@@ -18,6 +18,8 @@ namespace EMSApp.Models
         public EQUEPMENTS_INFO()
         {
             this.ASSET_MANAGEMENT = new HashSet<ASSET_MANAGEMENT>();
+            this.INV_INFO = new HashSet<INV_INFO>();
+            this.STOCK_INFO = new HashSet<STOCK_INFO>();
         }
     
         public long EQUEPMENT_ID { get; set; }
@@ -29,9 +31,14 @@ namespace EMSApp.Models
         public System.DateTime ACTION_DATE { get; set; }
         public Nullable<long> UPDATE_BY { get; set; }
         public Nullable<System.DateTime> UPDATE_DATE { get; set; }
+        public string ASSET_FOR { get; set; }
     
         public virtual ASSET_INFO ASSET_INFO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ASSET_MANAGEMENT> ASSET_MANAGEMENT { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<INV_INFO> INV_INFO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<STOCK_INFO> STOCK_INFO { get; set; }
     }
 }

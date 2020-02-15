@@ -1,0 +1,43 @@
+﻿@model IEnumerable<EMSApp.Models.UserModel.InvProductClass>
+
+@{
+    ViewBag.Title = "InvStockReport";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+    <div class="col-12" style="padding-top:15px">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">Inventory Stock Report</h3>
+                <div class="color-bordered-table success-bordered-table">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Product
+                                </th>
+                                <th>
+                                    Available Stock
+                                </th>                               
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null)
+                            {
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @item.EQUIPMENT_TITLE
+                                        </td>
+                                        <td>
+                                            @item.UNIT
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>

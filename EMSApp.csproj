@@ -71,6 +71,7 @@
       <HintPath>packages\MilNet.Web.Mvc.DatePicker.2.0.0\lib\net461\MilNet.Web.Mvc.DatePicker.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Activities" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
@@ -160,12 +161,15 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\NoticeController.cs" />
     <Compile Include="Controllers\PositionController.cs" />
+    <Compile Include="Controllers\PurchaseController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\SalaryController.cs" />
     <Compile Include="Controllers\SalaryGradeController.cs" />
     <Compile Include="Controllers\SalarySetupController.cs" />
+    <Compile Include="Controllers\SellsController.cs" />
     <Compile Include="Controllers\TeamController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\VendorController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -196,6 +200,9 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EQUEPMENTS_INFO.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\INV_INFO.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\LEAVE_APPLICATION.cs">
@@ -234,6 +241,9 @@
     <Compile Include="Models\SALARY_SETUP.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\STOCK_INFO.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TEAM_DETAILS.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -248,6 +258,7 @@
     </Compile>
     <Compile Include="Models\UserModel\AttendanceClass.cs" />
     <Compile Include="Models\UserModel\EmployeeReport.cs" />
+    <Compile Include="Models\UserModel\InvProductClass.cs" />
     <Compile Include="Models\UserModel\NoticeBoard.cs" />
     <Compile Include="Models\UserModel\PositionalInfo.cs" />
     <Compile Include="Models\UserModel\SalaryInfo.cs" />
@@ -255,13 +266,19 @@
     <Compile Include="Models\USER_INFO.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\VENDOR_INFO.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CombineServices.cs" />
     <Compile Include="Services\ICombine.cs" />
+    <Compile Include="Services\Inventory\IInventory.cs" />
+    <Compile Include="Services\Inventory\InventoryService.cs" />
     <Compile Include="Services\Position\IPosition.cs" />
     <Compile Include="Services\Position\PositionService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\assets\images\android-chrome-192x192.png" />
     <Content Include="Content\assets\images\background\bg.jpg" />
     <Content Include="Content\assets\images\background\error-bg.jpg" />
     <Content Include="Content\assets\images\background\login-register.jpg" />
@@ -274,7 +291,9 @@
     <Content Include="Content\assets\images\browser\safari-logo.png" />
     <Content Include="Content\assets\images\browser\sketch.jpg" />
     <Content Include="Content\assets\images\favicon.png" />
+    <Content Include="Content\assets\images\fevicon-logo.png" />
     <Content Include="Content\assets\images\hrm-logo.png" />
+    <Content Include="Content\assets\images\hrm-text.png" />
     <Content Include="Content\assets\images\icon\danger.svg" />
     <Content Include="Content\assets\images\icon\success.svg" />
     <Content Include="Content\assets\images\icon\warning.svg" />
@@ -4183,6 +4202,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\milnet\milnet-datepicker.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Uploads\ff.jpg" />
     <Content Include="Uploads\images.jpg" />
     <Content Include="Uploads\img_avatar.png" />
     <Content Include="Uploads\png-avatar-4.png" />
@@ -4283,6 +4303,19 @@
     <Content Include="Views\Reports\DepartmentWiseReport.cshtml" />
     <Content Include="Views\Reports\AllEmployeeSalaryReport.cshtml" />
     <Content Include="Views\Reports\EmployeeSalaryReport.cshtml" />
+    <Content Include="Views\Purchase\Index.cshtml" />
+    <Content Include="Views\Purchase\Create.cshtml" />
+    <Content Include="Views\Purchase\Edit.cshtml" />
+    <Content Include="Views\Vendor\SupplierIndex.cshtml" />
+    <Content Include="Views\Vendor\BuyerIndex.cshtml" />
+    <Content Include="Views\Vendor\CreateSupplier.cshtml" />
+    <Content Include="Views\Vendor\CreateBuyer.cshtml" />
+    <Content Include="Views\Vendor\EditSupplier.cshtml" />
+    <Content Include="Views\Vendor\EditBuyer.cshtml" />
+    <Content Include="Views\Sells\Index.cshtml" />
+    <Content Include="Views\Sells\Create.cshtml" />
+    <Content Include="Views\Sells\Edit.cshtml" />
+    <Content Include="Views\Reports\InvStockReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

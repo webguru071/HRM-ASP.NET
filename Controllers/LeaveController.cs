@@ -11,11 +11,11 @@ namespace EMSApp.Controllers
     public class LeaveController : Controller
     {        
         EMSEntities db = new EMSEntities();
-        ConverterHelper converter = new ConverterHelper();
+        ConverterHelper converterHelper = new ConverterHelper();
         // GET: Leave
         public ActionResult Index()
         {
-            if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
             {
                 var data = db.LEAVE_TYPE.ToList();
                 return View(data);
@@ -34,7 +34,7 @@ namespace EMSApp.Controllers
         // GET: Leave/Create
         public ActionResult Create()
         {
-            if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
             {
                 return View();
             }
@@ -58,7 +58,7 @@ namespace EMSApp.Controllers
 
                 else
                 {
-                    long userID = converter.GetLoggedUserID();
+                    long userID = converterHelper.GetLoggedUserID();
                     collection.ACTIVE_BY = userID;
                     collection.ACTIVE_DATE = DateTime.Now;
                     if (ModelState.IsValid)
@@ -78,7 +78,7 @@ namespace EMSApp.Controllers
         // GET: Leave/Edit/5
         public ActionResult Edit(int id)
         {
-            if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
             {
                 var dt = db.LEAVE_TYPE.Where(x => x.LEAVE_ID == id).FirstOrDefault();
                 Session["AD"] = dt.ACTIVE_DATE;
@@ -103,7 +103,7 @@ namespace EMSApp.Controllers
                 }
                 else
                 {
-                    collection.UPDATE_BY = converter.GetLoggedUserID();
+                    collection.UPDATE_BY = converterHelper.GetLoggedUserID();
                     collection.ACTIVE_DATE = Convert.ToDateTime(Session["AD"]);
                     collection.UPDATE_DATE = DateTime.Now;
 
@@ -126,7 +126,7 @@ namespace EMSApp.Controllers
         // GET: Leave/Delete/5
         public ActionResult Delete(int id)
         {
-            if (converter.CheckLogin() && converter.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
             {
                 var dt = db.LEAVE_TYPE.Where(x => x.LEAVE_ID == id).FirstOrDefault();
                 return View(dt);
@@ -161,18 +161,18 @@ namespace EMSApp.Controllers
         [HttpGet]
         public ActionResult LeaveAppIndex()
         {
-            if (converter.CheckLogin())
+            if (converterHelper.CheckLogin())
             {
                 if (Session["USER_ID"] != null)
                 {
-                    if (converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+                    if (converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
                     {
                         var data = db.LEAVE_APPLICATION.Where(x => x.STATUS == ConstantValue.LeaveStatusPending).ToList();
                         return View(data);
                     }
                     else
                     {
-                        long empId = converter.GetLoggedEmployeeID(); ;
+                        long empId = converterHelper.GetLoggedEmployeeID(); ;
                         var data = db.LEAVE_APPLICATION.Where(x => x.EMPLOYEE_ID == empId).ToList();
                         return View(data);
                     }
@@ -191,15 +191,15 @@ namespace EMSApp.Controllers
         [HttpGet]
         public ActionResult LeaveAppAdd()
         {
-            if (converter.CheckLogin())
+            if (converterHelper.CheckLogin())
             {
-                if (converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+                if (converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
                 {
                     GetDataInBag();
                 }
                 else
                 {
-                    long empId = converter.GetLoggedEmployeeID();;
+                    long empId = converterHelper.GetLoggedEmployeeID();;
                     GetDataInBag(empId: empId);
                 }
                 return View();
@@ -254,14 +254,14 @@ namespace EMSApp.Controllers
                     }
                     if (flag)
                     {
-                        if (converter.GetLoggedUserLevel() == ConstantValue.UserLevelEmployee)
+                        if (converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelEmployee)
                         {
-                            collection.EMPLOYEE_ID = converter.GetLoggedEmployeeID();;
+                            collection.EMPLOYEE_ID = converterHelper.GetLoggedEmployeeID();;
                             collection.STATUS = ConstantValue.LeaveStatusPending;
                             collection.APPROVED_START_DATE = null;
                             collection.APPROVED_END_DATE = null;
                         }
-                        collection.ACTIVE_BY = converter.GetLoggedUserID();
+                        collection.ACTIVE_BY = converterHelper.GetLoggedUserID();
 
                         collection.ACTIVE_DATE = DateTime.Now;
 
@@ -285,10 +285,10 @@ namespace EMSApp.Controllers
         [HttpGet]
         public ActionResult LeaveAppEdit(long id)
         {
-            if (converter.CheckLogin())
+            if (converterHelper.CheckLogin())
             {
                 var data = db.LEAVE_APPLICATION.Where(x => x.LEAVE_APP_ID == id && x.STATUS != ConstantValue.LeaveStatusApproved).FirstOrDefault();
-                //long empId = converter.GetLoggedEmployeeID();
+                //long empId = converterHelper.GetLoggedEmployeeID();
                 Session["AD"] = data.ACTIVE_DATE;
                 GetDataInBag(data.EMPLOYEE_ID, data.LEAVE_TYPE_ID);
                 return View(data);
@@ -406,7 +406,7 @@ namespace EMSApp.Controllers
         [HttpPost]
         public ActionResult LeaveAppDelete(int id, FormCollection collection)
         {
-            if (converter.CheckLogin())
+            if (converterHelper.CheckLogin())
             {
                 // TODO: Add delete logic here
                 var dt = db.LEAVE_APPLICATION.Where(x => x.LEAVE_APP_ID == id).FirstOrDefault();

@@ -15,14 +15,14 @@ namespace EMSApp.Controllers
     {
         EMSEntities db = new EMSEntities();
         ICombine service = new CombineServices();
-        ConverterHelper converter = new ConverterHelper();
+        ConverterHelper converterHelper = new ConverterHelper();
 
         // GET: EmployeeProfile
         public ActionResult Index()
         {
-            if (converter.CheckLogin())
+            if (converterHelper.CheckLogin())
             {
-                long empId = converter.GetLoggedEmployeeID();
+                long empId = converterHelper.GetLoggedEmployeeID();
                 if (empId > 0)
                 {
                     var data = db.EMPLOYEE_INFO.Where(x => x.ID == empId && x.IS_DELETED == Helper.ConstantValue.UserStatusActive).FirstOrDefault();
@@ -47,7 +47,7 @@ namespace EMSApp.Controllers
         // GET: EmployeeProfile/Create
         public ActionResult Create()
         {
-            if (converter.CheckLogin())
+            if (converterHelper.CheckLogin())
             {
                 return View();
             }
@@ -75,9 +75,9 @@ namespace EMSApp.Controllers
         // GET: EmployeeProfile/Edit/5
         public ActionResult Edit(int id)
         {
-            if (converter.CheckLogin())
+            if (converterHelper.CheckLogin())
             {
-                long empId = converter.GetLoggedEmployeeID();
+                long empId = converterHelper.GetLoggedEmployeeID();
                 if (empId == id)
                 {
                     var data = db.EMPLOYEE_INFO.Where(x => x.IS_DELETED == Helper.ConstantValue.UserStatusActive && x.ID == empId).FirstOrDefault();
@@ -104,9 +104,9 @@ namespace EMSApp.Controllers
             try
             {
                 // TODO: Add update logic here
-                emp.EMPLOYEE_NAME = converter.GetLoggedEmployeeName();
+                emp.EMPLOYEE_NAME = converterHelper.GetLoggedEmployeeName();
                 emp.IS_DELETED = Convert.ToString(Session["ISD"]);
-                emp.UPDATE_BY = converter.GetLoggedUserID();
+                emp.UPDATE_BY = converterHelper.GetLoggedUserID();
                 emp.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
                 emp.UPDATE_DATE = DateTime.Now;
                 if (uploadFile != null && uploadFile.ContentLength > 0)

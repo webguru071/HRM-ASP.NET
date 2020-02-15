@@ -12,11 +12,11 @@ namespace EMSApp.Controllers
     public class SalaryController : Controller
     {
         EMSEntities db = new EMSEntities();
-        ConverterHelper converter = new ConverterHelper();
+        ConverterHelper converterHelper = new ConverterHelper();
         // GET: Salary
         public ActionResult Index()
         {
-            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
             {
                 var data = db.SALARY_INFO.ToList();
                 return View(data);
@@ -34,7 +34,7 @@ namespace EMSApp.Controllers
         // GET: Salary/Create
         public ActionResult Create()
         {
-            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
             {
                 ViewBag.EMPLOYEE_ID = SetEmployee();
                 return View();
@@ -70,7 +70,7 @@ namespace EMSApp.Controllers
                     salary.TOTAL = salary.GROSS_SALARY + bonus + other;
                     if (salary.ACTION_BY.ToString() != null)
                     {
-                        salary.ACTION_BY = converter.GetLoggedUserID();
+                        salary.ACTION_BY = converterHelper.GetLoggedUserID();
                     }
                     salary.ACTION_DATE = DateTime.Now;
 
@@ -93,7 +93,7 @@ namespace EMSApp.Controllers
         // GET: Salary/Edit/5
         public ActionResult Edit(int id)
         {
-            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
             {
                 var data = db.SALARY_INFO.Where(x => x.ID == id).FirstOrDefault();
                 Session["AD"] = data.ACTION_DATE;
@@ -131,7 +131,7 @@ namespace EMSApp.Controllers
                     decimal bonus = salary.BONUS != null ? Convert.ToDecimal(salary.BONUS) : 0;
                     decimal other = (salary.OTHERS != null) ? Convert.ToDecimal(salary.OTHERS) : 0;
                     salary.TOTAL = salary.GROSS_SALARY + bonus + other;
-                    salary.UPDATE_BY = converter.GetLoggedUserID();
+                    salary.UPDATE_BY = converterHelper.GetLoggedUserID();
                     salary.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
                     salary.UPDATE_DATE = DateTime.Now;
                     if (ModelState.IsValid)

@@ -7611,7 +7611,7 @@
         } else {
             // Try convertible dataTypes
             for ( type in responses ) {
-                if ( !dataTypes[ 0 ] || s.converters[ type + " " + dataTypes[0] ] ) {
+                if ( !dataTypes[ 0 ] || s.converterHelpers[ type + " " + dataTypes[0] ] ) {
                     finalDataType = type;
                     break;
                 }
@@ -7639,14 +7639,14 @@
      */
     function ajaxConvert( s, response, jqXHR, isSuccess ) {
         var conv2, current, conv, tmp, prev,
-            converters = {},
+            converterHelpers = {},
         // Work with a copy of dataTypes in case we need to modify it for conversion
             dataTypes = s.dataTypes.slice();
 
-        // Create converters map with lowercased keys
+        // Create converterHelpers map with lowercased keys
         if ( dataTypes[ 1 ] ) {
-            for ( conv in s.converters ) {
-                converters[ conv.toLowerCase() ] = s.converters[ conv ];
+            for ( conv in s.converterHelpers ) {
+                converterHelpers[ conv.toLowerCase() ] = s.converterHelpers[ conv ];
             }
         }
 
@@ -7677,27 +7677,27 @@
                     // Convert response if prev dataType is non-auto and differs from current
                 } else if ( prev !== "*" && prev !== current ) {
 
-                    // Seek a direct converter
-                    conv = converters[ prev + " " + current ] || converters[ "* " + current ];
+                    // Seek a direct converterHelper
+                    conv = converterHelpers[ prev + " " + current ] || converterHelpers[ "* " + current ];
 
                     // If none found, seek a pair
                     if ( !conv ) {
-                        for ( conv2 in converters ) {
+                        for ( conv2 in converterHelpers ) {
 
                             // If conv2 outputs current
                             tmp = conv2.split( " " );
                             if ( tmp[ 1 ] === current ) {
 
                                 // If prev can be converted to accepted input
-                                conv = converters[ prev + " " + tmp[ 0 ] ] ||
-                                    converters[ "* " + tmp[ 0 ] ];
+                                conv = converterHelpers[ prev + " " + tmp[ 0 ] ] ||
+                                    converterHelpers[ "* " + tmp[ 0 ] ];
                                 if ( conv ) {
-                                    // Condense equivalence converters
+                                    // Condense equivalence converterHelpers
                                     if ( conv === true ) {
-                                        conv = converters[ conv2 ];
+                                        conv = converterHelpers[ conv2 ];
 
                                         // Otherwise, insert the intermediate dataType
-                                    } else if ( converters[ conv2 ] !== true ) {
+                                    } else if ( converterHelpers[ conv2 ] !== true ) {
                                         current = tmp[ 0 ];
                                         dataTypes.unshift( tmp[ 1 ] );
                                     }
@@ -7707,7 +7707,7 @@
                         }
                     }
 
-                    // Apply converter (if not an equivalence)
+                    // Apply converterHelper (if not an equivalence)
                     if ( conv !== true ) {
 
                         // Unless errors are allowed to bubble, catch and return them
@@ -7777,9 +7777,9 @@
                 json: "responseJSON"
             },
 
-            // Data converters
+            // Data converterHelpers
             // Keys separate source (or catchall "*") and destination types with a single space
-            converters: {
+            converterHelpers: {
 
                 // Convert anything to text
                 "* text": String,
@@ -8576,7 +8576,7 @@
         contents: {
             script: /(?:java|ecma)script/
         },
-        converters: {
+        converterHelpers: {
             "text script": function( text ) {
                 jQuery.globalEval( text );
                 return text;
@@ -8666,8 +8666,8 @@
                 s.url += ( rquery.test( s.url ) ? "&" : "?" ) + s.jsonp + "=" + callbackName;
             }
 
-            // Use data converter to retrieve json after script execution
-            s.converters["script json"] = function() {
+            // Use data converterHelper to retrieve json after script execution
+            s.converterHelpers["script json"] = function() {
                 if ( !responseContainer ) {
                     jQuery.error( callbackName + " was not called" );
                 }
@@ -8683,7 +8683,7 @@
                 responseContainer = arguments;
             };
 
-            // Clean-up function (fires after converters)
+            // Clean-up function (fires after converterHelpers)
             jqXHR.always(function() {
                 // Restore preexisting value
                 window[ callbackName ] = overwritten;

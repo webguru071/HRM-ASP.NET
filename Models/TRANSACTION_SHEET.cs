@@ -19,13 +19,13 @@ namespace EMSApp.Models
         public long TRNS_ID { get; set; }
         public decimal AMOUNT { get; set; }
         public string PAY_TYPE { get; set; }
+        public string VOUCHER_NO { get; set; }
+        public string TYPE { get; set; }
         public string REMARKS { get; set; }
         public long ACTION_BY { get; set; }
         public Nullable<System.DateTime> ACTION_DATE { get; set; }
         public Nullable<long> UPDATE_BY { get; set; }
         public Nullable<System.DateTime> UPDATE_DATE { get; set; }
-        public string TYPE { get; set; }
-        public string VOUCHER_NO { get; set; }
     
         public virtual TRANSACTION_ITEM TRANSACTION_ITEM { get; set; }
     }

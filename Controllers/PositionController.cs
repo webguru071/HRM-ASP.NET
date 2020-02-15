@@ -11,12 +11,12 @@ namespace EMSApp.Controllers
     public class PositionController : Controller
     {
         EMSEntities db = new EMSEntities();
-        ConverterHelper converter = new ConverterHelper();
+        ConverterHelper converterHelper = new ConverterHelper();
 
         // GET: Position
         public ActionResult Index()
         {
-            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
             {
                 var data = db.POSITIONAL_INFO.Where(x => x.CHANGE_TYPE == ConstantValue.TypeActive).ToList();
                 return View(data);
@@ -35,7 +35,7 @@ namespace EMSApp.Controllers
         // GET: Position/Create
         public ActionResult Create()
         {
-            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
             {
                 GetDataInBag();
                 return View();
@@ -83,7 +83,7 @@ namespace EMSApp.Controllers
                 }
                 else
                 {
-                    long userID = converter.GetLoggedUserID();
+                    long userID = converterHelper.GetLoggedUserID();
                     obj.ACTION_BY = userID;
                     obj.ACTION_DATE = DateTime.Now;
                     obj.CHANGE_TYPE = ConstantValue.TypeActive;
@@ -106,7 +106,7 @@ namespace EMSApp.Controllers
         // GET: Position/Edit/5
         public ActionResult Edit(int id)
         {
-            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
             {
                 var dt = db.POSITIONAL_INFO.Where(x => x.POSITION_ID == id).FirstOrDefault();
                 Session["DATA"] = dt;
@@ -158,7 +158,7 @@ namespace EMSApp.Controllers
                 else
                 {
                     //obj.CHANGE_TYPE = ConstantValue.TypeActive;
-                    obj.UPDATE_BY = converter.GetLoggedUserID();
+                    obj.UPDATE_BY = converterHelper.GetLoggedUserID();
                     obj.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
                     obj.UPDATE_DATE = DateTime.Now;
                     if (ModelState.IsValid)
@@ -182,7 +182,7 @@ namespace EMSApp.Controllers
         // GET: Position/Delete/5
         public ActionResult Delete(int id)
         {
-            if (converter.CheckLogin() && converter.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
             {
                 var dt = db.POSITIONAL_INFO.Where(x => x.POSITION_ID == id).FirstOrDefault();
                 return View(dt);

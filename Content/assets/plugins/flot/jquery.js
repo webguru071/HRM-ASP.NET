@@ -7582,10 +7582,10 @@ jQuery.extend({
 			text: "responseText"
 		},
 
-		// List of data converters
+		// List of data converterHelpers
 		// 1) key format is "source_type destination_type" (a single space in-between)
 		// 2) the catchall symbol "*" can be used for source_type
-		converters: {
+		converterHelpers: {
 
 			// Convert anything to text
 			"* text": window.String,
@@ -8050,7 +8050,7 @@ function ajaxHandleResponses( s, jqXHR, responses ) {
 	} else {
 		// Try convertible dataTypes
 		for ( type in responses ) {
-			if ( !dataTypes[ 0 ] || s.converters[ type + " " + dataTypes[0] ] ) {
+			if ( !dataTypes[ 0 ] || s.converterHelpers[ type + " " + dataTypes[0] ] ) {
 				finalDataType = type;
 				break;
 			}
@@ -8080,7 +8080,7 @@ function ajaxConvert( s, response ) {
 		// Work with a copy of dataTypes in case we need to modify it for conversion
 		dataTypes = s.dataTypes.slice(),
 		prev = dataTypes[ 0 ],
-		converters = {},
+		converterHelpers = {},
 		i = 0;
 
 	// Apply the dataFilter if provided
@@ -8088,10 +8088,10 @@ function ajaxConvert( s, response ) {
 		response = s.dataFilter( response, s.dataType );
 	}
 
-	// Create converters map with lowercased keys
+	// Create converterHelpers map with lowercased keys
 	if ( dataTypes[ 1 ] ) {
-		for ( conv in s.converters ) {
-			converters[ conv.toLowerCase() ] = s.converters[ conv ];
+		for ( conv in s.converterHelpers ) {
+			converterHelpers[ conv.toLowerCase() ] = s.converterHelpers[ conv ];
 		}
 	}
 
@@ -8104,27 +8104,27 @@ function ajaxConvert( s, response ) {
 			// Convert response if prev dataType is non-auto and differs from current
 			if ( prev !== "*" && prev !== current ) {
 
-				// Seek a direct converter
-				conv = converters[ prev + " " + current ] || converters[ "* " + current ];
+				// Seek a direct converterHelper
+				conv = converterHelpers[ prev + " " + current ] || converterHelpers[ "* " + current ];
 
 				// If none found, seek a pair
 				if ( !conv ) {
-					for ( conv2 in converters ) {
+					for ( conv2 in converterHelpers ) {
 
 						// If conv2 outputs current
 						tmp = conv2.split(" ");
 						if ( tmp[ 1 ] === current ) {
 
 							// If prev can be converted to accepted input
-							conv = converters[ prev + " " + tmp[ 0 ] ] ||
-								converters[ "* " + tmp[ 0 ] ];
+							conv = converterHelpers[ prev + " " + tmp[ 0 ] ] ||
+								converterHelpers[ "* " + tmp[ 0 ] ];
 							if ( conv ) {
-								// Condense equivalence converters
+								// Condense equivalence converterHelpers
 								if ( conv === true ) {
-									conv = converters[ conv2 ];
+									conv = converterHelpers[ conv2 ];
 
 								// Otherwise, insert the intermediate dataType
-								} else if ( converters[ conv2 ] !== true ) {
+								} else if ( converterHelpers[ conv2 ] !== true ) {
 									current = tmp[ 0 ];
 									dataTypes.splice( i--, 0, current );
 								}
@@ -8135,7 +8135,7 @@ function ajaxConvert( s, response ) {
 					}
 				}
 
-				// Apply converter (if not an equivalence)
+				// Apply converterHelper (if not an equivalence)
 				if ( conv !== true ) {
 
 					// Unless errors are allowed to bubble, catch and return them
@@ -8203,8 +8203,8 @@ jQuery.ajaxPrefilter( "json jsonp", function( s, originalSettings, jqXHR ) {
 			s.url += ( rquestion.test( url ) ? "&" : "?" ) + s.jsonp + "=" + callbackName;
 		}
 
-		// Use data converter to retrieve json after script execution
-		s.converters["script json"] = function() {
+		// Use data converterHelper to retrieve json after script execution
+		s.converterHelpers["script json"] = function() {
 			if ( !responseContainer ) {
 				jQuery.error( callbackName + " was not called" );
 			}
@@ -8219,7 +8219,7 @@ jQuery.ajaxPrefilter( "json jsonp", function( s, originalSettings, jqXHR ) {
 			responseContainer = arguments;
 		};
 
-		// Clean-up function (fires after converters)
+		// Clean-up function (fires after converterHelpers)
 		jqXHR.always(function() {
 			// Restore preexisting value
 			window[ callbackName ] = overwritten;
@@ -8253,7 +8253,7 @@ jQuery.ajaxSetup({
 	contents: {
 		script: /javascript|ecmascript/
 	},
-	converters: {
+	converterHelpers: {
 		"text script": function( text ) {
 			jQuery.globalEval( text );
 			return text;
