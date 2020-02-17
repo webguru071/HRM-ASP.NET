@@ -5082,7 +5082,7 @@ wysihtml5.dom.parse = (function() {
     })()
   };
   
-  // ------------ class converter (converts an html attribute to a class name) ------------ \\
+  // ------------ class converterHelper (converts an html attribute to a class name) ------------ \\
   var addClassMethods = {
     align_img: (function() {
       var mapping = {

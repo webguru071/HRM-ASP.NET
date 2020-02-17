@@ -16,7 +16,7 @@ namespace EMSApp
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Login", action = "Create", id = UrlParameter.Optional }
+                defaults: new { controller = "Login", action = "LogIn", id = UrlParameter.Optional }
             );
         }
     }

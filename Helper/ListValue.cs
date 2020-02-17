@@ -78,6 +78,21 @@ namespace EMSApp.Helper
             {"Arts", 'a'},
             {"Commerce", 'c'},
         };
+        public static Dictionary<string, string> Month = new Dictionary<string, string>()
+        {
+            {"January", "January"},
+            {"February", "February"},
+            {"March", "March"},
+            {"April", "April"},
+            {"May", "May"},
+            {"June", "June"},
+            {"July", "July"},
+            {"August", "August"},
+            {"September", "September"},
+            {"October", "October"},
+            {"November", "November"},
+            {"December", "December"},
+        };
         public static Dictionary<string, int> Year = new Dictionary<string, int>()
     {
         {"2001",2001 },
@@ -105,21 +120,21 @@ namespace EMSApp.Helper
         {"2023",2023 },
         {"2024",2024 },
         {"2025",2025 },
-        //{"2026",2026 },
-        //{"2027",2027 },
-        //{"2028",2028 },
-        //{"2029",2029 },
-        //{"2030",2030 },
-        //{"2031",2031 },
-        //{"2032",2032 },
-        //{"2033",2033 },
-        //{"2034",2034 },
-        //{"2035",2035 },
-        //{"2036",2036 },
-        //{"2037",2037 },
-        //{"2038",2038},
-        //{"2039",2039 },
-        //{"2040",2040 },
+        {"2026",2026 },
+        {"2027",2027 },
+        {"2028",2028 },
+        {"2029",2029 },
+        {"2030",2030 },
+        {"2031",2031 },
+        {"2032",2032 },
+        {"2033",2033 },
+        {"2034",2034 },
+        {"2035",2035 },
+        {"2036",2036 },
+        {"2037",2037 },
+        {"2038",2038},
+        {"2039",2039 },
+        {"2040",2040 },
 
     };
     }

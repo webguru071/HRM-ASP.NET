@@ -4316,6 +4316,8 @@
     <Content Include="Views\Sells\Create.cshtml" />
     <Content Include="Views\Sells\Edit.cshtml" />
     <Content Include="Views\Reports\InvStockReport.cshtml" />
+    <Content Include="Views\Salary\AllEmpIndex.cshtml" />
+    <Content Include="Views\Salary\AllEmpSalaryCreate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

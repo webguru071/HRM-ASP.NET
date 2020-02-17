@@ -155,7 +155,7 @@ output {
     cursor: $cursor-disabled;
   }
 
-  // [converter] extracted textarea& to textarea.form-control
+  // [converterHelper] extracted textarea& to textarea.form-control
 }
 
 // Reset height for `textarea`s
@@ -469,7 +469,7 @@ input[type="checkbox"] {
 //
 // Heads up! This is mixin-ed into `.navbar-form` in navbars.less.
 
-// [converter] extracted from `.form-inline` for libsass compatibility
+// [converterHelper] extracted from `.form-inline` for libsass compatibility
 @mixin form-inline {
 
   // Kick in the inline
@@ -539,7 +539,7 @@ input[type="checkbox"] {
     }
   }
 }
-// [converter] extracted as `@mixin form-inline` for libsass compatibility
+// [converterHelper] extracted as `@mixin form-inline` for libsass compatibility
 .form-inline {
   @include form-inline;
 }

@@ -114,7 +114,7 @@ namespace EMSApp.Controllers
                     var fileName = Path.GetFileName(uploadFile.FileName);
                     var path = Path.Combine(Server.MapPath("/Uploads"), fileName);
                     uploadFile.SaveAs(path);
-                    emp.IMAGE = "../../Uploads/" + fileName; ;
+                    emp.IMAGE = "../../Uploads/" + fileName; 
                 }
                 if (ModelState.IsValid)
                 {

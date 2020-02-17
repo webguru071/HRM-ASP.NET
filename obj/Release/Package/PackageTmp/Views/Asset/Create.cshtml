@@ -13,9 +13,9 @@
             <div class="card-body">
                 <h4 class="card-title">Asset Type Details</h4>
                 <form class="form-material m-t-40" onsubmit=" return validation();">
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="" style="font-weight:900">@Html.ValidationSummary(true, "", new { @class = "text-danger alert alert-danger" })</div>                    
                     <div class="form-group">
-                        Asset Type
+                        Asset Caterogy
                         <div class="col-md-10">
                             @Html.EditorFor(model => model.ASSET_TITLE, new { htmlAttributes = new { @class = "form-control" } })
                             @*<label class="alert-danger" id="lblAssetTitle"></label>*@

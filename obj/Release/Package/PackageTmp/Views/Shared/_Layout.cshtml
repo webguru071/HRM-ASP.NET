@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="../../Content/assets/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="100x100" href="../../Content/assets/images/hrm-logo.png">
     <title>@ViewBag.Title-HRM</title>
     <!-- Bootstrap Core CSS -->
     <link href="~/Content/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -69,22 +69,18 @@
                         <b>
                             <!--You can put here icon as well / <i class="wi wi-sunset"></i> /-->
                             <!-- Dark Logo icon -->
-                            <img src="../../Content/assets/images/logo-icon.png" alt="homepage" class="dark-logo" />
+                            <img height="35" src="../../Content/assets/images/hrm-logo.png" alt="homepage" class="dark-logo" />
                             <!-- Light Logo icon -->
-                            <img src="../../Content/assets/images/logo-light-icon.png" alt="homepage" class="light-logo" />
-
+                            <img height="35" src="../../Content/assets/images/hrm-logo.png" alt="homepage" class="light-logo" />
                         </b>
-
-
                         <!--End Logo icon -->
                         <!-- Logo text -->
-                        @*<span>
-                                 dark Logo text
-                                <img src="~/Content/assets/images/logo-text.png" alt="homepage" class="dark-logo" />
-                                 Light Logo text
-                                <img src="~/Content/assets/images/logo-light-text.png" class="light-logo" alt="homepage" />
-
-                            </span>*@
+                        <span>
+                            @*dark Logo text*@
+                            <img src="~/Content/assets/images/hrm-text.png" alt="homepage" class="dark-logo" />
+                            @*Light Logo text*@
+                            <img height="35" src="~/Content/assets/images/hrm-text.png" class="light-logo" alt="homepage" />                           
+                        </span>
                     </a>
                 </div>
                 <!-- ============================================================== -->
@@ -119,7 +115,7 @@
                         <!-- ============================================================== -->
                         <!-- Profile -->
                         <!-- ============================================================== -->
-                        <li class="nav-item dropdown">                           
+                        <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="@imagePath" alt="user" class="profile-pic" /></a>
 
                             <div class="dropdown-menu dropdown-menu-right scale-up">
@@ -181,13 +177,13 @@
                             if (levelU == EMSApp.Helper.ConstantValue.UserLevelAdmin)
                             {
                                 <li>
-                                    <a class="waves-effect waves-dark" href="~/Home/Index" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Dashboard</span></a>
+                                    <a class="waves-effect waves-dark" href="~/Home/Index" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">@uLevel Dashboard</span></a>
                                 </li>
                             }
                             if (levelU == EMSApp.Helper.ConstantValue.UserLevelEmployee)
                             {
                                 <li>
-                                    <a class="waves-effect waves-dark" href="~/Home/Dashboard" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Dashboard</span></a>
+                                    <a class="waves-effect waves-dark" href="~/Home/Dashboard" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">@uLevel Dashboard</span></a>
                                 </li>
                             }
                         }
@@ -233,28 +229,28 @@
                                         <li><a href="~/Team/TeamMemberIndex">Add Member</a></li>
                                     </ul>
                                 </li>
-                                <li>
-                                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-elevation-rise"></i><span class="hide-menu">Asset</span></a>
-                                    <ul aria-expanded="false" class="collapse">
-                                        <li><a href="~/Asset/Index">Asset Type</a></li>
-                                        <li><a href="~/Equipment/Index">Equipments</a></li>
-                                        <li><a href="~/EquipmentManage/Index">Equipment Manage</a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-minus-box-outline"></i><span class="hide-menu">Expense</span></a>
-                                    <ul aria-expanded="false" class="collapse">
-                                        <li><a href="~/Expense/Index">Expenses Item</a></li>
-                                        <li><a href="~/Expense/ExpenseSheetIndex">Expenses List</a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-plus-box"></i><span class="hide-menu">Income</span></a>
-                                    <ul aria-expanded="false" class="collapse">
-                                        <li><a href="~/Income/Index">Income Item</a></li>
-                                        <li><a href="~/Income/IncomeSheetIndex">Income List</a></li>
-                                    </ul>
-                                </li>
+                                @*<li>
+                                        <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-elevation-rise"></i><span class="hide-menu">Asset</span></a>
+                                        <ul aria-expanded="false" class="collapse">
+                                            <li><a href="~/Asset/Index">Asset Type</a></li>
+                                            <li><a href="~/Equipment/Index">Equipments</a></li>
+                                            <li><a href="~/EquipmentManage/Index">Equipment Manage</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-minus-box-outline"></i><span class="hide-menu">Expense</span></a>
+                                        <ul aria-expanded="false" class="collapse">
+                                            <li><a href="~/Expense/Index">Expenses Item</a></li>
+                                            <li><a href="~/Expense/ExpenseSheetIndex">Expenses List</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-plus-box"></i><span class="hide-menu">Income</span></a>
+                                        <ul aria-expanded="false" class="collapse">
+                                            <li><a href="~/Income/Index">Income Item</a></li>
+                                            <li><a href="~/Income/IncomeSheetIndex">Income List</a></li>
+                                        </ul>
+                                    </li>*@
                                 <li>
                                     <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-file-chart"></i><span class="hide-menu">Salary</span></a>
                                     <ul aria-expanded="false" class="collapse">
@@ -264,15 +260,39 @@
                                     </ul>
                                 </li>
                                 <li>
+                                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-chart-line"></i><span class="hide-menu">Inventory</span></a>
+                                    <ul aria-expanded="false" class="collapse">
+                                        <li><a href="~/Asset/Index">Asset Category</a></li>
+                                        <li><a href="~/Equipment/Index">Product</a></li>
+                                        <li>
+                                            <a href="#" class="has-arrow">Purchase</a>
+                                            <ul aria-expanded="false" class="collapse">
+                                                <li><a href="~/Vendor/SupplierIndex">Suppliers</a></li>
+                                                <li><a href="~/Purchase/Index">Product Purchase</a></li>
+                                                @*<li><a href="~/Reports/DepartmentWiseReport">Wastage</a></li>*@
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi "></i><span class="hide-menu">Sells</span></a>
+                                            <ul aria-expanded="false" class="collapse">
+                                                <li><a href="~/Vendor/BuyerIndex">Clients</a></li>
+                                                <li><a href="~/Sells/Index">Product Sell</a></li>
+                                                @*<li><a href="~/Reports/EmployeeSalaryReport">Return</a></li>*@
+                                            </ul>
+                                        </li>
+                                        <li><a href="~/Reports/InvStockReport">Product Stock</a></li>
+                                    </ul>
+                                </li>
+                                <li>
                                     <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-book-open-variant"></i><span class="hide-menu">Reports</span></a>
                                     <ul aria-expanded="false" class="collapse">
                                         <li>
                                             <a href="#" class="has-arrow">Employee</a>
                                             <ul aria-expanded="false" class="collapse">
                                                 <li><a href="~/Reports/EmployeeDemogReport">Demography</a></li>
-                                                <li><a href="~/Reports/PositionWiseReport">Position</a></li>
+                                                @*<li><a href="~/Reports/PositionWiseReport">Position</a></li>*@
                                                 <li><a href="~/Reports/DepartmentWiseReport">Department</a></li>
-                                                <li><a href="~/Reports/EmployeeLeaveReport">Leaves</a></li>
+                                                @*<li><a href="~/Reports/EmployeeLeaveReport">Leaves</a></li>*@
                                                 <li><a href="~/Reports/AttendanceReport">Attendance</a></li>
                                             </ul>
                                         </li>
@@ -280,9 +300,17 @@
                                             <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi "></i><span class="hide-menu">Salary</span></a>
                                             <ul aria-expanded="false" class="collapse">
                                                 <li><a href="~/Reports/AllEmployeeSalaryReport">All Employee</a></li>
-                                                <li><a href="~/Reports/EmployeeSalaryReport">Employee Wise </a></li>
+                                                @*<li><a href="~/Reports/EmployeeSalaryReport">Employee Wise </a></li>*@
                                             </ul>
                                         </li>
+                                        @*<li>
+                                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi "></i><span class="hide-menu">Inventory</span></a>
+                                            <ul aria-expanded="false" class="collapse">
+                                                <li><a href="~/Reports/AllEmployeeSalaryReport">Purchase</a></li>
+                                                <li><a href="~/Reports/InvStockReport">Sells</a></li>
+                                                <li><a href="~/Reports/InvStockReport">Stock</a></li>
+                                            </ul>
+                                        </li>*@
                                         @*<li><a href="~/Notice/Index">Notice</a></li>*@
                                     </ul>
                                 </li>

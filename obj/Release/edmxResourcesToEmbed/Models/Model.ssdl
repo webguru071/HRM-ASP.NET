@@ -105,10 +105,26 @@
     <Property Name="EQUEPMENT_ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="EQP_TITLE" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="ASSET_ID" Type="bigint" Nullable="false" />
-    <Property Name="MODEL_NO" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="MODEL_NO" Type="nvarchar" MaxLength="50" />
     <Property Name="SERIAL_NO" Type="nvarchar" MaxLength="50" />
     <Property Name="ACTION_BY" Type="bigint" Nullable="false" />
     <Property Name="ACTION_DATE" Type="datetime" Nullable="false" />
+    <Property Name="UPDATE_BY" Type="bigint" />
+    <Property Name="UPDATE_DATE" Type="datetime" />
+    <Property Name="ASSET_FOR" Type="char" MaxLength="1" />
+  </EntityType>
+  <EntityType Name="INV_INFO">
+    <Key>
+      <PropertyRef Name="INV_ID" />
+    </Key>
+    <Property Name="INV_ID" Type="bigint" Nullable="false" />
+    <Property Name="EQP_ID" Type="bigint" Nullable="false" />
+    <Property Name="VENDOR_ID" Type="bigint" Nullable="false" />
+    <Property Name="UNIT" Type="int" Nullable="false" />
+    <Property Name="DATE" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="STOCK_TYPE" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="ACTION_DATE" Type="datetime" Nullable="false" />
+    <Property Name="ACTION_BY" Type="bigint" Nullable="false" />
     <Property Name="UPDATE_BY" Type="bigint" />
     <Property Name="UPDATE_DATE" Type="datetime" />
   </EntityType>
@@ -220,6 +236,21 @@
     <Property Name="UPDATE_BY" Type="bigint" />
     <Property Name="UPDATE_DATE" Type="datetime" />
   </EntityType>
+  <EntityType Name="STOCK_INFO">
+    <Key>
+      <PropertyRef Name="STOCK_ID" />
+    </Key>
+    <Property Name="STOCK_ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EQP_ID" Type="bigint" Nullable="false" />
+    <Property Name="UNIT" Type="int" Nullable="false" />
+    <Property Name="STOCK_TYPE" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="STOCK_FOR" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="ACTION_BY" Type="bigint" Nullable="false" />
+    <Property Name="ACTION_DATE" Type="datetime" Nullable="false" />
+    <Property Name="UPDATE_BY" Type="bigint" />
+    <Property Name="UPDATE_DATE" Type="datetime" />
+    <Property Name="INV_ID" Type="bigint" Nullable="false" />
+  </EntityType>
   <EntityType Name="TEAM_DETAILS">
     <Key>
       <PropertyRef Name="ID" />
@@ -269,13 +300,13 @@
     <Property Name="TRNS_ID" Type="bigint" Nullable="false" />
     <Property Name="AMOUNT" Type="decimal" Precision="18" Scale="2" Nullable="false" />
     <Property Name="PAY_TYPE" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="VOUCHER_NO" Type="nvarchar" MaxLength="50" />
+    <Property Name="TYPE" Type="char" MaxLength="1" />
     <Property Name="REMARKS" Type="nvarchar" MaxLength="50" />
     <Property Name="ACTION_BY" Type="bigint" Nullable="false" />
     <Property Name="ACTION_DATE" Type="datetime" />
     <Property Name="UPDATE_BY" Type="bigint" />
     <Property Name="UPDATE_DATE" Type="datetime" />
-    <Property Name="TYPE" Type="char" MaxLength="1" />
-    <Property Name="VOUCHER_NO" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="USER_INFO">
     <Key>
@@ -293,6 +324,21 @@
     <Property Name="ACTION_BY" Type="bigint" />
     <Property Name="UPDATE_DATE" Type="datetime" />
     <Property Name="UPDATE_BY" Type="bigint" />
+  </EntityType>
+  <EntityType Name="VENDOR_INFO">
+    <Key>
+      <PropertyRef Name="VENDOR_ID" />
+    </Key>
+    <Property Name="VENDOR_ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="VENDOR_NAME" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ADDRESS" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="CONTACT" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="VENDOR_TYPE" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="ACTION_BY" Type="bigint" Nullable="false" />
+    <Property Name="ACTION_DATE" Type="datetime" Nullable="false" />
+    <Property Name="UPDATE_BY" Type="bigint" />
+    <Property Name="UPDATE_DATE" Type="datetime" />
+    <Property Name="STATUS" Type="char" MaxLength="1" Nullable="false" />
   </EntityType>
   <Association Name="FK_ASSET_ASSIGNMENT_EMPLOYEE_INFO">
     <End Role="EMPLOYEE_INFO" Type="Self.EMPLOYEE_INFO" Multiplicity="1" />
@@ -363,6 +409,30 @@
       </Principal>
       <Dependent Role="EQUEPMENTS_INFO">
         <PropertyRef Name="ASSET_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_INV_INFO_INV_INFO">
+    <End Role="EQUEPMENTS_INFO" Type="Self.EQUEPMENTS_INFO" Multiplicity="1" />
+    <End Role="INV_INFO" Type="Self.INV_INFO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EQUEPMENTS_INFO">
+        <PropertyRef Name="EQUEPMENT_ID" />
+      </Principal>
+      <Dependent Role="INV_INFO">
+        <PropertyRef Name="EQP_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_INV_INFO_VENDOR_INFO">
+    <End Role="VENDOR_INFO" Type="Self.VENDOR_INFO" Multiplicity="1" />
+    <End Role="INV_INFO" Type="Self.INV_INFO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="VENDOR_INFO">
+        <PropertyRef Name="VENDOR_ID" />
+      </Principal>
+      <Dependent Role="INV_INFO">
+        <PropertyRef Name="VENDOR_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -450,6 +520,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_STOCK_INFO_EQUEPMENTS_INFO">
+    <End Role="EQUEPMENTS_INFO" Type="Self.EQUEPMENTS_INFO" Multiplicity="1" />
+    <End Role="STOCK_INFO" Type="Self.STOCK_INFO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EQUEPMENTS_INFO">
+        <PropertyRef Name="EQUEPMENT_ID" />
+      </Principal>
+      <Dependent Role="STOCK_INFO">
+        <PropertyRef Name="EQP_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_STOCK_INFO_INV_INFO">
+    <End Role="INV_INFO" Type="Self.INV_INFO" Multiplicity="1" />
+    <End Role="STOCK_INFO" Type="Self.STOCK_INFO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="INV_INFO">
+        <PropertyRef Name="INV_ID" />
+      </Principal>
+      <Dependent Role="STOCK_INFO">
+        <PropertyRef Name="INV_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_TEAM_DETAILS_EMPLOYEE_INFO">
     <End Role="EMPLOYEE_INFO" Type="Self.EMPLOYEE_INFO" Multiplicity="1" />
     <End Role="TEAM_DETAILS" Type="Self.TEAM_DETAILS" Multiplicity="*" />
@@ -519,6 +613,7 @@
     <EntitySet Name="EMPLOYEE_APPLICATION" EntityType="Self.EMPLOYEE_APPLICATION" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="EMPLOYEE_INFO" EntityType="Self.EMPLOYEE_INFO" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="EQUEPMENTS_INFO" EntityType="Self.EQUEPMENTS_INFO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="INV_INFO" EntityType="Self.INV_INFO" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LEAVE_APPLICATION" EntityType="Self.LEAVE_APPLICATION" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LEAVE_TYPE" EntityType="Self.LEAVE_TYPE" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="NOTICE_BOARD" EntityType="Self.NOTICE_BOARD" Schema="dbo" store:Type="Tables" />
@@ -526,11 +621,13 @@
     <EntitySet Name="SALARY_INFO" EntityType="Self.SALARY_INFO" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SALARY_SETUP" EntityType="Self.SALARY_SETUP" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SALARY-GRADE" EntityType="Self.SALARY-GRADE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="STOCK_INFO" EntityType="Self.STOCK_INFO" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TEAM_DETAILS" EntityType="Self.TEAM_DETAILS" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TEAM_INFO" EntityType="Self.TEAM_INFO" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TRANSACTION_ITEM" EntityType="Self.TRANSACTION_ITEM" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TRANSACTION_SHEET" EntityType="Self.TRANSACTION_SHEET" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="USER_INFO" EntityType="Self.USER_INFO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="VENDOR_INFO" EntityType="Self.VENDOR_INFO" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_ASSET_ASSIGNMENT_EMPLOYEE_INFO" Association="Self.FK_ASSET_ASSIGNMENT_EMPLOYEE_INFO">
       <End Role="EMPLOYEE_INFO" EntitySet="EMPLOYEE_INFO" />
       <End Role="ASSET_MANAGEMENT" EntitySet="ASSET_MANAGEMENT" />
@@ -554,6 +651,14 @@
     <AssociationSet Name="FK_EQUEPMENTS_INFO_EQUEPMENTS_INFO" Association="Self.FK_EQUEPMENTS_INFO_EQUEPMENTS_INFO">
       <End Role="ASSET_INFO" EntitySet="ASSET_INFO" />
       <End Role="EQUEPMENTS_INFO" EntitySet="EQUEPMENTS_INFO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_INV_INFO_INV_INFO" Association="Self.FK_INV_INFO_INV_INFO">
+      <End Role="EQUEPMENTS_INFO" EntitySet="EQUEPMENTS_INFO" />
+      <End Role="INV_INFO" EntitySet="INV_INFO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_INV_INFO_VENDOR_INFO" Association="Self.FK_INV_INFO_VENDOR_INFO">
+      <End Role="VENDOR_INFO" EntitySet="VENDOR_INFO" />
+      <End Role="INV_INFO" EntitySet="INV_INFO" />
     </AssociationSet>
     <AssociationSet Name="FK_LEAVE_APPLICATION_EMPLOYEE_INFO" Association="Self.FK_LEAVE_APPLICATION_EMPLOYEE_INFO">
       <End Role="EMPLOYEE_INFO" EntitySet="EMPLOYEE_INFO" />
@@ -582,6 +687,14 @@
     <AssociationSet Name="FK_SALARY_SETUP_POSITIONAL_INFO" Association="Self.FK_SALARY_SETUP_POSITIONAL_INFO">
       <End Role="POSITIONAL_INFO" EntitySet="POSITIONAL_INFO" />
       <End Role="SALARY_SETUP" EntitySet="SALARY_SETUP" />
+    </AssociationSet>
+    <AssociationSet Name="FK_STOCK_INFO_EQUEPMENTS_INFO" Association="Self.FK_STOCK_INFO_EQUEPMENTS_INFO">
+      <End Role="EQUEPMENTS_INFO" EntitySet="EQUEPMENTS_INFO" />
+      <End Role="STOCK_INFO" EntitySet="STOCK_INFO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_STOCK_INFO_INV_INFO" Association="Self.FK_STOCK_INFO_INV_INFO">
+      <End Role="INV_INFO" EntitySet="INV_INFO" />
+      <End Role="STOCK_INFO" EntitySet="STOCK_INFO" />
     </AssociationSet>
     <AssociationSet Name="FK_TEAM_DETAILS_EMPLOYEE_INFO" Association="Self.FK_TEAM_DETAILS_EMPLOYEE_INFO">
       <End Role="EMPLOYEE_INFO" EntitySet="EMPLOYEE_INFO" />

@@ -1,0 +1,68 @@
+﻿@model EMSApp.Models.VENDOR_INFO
+
+@{
+    ViewBag.Title = "Create Supplier";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal" style="padding:15px">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">New Supllier</h4>
+                <form class="form-material m-t-40">
+                    <div class="" style="font-weight:900">@Html.ValidationSummary(true, "", new { @class = "text-danger alert alert-danger" })</div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                Supllier Name
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.VENDOR_NAME, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.VENDOR_NAME, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                Address
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.ADDRESS, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.ADDRESS, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                Contact
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.CONTACT, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.CONTACT, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="control-label">Status</label>
+                            <div class="col-md-10">
+                                @Html.DropDownList("STATUS", new SelectListItem[]
+                                                              {
+                                                                   new SelectListItem { Text = "Select One", Value="" },
+                                                                  new SelectListItem { Text = "Active", Value=EMSApp.Helper.ConstantValue.TypeActive },
+                                                                  new SelectListItem{ Text="Deactive",Value=EMSApp.Helper.ConstantValue.TypeDeactive },},
+                                                                  htmlAttributes: new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <div class="btn btn-secondary pull-center">
+                            @Html.ActionLink("Back to List", "SupplierIndex")
+                        </div>
+                        <button type="submit" class="btn btn-primary pull-right">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+}

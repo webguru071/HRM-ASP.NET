@@ -1,0 +1,51 @@
+﻿@model IEnumerable<EMSApp.Models.SALARY_INFO>
+
+@{
+    ViewBag.Title = "All Employee Salary";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid" style="padding-top:15px">
+    <div class="row">
+        <div class="col-md-3">
+            <p class="btn btn-block btn-outline-success btn-md">
+                @Html.ActionLink("Create New", "AllEmpSalaryCreate")
+            </p>
+        </div>
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">All Employee Salary</h4>
+                    <div class="table-responsive">
+                        <table class="table color-bordered-table primary-bordered-table">
+                            <thead>
+                                <tr>                                    
+                                    <th>
+                                        Payment
+                                    </th>  
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.ActionLink("View", "Edit", new { id = item.SALARY_PAID })
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.SALARY_PAID)
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

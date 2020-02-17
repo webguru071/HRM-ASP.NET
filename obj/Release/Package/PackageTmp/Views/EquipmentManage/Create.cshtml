@@ -4,10 +4,6 @@
     ViewBag.Title = "Asset Assign";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>Create</h2>
-
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -16,8 +12,7 @@
             <div class="card-body">
                 <h4 class="card-title">Asset Assign</h4>
                 <form class="form-material m-t-40">
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
+                    <div class="" style="font-weight:900">@Html.ValidationSummary(true, "", new { @class = "text-danger alert alert-danger" })</div>
                     <div class="form-group">
                         Employee
                         <div class="col-md-10">

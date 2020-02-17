@@ -18,12 +18,12 @@
                         <table class="table color-bordered-table primary-bordered-table">
                             <thead>
                                 <tr>
-                                    <th>Action</th>
+                                    <th>ACTION</th>
                                     <th>
-                                        Applicant
+                                        APPLICANT
                                     </th>
                                     <th>
-                                        Leave For
+                                        LEAVE TYPE
                                     </th>
                                     <th>
                                         START DATE
@@ -32,10 +32,10 @@
                                         END DATE
                                     </th>
                                     <th>
-                                        Remarks
+                                        REASON
                                     </th>
                                     <th>
-                                        Status
+                                        STATUS
                                     </th>
                                 </tr>
                             </thead>
@@ -50,7 +50,7 @@
                                                 if (item.STATUS != EMSApp.Helper.ConstantValue.LeaveStatusApproved)
                                                 {
                                                     <td>
-                                                        @Html.ActionLink("View", "LeaveAppEdit", new { id = item.LEAVE_APP_ID })|
+                                                        @Html.ActionLink("EDIT", "LeaveAppEdit", new { id = item.LEAVE_APP_ID })|
                                                         @Html.ActionLink("Delete", "LeaveAppDelete", new { id = item.LEAVE_APP_ID })
                                                     </td>
                                                 }
@@ -62,7 +62,7 @@
                                                 {
                                                     <td>
                                                         @Html.ActionLink("View", "LeaveAppEdit", new { id = item.LEAVE_APP_ID })|
-                                                        @Html.ActionLink("Delete", "LeaveAppEdit", new { id = item.LEAVE_APP_ID })
+                                                        @Html.ActionLink("Delete", "LeaveAppDelete", new { id = item.LEAVE_APP_ID })
                                                     </td>
                                                 }
                                                 if (item.STATUS == EMSApp.Helper.ConstantValue.LeaveStatusApproved)
