@@ -59,7 +59,7 @@
         <!-- Topbar header - style you can find in pages.scss -->
         <!-- ============================================================== -->
         <header class="topbar">
-            <nav class="navbar top-navbar navbar-expand-md navbar-light">
+            <nav class="navbar top-navbar navbar-expand-md navbar-dark">
                 <!-- ============================================================== -->
                 <!-- Logo -->
                 <!-- ============================================================== -->
@@ -254,9 +254,15 @@
                                 <li>
                                     <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-file-chart"></i><span class="hide-menu">Salary</span></a>
                                     <ul aria-expanded="false" class="collapse">
-                                        <li><a href="~/SalaryGrade/Index">Benifits</a></li>
+                                        <li><a href="~/SalaryGrade/Index">Benefits </a></li>
                                         <li><a href="~/SalarySetup/Index">Salary Setup</a></li>
-                                        <li><a href="~/Salary/Index">Salary Pay</a></li>
+                                        <li>
+                                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi "></i><span class="hide-menu">Salary Pay</span></a>
+                                            <ul aria-expanded="false" class="collapse">
+                                                <li><a href="~/Salary/AllEmpIndex">All Employee</a></li>
+                                                <li><a href="~/Salary/Index">Individual Employee</a></li>
+                                            </ul>
+                                        </li>
                                     </ul>
                                 </li>
                                 <li>
@@ -303,14 +309,13 @@
                                                 @*<li><a href="~/Reports/EmployeeSalaryReport">Employee Wise </a></li>*@
                                             </ul>
                                         </li>
-                                        @*<li>
-                                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi "></i><span class="hide-menu">Inventory</span></a>
+                                        <li>
+                                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi "></i><span class="hide-menu">Attendance</span></a>
                                             <ul aria-expanded="false" class="collapse">
-                                                <li><a href="~/Reports/AllEmployeeSalaryReport">Purchase</a></li>
-                                                <li><a href="~/Reports/InvStockReport">Sells</a></li>
-                                                <li><a href="~/Reports/InvStockReport">Stock</a></li>
+                                                <li><a href="~/Reports/AttendanceReportMonthly">Monthly Attendance</a></li>
+                                                <li><a href="~/Reports/AttendanceReport">Daily Attendance</a></li>
                                             </ul>
-                                        </li>*@
+                                        </li>
                                         @*<li><a href="~/Notice/Index">Notice</a></li>*@
                                     </ul>
                                 </li>

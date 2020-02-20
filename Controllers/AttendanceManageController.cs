@@ -20,7 +20,8 @@ namespace EMSApp.Controllers
             if (converterHelper.CheckLogin())
             {
                 long empId = converterHelper.GetLoggedEmployeeID();
-                var data = service.GetAttendanceData(empId: empId);
+                string date = DateTime.Today.ToString("yyyy-MM-dd");
+                var data = service.GetAttendanceData(empId: empId,toDate:date);
                 return View(data);
             }
             else
@@ -83,7 +84,7 @@ namespace EMSApp.Controllers
                         attn.EMPLOYEE_ID = Convert.ToInt64(data.EMPLOYEE_ID);
                         attn.ATT_DATE = DateTime.Today.Date;
                         attn.STATUS = (string.IsNullOrEmpty(collection["checkIn"])) ? Helper.ConstantValue.AttendanceCheckOut : Helper.ConstantValue.AttendanceCheckIn;
-                        int count = db.ATTENDANCE_DETAILS.Where(x => x.EMPLOYEE_ID == attn.EMPLOYEE_ID && x.STATUS == attn.STATUS && x.ATT_DATE == attn.ATT_DATE).Count();
+                        int count = db.ATTENDANCE_DETAILS.Where(x => x.EMPLOYEE_ID == attn.EMPLOYEE_ID && x.ATT_DATE == attn.ATT_DATE).Count();
                         attn.SL_NO = count + 1;
                         if (!string.IsNullOrEmpty(collection["checkIn"]))
                         {

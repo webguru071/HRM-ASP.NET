@@ -4318,6 +4318,8 @@
     <Content Include="Views\Reports\InvStockReport.cshtml" />
     <Content Include="Views\Salary\AllEmpIndex.cshtml" />
     <Content Include="Views\Salary\AllEmpSalaryCreate.cshtml" />
+    <Content Include="Views\Salary\ViewAllEmployeeSalaryMonthWise.cshtml" />
+    <Content Include="Views\Reports\AttendanceReportMonthly.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

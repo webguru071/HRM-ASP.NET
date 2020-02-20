@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using EMSApp.Helper;
 using EMSApp.Models;
+using EMSApp.Models.UserModel;
 
 namespace EMSApp.Controllers
 {
@@ -13,6 +15,7 @@ namespace EMSApp.Controllers
     {
         EMSEntities db = new EMSEntities();
         ConverterHelper converterHelper = new ConverterHelper();
+        DBHelper dbHelper = new DBHelper();
         // GET: Salary
         public ActionResult Index()
         {
@@ -36,7 +39,7 @@ namespace EMSApp.Controllers
         {
             if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
             {
-                ViewBag.EMPLOYEE_ID = SetEmployee();
+                ViewBag.EMP_ID = SetEmployee();
                 ViewBag.SALARY_MONTH = SetMonth();
                 ViewBag.SALARY_YEAR = SetYear();
                 return View();
@@ -48,36 +51,38 @@ namespace EMSApp.Controllers
         }
         // POST: Salary/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(SalaryInfo collection)
         {
             try
             {
                 // TODO: Add insert logic here
-                if (Convert.ToInt64(collection["EMPLOYEE_ID"]) <= 0)
+                if (Convert.ToInt64(collection.EMP_ID) <= 0)
                 {
                     ModelState.AddModelError("", "Employee Name is Required!!");
                 }
-                else if (string.IsNullOrEmpty(collection["SALARY_MONTH"].ToString()))
+                else if (string.IsNullOrEmpty(collection.SALARY_MONTH))
                 {
                     ModelState.AddModelError("", "Payment Month is Required!!");
                 }
-                else if (string.IsNullOrEmpty(collection["SALARY_YEAR"].ToString()))
+                else if (string.IsNullOrEmpty(collection.SALARY_YEAR))
                 {
                     ModelState.AddModelError("", "Payment Year is Required!!");
                 }
-                else if (string.IsNullOrEmpty(collection["GROSS_SALARY"].ToString()))
+                else if (string.IsNullOrEmpty(collection.GROSS_SALARY.ToString()))
                 {
                     ModelState.AddModelError("", "Salary is Required!!");
                 }
                 else
                 {
                     SALARY_INFO salary = new SALARY_INFO();
-                    salary.EMPLOYEE_ID = Convert.ToInt64(collection["EMPLOYEE_ID"]);
-                    salary.GROSS_SALARY = Convert.ToInt64(collection["GROSS_SALARY"]);
-                    salary.SALARY_PAID = collection["SALARY_MONTH"] + "," + collection["SALARY_YEAR"];
-                    decimal bonus = !string.IsNullOrEmpty(collection["BONUS"]) ? Convert.ToDecimal(collection["BONUS"]) : 0;
-                    decimal other = !string.IsNullOrEmpty(collection["OTHERS"]) ? Convert.ToDecimal(collection["OTHERS"]) : 0;
-                    salary.TOTAL = Convert.ToInt64(collection["GROSS_SALARY"]) + bonus + other;
+                    salary.EMPLOYEE_ID = Convert.ToInt64(collection.EMP_ID);
+                    salary.GROSS_SALARY = collection.GROSS_SALARY;
+                    salary.SALARY_PAID = collection.SALARY_MONTH + ", " + collection.SALARY_YEAR;
+                    decimal bonus = !string.IsNullOrEmpty(collection.BONUS.ToString()) ? Convert.ToDecimal(collection.BONUS) : 0;
+                    decimal other = !string.IsNullOrEmpty(collection.OTHERS.ToString()) ? Convert.ToDecimal(collection.OTHERS) : 0;
+                    salary.BONUS = bonus;
+                    salary.OTHERS = other;
+                    salary.TOTAL = Convert.ToInt64(collection.GROSS_SALARY) + bonus + other;
                     if (salary.ACTION_BY.ToString() != null)
                     {
                         salary.ACTION_BY = converterHelper.GetLoggedUserID();
@@ -87,18 +92,19 @@ namespace EMSApp.Controllers
                     if (ModelState.IsValid)
                     {
                         db.SALARY_INFO.Add(salary);
-                        //db.SaveChanges();
+                        db.SaveChanges();
                         return RedirectToAction("Index");
                     }
                 }
-                ViewBag.EMPLOYEE_ID = SetEmployee();
-                return View();
             }
             catch (Exception ex)
             {
-                ViewBag.EMPLOYEE_ID = SetEmployee();
-                return View();
+
             }
+            ViewBag.EMP_ID = SetEmployee();
+            ViewBag.SALARY_MONTH = SetMonth();
+            ViewBag.SALARY_YEAR = SetYear();
+            return View();
         }
         // GET: Salary/Edit/5
         public ActionResult Edit(int id)
@@ -119,8 +125,23 @@ namespace EMSApp.Controllers
         [HttpGet]
         public ActionResult AllEmpIndex()
         {
-            return View();
-        }        
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            {
+                var data = dbHelper.GetDataTable(@"SELECT SALARY_PAID FROM SALARY_INFO GROUP BY SALARY_PAID");
+                List<SALARY_INFO> list = new List<SALARY_INFO>();
+                foreach (DataRow dt in data.Rows)
+                {
+                    SALARY_INFO obj = new SALARY_INFO();
+                    obj.SALARY_PAID = Convert.ToString(dt["SALARY_PAID"]);
+                    list.Add(obj);
+                }
+                return View(list);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+        }
         [HttpGet]
         public ActionResult AllEmpSalaryCreate()
         {
@@ -136,21 +157,96 @@ namespace EMSApp.Controllers
             }
         }
         [HttpPost]
-        public ActionResult AllEmpSalaryCreate(FormCollection collection)
+        public ActionResult AllEmpSalaryCreate(SalaryInfo collection)
         {
-            if (string.IsNullOrEmpty(collection["SALARY_MONTH"].ToString()))
+            if (string.IsNullOrEmpty(collection.SALARY_MONTH))
             {
                 ModelState.AddModelError("", "Payment Month is Required!!");
             }
-            else if (string.IsNullOrEmpty(collection["SALARY_YEAR"].ToString()))
+            else if (string.IsNullOrEmpty(collection.SALARY_YEAR))
             {
                 ModelState.AddModelError("", "Payment Year is Required!!");
             }
             else
             {
+                string paidDAate = collection.SALARY_MONTH + ", " + collection.SALARY_YEAR;
+                var checkData = db.SALARY_INFO.Where(x => x.SALARY_PAID == paidDAate).ToList();
+                if (checkData.Count > 0)
+                {
+                    ModelState.AddModelError("", "Salary is Already Generated for " + paidDAate + "!!!");
+                }
+                if (ModelState.IsValid)
+                {
+                    var data = db.SALARY_SETUP.Where(x => x.CANGE_TYPE == ConstantValue.TypeActive).ToList();
+                    using (var dbContextTransaction = db.Database.BeginTransaction())
+                    {
+                        try
+                        {
+                            foreach (var dt in data)
+                            {
+                                SALARY_INFO sInfo = new SALARY_INFO();
+                                sInfo.EMPLOYEE_ID = dt.EMP_ID;
+                                sInfo.GROSS_SALARY = dt.GROSS_SALARY;
+                                sInfo.BONUS = 0;
+                                sInfo.OTHERS = 0;
+                                sInfo.SALARY_PAID = paidDAate;
+                                sInfo.TOTAL = sInfo.GROSS_SALARY + sInfo.BONUS + sInfo.OTHERS;
+                                sInfo.ACTION_BY = converterHelper.GetLoggedUserID();
+                                sInfo.ACTION_DATE = DateTime.Now;
+                                db.SALARY_INFO.Add(sInfo);
+                                db.SaveChanges();
+                            }
+                            dbContextTransaction.Commit();
+                        }
+                        catch (Exception ex)
+                        {
+                            dbContextTransaction.Rollback();
+                        }
+                    }
+                    ShowDataInList(paidDAate);
+                }
             }
+            ViewBag.SALARY_MONTH = SetMonth();
+            ViewBag.SALARY_YEAR = SetYear();
             return View();
         }
+        [HttpGet]
+        public ActionResult ViewAllEmployeeSalaryMonthWise(string monthStr)
+        {
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            {
+                ShowDataInList(monthStr);
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+        }
+        private void ShowDataInList(string dateStr)
+        {
+            try
+            {
+                var data = db.SALARY_INFO.Where(x => x.SALARY_PAID == dateStr).ToList();
+                var empData = db.EMPLOYEE_INFO.ToList();
+                List<SalaryInfo> list = new List<SalaryInfo>();
+                foreach (var dt in data)
+                {
+                    SalaryInfo info = new SalaryInfo();
+                    var empDataInd = empData.Find(x => x.ID == dt.EMPLOYEE_ID);
+                    info.EMPLOYEE_NAME = empDataInd.EMPLOYEE_NAME;
+                    info.GROSS_SALARY = dt.GROSS_SALARY;
+                    info.SALARY_PAID = dateStr;
+                    list.Add(info);
+                }
+                ViewBag.SALARY_INFO = list;
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
         public ActionResult Edit(int id, SALARY_INFO salary)
         {
             try
@@ -224,14 +320,14 @@ namespace EMSApp.Controllers
         {
             string year = DateTime.Now.Year.ToString();
             List<SelectListItem> list = new SelectList(ListValue.Year, "Value", "Key", year).ToList();
-            list.Insert(0, (new SelectListItem { Text = "Select One", Value = "0" }));
+            list.Insert(0, (new SelectListItem { Text = "Select One", Value = "" }));
             return list;
         }
 
         private dynamic SetMonth()
         {
             List<SelectListItem> list = new SelectList(ListValue.Month, "Value", "Key").ToList();
-            list.Insert(0, (new SelectListItem { Text = "Select One", Value = "0" }));
+            list.Insert(0, (new SelectListItem { Text = "Select One", Value = "" }));
             return list;
         }
         public JsonResult GetEmpInfo(long id)

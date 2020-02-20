@@ -24,16 +24,16 @@ namespace EMSApp.Controllers
         [HttpGet]
         public ActionResult EmployeeDemogReport()
         {
-            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
             {
                 ViewBag.EMPLOYEE_ID = SetEmployee();
                 var data = service.GetDeptWiseData();
                 return View(data);
             }
-           else
+            else
             {
                 return RedirectToAction("LogIn", "Login");
-            }            
+            }
         }
         [HttpPost]
         public ActionResult EmployeeDemogReport(FormCollection collection)
@@ -50,7 +50,7 @@ namespace EMSApp.Controllers
             {
                 return RedirectToAction("LogIn", "Login");
             }
-           
+
         }
         [HttpGet]
         public ActionResult AttendanceReport()
@@ -65,7 +65,7 @@ namespace EMSApp.Controllers
             {
                 return RedirectToAction("LogIn", "Login");
             }
-           
+
         }
         [HttpPost]
         public ActionResult AttendanceReport(FormCollection collection)
@@ -74,7 +74,7 @@ namespace EMSApp.Controllers
             {
                 string fromDate = collection["fromDate"];
                 string toDate = collection["toDate"];
-                long empId = converterHelper.GetLoggedEmployeeID();
+                long empId = Convert.ToInt64(collection["EMPLOYEE_ID"]);
                 var data = service.GetAttendanceData(fromDate: fromDate, toDate: toDate, empId: empId);
                 ViewBag.EMPLOYEE_ID = SetEmployee();
                 return View(data);
@@ -83,12 +83,76 @@ namespace EMSApp.Controllers
             {
                 return RedirectToAction("LogIn", "Login");
             }
-            
+
+        }
+        [HttpGet]
+        public ActionResult AttendanceReportMonthly()
+        {
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            {                
+                ViewBag.EMPLOYEE_ID = SetEmployee();
+                ViewBag.MONTH = SetMonth();
+                ViewBag.YEAR = SetYear();
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+
+        }
+        [HttpPost]
+        public ActionResult AttendanceReportMonthly(FormCollection collection)
+        {
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            {
+                if (string.IsNullOrEmpty(collection["MONTH"]))
+                {
+                    ModelState.AddModelError("", "Please Select Month!!!");
+                }
+                else if (string.IsNullOrEmpty(collection["YEAR"]))
+                {
+                    ModelState.AddModelError("", "Please Select Year!!!");
+                }
+                else if (string.IsNullOrEmpty(collection["EMPLOYEE_ID"]))
+                {
+                    ModelState.AddModelError("", "Please Select Employee!!!");
+                }
+                else
+                {
+                    string fromDate = "";
+                    string toDate = "";
+                    if (!string.IsNullOrEmpty(collection["MONTH"]) && !string.IsNullOrEmpty(collection["YEAR"]))
+                    {
+                        fromDate = collection["YEAR"] + "-" + collection["MONTH"] + "-01";
+                        DateTime firstDate = Convert.ToDateTime(fromDate);
+                        DateTime lastDate = firstDate.AddMonths(1).AddDays(-1);
+                        toDate = lastDate.ToString("yyyy-MM-dd");
+                    }
+                    long empId = Convert.ToInt64(collection["EMPLOYEE_ID"]);
+                    var data = service.GetAttendanceDataMonthly(fromDate: fromDate, toDate: toDate, empId: empId);
+                    ViewBag.STR = " of " + collection["MONTH"] + ", " + collection["YEAR"];
+                    ViewBag.EMPLOYEE_ID = SetEmployee();
+                    ViewBag.MONTH = SetMonth();
+                    ViewBag.YEAR = SetYear();
+                    return View(data);
+                }
+                ViewBag.STR = " of " + collection["MONTH"] + ", " + collection["YEAR"];
+                ViewBag.EMPLOYEE_ID = SetEmployee();
+                ViewBag.MONTH = SetMonth();
+                ViewBag.YEAR = SetYear();
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+
         }
         private List<SelectListItem> SetEmployee()
         {
             List<SelectListItem> empList = new SelectList(db.EMPLOYEE_INFO, "ID", "EMPLOYEE_NAME").ToList();
-            empList.Insert(0, (new SelectListItem { Text = "Select Employee", Value = "0" }));
+            empList.Insert(0, (new SelectListItem { Text = "Select Employee", Value = "" }));
             return empList;
         }
         [HttpGet]
@@ -103,7 +167,7 @@ namespace EMSApp.Controllers
             {
                 return RedirectToAction("LogIn", "Login");
             }
-            
+
         }
         [HttpPost]
         public ActionResult DepartmentWiseReport(FormCollection collection)
@@ -120,7 +184,7 @@ namespace EMSApp.Controllers
             {
                 return RedirectToAction("LogIn", "Login");
             }
-            
+
         }
         private List<SelectListItem> SetDepartment()
         {
@@ -141,7 +205,7 @@ namespace EMSApp.Controllers
             {
                 return RedirectToAction("LogIn", "Login");
             }
-            
+
         }
         [HttpPost]
         public ActionResult AllEmployeeSalaryReport(FormCollection collection)
@@ -158,7 +222,7 @@ namespace EMSApp.Controllers
             {
                 return RedirectToAction("LogIn", "Login");
             }
-            
+
         }
         [HttpGet]
         public ActionResult EmployeeSalaryReport()
@@ -172,14 +236,14 @@ namespace EMSApp.Controllers
             {
                 return RedirectToAction("LogIn", "Login");
             }
-           
+
         }
         [HttpPost]
         public ActionResult EmployeeSalaryReport(FormCollection collection)
         {
             if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
             {
-                long Id=converterHelper.GetLoggedEmployeeID();
+                long Id = converterHelper.GetLoggedEmployeeID();
                 var data = db.SALARY_INFO.Where(x => x.EMPLOYEE_ID == Id).OrderByDescending(x => x.SALARY_PAID).ToList();
                 ViewBag.EMPLOYEE_ID = SetEmployee();
                 return View(data);
@@ -188,7 +252,7 @@ namespace EMSApp.Controllers
             {
                 return RedirectToAction("LogIn", "Login");
             }
-           
+
         }
         [HttpGet]
         public ActionResult InvStockReport()
@@ -213,7 +277,7 @@ namespace EMSApp.Controllers
                         dt.UNIT = unitAvail;
                         dt.EQUIPMENT_TITLE = data.EQUEPMENTS_INFO.EQP_TITLE;
                         dataList.Add(dt);
-                    }                                    
+                    }
                 }
                 return View(dataList);
             }
@@ -223,21 +287,20 @@ namespace EMSApp.Controllers
             }
 
         }
-        //[HttpPost]
-        //public ActionResult InvStockReport(FormCollection collection)
-        //{
-        //    if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
-        //    {
-        //        long Id = converterHelper.GetLoggedEmployeeID();
-        //        var data = db.SALARY_INFO.Where(x => x.EMPLOYEE_ID == Id).OrderByDescending(x => x.SALARY_PAID).ToList();
-        //        ViewBag.EMPLOYEE_ID = SetEmployee();
-        //        return View(data);
-        //    }
-        //    else
-        //    {
-        //        return RedirectToAction("LogIn", "Login");
-        //    }
+        private dynamic SetYear()
+        {
+            string year = DateTime.Now.Year.ToString();
+            List<SelectListItem> list = new SelectList(ListValue.Year, "Value", "Key", year).ToList();
+            list.Insert(0, (new SelectListItem { Text = "Select One", Value = "" }));
+            return list;
+        }
 
-        //}
+        private dynamic SetMonth()
+        {
+            //string month = (DateTime.Now.Month).ToString();
+            List<SelectListItem> list = new SelectList(ListValue.MonthDate, "Value", "Key").ToList();
+            list.Insert(0, (new SelectListItem { Text = "Select One", Value = "" }));
+            return list;
+        }
     }
 }

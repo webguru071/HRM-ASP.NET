@@ -1,7 +1,7 @@
 ﻿@model EMSApp.Models.SALARY_GRADE
 
 @{
-    ViewBag.Title = "Delete Salary Benifit";
+    ViewBag.Title = "Delete Salary Benefit";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @using (Html.BeginForm())
@@ -17,12 +17,12 @@
         <div class="card-body">
             <form class="form-horizontal" role="form">
                 <div class="form-body">
-                    <h3 class="box-title">Salary Benifit Details</h3>
+                    <h3 class="box-title">Salary Benefit Details</h3>
                     <hr class="m-t-0 m-b-40">
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group row">
-                                <label class="control-label text-right col-md-3">Benifit</label>
+                                <label class="control-label text-right col-md-3">Benefit</label>
                                 <div class="col-md-9">
                                     @Html.DisplayFor(model => model.GRADE_TITLE)
                                 </div>
@@ -33,7 +33,7 @@
                         {
                             <div class="col-md-4">
                                 <div class="form-group row">
-                                    <label class="control-label text-right col-md-3">Benifit Action</label>
+                                    <label class="control-label text-right col-md-3">Benefit Action</label>
                                     <div class="col-md-9">
                                         Addition
                                     </div>
@@ -44,7 +44,7 @@
                         {
                             <div class="col-md-4">
                                 <div class="form-group row">
-                                    <label class="control-label text-right col-md-3">Benifit Action</label>
+                                    <label class="control-label text-right col-md-3">Benefit Action</label>
                                     <div class="col-md-9">
                                         Deduction
                                     </div>

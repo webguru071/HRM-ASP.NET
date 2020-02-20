@@ -1,7 +1,7 @@
 ﻿@model EMSApp.Models.SALARY_GRADE
 
 @{
-    ViewBag.Title = "Edit Benifit";
+    ViewBag.Title = "Edit Benefit";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -19,7 +19,7 @@
                 <div class="row p-t-20">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label class="control-label">Benifit</label>
+                            <label class="control-label">Benefit</label>
                             @Html.EditorFor(model => model.GRADE_TITLE, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.GRADE_TITLE, "", new { @class = "text-danger" })
                         </div>
@@ -27,7 +27,7 @@
                     <!--/span-->
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label class="control-label">Benifit Action</label>
+                            <label class="control-label">Benefit Action</label>
                             <div class="col-md-10">
                                 @Html.DropDownList("GRADE_TYPE", new SelectListItem[]
                                                               {

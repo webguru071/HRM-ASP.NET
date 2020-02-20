@@ -12,10 +12,11 @@ namespace EMSApp.Services
 {
     public class CombineServices : ICombine
     {
+        EMSEntities db = new EMSEntities();
         DBHelper dbHelper = new DBHelper();
         ConverterHelper converterHelper = new ConverterHelper();
         public List<EmployeeReport> GetDeptWiseData(string status = "", long deptId = 0, long empId = 0)
-        {           
+        {
             string iDFilter = (deptId <= 0) ? "" : " AND DII.DEPT_ID=" + deptId;
             string empIdFilter = (empId <= 0) ? "" : " AND EI.ID=" + empId;
             string statusFilter = (string.IsNullOrEmpty(status)) ? "" : " AND EI.IS_DELETED='" + status + "' ";
@@ -60,7 +61,7 @@ namespace EMSApp.Services
                             INNER JOIN EMPLOYEE_INFO EI ON EI.ID=PI.EMPLOYEE_ID
                             INNER JOIN DIVISION_INFO DI ON PI.DIV_ID=DI.DIV_ID
                             INNER JOIN DEPARTMENT_INFO DII ON DI.DEPT_ID=DII.DEPT_ID
-                            WHERE PI.CHANGE_TYPE='a' " + iDFilter + statusFilter +empIdFilter;
+                            WHERE PI.CHANGE_TYPE='a' " + iDFilter + statusFilter + empIdFilter;
             DataTable data = dbHelper.GetDataTable(query);
             return GetDeptWiseEmpDataInList(data);
         }
@@ -75,7 +76,7 @@ namespace EMSApp.Services
                     pInfo.ID = Convert.ToInt64(dRow["ID"]);
                     pInfo.EMPLOYEE_NAME = Convert.ToString(dRow["EMPLOYEE_NAME"]);
                     pInfo.ADDRESS = Convert.ToString(dRow["ADDRESS"]);
-                    pInfo.NID = Convert.ToString(dRow["NID"]);                    
+                    pInfo.NID = Convert.ToString(dRow["NID"]);
                     pInfo.CITY = Convert.ToString(dRow["CITY"]);
                     if (!string.IsNullOrEmpty(dRow["POSTAL_CODE"].ToString()))
                     {
@@ -92,7 +93,7 @@ namespace EMSApp.Services
                     pInfo.DEPT_TITLE = Convert.ToString(dRow["DEPT_TITLE"]);
                     pInfo.DIV_TITLE = Convert.ToString(dRow["DIV_TITLE"]);
                     pInfo.POSITION_TITLE = Convert.ToString(dRow["POSITION_TITLE"]);
-                    pInfo.CONTACT  = Convert.ToString(dRow["CONTACT"]);
+                    pInfo.CONTACT = Convert.ToString(dRow["CONTACT"]);
                     pInfo.EMAIL = Convert.ToString(dRow["EMAIL"]);
                     pInfo.JOINING_DATE = Convert.ToString(dRow["JOINING_DATE"]);
                     pInfo.RESIGNING_DATE = Convert.ToString(dRow["RESIGNING_DATE"]);
@@ -131,8 +132,8 @@ namespace EMSApp.Services
                     AttendanceClass pInfo = new AttendanceClass();
                     pInfo.EMPLOYEE_NAME = Convert.ToString(dRow["EMPLOYEE_NAME"]);
                     DateTime dateAtt = Convert.ToDateTime(dRow["ATT_DATE"]);
-                    pInfo.ATT_DATE = dateAtt.ToString("dd-MM-yyyy");                    
-                    pInfo.CHECK_IN_TIME =converterHelper.GetFormatted12HTime( Convert.ToString(dRow["CHECK_IN_TIME"]));
+                    pInfo.ATT_DATE = dateAtt.ToString("dd-MM-yyyy");
+                    pInfo.CHECK_IN_TIME = converterHelper.GetFormatted12HTime(Convert.ToString(dRow["CHECK_IN_TIME"]));
                     pInfo.CHECK_OUT_TIME = converterHelper.GetFormatted12HTime(Convert.ToString(dRow["CHECK_OUT_TIME"]));
                     dataList.Add(pInfo);
                 }
@@ -152,7 +153,7 @@ namespace EMSApp.Services
         public bool SalarySetupStatusChange(long id, string statusV)
         {
             string query = @"UPDATE SALARY_SETUP  SET CANGE_TYPE='" + statusV + "' WHERE SALARY_SET_ID=" + id;
-            bool result = dbHelper.ExecuteDML(query);            
+            bool result = dbHelper.ExecuteDML(query);
             return result;
         }
 
@@ -182,6 +183,91 @@ namespace EMSApp.Services
                 }
             }
             return dataList;
+        }
+
+        public List<AttendanceClass> GetAttendanceDataMonthly(string fromDate = "", string toDate = "", long empId = 0)
+        {
+            string DateFilter = "";
+            if (!string.IsNullOrEmpty(toDate) && !string.IsNullOrEmpty(fromDate))
+            {
+                DateFilter = " and ad.ATT_DATE BETWEEN '" + fromDate + "' AND '" + toDate + "' ";
+            }
+
+            string query = @"select ei.ID,ei.EMPLOYEE_NAME,ad.ATT_DATE from ATTENDANCE_DETAILS ad
+                            inner join EMPLOYEE_INFO ei on ei.ID=ad.EMPLOYEE_ID 
+                            where ei.id=" + empId + DateFilter + @"  group by ad.ATT_DATE,ei.EMPLOYEE_NAME,ei.ID";
+            DataTable data = dbHelper.GetDataTable(query);
+            List<AttendanceClass> list = GetAttendanceDataMonthyList(data);
+            return list;
+        }
+        private List<AttendanceClass> GetAttendanceDataMonthyList(DataTable data)
+        {
+            List<AttendanceClass> list = new List<AttendanceClass>();
+
+            foreach (DataRow dRow in data.Rows)
+            {
+                AttendanceClass listObj = new AttendanceClass();
+                long id = Convert.ToInt64(dRow["ID"]);
+                string name = Convert.ToString(dRow["EMPLOYEE_NAME"]);
+                DateTime date = Convert.ToDateTime(dRow["ATT_DATE"]);
+                listObj.EMPLOYEE_ID = id;
+                listObj.EMPLOYEE_NAME = name;
+                listObj.ATT_DATE = date.ToString("MM/dd/yyyy");
+                var dataList = db.ATTENDANCE_DETAILS.Where(x => x.EMPLOYEE_ID == id && x.ATT_DATE == date).ToList();
+                int maxSl = Convert.ToInt32(dataList.Max(x => x.SL_NO));
+                var dayData = dataList.Where(x => x.STATUS == ConstantValue.AttendanceCheckIn).FirstOrDefault();
+                int slNo = Convert.ToInt32(dayData.SL_NO);
+                DateTime checkIn =DateTime.ParseExact(dayData.CHECK_IN_TIME.ToString(), "HH:mm:ss", CultureInfo.InvariantCulture);
+                listObj.CHECK_IN_TIME = checkIn.ToString("hh:mm tt");
+                bool flag = true;
+                DateTime checkOut = checkIn;
+                TimeSpan wHour = TimeSpan.Zero;
+                for (int i = slNo; i <= maxSl; i++)
+                {
+                    if (slNo <= maxSl)
+                    {
+                        if (flag)
+                        {
+                            dayData = dataList.Where(x => x.STATUS == ConstantValue.AttendanceCheckOut && x.SL_NO > slNo).FirstOrDefault();
+                            if (dayData != null)
+                            {
+                                flag = false;
+                                checkOut = DateTime.ParseExact(dayData.CHECK_OUT_TIME.ToString(), "HH:mm:ss", CultureInfo.InvariantCulture);
+                                slNo = Convert.ToInt32(dayData.SL_NO);
+                                if (wHour == TimeSpan.Zero)
+                                {
+                                    wHour = checkOut.Subtract(checkIn);
+                                }
+                                else
+                                {
+                                    wHour += checkOut.Subtract(checkIn);
+                                }
+
+                            }
+
+                        }
+                        else
+                        {
+                            flag = true;
+                            dayData = dataList.Where(x => x.STATUS == ConstantValue.AttendanceCheckIn && x.SL_NO > slNo).FirstOrDefault();
+                            if (dayData != null)
+                            {                                
+                                slNo = Convert.ToInt32(dayData.SL_NO);
+                                checkIn = DateTime.ParseExact(dayData.CHECK_IN_TIME.ToString(), "HH:mm:ss", CultureInfo.InvariantCulture);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        break;
+                    }
+
+                }
+                listObj.CHECK_OUT_TIME = checkOut.ToString("hh:mm tt");
+                listObj.TOTAL_WORKING_HOUR = wHour.ToString();
+                list.Add(listObj);
+            }
+            return list;
         }
     }
 }

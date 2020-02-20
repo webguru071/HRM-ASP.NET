@@ -93,6 +93,21 @@ namespace EMSApp.Helper
             {"November", "November"},
             {"December", "December"},
         };
+        public static Dictionary<string, string> MonthDate = new Dictionary<string, string>()
+        {
+            {"January", "01"},
+            {"February", "02"},
+            {"March", "03"},
+            {"April", "04"},
+            {"May", "05"},
+            {"June", "06"},
+            {"July", "07"},
+            {"August", "08"},
+            {"September", "09"},
+            {"October", "10"},
+            {"November", "11"},
+            {"December", "12"},
+        };
         public static Dictionary<string, int> Year = new Dictionary<string, int>()
     {
         {"2001",2001 },

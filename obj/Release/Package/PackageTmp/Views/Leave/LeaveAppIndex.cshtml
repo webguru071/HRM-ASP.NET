@@ -26,10 +26,10 @@
                                         LEAVE TYPE
                                     </th>
                                     <th>
-                                        START DATE
+                                        Applied Date
                                     </th>
                                     <th>
-                                        END DATE
+                                        Approved Date
                                     </th>
                                     <th>
                                         REASON
@@ -77,18 +77,35 @@
                                                 @Html.DisplayFor(modelItem => item.LEAVE_TYPE.LEAVE_TITLE)
                                             </td>
                                             <td>
-                                                Applied Start Date: @Html.DisplayFor(modelItem => item.START_DATE)
-                                                <br />
-                                                Approved Start Date: @Html.DisplayFor(modelItem => item.APPROVED_START_DATE)
+                                                @Html.DisplayFor(modelItem => item.START_DATE)
+                                                @if (!string.IsNullOrEmpty(item.END_DATE))
+                                                {
+                                                    <b> To </b> @Html.DisplayFor(modelItem => item.END_DATE)
+                                                }
                                             </td>
                                             <td>
-                                                Applied End Date: @Html.DisplayFor(modelItem => item.END_DATE)
-                                                <br />
-                                                Approved End Date: @Html.DisplayFor(modelItem => item.APPROVED_END_DATE)
+                                                @Html.DisplayFor(modelItem => item.APPROVED_START_DATE)
+                                                @if (!string.IsNullOrEmpty(item.APPROVED_END_DATE))
+                                                {
+                                                    <b> TO </b> @Html.DisplayFor(modelItem => item.APPROVED_END_DATE)
+                                                }
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.REMARKS)
                                             </td>
+                                            @{
+                                                string approvedBy = "";
+                                            }
+                                            @if (item.STATUS != EMSApp.Helper.ConstantValue.LeaveStatusPending)
+                                            {
+
+                                                EMSApp.Models.EMSEntities db = new EMSApp.Models.EMSEntities();
+                                                if (item.UPDATE_BY > 0)
+                                                {
+                                                    var data = db.USER_INFO.Where(x => x.ID == item.UPDATE_BY).FirstOrDefault();
+                                                    approvedBy = " " + data.USER_NAME;
+                                                }
+                                            }
                                             @if (item.STATUS == EMSApp.Helper.ConstantValue.LeaveStatusPending)
                                             {
                                                 <td>
@@ -98,13 +115,13 @@
                                             @if (item.STATUS == EMSApp.Helper.ConstantValue.LeaveStatusApproved)
                                             {
                                                 <td>
-                                                    Approved
+                                                    Approved By @approvedBy
                                                 </td>
                                             }
                                             @if (item.STATUS == EMSApp.Helper.ConstantValue.LeaveStatusCanceled)
                                             {
                                                 <td>
-                                                    Cancel
+                                                    Canceled By @approvedBy
                                                 </td>
                                             }
                                         </tr>

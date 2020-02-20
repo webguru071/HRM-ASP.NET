@@ -1,4 +1,4 @@
-﻿@model EMSApp.Models.SALARY_INFO
+﻿@model EMSApp.Models.UserModel.SalaryInfo
 
 @{
     ViewBag.Title = "Salary Details";
@@ -7,36 +7,38 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-<div class="" style="font-weight:900">@Html.ValidationSummary(true, "", new { @class = "text-danger alert alert-danger" })</div>
-    <hr />
+
     <div class="content">
         <div class="container-fluid">
             <div class="card">
                 <div class="card-header card-header-primary">
                     <h4 class="card-title">Employee Salary Details</h4>
                     <hr />
-                </div>
+                </div>                
                 <div class="card-body">
+                    <div class="" style="font-weight:900">@Html.ValidationSummary(true, "", new { @class = "text-danger alert alert-danger" })</div>
                     <div id="typography">
                         <form>
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="bmd-label-floating">Employee Name</label>
-                                        @Html.DropDownList("EMPLOYEE_ID", null, htmlAttributes: new { @class = "form-control", @id = "EMP_ID", @onchange = "GetEmpInfo()" })
-                                        @Html.ValidationMessageFor(model => model.EMPLOYEE_ID, "", new { @class = "text-danger" })
+                                        @Html.DropDownList("EMP_ID", null, htmlAttributes: new { @class = "form-control", @id = "EMP_ID", @onchange = "GetEmpInfo()" })
+                                        @Html.ValidationMessageFor(model => model.EMP_ID, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="bmd-label-floating">Payment Month</label>
-                                        @Html.DropDownList("SALARY_MONTH", null, htmlAttributes: new { @class = "form-control"})
+                                        @Html.DropDownList("SALARY_MONTH", null, htmlAttributes: new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.SALARY_MONTH, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="bmd-label-floating">Payment Year</label>
-                                        @Html.DropDownList("SALARY_YEAR", null, htmlAttributes: new { @class = "form-control"})
+                                        @Html.DropDownList("SALARY_YEAR", null, htmlAttributes: new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.SALARY_YEAR, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                             </div>
@@ -67,11 +69,11 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="bmd-label-floating">Remarks</label>
-                                        @Html.EditorFor(model => model.REMARKS, new { htmlAttributes = new { @class = "form-control", @rows = "4" } })
+                                        @Html.EditorFor(model => model.REMARKS, new { htmlAttributes = new { @class = "form-control" } })
                                         @Html.ValidationMessageFor(model => model.REMARKS, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-                            </div>                            
+                            </div>
                             <div class="form-actions">
                                 <div class="btn btn-secondary pull-center">
                                     @Html.ActionLink("Back to List", "Index")
