@@ -91,7 +91,7 @@ namespace EMSApp.Controllers
             if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
             {                
                 ViewBag.EMPLOYEE_ID = SetEmployee();
-                ViewBag.MONTH = SetMonth();
+                ViewBag.MONTH = SetMonthDate();
                 ViewBag.YEAR = SetYear();
                 return View();
             }
@@ -133,13 +133,13 @@ namespace EMSApp.Controllers
                     var data = service.GetAttendanceDataMonthly(fromDate: fromDate, toDate: toDate, empId: empId);
                     ViewBag.STR = " of " + collection["MONTH"] + ", " + collection["YEAR"];
                     ViewBag.EMPLOYEE_ID = SetEmployee();
-                    ViewBag.MONTH = SetMonth();
+                    ViewBag.MONTH = SetMonthDate();
                     ViewBag.YEAR = SetYear();
                     return View(data);
                 }
                 ViewBag.STR = " of " + collection["MONTH"] + ", " + collection["YEAR"];
                 ViewBag.EMPLOYEE_ID = SetEmployee();
-                ViewBag.MONTH = SetMonth();
+                ViewBag.MONTH = SetMonthDate();
                 ViewBag.YEAR = SetYear();
                 return View();
             }
@@ -197,9 +197,11 @@ namespace EMSApp.Controllers
         {
             if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
             {
-                var data = service.GetSalaryWithBenifitsData();
+                //var data = service.GetSalaryWithBenifitsData();
+                ViewBag.MONTH = SetMonth();
+                ViewBag.YEAR = SetYear();
                 ViewBag.EMPLOYEE_ID = SetEmployee();
-                return View(data);
+                return View();
             }
             else
             {
@@ -212,11 +214,31 @@ namespace EMSApp.Controllers
         {
             if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
             {
-                string status = collection["CANGE_TYPE"];
-                long deptId = Convert.ToInt64(collection["DEPT_ID"]);
-                var data = service.GetSalaryWithBenifitsData();
-                ViewBag.EMPLOYEE_ID = SetEmployee();
-                return View(data);
+                if (string.IsNullOrEmpty(collection["MONTH"]))
+                {
+                    ModelState.AddModelError("", "Please Select Month!!!");
+                }
+                else if (string.IsNullOrEmpty(collection["YEAR"]))
+                {
+                    ModelState.AddModelError("", "Please Select Year!!!");
+                }                
+                else
+                {
+                    string dateStr = "";
+                    if (!string.IsNullOrEmpty(collection["MONTH"]) && !string.IsNullOrEmpty(collection["YEAR"]))
+                    {
+                        dateStr = collection["MONTH"]+", "+ collection["YEAR"];
+                    }
+                    var data = db.SALARY_INFO.Where(x=>x.SALARY_PAID==dateStr).ToList();
+                    ViewBag.STR = " of " + collection["MONTH"] + ", " + collection["YEAR"];
+                    ViewBag.MONTH = SetMonthDate();
+                    ViewBag.YEAR = SetYear();
+                    return View(data);
+                }
+                ViewBag.STR = " of " + collection["MONTH"] + ", " + collection["YEAR"];
+                ViewBag.MONTH = SetMonth();
+                ViewBag.YEAR = SetYear();
+                return View();
             }
             else
             {
@@ -295,10 +317,17 @@ namespace EMSApp.Controllers
             return list;
         }
 
-        private dynamic SetMonth()
+        private dynamic SetMonthDate()
         {
             //string month = (DateTime.Now.Month).ToString();
             List<SelectListItem> list = new SelectList(ListValue.MonthDate, "Value", "Key").ToList();
+            list.Insert(0, (new SelectListItem { Text = "Select One", Value = "" }));
+            return list;
+        }
+        private dynamic SetMonth()
+        {
+            //string month = (DateTime.Now.Month).ToString();
+            List<SelectListItem> list = new SelectList(ListValue.Month, "Value", "Key").ToList();
             list.Insert(0, (new SelectListItem { Text = "Select One", Value = "" }));
             return list;
         }

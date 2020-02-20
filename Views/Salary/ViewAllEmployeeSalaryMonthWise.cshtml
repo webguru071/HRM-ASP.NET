@@ -5,52 +5,72 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="container-fluid" style="padding-top:15px">
-    <div class="row">
+    <div class="row">        
         <div class="col-12">
             <div class="card">
-                <div class="card-body">
-                    <div class="btn btn-secondary pull-right">
+                <div class="col-md-12">
+                    <div class="btn btn-secondary waves-effect waves-light m-t-10 pull-left">
                         @Html.ActionLink("Back to List", "AllEmpIndex")
                     </div>
-                    <h4 class="card-title">Employee Salary List</h4>
-                    <div class="table-responsive">
-                        <table class="table color-bordered-table primary-bordered-table">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        For Month
-                                    </th>
-                                    <th>
-                                        Employee
-                                    </th>
-                                    <th>
-                                        Salary
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if (ViewBag.SALARY_INFO != null)
-                                {
-                                    foreach (var item in (ViewBag.SALARY_INFO as List<EMSApp.Models.UserModel.SalaryInfo>))
+                    <button type="button" class="btn btn-primary waves-effect waves-light m-t-10 pull-right" onclick=" printDiv()">Print</button>
+                </div>
+                <div id="DivIdToPrint">
+                    <div class="card-body">
+                        <h4 class="card-title">Employee Salary List</h4>
+                        <div class="table-responsive">
+                            <table class="table color-bordered-table primary-bordered-table">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Month
+                                        </th>
+                                        <th>
+                                            Employee
+                                        </th>
+                                        <th>
+                                            Salary
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (ViewBag.SALARY_INFO != null)
                                     {
-                                        <tr>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.SALARY_PAID)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.EMPLOYEE_NAME)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.GROSS_SALARY)
-                                            </td>
-                                        </tr>
+                                        foreach (var item in (ViewBag.SALARY_INFO as List<EMSApp.Models.UserModel.SalaryInfo>))
+                                        {
+                                            <tr>
+                                                <td style="padding:20px">
+                                                    @Html.DisplayFor(modelItem => item.SALARY_PAID)
+                                                </td>
+                                                <td style="padding:20px">
+                                                    @Html.DisplayFor(modelItem => item.EMPLOYEE_NAME)
+                                                </td>
+                                                <td style="padding:20px">
+                                                    @Html.DisplayFor(modelItem => item.GROSS_SALARY)
+                                                </td>
+                                            </tr>
+                                        }
                                     }
-                                }
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        function printDiv() {
+
+            var divToPrint = document.getElementById('DivIdToPrint');
+            var newWin = window.open('', 'Print-Window');
+            newWin.document.open();
+            newWin.document.write('<html><body onload="window.print()">'+ divToPrint.innerHTML + '</body></html>');
+            newWin.document.close();
+            setTimeout(function () { newWin.close(); }, 10);
+
+        }
+    </script>
+}
