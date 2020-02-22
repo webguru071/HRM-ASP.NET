@@ -7,7 +7,6 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-
     <div class="col-md-12" style="padding-top:15px">
         <div class="card card-body">
             <h3 class="box-title m-b-0">Filters</h3>
@@ -31,10 +30,13 @@
     </div>
     <div class="col-12">
         <div class="card">
+            <div class="col-md-12">
+                <button type="button" class="btn btn-primary waves-effect waves-light m-t-10 pull-right" onclick=" printDiv()">Print</button>
+            </div>
             <div class="card-body">
                 <h3 class="card-title">Attandence @ViewBag.STR</h3>
-                <div class="color-bordered-table success-bordered-table">
-                    <table class="table">
+                <div class="table-responsive" id="DivIdToPrint">
+                    <table class="color-table success-table" width="100%" border="1px">
                         <thead>
                             <tr>
                                 <th>Employee Name</th>
@@ -50,13 +52,13 @@
                                 foreach (var item in Model)
                                 {
                                     <tr>
-                                        <td>
+                                        <td >
                                             @Html.DisplayFor(modelItem => item.EMPLOYEE_NAME)
                                         </td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.ATT_DATE)
                                         </td>
-                                        <td>
+                                        <td style="padding:20px">
                                             @Html.DisplayFor(modelItem => item.CHECK_IN_TIME)
                                         </td>
                                         <td>
@@ -75,5 +77,19 @@
         </div>
     </div>
 }
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        function printDiv() {
 
+            var divToPrint = document.getElementById('DivIdToPrint');
+            var newWin = window.open('', 'Print-Window');
+            newWin.document.open();
+            newWin.document.write('<html><body onload="window.print()">' +'<h2>Attendance of @ViewBag.STR<h2/><br/>'+ divToPrint.innerHTML + '</body></html>');
+            newWin.document.close();
+            setTimeout(function () { newWin.close(); }, 10);
+
+        }
+    </script>
+}
 

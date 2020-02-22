@@ -30,11 +30,13 @@
     </div>
     <div class="col-12">
         <div class="card">
+            <div class="col-md-12">
+                <button type="button" class="btn btn-primary waves-effect waves-light m-t-10 pull-right" onclick=" printDiv()">Print</button>
+            </div>
             <div class="card-body">
                 <h3 class="card-title">Attandence View</h3>
-
-                <div class="color-bordered-table success-bordered-table">
-                    <table class="table">
+                <div class="table-responsive" id="DivIdToPrint">
+                    <table class="color-table success-table" width="100%" border="1px">
                         <thead>
                             <tr>
                                 <th>Employee Name</th>
@@ -70,5 +72,19 @@
             </div>
         </div>
     </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        function printDiv() {
+
+            var divToPrint = document.getElementById('DivIdToPrint');
+            var newWin = window.open('', 'Print-Window');
+            newWin.document.open();
+            newWin.document.write('<html><body onload="window.print()">' + '<h2>Date Wise Attendance Report<h2/><br/>' + divToPrint.innerHTML + '</body></html>');
+            newWin.document.close();
+            setTimeout(function () { newWin.close(); }, 10);
+        }
+    </script>
 }
 

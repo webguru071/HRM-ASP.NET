@@ -34,8 +34,8 @@
             </div>
             <div class="card-body">                
                 <h3 class="card-title">Employee Salary Report of @ViewBag.STR</h3>
-                <div class="color-bordered-table success-bordered-table" id="DivIdToPrint">
-                    <table class="table">
+                <div class="table-responsive" id="DivIdToPrint">
+                    <table class="color-table success-table" width="100%" border="1px">
                         <thead>
                             <tr>
                                 <th>
@@ -89,7 +89,7 @@
             var divToPrint = document.getElementById('DivIdToPrint');
             var newWin = window.open('', 'Print-Window');
             newWin.document.open();
-            newWin.document.write('<html><body onload="window.print()">' +'<h2>Employee Salary Report of @ViewBag.STR<h2/><br/>'+ divToPrint.innerHTML + '</body></html>');
+            newWin.document.write('<html><body onload="window.print()">' +'<h2>Employee Salary Report<h2/><br/>'+ divToPrint.innerHTML + '</body></html>');
             newWin.document.close();
             setTimeout(function () { newWin.close(); }, 10);
         }

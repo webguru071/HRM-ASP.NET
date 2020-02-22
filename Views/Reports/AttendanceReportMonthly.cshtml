@@ -35,8 +35,8 @@
             </div>
             <div class="card-body">
                 <h3 class="card-title">Attandence @ViewBag.STR</h3>
-                <div class="color-bordered-table success-bordered-table" id="DivIdToPrint">
-                    <table class="table" width="100%" align="center">
+                <div class="table-responsive" id="DivIdToPrint">
+                    <table class="color-table success-table" width="100%" border="1px">
                         <thead>
                             <tr>
                                 <th>Employee Name</th>
@@ -52,19 +52,19 @@
                                 foreach (var item in Model)
                                 {
                                     <tr>
-                                        <td style="padding:20px">
+                                        <td >
                                             @Html.DisplayFor(modelItem => item.EMPLOYEE_NAME)
                                         </td>
-                                        <td style="padding:20px">
+                                        <td>
                                             @Html.DisplayFor(modelItem => item.ATT_DATE)
                                         </td>
                                         <td style="padding:20px">
                                             @Html.DisplayFor(modelItem => item.CHECK_IN_TIME)
                                         </td>
-                                        <td style="padding:20px">
+                                        <td>
                                             @Html.DisplayFor(modelItem => item.CHECK_OUT_TIME)
                                         </td>
-                                        <td style="padding:20px">
+                                        <td>
                                             @Html.DisplayFor(modelItem => item.TOTAL_WORKING_HOUR)
                                         </td>
                                     </tr>
