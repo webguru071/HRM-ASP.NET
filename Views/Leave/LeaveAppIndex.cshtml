@@ -44,87 +44,91 @@
                                 {
                                     foreach (var item in Model)
                                     {
-                                        <tr>
-                                            @if (Session["USER_LEVEL"].ToString() == EMSApp.Helper.ConstantValue.UserLevelAdmin)
-                                            {
-                                                if (item.STATUS != EMSApp.Helper.ConstantValue.LeaveStatusApproved)
-                                                {
-                                                    <td>
-                                                        @Html.ActionLink("EDIT", "LeaveAppEdit", new { id = item.LEAVE_APP_ID })|
-                                                        @Html.ActionLink("Delete", "LeaveAppDelete", new { id = item.LEAVE_APP_ID })
-                                                    </td>
-                                                }
+                                <tr>
+                                    @if (Session["USER_LEVEL"].ToString() == EMSApp.Helper.ConstantValue.UserLevelAdmin)
+                                    {
+                                        if (item.STATUS != EMSApp.Helper.ConstantValue.LeaveStatusApproved)
+                                        {
+                                            <td>
+                                                @Html.ActionLink("EDIT", "LeaveAppEdit", new { id = item.LEAVE_APP_ID })|
+                                                @Html.ActionLink("Delete", "LeaveAppDelete", new { id = item.LEAVE_APP_ID })
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td></td>
+                                        }
 
-                                            }
-                                            @if (Session["USER_LEVEL"].ToString() == EMSApp.Helper.ConstantValue.UserLevelEmployee)
-                                            {
-                                                if (item.STATUS != EMSApp.Helper.ConstantValue.LeaveStatusApproved)
-                                                {
-                                                    <td>
-                                                        @Html.ActionLink("View", "LeaveAppEdit", new { id = item.LEAVE_APP_ID })|
-                                                        @Html.ActionLink("Delete", "LeaveAppDelete", new { id = item.LEAVE_APP_ID })
-                                                    </td>
-                                                }
-                                                if (item.STATUS == EMSApp.Helper.ConstantValue.LeaveStatusApproved)
-                                                {
-                                                    <td></td>
-                                                }
-                                            }
-                                            <th>
-                                                @Html.DisplayFor(modelItem => item.EMPLOYEE_INFO.EMPLOYEE_NAME)
-                                            </th>
+                                    }
+                                    @if (Session["USER_LEVEL"].ToString() == EMSApp.Helper.ConstantValue.UserLevelEmployee)
+                                    {
+                                        if (item.STATUS != EMSApp.Helper.ConstantValue.LeaveStatusApproved)
+                                        {
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.LEAVE_TYPE.LEAVE_TITLE)
+                                                @Html.ActionLink("View", "LeaveAppEdit", new { id = item.LEAVE_APP_ID })|
+                                                @Html.ActionLink("Delete", "LeaveAppDelete", new { id = item.LEAVE_APP_ID })
                                             </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.START_DATE)
-                                                @if (!string.IsNullOrEmpty(item.END_DATE))
-                                                {
-                                                    <b> To </b> @Html.DisplayFor(modelItem => item.END_DATE)
-                                                }
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.APPROVED_START_DATE)
-                                                @if (!string.IsNullOrEmpty(item.APPROVED_END_DATE))
-                                                {
-                                                    <b> TO </b> @Html.DisplayFor(modelItem => item.APPROVED_END_DATE)
-                                                }
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.REMARKS)
-                                            </td>
-                                            @{
-                                                string approvedBy = "";
-                                            }
-                                            @if (item.STATUS != EMSApp.Helper.ConstantValue.LeaveStatusPending)
-                                            {
+                                        }
+                                        if (item.STATUS == EMSApp.Helper.ConstantValue.LeaveStatusApproved)
+                                        {
+                                            <td></td>
+                                        }
+                                    }
+                                    <th>
+                                        @Html.DisplayFor(modelItem => item.EMPLOYEE_INFO.EMPLOYEE_NAME)
+                                    </th>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.LEAVE_TYPE.LEAVE_TITLE)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.START_DATE)
+                                        @if (!string.IsNullOrEmpty(item.END_DATE))
+                                        {
+                                            <b> To </b> @Html.DisplayFor(modelItem => item.END_DATE)
+                                        }
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.APPROVED_START_DATE)
+                                        @if (!string.IsNullOrEmpty(item.APPROVED_END_DATE))
+                                        {
+                                            <b> TO </b> @Html.DisplayFor(modelItem => item.APPROVED_END_DATE)
+                                        }
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.REMARKS)
+                                    </td>
+                                    @{
+                                        string approvedBy = "";
+                                    }
+                                    @if (item.STATUS != EMSApp.Helper.ConstantValue.LeaveStatusPending)
+                                    {
 
-                                                EMSApp.Models.EMSEntities db = new EMSApp.Models.EMSEntities();
-                                                if (item.UPDATE_BY > 0)
-                                                {
-                                                    var data = db.USER_INFO.Where(x => x.ID == item.UPDATE_BY).FirstOrDefault();
-                                                    approvedBy = " " + data.USER_NAME;
-                                                }
-                                            }
-                                            @if (item.STATUS == EMSApp.Helper.ConstantValue.LeaveStatusPending)
-                                            {
-                                                <td>
-                                                    Pending
-                                                </td>
-                                            }
-                                            @if (item.STATUS == EMSApp.Helper.ConstantValue.LeaveStatusApproved)
-                                            {
-                                                <td>
-                                                    Approved By @approvedBy
-                                                </td>
-                                            }
-                                            @if (item.STATUS == EMSApp.Helper.ConstantValue.LeaveStatusCanceled)
-                                            {
-                                                <td>
-                                                    Canceled By @approvedBy
-                                                </td>
-                                            }
-                                        </tr>
+                                        EMSApp.Models.EMSEntities db = new EMSApp.Models.EMSEntities();
+                                        if (item.UPDATE_BY > 0)
+                                        {
+                                            var data = db.USER_INFO.Where(x => x.ID == item.UPDATE_BY).FirstOrDefault();
+                                            approvedBy = " " + data.USER_NAME;
+                                        }
+                                    }
+                                    @if (item.STATUS == EMSApp.Helper.ConstantValue.LeaveStatusPending)
+                                    {
+                                        <td>
+                                            Pending
+                                        </td>
+                                    }
+                                    @if (item.STATUS == EMSApp.Helper.ConstantValue.LeaveStatusApproved)
+                                    {
+                                        <td>
+                                            Approved By @approvedBy
+                                        </td>
+                                    }
+                                    @if (item.STATUS == EMSApp.Helper.ConstantValue.LeaveStatusCanceled)
+                                    {
+                                        <td>
+                                            Canceled By @approvedBy
+                                        </td>
+                                    }
+                                </tr>
                                     }
                                 }
                             </tbody>

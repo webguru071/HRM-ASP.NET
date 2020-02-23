@@ -21,7 +21,7 @@ namespace EMSApp.Controllers
         {
             if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
             {
-                var data = db.SALARY_INFO.ToList();
+                var data = db.SALARY_INFO.OrderByDescending(x=>x.ACTION_DATE).ToList();
                 return View(data);
             }
             else
@@ -82,6 +82,7 @@ namespace EMSApp.Controllers
                     decimal other = !string.IsNullOrEmpty(collection.OTHERS.ToString()) ? Convert.ToDecimal(collection.OTHERS) : 0;
                     salary.BONUS = bonus;
                     salary.OTHERS = other;
+                    salary.STATUS = ConstantValue.SalaryPaymentIndividual;
                     salary.TOTAL = Convert.ToInt64(collection.GROSS_SALARY) + bonus + other;
                     if (salary.ACTION_BY.ToString() != null)
                     {
@@ -170,7 +171,7 @@ namespace EMSApp.Controllers
             else
             {
                 string paidDAate = collection.SALARY_MONTH + ", " + collection.SALARY_YEAR;
-                var checkData = db.SALARY_INFO.Where(x => x.SALARY_PAID == paidDAate).ToList();
+                var checkData = db.SALARY_INFO.Where(x => x.SALARY_PAID == paidDAate && x.STATUS!=ConstantValue.SalaryPaymentIndividual).ToList();
                 if (checkData.Count > 0)
                 {
                     ModelState.AddModelError("", "Salary is Already Generated for " + paidDAate + "!!!");

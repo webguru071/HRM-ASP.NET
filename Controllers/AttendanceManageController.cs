@@ -1,5 +1,10 @@
 ﻿using System;
+using System.Activities.Statements;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.OleDb;
+using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -21,13 +26,13 @@ namespace EMSApp.Controllers
             {
                 long empId = converterHelper.GetLoggedEmployeeID();
                 string date = DateTime.Today.ToString("yyyy-MM-dd");
-                var data = service.GetAttendanceData(empId: empId,toDate:date);
+                var data = service.GetAttendanceData(empId: empId, toDate: date);
                 return View(data);
             }
             else
             {
                 return RedirectToAction("LogIn", "Login");
-            }           
+            }
         }
 
         // GET: AttendanceManage/Details/5
@@ -46,7 +51,7 @@ namespace EMSApp.Controllers
             else
             {
                 return RedirectToAction("LogIn", "Login");
-            }            
+            }
         }
 
         // POST: AttendanceManage/Create
@@ -138,27 +143,163 @@ namespace EMSApp.Controllers
                 return View();
             }
         }
-
-        // GET: AttendanceManage/Delete/5
-        public ActionResult Delete(int id)
+        [HttpGet]
+        // GET: AttendanceManage/Import
+        public ActionResult Import()
         {
             return View();
         }
-
         // POST: AttendanceManage/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Import(FormCollection collection, HttpPostedFileBase uploadFile)
         {
             try
             {
                 // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
+                if (uploadFile == null || uploadFile.ContentLength <= 0)
+                {
+                    ModelState.AddModelError("", "File is Required!!!");
+                }
+                else if (!uploadFile.FileName.EndsWith("xls") && !uploadFile.FileName.EndsWith("xlsx"))
+                {
+                    ModelState.AddModelError("", "File is Not in Correct Format!!!");
+                }
+                else if (uploadFile.ContentLength > 500000)
+                {
+                    ModelState.AddModelError("", "File is Too Long. Max Size is 500MB!!!");
+                }
+                else
+                {
+                    if (uploadFile != null && uploadFile.ContentLength > 0)
+                    {
+                        var fileName = Path.GetFileName(DateTime.Now.ToString() + "_" + uploadFile.FileName);
+                        var path = Path.Combine(Server.MapPath("/ExcelFiles"), fileName);
+                        //if (System.IO.File.Exists(path))
+                        //{
+                        //    System.IO.File.Delete(path);
+                        //}
+                        uploadFile.SaveAs(path);
+                        string connString = "";
+                        string extension = Path.GetExtension(uploadFile.FileName);
+                        if (extension.Trim() == ".xls")
+                        {
+                            connString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + path + ";Extended Properties=\"Excel 8.0;HDR=Yes;IMEX=2\"";
+                            DataTable dt = ConvertXSLXtoDataTable(path, connString);
+                            bool result = InsertIntoDB(dt);
+                        }
+                        else if (extension.Trim() == ".xlsx")
+                        {
+                            connString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + path + ";Extended Properties=\"Excel 12.0;HDR=Yes;IMEX=2\"";
+                            DataTable dt = ConvertXSLXtoDataTable(path, connString);
+                            bool result = InsertIntoDB(dt);
+                        }
+                    }
+                }
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+
             }
+            return View();
+        }
+        private bool InsertIntoDB(DataTable dt)
+        {
+            bool result = true;
+            var cardData = db.CARD_ASSIGN_INFO.ToList();
+            List<ATTENDANCE_DETAILS> attList = new List<ATTENDANCE_DETAILS>();
+            int slNo = 0;
+            string dateFlag = "";
+            foreach (DataRow dRow in dt.Rows)
+            {
+                if (!string.IsNullOrEmpty(dRow[0].ToString()))
+                {
+                    string cardNo = Convert.ToString(dRow[0]);
+                    string check_in = Convert.ToString(dRow[2]);
+                    string check_out = Convert.ToString(dRow[3]);
+                    DateTime date = Convert.ToDateTime(dRow[5]);
+                    string dateStr = date.ToString();
+                    if (dateFlag != dateStr)
+                    {
+                        slNo = 0;
+                        dateFlag = dateStr;
+                    }
+                    ATTENDANCE_DETAILS objIn = new ATTENDANCE_DETAILS();
+                    ATTENDANCE_DETAILS objOut = new ATTENDANCE_DETAILS();
+                    var empDataCard = cardData.Where(x => x.CARD_NO.Trim() == cardNo.Trim()).FirstOrDefault();
+                    objIn.EMPLOYEE_ID = objOut.EMPLOYEE_ID = empDataCard.EMP_ID;
+                    objIn.ATT_DATE = objOut.ATT_DATE = date;
+                    objIn.CHECK_IN_TIME = TimeSpan.Parse(check_in);
+                    slNo++;
+                    objIn.SL_NO = slNo;
+                    objIn.STATUS = ConstantValue.AttendanceCheckIn;
+                    objOut.CHECK_OUT_TIME = TimeSpan.Parse(check_out);
+                    slNo++;
+                    objOut.SL_NO = slNo;
+                    objOut.STATUS = ConstantValue.AttendanceCheckOut;
+                    attList.Add(objIn);
+                    attList.Add(objOut);
+                }               
+            }
+            using (var dbContextTransaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    foreach (var obj in attList)
+                    {
+                        db.ATTENDANCE_DETAILS.Add(obj);
+                        db.SaveChanges();
+                    }
+                    dbContextTransaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    dbContextTransaction.Rollback();
+                    result = false;
+                }
+            }
+            if (result)
+            {
+                ViewBag.ResultSuccess = "Data Import Successfully!!!";
+                ViewBag.ResultFailed = "";
+
+            }
+            else
+            {
+                ViewBag.ResultFailed = "Failed To Import!!!";
+                ViewBag.ResultSuccess = "";
+            }
+            return result;
+        }
+        private DataTable ConvertXSLXtoDataTable(string strFilePath, string connString)
+        {
+            OleDbConnection oledbConn = new OleDbConnection(connString);
+            DataTable dt = new DataTable();
+            try
+            {
+
+                oledbConn.Open();
+                using (OleDbCommand cmd = new OleDbCommand("SELECT * FROM [Sheet1$]", oledbConn))
+                {
+                    OleDbDataAdapter oleda = new OleDbDataAdapter();
+                    oleda.SelectCommand = cmd;
+                    DataSet ds = new DataSet();
+                    oleda.Fill(ds);
+
+                    dt = ds.Tables[0];
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+            finally
+            {
+
+                oledbConn.Close();
+            }
+
+            return dt;
+
         }
     }
 }
+

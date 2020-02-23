@@ -167,7 +167,7 @@ namespace EMSApp.Controllers
                 {
                     if (converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
                     {
-                        var data = db.LEAVE_APPLICATION.Where(x => x.STATUS == ConstantValue.LeaveStatusPending).ToList();
+                        var data = db.LEAVE_APPLICATION.ToList();
                         return View(data);
                     }
                     else
@@ -262,9 +262,7 @@ namespace EMSApp.Controllers
                             collection.APPROVED_END_DATE = null;
                         }
                         collection.ACTIVE_BY = converterHelper.GetLoggedUserID();
-
                         collection.ACTIVE_DATE = DateTime.Now;
-
                         if (ModelState.IsValid)
                         {
                             db.LEAVE_APPLICATION.Add(collection);
@@ -296,8 +294,7 @@ namespace EMSApp.Controllers
             else
             {
                 return RedirectToAction("LogIn", "Login");
-            }
-            
+            }            
         }
         [HttpPost]
         public ActionResult LeaveAppEdit(long id, LEAVE_APPLICATION collection)
@@ -352,7 +349,6 @@ namespace EMSApp.Controllers
                         collection.UPDATE_BY = Convert.ToInt64(Session["USER_ID"]);
                         collection.ACTIVE_DATE = Convert.ToDateTime(Session["AD"]);
                         collection.UPDATE_DATE = DateTime.Now;
-
                         if (ModelState.IsValid)
                         {
                             db.Entry(collection).State = EntityState.Modified;

@@ -3,57 +3,65 @@
     ViewBag.Title = "Home Page";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-    <div class="container-fluid" style="padding-top:15px">
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">Leave Application</h4>
-                        <div class="table-responsive">
-                            <table class="table color-bordered-table primary-bordered-table">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            Employee
-                                        </th>
-                                        <th>
-                                            Leave Type
-                                        </th>
-                                        <th>
-                                            Applied For 
-                                        </th>
-                                        <th>
-                                            
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @if (Model != null)
-                                    {
-                                        foreach (var item in Model)
-                                        {
-                                    <tr>
-                                        <td>
-                                            @item.EMPLOYEE_INFO.EMPLOYEE_NAME
-                                        </td>
-                                        <td>
-                                            @item.START_DATE to @item.END_DATE
-                                        </td>
-                                        <td>
-                                            @item.LEAVE_TYPE.LEAVE_TITLE
-                                        </td>
-                                        <td>
-                                            <a href="~/Leave/LeaveAppEdit/@item.LEAVE_APP_ID" class="btn btn-success">View</a>
-                                        </td>
+<div class="container-fluid" style="padding-top:15px">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Leave Application</h4>
+                    <div class="table-responsive">
+                        <table class="table color-bordered-table primary-bordered-table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Employee
+                                    </th>
+                                    <th>
+                                        Leave Type
+                                    </th>
+                                    <th>
+                                        Applied For
+                                    </th>
+                                    <th>
 
-                                    </tr>
-                                        }
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @item.EMPLOYEE_INFO.EMPLOYEE_NAME
+                                            </td>
+                                            @if (item.END_DATE == null)
+                                            {
+                                                <td>
+                                                    @item.START_DATE
+                                                </td>
+                                            }
+                                            @if (item.END_DATE != null)
+                                            {
+                                                <td>
+                                                    @item.START_DATE to @item.END_DATE
+                                                </td>
+                                            }
+                                            <td>
+                                                @item.LEAVE_TYPE.LEAVE_TITLE
+                                            </td>
+                                            <td>
+                                                <a href="~/Leave/LeaveAppEdit/@item.LEAVE_APP_ID" class="btn btn-success">View</a>
+                                            </td>
+                                        </tr>
                                     }
-                                </tbody>
-                            </table>
-                        </div>
+                                }
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>

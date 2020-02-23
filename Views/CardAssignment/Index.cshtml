@@ -1,6 +1,7 @@
-﻿@model IEnumerable<EMSApp.Models.POSITIONAL_INFO>
+﻿@model IEnumerable<EMSApp.Models.CARD_ASSIGN_INFO>
+
 @{
-    ViewBag.Title = "Employee Position";
+    ViewBag.Title = "Card Assigned";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="container-fluid" style="padding-top:15px">
@@ -13,7 +14,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Employee Position</h4>
+                    <h4 class="card-title">Card Assigned Details</h4>
                     <div class="table-responsive">
                         <table class="table color-bordered-table primary-bordered-table">
                             <thead>
@@ -23,15 +24,9 @@
                                         Employee
                                     </th>
                                     <th>
-                                        Division
+                                        Card No
                                     </th>
-                                    <th>
-                                        Position
-                                    </th>
-                                    <th>
-                                        Basic Salary
-                                    </th>
-                                    @*<th></th>*@
+                                    
                                 </tr>
                             </thead>
                             <tbody>
@@ -41,23 +36,15 @@
                                     {
                                 <tr>
                                     <td>
-                                        @Html.ActionLink("Edit", "Edit", new { id = item.POSITION_ID })
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.CARD_ASSGN_ID })
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.EMPLOYEE_INFO.EMPLOYEE_NAME)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.DIVISION_INFO.DIV_TITLE)
+                                        @Html.DisplayFor(modelItem => item.CARD_NO)
                                     </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.POSITION_TITLE)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.BASIC_SALARY)
-                                    </td>
-                                    @*<td>
-                                        @Html.ActionLink("Delete", "Delete", new { id = item.POSITION_ID })
-                                    </td>*@
+                                  
                                 </tr>
                                     }
                                 }

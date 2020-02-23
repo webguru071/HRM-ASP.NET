@@ -44,6 +44,18 @@
           <Property Name="SL_NO" Type="int" />
           <Property Name="STATUS" Type="char" MaxLength="1" />
         </EntityType>
+        <EntityType Name="CARD_ASSIGN_INFO">
+          <Key>
+            <PropertyRef Name="CARD_ASSGN_ID" />
+          </Key>
+          <Property Name="CARD_ASSGN_ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EMP_ID" Type="bigint" Nullable="false" />
+          <Property Name="CARD_NO" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="ACTION_BY" Type="bigint" Nullable="false" />
+          <Property Name="ACTION_DATE" Type="datetime" Nullable="false" />
+          <Property Name="UPDATE_BY" Type="bigint" />
+          <Property Name="UPDATE_DATE" Type="datetime" />
+        </EntityType>
         <EntityType Name="DEPARTMENT_INFO">
           <Key>
             <PropertyRef Name="DEPT_ID" />
@@ -381,6 +393,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CARD_ASSIGN_INFO_EMPLOYEE_INFO">
+          <End Role="EMPLOYEE_INFO" Type="Self.EMPLOYEE_INFO" Multiplicity="1" />
+          <End Role="CARD_ASSIGN_INFO" Type="Self.CARD_ASSIGN_INFO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLOYEE_INFO">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CARD_ASSIGN_INFO">
+              <PropertyRef Name="EMP_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_DIVISION_INFO_DEPARTMENT_INFO">
           <End Role="DEPARTMENT_INFO" Type="Self.DEPARTMENT_INFO" Multiplicity="1" />
           <End Role="DIVISION_INFO" Type="Self.DIVISION_INFO" Multiplicity="*" />
@@ -613,6 +637,7 @@
           <EntitySet Name="ASSET_INFO" EntityType="Self.ASSET_INFO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ASSET_MANAGEMENT" EntityType="Self.ASSET_MANAGEMENT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ATTENDANCE_DETAILS" EntityType="Self.ATTENDANCE_DETAILS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CARD_ASSIGN_INFO" EntityType="Self.CARD_ASSIGN_INFO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DEPARTMENT_INFO" EntityType="Self.DEPARTMENT_INFO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DIVISION_INFO" EntityType="Self.DIVISION_INFO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EMPLOYEE_APPLICATION" EntityType="Self.EMPLOYEE_APPLICATION" Schema="dbo" store:Type="Tables" />
@@ -644,6 +669,10 @@
           <AssociationSet Name="FK_ATTENDANCE_DETAILS_EMPLOYEE_INFO" Association="Self.FK_ATTENDANCE_DETAILS_EMPLOYEE_INFO">
             <End Role="EMPLOYEE_INFO" EntitySet="EMPLOYEE_INFO" />
             <End Role="ATTENDANCE_DETAILS" EntitySet="ATTENDANCE_DETAILS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CARD_ASSIGN_INFO_EMPLOYEE_INFO" Association="Self.FK_CARD_ASSIGN_INFO_EMPLOYEE_INFO">
+            <End Role="EMPLOYEE_INFO" EntitySet="EMPLOYEE_INFO" />
+            <End Role="CARD_ASSIGN_INFO" EntitySet="CARD_ASSIGN_INFO" />
           </AssociationSet>
           <AssociationSet Name="FK_DIVISION_INFO_DEPARTMENT_INFO" Association="Self.FK_DIVISION_INFO_DEPARTMENT_INFO">
             <End Role="DEPARTMENT_INFO" EntitySet="DEPARTMENT_INFO" />
@@ -730,6 +759,7 @@
           <EntitySet Name="ASSET_INFO" EntityType="EMSModel.ASSET_INFO" />
           <EntitySet Name="ASSET_MANAGEMENT" EntityType="EMSModel.ASSET_MANAGEMENT" />
           <EntitySet Name="ATTENDANCE_DETAILS" EntityType="EMSModel.ATTENDANCE_DETAILS" />
+          <EntitySet Name="CARD_ASSIGN_INFO" EntityType="EMSModel.CARD_ASSIGN_INFO" />
           <EntitySet Name="DEPARTMENT_INFO" EntityType="EMSModel.DEPARTMENT_INFO" />
           <EntitySet Name="DIVISION_INFO" EntityType="EMSModel.DIVISION_INFO" />
           <EntitySet Name="EMPLOYEE_APPLICATION" EntityType="EMSModel.EMPLOYEE_APPLICATION" />
@@ -765,6 +795,10 @@
           <AssociationSet Name="FK_ATTENDANCE_DETAILS_EMPLOYEE_INFO" Association="EMSModel.FK_ATTENDANCE_DETAILS_EMPLOYEE_INFO">
             <End Role="EMPLOYEE_INFO" EntitySet="EMPLOYEE_INFO" />
             <End Role="ATTENDANCE_DETAILS" EntitySet="ATTENDANCE_DETAILS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CARD_ASSIGN_INFO_EMPLOYEE_INFO" Association="EMSModel.FK_CARD_ASSIGN_INFO_EMPLOYEE_INFO">
+            <End Role="EMPLOYEE_INFO" EntitySet="EMPLOYEE_INFO" />
+            <End Role="CARD_ASSIGN_INFO" EntitySet="CARD_ASSIGN_INFO" />
           </AssociationSet>
           <AssociationSet Name="FK_DIVISION_INFO_DEPARTMENT_INFO" Association="EMSModel.FK_DIVISION_INFO_DEPARTMENT_INFO">
             <End Role="DEPARTMENT_INFO" EntitySet="DEPARTMENT_INFO" />
@@ -882,6 +916,19 @@
           <Property Name="STATUS" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="EMPLOYEE_INFO" Relationship="EMSModel.FK_ATTENDANCE_DETAILS_EMPLOYEE_INFO" FromRole="ATTENDANCE_DETAILS" ToRole="EMPLOYEE_INFO" />
         </EntityType>
+        <EntityType Name="CARD_ASSIGN_INFO">
+          <Key>
+            <PropertyRef Name="CARD_ASSGN_ID" />
+          </Key>
+          <Property Name="CARD_ASSGN_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EMP_ID" Type="Int64" Nullable="false" />
+          <Property Name="CARD_NO" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="ACTION_BY" Type="Int64" Nullable="false" />
+          <Property Name="ACTION_DATE" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UPDATE_BY" Type="Int64" />
+          <Property Name="UPDATE_DATE" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="EMPLOYEE_INFO" Relationship="EMSModel.FK_CARD_ASSIGN_INFO_EMPLOYEE_INFO" FromRole="CARD_ASSIGN_INFO" ToRole="EMPLOYEE_INFO" />
+        </EntityType>
         <EntityType Name="DEPARTMENT_INFO">
           <Key>
             <PropertyRef Name="DEPT_ID" />
@@ -946,6 +993,7 @@
           <Property Name="NATIONALITY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ASSET_MANAGEMENT" Relationship="EMSModel.FK_ASSET_ASSIGNMENT_EMPLOYEE_INFO" FromRole="EMPLOYEE_INFO" ToRole="ASSET_MANAGEMENT" />
           <NavigationProperty Name="ATTENDANCE_DETAILS" Relationship="EMSModel.FK_ATTENDANCE_DETAILS_EMPLOYEE_INFO" FromRole="EMPLOYEE_INFO" ToRole="ATTENDANCE_DETAILS" />
+          <NavigationProperty Name="CARD_ASSIGN_INFO" Relationship="EMSModel.FK_CARD_ASSIGN_INFO_EMPLOYEE_INFO" FromRole="EMPLOYEE_INFO" ToRole="CARD_ASSIGN_INFO" />
           <NavigationProperty Name="EMPLOYEE_APPLICATION" Relationship="EMSModel.FK_EMPLOYEE_APPLICATION_EMPLOYEE_INFO" FromRole="EMPLOYEE_INFO" ToRole="EMPLOYEE_APPLICATION" />
           <NavigationProperty Name="LEAVE_APPLICATION" Relationship="EMSModel.FK_LEAVE_APPLICATION_EMPLOYEE_INFO" FromRole="EMPLOYEE_INFO" ToRole="LEAVE_APPLICATION" />
           <NavigationProperty Name="POSITIONAL_INFO" Relationship="EMSModel.FK_POSITIONAL_INFO_EMPLOYEE_INFO" FromRole="EMPLOYEE_INFO" ToRole="POSITIONAL_INFO" />
@@ -1271,6 +1319,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CARD_ASSIGN_INFO_EMPLOYEE_INFO">
+          <End Type="EMSModel.EMPLOYEE_INFO" Role="EMPLOYEE_INFO" Multiplicity="1" />
+          <End Type="EMSModel.CARD_ASSIGN_INFO" Role="CARD_ASSIGN_INFO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLOYEE_INFO">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CARD_ASSIGN_INFO">
+              <PropertyRef Name="EMP_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_DIVISION_INFO_DEPARTMENT_INFO">
           <End Type="EMSModel.DEPARTMENT_INFO" Role="DEPARTMENT_INFO" Multiplicity="1" />
           <End Type="EMSModel.DIVISION_INFO" Role="DIVISION_INFO" Multiplicity="*" />
@@ -1532,6 +1592,19 @@
                 <ScalarProperty Name="ATT_DATE" ColumnName="ATT_DATE" />
                 <ScalarProperty Name="EMPLOYEE_ID" ColumnName="EMPLOYEE_ID" />
                 <ScalarProperty Name="ATNDNC_ID" ColumnName="ATNDNC_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CARD_ASSIGN_INFO">
+            <EntityTypeMapping TypeName="EMSModel.CARD_ASSIGN_INFO">
+              <MappingFragment StoreEntitySet="CARD_ASSIGN_INFO">
+                <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
+                <ScalarProperty Name="UPDATE_BY" ColumnName="UPDATE_BY" />
+                <ScalarProperty Name="ACTION_DATE" ColumnName="ACTION_DATE" />
+                <ScalarProperty Name="ACTION_BY" ColumnName="ACTION_BY" />
+                <ScalarProperty Name="CARD_NO" ColumnName="CARD_NO" />
+                <ScalarProperty Name="EMP_ID" ColumnName="EMP_ID" />
+                <ScalarProperty Name="CARD_ASSGN_ID" ColumnName="CARD_ASSGN_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "Import Attendance Data";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm("Import", "AttendanceManage", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="row" style="margin:20px">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="" style="font-weight:900">@Html.ValidationSummary(true, "", new { @class = "text-danger alert alert-danger" })</div>
+                    <h4 class="card-title">Import Attendance Data</h4>
+                    <form action="#" class="dropzone">
+                        <div class="fallback">
+                            <input name="uploadFile" id="uploadFile" type="file" multiple />
+                        </div>
+                    </form>
+                    <div class="form-actions" style="margin:20px">
+                        <div class="btn btn-secondary pull-center">
+                            @Html.ActionLink("Back to List", "Index")
+                        </div>
+                        <button type="submit" class="btn btn-primary pull-right">Import</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

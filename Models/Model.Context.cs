@@ -28,6 +28,7 @@ namespace EMSApp.Models
         public virtual DbSet<ASSET_INFO> ASSET_INFO { get; set; }
         public virtual DbSet<ASSET_MANAGEMENT> ASSET_MANAGEMENT { get; set; }
         public virtual DbSet<ATTENDANCE_DETAILS> ATTENDANCE_DETAILS { get; set; }
+        public virtual DbSet<CARD_ASSIGN_INFO> CARD_ASSIGN_INFO { get; set; }
         public virtual DbSet<DEPARTMENT_INFO> DEPARTMENT_INFO { get; set; }
         public virtual DbSet<DIVISION_INFO> DIVISION_INFO { get; set; }
         public virtual DbSet<EMPLOYEE_APPLICATION> EMPLOYEE_APPLICATION { get; set; }

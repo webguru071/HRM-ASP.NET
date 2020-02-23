@@ -19,6 +19,7 @@ namespace EMSApp.Models
         {
             this.ASSET_MANAGEMENT = new HashSet<ASSET_MANAGEMENT>();
             this.ATTENDANCE_DETAILS = new HashSet<ATTENDANCE_DETAILS>();
+            this.CARD_ASSIGN_INFO = new HashSet<CARD_ASSIGN_INFO>();
             this.LEAVE_APPLICATION = new HashSet<LEAVE_APPLICATION>();
             this.POSITIONAL_INFO = new HashSet<POSITIONAL_INFO>();
             this.SALARY_INFO = new HashSet<SALARY_INFO>();
@@ -54,6 +55,8 @@ namespace EMSApp.Models
         public virtual ICollection<ASSET_MANAGEMENT> ASSET_MANAGEMENT { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ATTENDANCE_DETAILS> ATTENDANCE_DETAILS { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CARD_ASSIGN_INFO> CARD_ASSIGN_INFO { get; set; }
         public virtual EMPLOYEE_APPLICATION EMPLOYEE_APPLICATION { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LEAVE_APPLICATION> LEAVE_APPLICATION { get; set; }
