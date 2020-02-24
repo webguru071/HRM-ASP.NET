@@ -188,6 +188,7 @@ namespace EMSApp.Services
         public List<AttendanceClass> GetAttendanceDataMonthly(string fromDate = "", string toDate = "", long empId = 0)
         {
             string DateFilter = "";
+            string idFilter = empId>0 ? " and ei.id="+empId+" ":"";
             if (!string.IsNullOrEmpty(toDate) && !string.IsNullOrEmpty(fromDate))
             {
                 DateFilter = " and ad.ATT_DATE BETWEEN '" + fromDate + "' AND '" + toDate + "' ";
@@ -195,7 +196,7 @@ namespace EMSApp.Services
 
             string query = @"select ei.ID,ei.EMPLOYEE_NAME,ad.ATT_DATE from ATTENDANCE_DETAILS ad
                             inner join EMPLOYEE_INFO ei on ei.ID=ad.EMPLOYEE_ID 
-                            where ei.id=" + empId + DateFilter + @"  group by ad.ATT_DATE,ei.EMPLOYEE_NAME,ei.ID";
+                            where ei.id!=0" + idFilter + DateFilter + @"  group by ad.ATT_DATE,ei.EMPLOYEE_NAME,ei.ID";
             DataTable data = dbHelper.GetDataTable(query);
             List<AttendanceClass> list = GetAttendanceDataMonthyList(data);
             return list;
@@ -212,7 +213,7 @@ namespace EMSApp.Services
                 DateTime date = Convert.ToDateTime(dRow["ATT_DATE"]);
                 listObj.EMPLOYEE_ID = id;
                 listObj.EMPLOYEE_NAME = name;
-                listObj.ATT_DATE = date.ToString("MM/dd/yyyy");
+                listObj.ATT_DATE = date.ToString("dd/MM/yyyy");
                 var dataList = db.ATTENDANCE_DETAILS.Where(x => x.EMPLOYEE_ID == id && x.ATT_DATE == date).ToList();
                 int maxSl = Convert.ToInt32(dataList.Max(x => x.SL_NO));
                 var dayData = dataList.Where(x => x.STATUS == ConstantValue.AttendanceCheckIn).FirstOrDefault();

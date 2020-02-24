@@ -4,6 +4,7 @@
     <EntitySet Name="ASSET_INFO" EntityType="EMSModel.ASSET_INFO" />
     <EntitySet Name="ASSET_MANAGEMENT" EntityType="EMSModel.ASSET_MANAGEMENT" />
     <EntitySet Name="ATTENDANCE_DETAILS" EntityType="EMSModel.ATTENDANCE_DETAILS" />
+    <EntitySet Name="CARD_ASSIGN_INFO" EntityType="EMSModel.CARD_ASSIGN_INFO" />
     <EntitySet Name="DEPARTMENT_INFO" EntityType="EMSModel.DEPARTMENT_INFO" />
     <EntitySet Name="DIVISION_INFO" EntityType="EMSModel.DIVISION_INFO" />
     <EntitySet Name="EMPLOYEE_APPLICATION" EntityType="EMSModel.EMPLOYEE_APPLICATION" />
@@ -39,6 +40,10 @@
     <AssociationSet Name="FK_ATTENDANCE_DETAILS_EMPLOYEE_INFO" Association="EMSModel.FK_ATTENDANCE_DETAILS_EMPLOYEE_INFO">
       <End Role="EMPLOYEE_INFO" EntitySet="EMPLOYEE_INFO" />
       <End Role="ATTENDANCE_DETAILS" EntitySet="ATTENDANCE_DETAILS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CARD_ASSIGN_INFO_EMPLOYEE_INFO" Association="EMSModel.FK_CARD_ASSIGN_INFO_EMPLOYEE_INFO">
+      <End Role="EMPLOYEE_INFO" EntitySet="EMPLOYEE_INFO" />
+      <End Role="CARD_ASSIGN_INFO" EntitySet="CARD_ASSIGN_INFO" />
     </AssociationSet>
     <AssociationSet Name="FK_DIVISION_INFO_DEPARTMENT_INFO" Association="EMSModel.FK_DIVISION_INFO_DEPARTMENT_INFO">
       <End Role="DEPARTMENT_INFO" EntitySet="DEPARTMENT_INFO" />
@@ -156,6 +161,19 @@
     <Property Name="STATUS" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
     <NavigationProperty Name="EMPLOYEE_INFO" Relationship="EMSModel.FK_ATTENDANCE_DETAILS_EMPLOYEE_INFO" FromRole="ATTENDANCE_DETAILS" ToRole="EMPLOYEE_INFO" />
   </EntityType>
+  <EntityType Name="CARD_ASSIGN_INFO">
+    <Key>
+      <PropertyRef Name="CARD_ASSGN_ID" />
+    </Key>
+    <Property Name="CARD_ASSGN_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EMP_ID" Type="Int64" Nullable="false" />
+    <Property Name="CARD_NO" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="ACTION_BY" Type="Int64" Nullable="false" />
+    <Property Name="ACTION_DATE" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UPDATE_BY" Type="Int64" />
+    <Property Name="UPDATE_DATE" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="EMPLOYEE_INFO" Relationship="EMSModel.FK_CARD_ASSIGN_INFO_EMPLOYEE_INFO" FromRole="CARD_ASSIGN_INFO" ToRole="EMPLOYEE_INFO" />
+  </EntityType>
   <EntityType Name="DEPARTMENT_INFO">
     <Key>
       <PropertyRef Name="DEPT_ID" />
@@ -220,6 +238,7 @@
     <Property Name="NATIONALITY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="ASSET_MANAGEMENT" Relationship="EMSModel.FK_ASSET_ASSIGNMENT_EMPLOYEE_INFO" FromRole="EMPLOYEE_INFO" ToRole="ASSET_MANAGEMENT" />
     <NavigationProperty Name="ATTENDANCE_DETAILS" Relationship="EMSModel.FK_ATTENDANCE_DETAILS_EMPLOYEE_INFO" FromRole="EMPLOYEE_INFO" ToRole="ATTENDANCE_DETAILS" />
+    <NavigationProperty Name="CARD_ASSIGN_INFO" Relationship="EMSModel.FK_CARD_ASSIGN_INFO_EMPLOYEE_INFO" FromRole="EMPLOYEE_INFO" ToRole="CARD_ASSIGN_INFO" />
     <NavigationProperty Name="EMPLOYEE_APPLICATION" Relationship="EMSModel.FK_EMPLOYEE_APPLICATION_EMPLOYEE_INFO" FromRole="EMPLOYEE_INFO" ToRole="EMPLOYEE_APPLICATION" />
     <NavigationProperty Name="LEAVE_APPLICATION" Relationship="EMSModel.FK_LEAVE_APPLICATION_EMPLOYEE_INFO" FromRole="EMPLOYEE_INFO" ToRole="LEAVE_APPLICATION" />
     <NavigationProperty Name="POSITIONAL_INFO" Relationship="EMSModel.FK_POSITIONAL_INFO_EMPLOYEE_INFO" FromRole="EMPLOYEE_INFO" ToRole="POSITIONAL_INFO" />
@@ -542,6 +561,18 @@
       </Principal>
       <Dependent Role="ATTENDANCE_DETAILS">
         <PropertyRef Name="EMPLOYEE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CARD_ASSIGN_INFO_EMPLOYEE_INFO">
+    <End Type="EMSModel.EMPLOYEE_INFO" Role="EMPLOYEE_INFO" Multiplicity="1" />
+    <End Type="EMSModel.CARD_ASSIGN_INFO" Role="CARD_ASSIGN_INFO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EMPLOYEE_INFO">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CARD_ASSIGN_INFO">
+        <PropertyRef Name="EMP_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

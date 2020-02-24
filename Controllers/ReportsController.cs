@@ -113,11 +113,7 @@ namespace EMSApp.Controllers
                 else if (string.IsNullOrEmpty(collection["YEAR"]))
                 {
                     ModelState.AddModelError("", "Please Select Year!!!");
-                }
-                else if (string.IsNullOrEmpty(collection["EMPLOYEE_ID"]))
-                {
-                    ModelState.AddModelError("", "Please Select Employee!!!");
-                }
+                }               
                 else
                 {
                     string fromDate = "";
@@ -129,7 +125,7 @@ namespace EMSApp.Controllers
                         DateTime lastDate = firstDate.AddMonths(1).AddDays(-1);
                         toDate = lastDate.ToString("yyyy-MM-dd");
                     }
-                    long empId = Convert.ToInt64(collection["EMPLOYEE_ID"]);
+                    long empId =!string.IsNullOrEmpty(collection["EMPLOYEE_ID"].ToString()) ? Convert.ToInt64(collection["EMPLOYEE_ID"]):0;
                     var data = service.GetAttendanceDataMonthly(fromDate: fromDate, toDate: toDate, empId: empId);
                     ViewBag.STR = " of " + collection["MONTH"] + ", " + collection["YEAR"];
                     ViewBag.EMPLOYEE_ID = SetEmployee();

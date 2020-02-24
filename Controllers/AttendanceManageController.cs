@@ -153,6 +153,7 @@ namespace EMSApp.Controllers
         [HttpPost]
         public ActionResult Import(FormCollection collection, HttpPostedFileBase uploadFile)
         {
+            DataTable result = new DataTable();
             try
             {
                 // TODO: Add delete logic here
@@ -183,15 +184,31 @@ namespace EMSApp.Controllers
                         string extension = Path.GetExtension(uploadFile.FileName);
                         if (extension.Trim() == ".xls")
                         {
-                            connString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + path + ";Extended Properties=\"Excel 8.0;HDR=Yes;IMEX=2\"";
-                            DataTable dt = ConvertXSLXtoDataTable(path, connString);
-                            bool result = InsertIntoDB(dt);
+                            connString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + path + ";Extended Properties=\"Excel 8.0;HDR=Yes;IMEX=2\"";                            
                         }
                         else if (extension.Trim() == ".xlsx")
                         {
-                            connString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + path + ";Extended Properties=\"Excel 12.0;HDR=Yes;IMEX=2\"";
-                            DataTable dt = ConvertXSLXtoDataTable(path, connString);
-                            bool result = InsertIntoDB(dt);
+                            connString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + path + ";Extended Properties=\"Excel 12.0;HDR=Yes;IMEX=2\"";                            
+                        }                      
+                        DataTable dt = ConvertXSLXtoDataTable(path, connString);
+                        if (dt != null)
+                        {
+                            result = InsertIntoDB(dt);
+                            if (result!=null)
+                            {
+                                ViewBag.ResultSuccess = "Data Import Successfully!!!";
+                                ViewBag.ResultFailed = "";
+
+                            }
+                            else
+                            {
+                                ViewBag.ResultFailed = "Failed To Import!!!";
+                                ViewBag.ResultSuccess = "";
+                            }
+                        }
+                        else
+                        {
+                            ViewBag.ResultFailed = "Data is Not Matched or Empty!!!";
                         }
                     }
                 }
@@ -200,75 +217,94 @@ namespace EMSApp.Controllers
             {
 
             }
-            return View();
+            return View(result);
         }
-        private bool InsertIntoDB(DataTable dt)
+        private DataTable InsertIntoDB(DataTable dt)
         {
-            bool result = true;
-            var cardData = db.CARD_ASSIGN_INFO.ToList();
-            List<ATTENDANCE_DETAILS> attList = new List<ATTENDANCE_DETAILS>();
-            int slNo = 0;
+            bool result = new bool();
+            var cardData = db.CARD_ASSIGN_INFO.ToList();            
+            DataTable dtNew = new DataTable();
+            dtNew.Columns.AddRange(new DataColumn[6] { new DataColumn("EMPLOYEE_ID", typeof(int)),
+                        new DataColumn("ATT_DATE", typeof(DateTime)),
+                        new DataColumn("CHECK_IN_TIME", typeof(TimeSpan)),
+                        new DataColumn("CHECK_OUT_TIME", typeof(TimeSpan)),
+                        new DataColumn("SL_NO", typeof(int)),
+                        new DataColumn("STATUS",typeof(string)) });
+            int slNoIN = 0;
+            int slNoOUT = 0;
             string dateFlag = "";
-            foreach (DataRow dRow in dt.Rows)
+            try
             {
-                if (!string.IsNullOrEmpty(dRow[0].ToString()))
+                foreach (DataRow dRow in dt.Rows)
                 {
-                    string cardNo = Convert.ToString(dRow[0]);
-                    string check_in = Convert.ToString(dRow[2]);
-                    string check_out = Convert.ToString(dRow[3]);
-                    DateTime date = Convert.ToDateTime(dRow[5]);
-                    string dateStr = date.ToString();
-                    if (dateFlag != dateStr)
+                    if (!string.IsNullOrEmpty(dRow[0].ToString()))
                     {
-                        slNo = 0;
-                        dateFlag = dateStr;
+                        string cardNo = Convert.ToString(dRow[0]);
+                        if (Convert.ToInt32(cardNo) == 24)
+                        {
+                            string my = cardNo;
+                        }
+                        string check_in = Convert.ToString(dRow[2]);
+                        string check_out = Convert.ToString(dRow[3]);
+                        DateTime date = Convert.ToDateTime(dRow[5]);
+                        string dateStr = date.ToString();
+                        if (dateFlag != dateStr)
+                        {
+                            slNoIN = 1;
+                            slNoOUT = slNoIN + 1;
+                            dateFlag = dateStr;
+                        }
+                        else
+                        {
+                            slNoIN= slNoOUT+1;
+                            slNoOUT=slNoIN+1;
+                        }
+                        var empDataCard = cardData.Where(x => x.CARD_NO.Trim() == cardNo.Trim()).FirstOrDefault();
+                        if (empDataCard != null)
+                        {
+                            dtNew.Rows.Add(empDataCard.EMP_ID, date, TimeSpan.Parse(check_in), null, slNoIN, ConstantValue.AttendanceCheckIn);
+                            dtNew.Rows.Add(empDataCard.EMP_ID, date, null, TimeSpan.Parse(check_out), slNoOUT, ConstantValue.AttendanceCheckOut);
+                        }                        
                     }
-                    ATTENDANCE_DETAILS objIn = new ATTENDANCE_DETAILS();
-                    ATTENDANCE_DETAILS objOut = new ATTENDANCE_DETAILS();
-                    var empDataCard = cardData.Where(x => x.CARD_NO.Trim() == cardNo.Trim()).FirstOrDefault();
-                    objIn.EMPLOYEE_ID = objOut.EMPLOYEE_ID = empDataCard.EMP_ID;
-                    objIn.ATT_DATE = objOut.ATT_DATE = date;
-                    objIn.CHECK_IN_TIME = TimeSpan.Parse(check_in);
-                    slNo++;
-                    objIn.SL_NO = slNo;
-                    objIn.STATUS = ConstantValue.AttendanceCheckIn;
-                    objOut.CHECK_OUT_TIME = TimeSpan.Parse(check_out);
-                    slNo++;
-                    objOut.SL_NO = slNo;
-                    objOut.STATUS = ConstantValue.AttendanceCheckOut;
-                    attList.Add(objIn);
-                    attList.Add(objOut);
-                }               
+                }
             }
+            catch(Exception ex)
+            {
+                result = false;
+            }
+            int count = dtNew.Rows.Count;
+            DBHelper dbHelper = new DBHelper();
             using (var dbContextTransaction = db.Database.BeginTransaction())
             {
                 try
                 {
-                    foreach (var obj in attList)
+                    using (SqlConnection con = new SqlConnection(DBHelper.GetConnString()))
                     {
-                        db.ATTENDANCE_DETAILS.Add(obj);
-                        db.SaveChanges();
+                        using (SqlBulkCopy sqlBulkCopy = new SqlBulkCopy(con))
+                        {
+                            //Set the database table name
+                            sqlBulkCopy.DestinationTableName = "dbo.ATTENDANCE_DETAILS";
+
+                            //[OPTIONAL]: Map the DataTable columns with that of the database table
+                            sqlBulkCopy.ColumnMappings.Add("EMPLOYEE_ID", "EMPLOYEE_ID");
+                            sqlBulkCopy.ColumnMappings.Add("ATT_DATE", "ATT_DATE");
+                            sqlBulkCopy.ColumnMappings.Add("CHECK_IN_TIME", "CHECK_IN_TIME");
+                            sqlBulkCopy.ColumnMappings.Add("CHECK_OUT_TIME", "CHECK_OUT_TIME");
+                            sqlBulkCopy.ColumnMappings.Add("SL_NO", "SL_NO");
+                            sqlBulkCopy.ColumnMappings.Add("STATUS", "STATUS");
+                            con.Open();
+                            sqlBulkCopy.WriteToServer(dtNew);
+                            con.Close();
+                            result = true;
+                        }
                     }
-                    dbContextTransaction.Commit();
                 }
                 catch (Exception ex)
                 {
-                    dbContextTransaction.Rollback();
-                    result = false;
+                 
                 }
-            }
-            if (result)
-            {
-                ViewBag.ResultSuccess = "Data Import Successfully!!!";
-                ViewBag.ResultFailed = "";
-
-            }
-            else
-            {
-                ViewBag.ResultFailed = "Failed To Import!!!";
-                ViewBag.ResultSuccess = "";
-            }
-            return result;
+            }            
+            return dtNew;
         }
         private DataTable ConvertXSLXtoDataTable(string strFilePath, string connString)
         {
