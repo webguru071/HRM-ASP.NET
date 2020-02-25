@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using EMSApp.Models;
@@ -15,5 +16,6 @@ namespace EMSApp.Services
         List<AttendanceClass> GetAttendanceDataMonthly(string fromDate="",string toDate="",long empId=0);
         List<EmployeeReport> GetDeptWiseData(string status="",long deptId=0, long empId = 0);
         List<SalaryInfo> GetSalaryWithBenifitsData(string status="");
+        List<AttendanceClass> GetAttendanceDataMonthyList(DataTable data);
     }
 }

@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<EMSApp.Models.UserModel.AttendanceClass>
+@{
     ViewBag.Title = "Import Attendance Data";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -9,8 +10,8 @@
         <div class="card-body">
             <div class="" style="font-weight:900">@Html.ValidationSummary(true, "", new { @class = "text-danger alert alert-danger" })</div>
             <h4 class="card-title">Import Attendance Data</h4>
-            <h5 class="text-success alert-success">@ViewBag.ResultSuccess</h5>
-            <h5 class="text-danger alert-danger">@ViewBag.ResultFailed</h5>
+            <h5 class="text-success ">@ViewBag.ResultSuccess</h5>
+            <h5 class="text-danger">@ViewBag.ResultFailed</h5>
             <form action="#" class="dropzone">
                 <div class="fallback">
                     <input name="uploadFile" id="uploadFile" type="file" multiple />
@@ -24,4 +25,67 @@
             </div>
         </div>
     </div>
+    <div class="col-12">
+        <div class="card">
+            <div class="col-md-12">
+                <button type="button" class="btn btn-primary waves-effect waves-light m-t-10 pull-right" onclick=" printDiv()">Print</button>
+            </div>
+            <div class="card-body">
+                <h3 class="card-title">Imported Attandence</h3>
+                <div class="table-responsive" id="DivIdToPrint">
+                    <table class="color-table success-table" width="100%" border="1px">
+                        <thead>
+                            <tr>
+                                <th>Employee Name</th>
+                                <th>Date</th>
+                                <th>Check In</th>
+                                <th>Check Out</th>
+                                <th>Total Working Hour</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null)
+                            {
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.EMPLOYEE_NAME)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ATT_DATE)
+                                        </td>
+                                        <td style="padding:20px">
+                                            @Html.DisplayFor(modelItem => item.CHECK_IN_TIME)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.CHECK_OUT_TIME)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TOTAL_WORKING_HOUR)
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        function printDiv() {
+
+            var divToPrint = document.getElementById('DivIdToPrint');
+            var newWin = window.open('', 'Print-Window');
+            newWin.document.open();
+            newWin.document.write('<html><body onload="window.print()">' +'<h2>Imported Attendance<h2/><br/>'+ divToPrint.innerHTML + '</body></html>');
+            newWin.document.close();
+            setTimeout(function () { newWin.close(); }, 10);
+
+        }
+    </script>
 }

@@ -188,7 +188,7 @@ namespace EMSApp.Services
         public List<AttendanceClass> GetAttendanceDataMonthly(string fromDate = "", string toDate = "", long empId = 0)
         {
             string DateFilter = "";
-            string idFilter = empId>0 ? " and ei.id="+empId+" ":"";
+            string idFilter = empId > 0 ? " and ei.id=" + empId + " " : "";
             if (!string.IsNullOrEmpty(toDate) && !string.IsNullOrEmpty(fromDate))
             {
                 DateFilter = " and ad.ATT_DATE BETWEEN '" + fromDate + "' AND '" + toDate + "' ";
@@ -201,15 +201,33 @@ namespace EMSApp.Services
             List<AttendanceClass> list = GetAttendanceDataMonthyList(data);
             return list;
         }
-        private List<AttendanceClass> GetAttendanceDataMonthyList(DataTable data)
+        public List<AttendanceClass> GetAttendanceDataMonthyList(DataTable data)
         {
             List<AttendanceClass> list = new List<AttendanceClass>();
-
+            var dataEmp = db.EMPLOYEE_INFO.ToList();
             foreach (DataRow dRow in data.Rows)
             {
                 AttendanceClass listObj = new AttendanceClass();
-                long id = Convert.ToInt64(dRow["ID"]);
-                string name = Convert.ToString(dRow["EMPLOYEE_NAME"]);
+                long id = 0;
+                DataColumnCollection columns = data.Columns;
+                if (columns.Contains("ID"))
+                {
+                    id = Convert.ToInt64(dRow["ID"]);
+                }
+                else
+                {
+                    id = Convert.ToInt64(dRow["EMPLOYEE_ID"]);
+                }
+                string name = "";
+                if (columns.Contains("EMPLOYEE_NAME"))
+                {
+                    name = Convert.ToString(dRow["EMPLOYEE_NAME"]);
+                }
+                else
+                {
+                    var temp = dataEmp.Where(x => x.ID == id).FirstOrDefault();
+                    name = temp.EMPLOYEE_NAME; 
+                }               
                 DateTime date = Convert.ToDateTime(dRow["ATT_DATE"]);
                 listObj.EMPLOYEE_ID = id;
                 listObj.EMPLOYEE_NAME = name;
@@ -218,7 +236,7 @@ namespace EMSApp.Services
                 int maxSl = Convert.ToInt32(dataList.Max(x => x.SL_NO));
                 var dayData = dataList.Where(x => x.STATUS == ConstantValue.AttendanceCheckIn).FirstOrDefault();
                 int slNo = Convert.ToInt32(dayData.SL_NO);
-                DateTime checkIn =DateTime.ParseExact(dayData.CHECK_IN_TIME.ToString(), "HH:mm:ss", CultureInfo.InvariantCulture);
+                DateTime checkIn = DateTime.ParseExact(dayData.CHECK_IN_TIME.ToString(), "HH:mm:ss", CultureInfo.InvariantCulture);
                 listObj.CHECK_IN_TIME = checkIn.ToString("hh:mm tt");
                 bool flag = true;
                 DateTime checkOut = checkIn;
@@ -252,7 +270,7 @@ namespace EMSApp.Services
                             flag = true;
                             dayData = dataList.Where(x => x.STATUS == ConstantValue.AttendanceCheckIn && x.SL_NO > slNo).FirstOrDefault();
                             if (dayData != null)
-                            {                                
+                            {
                                 slNo = Convert.ToInt32(dayData.SL_NO);
                                 checkIn = DateTime.ParseExact(dayData.CHECK_IN_TIME.ToString(), "HH:mm:ss", CultureInfo.InvariantCulture);
                             }

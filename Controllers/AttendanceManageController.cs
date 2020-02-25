@@ -10,6 +10,7 @@ using System.Web;
 using System.Web.Mvc;
 using EMSApp.Helper;
 using EMSApp.Models;
+using EMSApp.Models.UserModel;
 using EMSApp.Services;
 
 namespace EMSApp.Controllers
@@ -147,13 +148,20 @@ namespace EMSApp.Controllers
         // GET: AttendanceManage/Import
         public ActionResult Import()
         {
-            return View();
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
         }
         // POST: AttendanceManage/Delete/5
         [HttpPost]
         public ActionResult Import(FormCollection collection, HttpPostedFileBase uploadFile)
         {
-            DataTable result = new DataTable();
+            List<AttendanceClass> viewList = new List<AttendanceClass>();
             try
             {
                 // TODO: Add delete logic here
@@ -175,30 +183,27 @@ namespace EMSApp.Controllers
                     {
                         var fileName = Path.GetFileName(DateTime.Now.ToString() + "_" + uploadFile.FileName);
                         var path = Path.Combine(Server.MapPath("/ExcelFiles"), fileName);
-                        //if (System.IO.File.Exists(path))
-                        //{
-                        //    System.IO.File.Delete(path);
-                        //}
+
                         uploadFile.SaveAs(path);
                         string connString = "";
                         string extension = Path.GetExtension(uploadFile.FileName);
                         if (extension.Trim() == ".xls")
                         {
-                            connString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + path + ";Extended Properties=\"Excel 8.0;HDR=Yes;IMEX=2\"";                            
+                            connString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + path + ";Extended Properties=\"Excel 8.0;HDR=Yes;IMEX=2\"";
                         }
                         else if (extension.Trim() == ".xlsx")
                         {
-                            connString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + path + ";Extended Properties=\"Excel 12.0;HDR=Yes;IMEX=2\"";                            
-                        }                      
+                            connString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + path + ";Extended Properties=\"Excel 12.0;HDR=Yes;IMEX=2\"";
+                        }
                         DataTable dt = ConvertXSLXtoDataTable(path, connString);
                         if (dt != null)
                         {
-                            result = InsertIntoDB(dt);
-                            if (result!=null)
+                            DataTable result = InsertIntoDB(dt);
+                            if (result != null)
                             {
                                 ViewBag.ResultSuccess = "Data Import Successfully!!!";
                                 ViewBag.ResultFailed = "";
-
+                                viewList = service.GetAttendanceDataMonthyList(result);
                             }
                             else
                             {
@@ -215,14 +220,15 @@ namespace EMSApp.Controllers
             }
             catch (Exception ex)
             {
-
+                ViewBag.ResultFailed = "Failed To Import!!!";
+                ViewBag.ResultSuccess = "";
             }
-            return View(result);
+            return View(viewList);
         }
         private DataTable InsertIntoDB(DataTable dt)
         {
             bool result = new bool();
-            var cardData = db.CARD_ASSIGN_INFO.ToList();            
+            var cardData = db.CARD_ASSIGN_INFO.ToList();
             DataTable dtNew = new DataTable();
             dtNew.Columns.AddRange(new DataColumn[6] { new DataColumn("EMPLOYEE_ID", typeof(int)),
                         new DataColumn("ATT_DATE", typeof(DateTime)),
@@ -256,19 +262,22 @@ namespace EMSApp.Controllers
                         }
                         else
                         {
-                            slNoIN= slNoOUT+1;
-                            slNoOUT=slNoIN+1;
+                            slNoIN = slNoOUT + 1;
+                            slNoOUT = slNoIN + 1;
                         }
+                        //Get employee info according to card no
                         var empDataCard = cardData.Where(x => x.CARD_NO.Trim() == cardNo.Trim()).FirstOrDefault();
-                        if (empDataCard != null)
+                        DateTime dateTemp = Convert.ToDateTime(check_in);
+                        int isImportedCount = db.ATTENDANCE_DETAILS.Where(x => x.EMPLOYEE_ID == empDataCard.EMP_ID && x.ATT_DATE == dateTemp).Count();
+                        if (empDataCard != null && isImportedCount == 0)
                         {
                             dtNew.Rows.Add(empDataCard.EMP_ID, date, TimeSpan.Parse(check_in), null, slNoIN, ConstantValue.AttendanceCheckIn);
                             dtNew.Rows.Add(empDataCard.EMP_ID, date, null, TimeSpan.Parse(check_out), slNoOUT, ConstantValue.AttendanceCheckOut);
-                        }                        
+                        }
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 result = false;
             }
@@ -285,7 +294,7 @@ namespace EMSApp.Controllers
                             //Set the database table name
                             sqlBulkCopy.DestinationTableName = "dbo.ATTENDANCE_DETAILS";
 
-                            //[OPTIONAL]: Map the DataTable columns with that of the database table
+                            //Map the DataTable columns with that of the database table
                             sqlBulkCopy.ColumnMappings.Add("EMPLOYEE_ID", "EMPLOYEE_ID");
                             sqlBulkCopy.ColumnMappings.Add("ATT_DATE", "ATT_DATE");
                             sqlBulkCopy.ColumnMappings.Add("CHECK_IN_TIME", "CHECK_IN_TIME");
@@ -293,7 +302,7 @@ namespace EMSApp.Controllers
                             sqlBulkCopy.ColumnMappings.Add("SL_NO", "SL_NO");
                             sqlBulkCopy.ColumnMappings.Add("STATUS", "STATUS");
                             con.Open();
-                            sqlBulkCopy.WriteToServer(dtNew);
+                            //sqlBulkCopy.WriteToServer(dtNew);
                             con.Close();
                             result = true;
                         }
@@ -301,20 +310,27 @@ namespace EMSApp.Controllers
                 }
                 catch (Exception ex)
                 {
-                 
+
                 }
-            }            
+            }
             return dtNew;
         }
         private DataTable ConvertXSLXtoDataTable(string strFilePath, string connString)
         {
+            Microsoft.Office.Interop.Excel.Application ExcelObj = new Microsoft.Office.Interop.Excel.Application();
+            Microsoft.Office.Interop.Excel.Workbook theWorkbook = null;
+            theWorkbook = ExcelObj.Workbooks.Open(strFilePath);
+            Microsoft.Office.Interop.Excel.Sheets sheets = theWorkbook.Worksheets;
+            Microsoft.Office.Interop.Excel.Worksheet worksheet = (Microsoft.Office.Interop.Excel.Worksheet)sheets.get_Item(1);//Get the reference of first worksheet
+            string strWorksheetName = worksheet.Name;//Get the name of worksheet.
+            ExcelObj.Workbooks.Close();
             OleDbConnection oledbConn = new OleDbConnection(connString);
             DataTable dt = new DataTable();
             try
             {
 
                 oledbConn.Open();
-                using (OleDbCommand cmd = new OleDbCommand("SELECT * FROM [Sheet1$]", oledbConn))
+                using (OleDbCommand cmd = new OleDbCommand("SELECT * FROM [" + strWorksheetName + "]", oledbConn))
                 {
                     OleDbDataAdapter oleda = new OleDbDataAdapter();
                     oleda.SelectCommand = cmd;
