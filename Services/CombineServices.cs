@@ -61,7 +61,7 @@ namespace EMSApp.Services
                             INNER JOIN EMPLOYEE_INFO EI ON EI.ID=PI.EMPLOYEE_ID
                             INNER JOIN DIVISION_INFO DI ON PI.DIV_ID=DI.DIV_ID
                             INNER JOIN DEPARTMENT_INFO DII ON DI.DEPT_ID=DII.DEPT_ID
-                            WHERE PI.CHANGE_TYPE='a' " + iDFilter + statusFilter + empIdFilter;
+                            WHERE EI.ID>0 " + iDFilter + statusFilter + empIdFilter;
             DataTable data = dbHelper.GetDataTable(query);
             return GetDeptWiseEmpDataInList(data);
         }
@@ -226,8 +226,9 @@ namespace EMSApp.Services
                 else
                 {
                     var temp = dataEmp.Where(x => x.ID == id).FirstOrDefault();
-                    name = temp.EMPLOYEE_NAME; 
-                }               
+                    name = temp.EMPLOYEE_NAME;
+                }
+                var allEmpPOsitionalData = db.POSITIONAL_INFO.Where(x => x.STATUS == ConstantValue.TypeActive).ToList();
                 DateTime date = Convert.ToDateTime(dRow["ATT_DATE"]);
                 listObj.EMPLOYEE_ID = id;
                 listObj.EMPLOYEE_NAME = name;
@@ -283,7 +284,41 @@ namespace EMSApp.Services
 
                 }
                 listObj.CHECK_OUT_TIME = checkOut.ToString("hh:mm tt");
-                listObj.TOTAL_WORKING_HOUR = wHour.ToString();
+                listObj.PERDAY_WORKING_HOUR = wHour.ToString();
+                TimeSpan totalDayWT = Convert.ToDateTime(listObj.CHECK_OUT_TIME).Subtract(Convert.ToDateTime(listObj.CHECK_IN_TIME));
+                listObj.TOTAL_WORKING_HOUR = totalDayWT.ToString();
+                listObj.TOTAL_BREAK = ConstantValue.BreakTime.ToString();
+                var empPOsitionalData = allEmpPOsitionalData.Where(x => x.EMPLOYEE_ID == listObj.EMPLOYEE_ID).FirstOrDefault();
+                TimeSpan actualWH = TimeSpan.FromHours(Convert.ToInt64(empPOsitionalData.WORKING_HOURS)).Subtract(ConstantValue.BreakTime);
+                TimeSpan lessWork = actualWH.Subtract(wHour);
+                TimeSpan overTime = wHour.Subtract(actualWH);
+                if (lessWork > TimeSpan.Zero)
+                {
+                    listObj.LESS_WORK = lessWork.ToString();
+                }               
+                else
+                {
+                    listObj.LESS_WORK = "0";
+                }
+                if (overTime > TimeSpan.Zero)
+                {
+                    listObj.OVER_TIME = overTime.ToString();
+                }
+                else
+                {
+                    listObj.OVER_TIME = "0";
+                }
+                TimeSpan workShift = empPOsitionalData.WORKING_SHIFT;
+                DateTime arvTime =Convert.ToDateTime(listObj.CHECK_IN_TIME);
+                TimeSpan lateArrival = (arvTime.TimeOfDay).Subtract(workShift);
+                if (lateArrival > TimeSpan.Zero)
+                {
+                    listObj.LATE_ARRIVED = lateArrival.ToString();
+                }
+                else
+                {
+                    listObj.LATE_ARRIVED = "0";
+                }
                 list.Add(listObj);
             }
             return list;

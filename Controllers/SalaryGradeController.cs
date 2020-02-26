@@ -128,7 +128,7 @@ namespace EMSApp.Controllers
                 }
             }
 
-            catch
+            catch(Exception ex)
             {
                 return View();
             }

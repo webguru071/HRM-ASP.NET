@@ -45,8 +45,11 @@ namespace EMSApp.Controllers
                     Session["USER_ID"] = data.ID;
                     Session["USER_NAME"] = data.USER_NAME;
                     Session["USER_LEVEL"]=data.USER_LEVEL;
-                    Session["EMP_ID"]=data.EMPLOYEE_ID;
-                    Session["IMAGE"]=empData.IMAGE;
+                    if (empData != null)
+                    {
+                        Session["EMP_ID"] = data.EMPLOYEE_ID;
+                        Session["IMAGE"] = !string.IsNullOrEmpty(empData.IMAGE) ? empData.IMAGE : "";
+                    }
                     if (data.USER_LEVEL == Helper.ConstantValue.UserLevelAdmin)
                     {                        
                         return RedirectToAction("Index", "Home");

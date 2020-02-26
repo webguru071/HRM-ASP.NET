@@ -12,23 +12,25 @@ namespace EMSApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class LEAVE_APPLICATION
+    public partial class SALARY_INFO_MONTHLY
     {
-        public long LEAVE_APP_ID { get; set; }
-        public long LEAVE_TYPE_ID { get; set; }
+        public long SALARY_INFO_MONTHLY_ID { get; set; }
         public long EMPLOYEE_ID { get; set; }
-        public string START_DATE { get; set; }
-        public string END_DATE { get; set; }
-        public string APPROVED_START_DATE { get; set; }
-        public string APPROVED_END_DATE { get; set; }
-        public string STATUS { get; set; }
-        public string REMARKS { get; set; }
-        public long ACTION_BY { get; set; }
+        public decimal BASIC_SALARY { get; set; }
+        public decimal GROSS_SALARY { get; set; }
+        public Nullable<decimal> ADDITIONAL { get; set; }
+        public Nullable<decimal> BONUS { get; set; }
+        public Nullable<decimal> COMMISSION { get; set; }
+        public Nullable<decimal> ADVANCE { get; set; }
+        public Nullable<decimal> DEDUCTION { get; set; }
+        public Nullable<double> LEAVE_COUNT { get; set; }
+        public decimal TOTAL_SALARY { get; set; }
+        public string NOTE { get; set; }
         public System.DateTime ACTION_DATE { get; set; }
-        public Nullable<long> UPDATE_BY { get; set; }
+        public long ACTION_BY { get; set; }
         public Nullable<System.DateTime> UPDATE_DATE { get; set; }
+        public Nullable<long> UPDATE_BY { get; set; }
     
         public virtual EMPLOYEE_INFO EMPLOYEE_INFO { get; set; }
-        public virtual LEAVE_TYPE LEAVE_TYPE { get; set; }
     }
 }

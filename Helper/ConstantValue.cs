@@ -64,5 +64,15 @@ namespace EMSApp.Helper
         //Stock
         public static string StockForAdd = "a";
         public static string StockForDeduct = "d";
+        //LEAVE DAY COUNT
+        public static string LeaveDayCountOne = "o";
+        public static string LeaveDayCountHalf = "h";
+        public static string LeaveDayCountDate = "d";
+        public static double LeaveDayCountOneValue = 1;
+        public static double LeaveDayCountHalfValue = .5;
+        //Attendance
+        public static TimeSpan BreakTime = TimeSpan.FromMinutes(45);
+
+
     }
 }

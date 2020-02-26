@@ -174,7 +174,8 @@ namespace EMSApp.Controllers
                 else
                 {
                     user.UPDATE_BY = converterHelper.GetLoggedUserID();
-                    user.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
+                    //string acDate = Session["AD"].ToString();
+                    user.ACTION_DATE = (Session["AD"]!=null)  ? Convert.ToDateTime(Session["AD"]) : DateTime.Now;
                     user.UPDATE_DATE = DateTime.Now;
                     if (user.EMPLOYEE_ID == 0)
                     {

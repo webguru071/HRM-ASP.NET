@@ -34,12 +34,14 @@ namespace EMSApp.Models
         public virtual DbSet<EMPLOYEE_APPLICATION> EMPLOYEE_APPLICATION { get; set; }
         public virtual DbSet<EMPLOYEE_INFO> EMPLOYEE_INFO { get; set; }
         public virtual DbSet<EQUEPMENTS_INFO> EQUEPMENTS_INFO { get; set; }
+        public virtual DbSet<INCREMENT_INFO> INCREMENT_INFO { get; set; }
         public virtual DbSet<INV_INFO> INV_INFO { get; set; }
         public virtual DbSet<LEAVE_APPLICATION> LEAVE_APPLICATION { get; set; }
         public virtual DbSet<LEAVE_TYPE> LEAVE_TYPE { get; set; }
         public virtual DbSet<NOTICE_BOARD> NOTICE_BOARD { get; set; }
         public virtual DbSet<POSITIONAL_INFO> POSITIONAL_INFO { get; set; }
         public virtual DbSet<SALARY_INFO> SALARY_INFO { get; set; }
+        public virtual DbSet<SALARY_INFO_MONTHLY> SALARY_INFO_MONTHLY { get; set; }
         public virtual DbSet<SALARY_SETUP> SALARY_SETUP { get; set; }
         public virtual DbSet<SALARY_GRADE> SALARY_GRADE { get; set; }
         public virtual DbSet<STOCK_INFO> STOCK_INFO { get; set; }

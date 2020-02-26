@@ -32,7 +32,9 @@ namespace EMSApp.Models
         public System.DateTime ACTION_DATE { get; set; }
         public Nullable<long> UPDATE_BY { get; set; }
         public Nullable<System.DateTime> UPDATE_DATE { get; set; }
-        public string CHANGE_TYPE { get; set; }
+        public string STATUS { get; set; }
+        public System.TimeSpan WORKING_SHIFT { get; set; }
+        public int WORKING_HOURS { get; set; }
     
         public virtual DIVISION_INFO DIVISION_INFO { get; set; }
         public virtual EMPLOYEE_INFO EMPLOYEE_INFO { get; set; }

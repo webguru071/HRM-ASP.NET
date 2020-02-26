@@ -303,7 +303,7 @@ namespace EMSApp.Controllers
         }
         public JsonResult GetEmpInfo(long id)
         {
-            var data = db.POSITIONAL_INFO.Where(x => x.EMPLOYEE_ID == id && x.CHANGE_TYPE == Helper.ConstantValue.TypeActive).FirstOrDefault();
+            var data = db.POSITIONAL_INFO.Where(x => x.EMPLOYEE_ID == id && x.STATUS == Helper.ConstantValue.TypeActive).FirstOrDefault();
             Dictionary<string, string> listOfData = new Dictionary<string, string>();
             if (data != null)
             {

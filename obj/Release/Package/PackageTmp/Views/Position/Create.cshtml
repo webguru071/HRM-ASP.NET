@@ -8,126 +8,181 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-<div class="form-horizontal">
-    <div class="form-horizontal" style="padding:15px">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">Employee Position</h4>
-                <hr />
-                <form class="form-material m-t-40">
-                    <div class="" style="font-weight:900">@Html.ValidationSummary(true, "", new { @class = "text-danger alert alert-danger" })</div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                Employee
-                                <div class="col-md-10">
-                                    @Html.DropDownList("EMPLOYEE_ID", null, htmlAttributes: new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.EMPLOYEE_ID, "", new { @class = "text-danger" })
+    <div class="form-horizontal">
+        <div class="form-horizontal" style="padding:15px">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Employee Position</h4>
+                    <hr />
+                    <form class="form-material m-t-40">
+                        <div class="" style="font-weight:900">@Html.ValidationSummary(true, "", new { @class = "text-danger alert alert-danger" })</div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    Employee
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("EMPLOYEE_ID", null, htmlAttributes: new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.EMPLOYEE_ID, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    Department
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("DEPT_ID", null, htmlAttributes: new { @class = "form-control", @OnChange = "GetDivision()" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    Division
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("DIV_ID", null, htmlAttributes: new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.DIV_ID, "", new { @class = "text-danger" })
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                Division
-                                <div class="col-md-10">
-                                    @Html.DropDownList("DIV_ID", null, htmlAttributes: new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.DIV_ID, "", new { @class = "text-danger" })
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    Job Post
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.POSITION_TITLE, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.POSITION_TITLE, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    Basic Salary
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.BASIC_SALARY, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+                                        @Html.ValidationMessageFor(model => model.BASIC_SALARY, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    Job Type
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("DUTY_TYPE", new SelectListItem[]
+                                                                        {
+                                                                             new SelectListItem { Text = "Select One", Value="" },
+                                                                            new SelectListItem { Text = "Full Time", Value="f" },
+                                                                            new SelectListItem{ Text="Part Time",Value="p" },
+                                                                            new SelectListItem{ Text="Contructual",Value="c" },
+                                                                            new SelectListItem{ Text="Other", Value="o" },},
+                                                                            htmlAttributes: new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.DUTY_TYPE, "", new { @class = "text-danger" })
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                Position
-                                <div class="col-md-10">
-                                    @Html.EditorFor(model => model.POSITION_TITLE, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.POSITION_TITLE, "", new { @class = "text-danger" })
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    Salary Count As
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("RATE_TYPE", new SelectListItem[]
+                                                                         {
+                                                                              new SelectListItem { Text = "Select One", Value="" },
+                                                                             new SelectListItem { Text = "Hourly", Value="h" },
+                                                                             new SelectListItem{ Text="Salary",Value="s" },},
+                                                                             htmlAttributes: new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.RATE_TYPE, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    Working Shift<span class="card-subtitle small">(Format: 12:00 pm)</span>
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.WORKING_SHIFT, new { htmlAttributes = new { @class = "form-control", @type = "time" } })
+                                        @Html.ValidationMessageFor(model => model.WORKING_SHIFT, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    Total Working Hour
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.WORKING_HOURS, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+                                        @Html.ValidationMessageFor(model => model.WORKING_HOURS, "", new { @class = "text-danger" })
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                Duty Type
-                                <div class="col-md-10">
-                                    @Html.DropDownList("DUTY_TYPE", new SelectListItem[]
-                                                                    {
-                                                                         new SelectListItem { Text = "Select One", Value="" },
-                                                                        new SelectListItem { Text = "Full Time", Value="f" },
-                                                                        new SelectListItem{ Text="Part Time",Value="p" },
-                                                                        new SelectListItem{ Text="Contructual",Value="c" },
-                                                                        new SelectListItem{ Text="Other", Value="o" },},
-                                                                        htmlAttributes: new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.DUTY_TYPE, "", new { @class = "text-danger" })
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    Payment Frequency
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("PAY_FREQ", new SelectListItem[]
+                                                                        {
+                                                                             new SelectListItem { Text = "Select One", Value="" },
+                                                                            new SelectListItem { Text = "Daily", Value="d" },
+                                                                            new SelectListItem { Text = "Weekly", Value="w" },
+                                                                            new SelectListItem{ Text="Biweekly",Value="b" },
+                                                                            new SelectListItem{ Text="Monthly", Value="m" },},
+                                                                            htmlAttributes: new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.PAY_FREQ, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    Status
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("CHANGE_TYPE", new SelectListItem[]
+                                                    {
+                                                         new SelectListItem { Text = "Select Status", Value="" },
+                                                        new SelectListItem { Text = "Active", Value=EMSApp.Helper.ConstantValue.UserStatusActive },
+                                                        new SelectListItem{ Text="Deactive",Value=EMSApp.Helper.ConstantValue.UserStatusDeactive },},
+                                                        htmlAttributes: new { @class = "form-control" })
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                Salary Rate
-                                <div class="col-md-10">
-                                    @Html.DropDownList("RATE_TYPE", new SelectListItem[]
-                                                                     {
-                                                                          new SelectListItem { Text = "Select One", Value="" },
-                                                                         new SelectListItem { Text = "Hourly", Value="h" },
-                                                                         new SelectListItem{ Text="Salary",Value="s" },},
-                                                                         htmlAttributes: new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.RATE_TYPE, "", new { @class = "text-danger" })
-                                </div>
+                        <div class="form-actions">
+                            <div class="btn btn-secondary pull-center">
+                                @Html.ActionLink("Back to List", "Index")
                             </div>
+                            <button type="submit" class="btn btn-primary pull-right">Save</button>
                         </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                Payment Frequency
-                                <div class="col-md-10">
-                                    @Html.DropDownList("PAY_FREQ", new SelectListItem[]
-                                                                    {
-                                                                         new SelectListItem { Text = "Select One", Value="" },
-                                                                        new SelectListItem { Text = "Daily", Value="d" },
-                                                                        new SelectListItem { Text = "Weekly", Value="w" },
-                                                                        new SelectListItem{ Text="Biweekly",Value="b" },
-                                                                        new SelectListItem{ Text="Monthly", Value="m" },},
-                                                                        htmlAttributes: new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.PAY_FREQ, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                Basic Salary
-                                <div class="col-md-10">
-                                    @Html.EditorFor(model => model.BASIC_SALARY, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
-                                    @Html.ValidationMessageFor(model => model.BASIC_SALARY, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                Status
-                                <div class="col-md-10">
-                                    @Html.DropDownList("CHANGE_TYPE", new SelectListItem[]
-                                                {
-                                                     new SelectListItem { Text = "Select Status", Value="" },
-                                                    new SelectListItem { Text = "Active", Value=EMSApp.Helper.ConstantValue.UserStatusActive },
-                                                    new SelectListItem{ Text="Deactive",Value=EMSApp.Helper.ConstantValue.UserStatusDeactive },},
-                                                    htmlAttributes: new { @class = "form-control" })
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-actions">
-                        <div class="btn btn-secondary pull-center">
-                            @Html.ActionLink("Back to List", "Index")
-                        </div>
-                        <button type="submit" class="btn btn-primary pull-right">Save</button>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
 }
 
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
 
+         function GetDivision(){
+            var deptId = $('#DEPT_ID').val();
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("GetDivision", "Notice")",
+                data: { deptId: deptId },
+                success: function (listOfData) {
+                    $('#DIV_ID option').remove();
+                       var _val = 0;
+                            var _valData = 'Select One';
+                            $("#DIV_ID").append('<option value="' + _val + '">' + _valData + '</option>');
+                            $.each(listOfData, function (i, data) {
+                                $("#DIV_ID").append('<option value="'
+                                                           + data.Value + '">'
+                                                     + data.Text + '</option>');
+                            });
+                },
+                error: function (result) {
+                    alert("Error");
+                }
+            });
+        }
+    </script>
+}

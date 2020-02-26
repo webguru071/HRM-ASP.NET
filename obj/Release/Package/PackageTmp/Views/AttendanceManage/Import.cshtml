@@ -6,29 +6,40 @@
 @using (Html.BeginForm("Import", "AttendanceManage", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    <div class="card" style="margin:20px">
-        <div class="card-body">
-            <div class="" style="font-weight:900">@Html.ValidationSummary(true, "", new { @class = "text-danger alert alert-danger" })</div>
-            <h4 class="card-title">Import Attendance Data</h4>
-            <h5 class="text-success ">@ViewBag.ResultSuccess</h5>
-            <h5 class="text-danger">@ViewBag.ResultFailed</h5>
-            <form action="#" class="dropzone">
-                <div class="fallback">
-                    <input name="uploadFile" id="uploadFile" type="file" multiple />
+    <div class="col-md-12" style="padding-top:15px">
+        <div class="card card-body">
+            <h3 class="box-title m-b-0">Import Attendance Data</h3>
+            <hr />
+            <div class="" style="font-weight:900">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger alert alert-danger" })
+                <h5 class="text-success ">@ViewBag.ResultSuccess</h5>
+                <h5 class="text-danger">@ViewBag.ResultFailed</h5>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    @Html.DropDownList("MONTH", null, htmlAttributes: new { @class = "form-control" })
                 </div>
-            </form>
-            <div class="form-actions" style="margin:20px">
-                <div class="btn btn-secondary pull-center">
-                    @Html.ActionLink("Back to List", "Index")
+                <div class="col-md-4">
+                    @Html.DropDownList("YEAR", null, htmlAttributes: new { @class = "form-control" })
+                </div>                
+                <form action="#" class="dropzone">
+                    <div class="fallback">
+                        <input name="uploadFile" id="uploadFile" type="file" multiple />
+                    </div>
+                </form>
+                <div class="form-actions col-md-12" style="padding:20px">
+                    <div class="btn btn-secondary pull-left">
+                        @Html.ActionLink("Back to List", "Index")
+                    </div>
+                    <button type="submit" class="btn btn-primary pull-right">Import</button>
                 </div>
-                <button type="submit" class="btn btn-primary pull-right">Import</button>
             </div>
         </div>
-    </div>
+    </div>  
     <div class="col-12">
         <div class="card">
             <div class="col-md-12">
-                <button type="button" class="btn btn-primary waves-effect waves-light m-t-10 pull-right" onclick=" printDiv()">Print</button>
+                <button type="button" class="btn btn-warning waves-effect waves-light m-t-10 pull-right" onclick=" printDiv()">Print</button>
             </div>
             <div class="card-body">
                 <h3 class="card-title">Imported Attandence</h3>
@@ -36,11 +47,16 @@
                     <table class="color-table success-table" width="100%" border="1px">
                         <thead>
                             <tr>
-                                <th>Employee Name</th>
                                 <th>Date</th>
+                                <th>Employee Name</th>
                                 <th>Check In</th>
                                 <th>Check Out</th>
                                 <th>Total Working Hour</th>
+                                <th>Break</th>
+                                <th>Active Working Hour</th>
+                                <th>Less Work</th>
+                                <th>Over Time </th>
+                                <th>Late Arrival</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -50,12 +66,13 @@
                                 {
                                     <tr>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.EMPLOYEE_NAME)
-                                        </td>
-                                        <td>
                                             @Html.DisplayFor(modelItem => item.ATT_DATE)
                                         </td>
-                                        <td style="padding:20px">
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.EMPLOYEE_NAME)
+                                        </td>
+
+                                        <td>
                                             @Html.DisplayFor(modelItem => item.CHECK_IN_TIME)
                                         </td>
                                         <td>
@@ -63,6 +80,21 @@
                                         </td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.TOTAL_WORKING_HOUR)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TOTAL_BREAK)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.PERDAY_WORKING_HOUR)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.LESS_WORK)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.OVER_TIME)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.LATE_ARRIVED)
                                         </td>
                                     </tr>
                                 }
@@ -82,7 +114,7 @@
             var divToPrint = document.getElementById('DivIdToPrint');
             var newWin = window.open('', 'Print-Window');
             newWin.document.open();
-            newWin.document.write('<html><body onload="window.print()">' +'<h2>Imported Attendance<h2/><br/>'+ divToPrint.innerHTML + '</body></html>');
+            newWin.document.write('<html><body onload="window.print()">' + '<h2>Imported Attendance<h2/><br/>' + divToPrint.innerHTML + '</body></html>');
             newWin.document.close();
             setTimeout(function () { newWin.close(); }, 10);
 

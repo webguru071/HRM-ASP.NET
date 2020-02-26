@@ -17,6 +17,7 @@
     <EntitySetMapping Name="ASSET_MANAGEMENT">
       <EntityTypeMapping TypeName="EMSModel.ASSET_MANAGEMENT">
         <MappingFragment StoreEntitySet="ASSET_MANAGEMENT">
+          <ScalarProperty Name="LOCATION" ColumnName="LOCATION" />
           <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
           <ScalarProperty Name="UPDATE_BY" ColumnName="UPDATE_BY" />
           <ScalarProperty Name="ACTION_DATE" ColumnName="ACTION_DATE" />
@@ -135,6 +136,21 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="INCREMENT_INFO">
+      <EntityTypeMapping TypeName="EMSModel.INCREMENT_INFO">
+        <MappingFragment StoreEntitySet="INCREMENT_INFO">
+          <ScalarProperty Name="UPDATE_BY" ColumnName="UPDATE_BY" />
+          <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
+          <ScalarProperty Name="ACTION_BY" ColumnName="ACTION_BY" />
+          <ScalarProperty Name="ACTION_DATE" ColumnName="ACTION_DATE" />
+          <ScalarProperty Name="INCREMENT_FROM" ColumnName="INCREMENT_FROM" />
+          <ScalarProperty Name="INCREMENT_TYPE" ColumnName="INCREMENT_TYPE" />
+          <ScalarProperty Name="INCREMENT_RATE" ColumnName="INCREMENT_RATE" />
+          <ScalarProperty Name="EMP_ID" ColumnName="EMP_ID" />
+          <ScalarProperty Name="INCREMENT_ID" ColumnName="INCREMENT_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="INV_INFO">
       <EntityTypeMapping TypeName="EMSModel.INV_INFO">
         <MappingFragment StoreEntitySet="INV_INFO">
@@ -156,8 +172,8 @@
         <MappingFragment StoreEntitySet="LEAVE_APPLICATION">
           <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
           <ScalarProperty Name="UPDATE_BY" ColumnName="UPDATE_BY" />
-          <ScalarProperty Name="ACTIVE_DATE" ColumnName="ACTIVE_DATE" />
-          <ScalarProperty Name="ACTIVE_BY" ColumnName="ACTIVE_BY" />
+          <ScalarProperty Name="ACTION_DATE" ColumnName="ACTION_DATE" />
+          <ScalarProperty Name="ACTION_BY" ColumnName="ACTION_BY" />
           <ScalarProperty Name="REMARKS" ColumnName="REMARKS" />
           <ScalarProperty Name="STATUS" ColumnName="STATUS" />
           <ScalarProperty Name="APPROVED_END_DATE" ColumnName="APPROVED_END_DATE" />
@@ -201,7 +217,9 @@
     <EntitySetMapping Name="POSITIONAL_INFO">
       <EntityTypeMapping TypeName="EMSModel.POSITIONAL_INFO">
         <MappingFragment StoreEntitySet="POSITIONAL_INFO">
-          <ScalarProperty Name="CHANGE_TYPE" ColumnName="CHANGE_TYPE" />
+          <ScalarProperty Name="WORKING_HOURS" ColumnName="WORKING_HOURS" />
+          <ScalarProperty Name="WORKING_SHIFT" ColumnName="WORKING_SHIFT" />
+          <ScalarProperty Name="STATUS" ColumnName="STATUS" />
           <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
           <ScalarProperty Name="UPDATE_BY" ColumnName="UPDATE_BY" />
           <ScalarProperty Name="ACTION_DATE" ColumnName="ACTION_DATE" />
@@ -236,18 +254,41 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="SALARY_INFO_MONTHLY">
+      <EntityTypeMapping TypeName="EMSModel.SALARY_INFO_MONTHLY">
+        <MappingFragment StoreEntitySet="SALARY_INFO_MONTHLY">
+          <ScalarProperty Name="UPDATE_BY" ColumnName="UPDATE_BY" />
+          <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
+          <ScalarProperty Name="ACTION_BY" ColumnName="ACTION_BY" />
+          <ScalarProperty Name="ACTION_DATE" ColumnName="ACTION_DATE" />
+          <ScalarProperty Name="NOTE" ColumnName="NOTE" />
+          <ScalarProperty Name="TOTAL_SALARY" ColumnName="TOTAL_SALARY" />
+          <ScalarProperty Name="LEAVE_COUNT" ColumnName="LEAVE_COUNT" />
+          <ScalarProperty Name="DEDUCTION" ColumnName="DEDUCTION" />
+          <ScalarProperty Name="ADVANCE" ColumnName="ADVANCE" />
+          <ScalarProperty Name="COMMISSION" ColumnName="COMMISSION" />
+          <ScalarProperty Name="BONUS" ColumnName="BONUS" />
+          <ScalarProperty Name="ADDITIONAL" ColumnName="ADDITIONAL" />
+          <ScalarProperty Name="GROSS_SALARY" ColumnName="GROSS_SALARY" />
+          <ScalarProperty Name="BASIC_SALARY" ColumnName="BASIC_SALARY" />
+          <ScalarProperty Name="EMPLOYEE_ID" ColumnName="EMPLOYEE_ID" />
+          <ScalarProperty Name="SALARY_INFO_MONTHLY_ID" ColumnName="SALARY_INFO_MONTHLY_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="SALARY_SETUP">
       <EntityTypeMapping TypeName="EMSModel.SALARY_SETUP">
         <MappingFragment StoreEntitySet="SALARY_SETUP">
-          <ScalarProperty Name="POSITION_ID" ColumnName="POSITION_ID" />
-          <ScalarProperty Name="CANGE_TYPE" ColumnName="CANGE_TYPE" />
           <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
           <ScalarProperty Name="UPDATE_BY" ColumnName="UPDATE_BY" />
           <ScalarProperty Name="ACTION_DATE" ColumnName="ACTION_DATE" />
           <ScalarProperty Name="ACTION_BY" ColumnName="ACTION_BY" />
+          <ScalarProperty Name="CANGE_TYPE" ColumnName="CANGE_TYPE" />
+          <ScalarProperty Name="SALARY_GRADE_SETUP_STRING" ColumnName="SALARY_GRADE_SETUP_STRING" />
           <ScalarProperty Name="SALARY_GRADE_SETUP" ColumnName="SALARY_GRADE_SETUP" />
           <ScalarProperty Name="GROSS_SALARY" ColumnName="GROSS_SALARY" />
           <ScalarProperty Name="PAY_TYPE" ColumnName="PAY_TYPE" />
+          <ScalarProperty Name="POSITION_ID" ColumnName="POSITION_ID" />
           <ScalarProperty Name="EMP_ID" ColumnName="EMP_ID" />
           <ScalarProperty Name="SALARY_SET_ID" ColumnName="SALARY_SET_ID" />
         </MappingFragment>

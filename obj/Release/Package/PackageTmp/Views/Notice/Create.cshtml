@@ -83,28 +83,7 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript">
-         @*function GetTeam() {
-            var divId = $('#DIV_ID').val();
-            $.ajax({
-                type: "GET",
-                url: "@Url.Action("GetTeam", "Notice")",
-                data: { divId: divId },
-                success: function (listOfData) {
-                    $('#TEAM_ID option').remove();
-                       var _val = 0;
-                            var _valData = 'SELECT ONE';
-                            $("#TEAM_ID").append('<option value="' + _val + '">' + _valData + '</option>');
-                            $.each(listOfData, function (i, data) {
-                                $("#TEAM_ID").append('<option value="'
-                                                           + data.Value + '">'
-                                                     + data.Text + '</option>');
-                            });
-                },
-                error: function (result) {
-                    alert("Error");
-                }
-            });
-        }*@
+  
          function GetDivision(){
             var deptId = $('#DEPT_ID').val();
             $.ajax({

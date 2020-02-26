@@ -18,14 +18,14 @@ namespace EMSApp.Controllers
         {
             if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
             {
-                var data = db.POSITIONAL_INFO.Where(x => x.CHANGE_TYPE == ConstantValue.TypeActive).ToList();
+                var data = db.POSITIONAL_INFO.Where(x => x.STATUS == ConstantValue.TypeActive).ToList();
                 return View(data);
             }
             else
             {
                 return RedirectToAction("LogIn", "Login");
             }
-            
+
         }
         // GET: Position/Details/5
         public ActionResult Details(int id)
@@ -44,7 +44,7 @@ namespace EMSApp.Controllers
             {
                 return RedirectToAction("LogIn", "Login");
             }
-            
+
         }
         // POST: Position/Create
         [HttpPost]
@@ -55,38 +55,46 @@ namespace EMSApp.Controllers
                 // TODO: Add insert logic here
                 if (obj.EMPLOYEE_ID <= 0)
                 {
-                    ModelState.AddModelError("", "Please Select Employee Name");
+                    ModelState.AddModelError("", "Please Select Employee Name!!!");
                 }
                 else if (obj.DIV_ID <= 0)
                 {
-                    ModelState.AddModelError("", "Please Select Division Name");
+                    ModelState.AddModelError("", "Please Select Division Name!!!");
                 }
                 else if (string.IsNullOrEmpty(obj.POSITION_TITLE))
                 {
-                    ModelState.AddModelError("", "Please Enter Position Name");
+                    ModelState.AddModelError("", "Please Enter Job Post!!!");
+                }
+                else if (obj.BASIC_SALARY <= 0)
+                {
+                    ModelState.AddModelError("", "Please Enter Basic Salary!!!");
                 }
                 else if (string.IsNullOrEmpty(obj.DUTY_TYPE))
                 {
-                    ModelState.AddModelError("", "Please Select Duty Type");
+                    ModelState.AddModelError("", "Please Select Job Type!!!");
                 }
                 else if (string.IsNullOrEmpty(obj.RATE_TYPE))
                 {
-                    ModelState.AddModelError("", "Please Select Rate Type");
+                    ModelState.AddModelError("", "Please Select Salary Count!!!");
+                }
+                else if (string.IsNullOrEmpty(obj.WORKING_SHIFT.ToString()))
+                {
+                    ModelState.AddModelError("", "Work Shift is Required!!!");
+                }
+                else if (Convert.ToInt32(obj.WORKING_HOURS)<=0)
+                {
+                    ModelState.AddModelError("", "Total Working Hour is Required!!!");
                 }
                 else if (string.IsNullOrEmpty(obj.PAY_FREQ))
                 {
                     ModelState.AddModelError("", "Please Select Payment Frequency Type");
-                }
-                else if (obj.BASIC_SALARY <= 0)
-                {
-                    ModelState.AddModelError("", "Please Enter Basic Salary");
                 }
                 else
                 {
                     long userID = converterHelper.GetLoggedUserID();
                     obj.ACTION_BY = userID;
                     obj.ACTION_DATE = DateTime.Now;
-                    obj.CHANGE_TYPE = ConstantValue.TypeActive;
+                    obj.STATUS = ConstantValue.TypeActive;
                     if (ModelState.IsValid)
                     {
                         db.POSITIONAL_INFO.Add(obj);
@@ -118,7 +126,7 @@ namespace EMSApp.Controllers
             {
                 return RedirectToAction("LogIn", "Login");
             }
-            
+
         }
         // POST: Position/Edit/5
         [HttpPost]
@@ -157,7 +165,7 @@ namespace EMSApp.Controllers
                 }
                 else
                 {
-                    //obj.CHANGE_TYPE = ConstantValue.TypeActive;
+                    //obj.STATUS = ConstantValue.TypeActive;
                     obj.UPDATE_BY = converterHelper.GetLoggedUserID();
                     obj.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
                     obj.UPDATE_DATE = DateTime.Now;
@@ -191,7 +199,7 @@ namespace EMSApp.Controllers
             {
                 return RedirectToAction("LogIn", "Login");
             }
-           
+
         }
         // POST: Position/Delete/5
         [HttpPost]
@@ -214,10 +222,18 @@ namespace EMSApp.Controllers
             }
             return View();
         }
-        private void GetDataInBag(long empId = 0, long divId = 0)
+        private void GetDataInBag(long empId = 0, long divId = 0, long deptId = 0)
         {
             ViewBag.EMPLOYEE_ID = new SelectList(SetEmployee(), "Value", "Text", empId);
             ViewBag.DIV_ID = new SelectList(SetDiv(), "Value", "Text", divId);
+            if (divId != 0)
+            {
+                var data = db.DEPARTMENT_INFO.Where(x => x.DEPT_ID == divId).FirstOrDefault();
+                deptId = data.DEPT_ID;
+            }
+            ViewBag.DEPT_ID = new SelectList(SetDept(), "Value", "Text", deptId);
+            TimeSpan ts = new TimeSpan(12, 0, 0);
+            ViewBag.WORKING_SHIFT = ts;
         }
         private List<SelectListItem> SetEmployee()
         {
@@ -228,6 +244,12 @@ namespace EMSApp.Controllers
         private List<SelectListItem> SetDiv()
         {
             List<SelectListItem> divtList = new SelectList(db.DIVISION_INFO, "DIV_ID", "DIV_TITLE").ToList();
+            divtList.Insert(0, (new SelectListItem { Text = "Select One", Value = "0" }));
+            return divtList;
+        }
+        private List<SelectListItem> SetDept()
+        {
+            List<SelectListItem> divtList = new SelectList(db.DEPARTMENT_INFO, "DEPT_ID", "DEPT_TITLE").ToList();
             divtList.Insert(0, (new SelectListItem { Text = "Select One", Value = "0" }));
             return divtList;
         }

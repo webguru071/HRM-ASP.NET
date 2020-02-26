@@ -26,6 +26,7 @@
     <Property Name="ACTION_DATE" Type="datetime" Nullable="false" />
     <Property Name="UPDATE_BY" Type="bigint" />
     <Property Name="UPDATE_DATE" Type="datetime" />
+    <Property Name="LOCATION" Type="nvarchar" MaxLength="100" />
   </EntityType>
   <EntityType Name="ATTENDANCE_DETAILS">
     <Key>
@@ -125,6 +126,20 @@
     <Property Name="UPDATE_DATE" Type="datetime" />
     <Property Name="ASSET_FOR" Type="char" MaxLength="1" />
   </EntityType>
+  <EntityType Name="INCREMENT_INFO">
+    <Key>
+      <PropertyRef Name="INCREMENT_ID" />
+    </Key>
+    <Property Name="INCREMENT_ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EMP_ID" Type="bigint" Nullable="false" />
+    <Property Name="INCREMENT_RATE" Type="int" Nullable="false" />
+    <Property Name="INCREMENT_TYPE" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="INCREMENT_FROM" Type="date" Nullable="false" />
+    <Property Name="ACTION_DATE" Type="datetime" Nullable="false" />
+    <Property Name="ACTION_BY" Type="bigint" Nullable="false" />
+    <Property Name="UPDATE_DATE" Type="datetime" />
+    <Property Name="UPDATE_BY" Type="bigint" />
+  </EntityType>
   <EntityType Name="INV_INFO">
     <Key>
       <PropertyRef Name="INV_ID" />
@@ -153,8 +168,8 @@
     <Property Name="APPROVED_END_DATE" Type="nvarchar" MaxLength="50" />
     <Property Name="STATUS" Type="char" MaxLength="1" Nullable="false" />
     <Property Name="REMARKS" Type="nvarchar" MaxLength="50" />
-    <Property Name="ACTIVE_BY" Type="bigint" Nullable="false" />
-    <Property Name="ACTIVE_DATE" Type="datetime" Nullable="false" />
+    <Property Name="ACTION_BY" Type="bigint" Nullable="false" />
+    <Property Name="ACTION_DATE" Type="datetime" Nullable="false" />
     <Property Name="UPDATE_BY" Type="bigint" />
     <Property Name="UPDATE_DATE" Type="datetime" />
   </EntityType>
@@ -200,7 +215,9 @@
     <Property Name="ACTION_DATE" Type="datetime" Nullable="false" />
     <Property Name="UPDATE_BY" Type="bigint" />
     <Property Name="UPDATE_DATE" Type="datetime" />
-    <Property Name="CHANGE_TYPE" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="STATUS" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="WORKING_SHIFT" Type="time" Precision="0" Nullable="false" />
+    <Property Name="WORKING_HOURS" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="SALARY_INFO">
     <Key>
@@ -220,21 +237,43 @@
     <Property Name="UPDATE_DATE" Type="datetime" />
     <Property Name="REMARKS" Type="nvarchar" MaxLength="50" />
   </EntityType>
+  <EntityType Name="SALARY_INFO_MONTHLY">
+    <Key>
+      <PropertyRef Name="SALARY_INFO_MONTHLY_ID" />
+    </Key>
+    <Property Name="SALARY_INFO_MONTHLY_ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EMPLOYEE_ID" Type="bigint" Nullable="false" />
+    <Property Name="BASIC_SALARY" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="GROSS_SALARY" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="ADDITIONAL" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="BONUS" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="COMMISSION" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ADVANCE" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="DEDUCTION" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="LEAVE_COUNT" Type="float" />
+    <Property Name="TOTAL_SALARY" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="NOTE" Type="nvarchar" MaxLength="500" />
+    <Property Name="ACTION_DATE" Type="datetime" Nullable="false" />
+    <Property Name="ACTION_BY" Type="bigint" Nullable="false" />
+    <Property Name="UPDATE_DATE" Type="datetime" />
+    <Property Name="UPDATE_BY" Type="bigint" />
+  </EntityType>
   <EntityType Name="SALARY_SETUP">
     <Key>
       <PropertyRef Name="SALARY_SET_ID" />
     </Key>
     <Property Name="SALARY_SET_ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="EMP_ID" Type="bigint" Nullable="false" />
+    <Property Name="POSITION_ID" Type="bigint" />
     <Property Name="PAY_TYPE" Type="char" MaxLength="1" Nullable="false" />
     <Property Name="GROSS_SALARY" Type="decimal" Precision="18" Scale="2" Nullable="false" />
     <Property Name="SALARY_GRADE_SETUP" Type="nvarchar" MaxLength="500" Nullable="false" />
+    <Property Name="SALARY_GRADE_SETUP_STRING" Type="nvarchar" MaxLength="100" />
+    <Property Name="CANGE_TYPE" Type="char" MaxLength="1" />
     <Property Name="ACTION_BY" Type="bigint" Nullable="false" />
     <Property Name="ACTION_DATE" Type="datetime" Nullable="false" />
     <Property Name="UPDATE_BY" Type="bigint" />
     <Property Name="UPDATE_DATE" Type="datetime" />
-    <Property Name="CANGE_TYPE" Type="char" MaxLength="1" />
-    <Property Name="POSITION_ID" Type="bigint" />
   </EntityType>
   <EntityType Name="SALARY-GRADE">
     <Key>
@@ -436,6 +475,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_INCREMENT_INFO_EMPLOYEE_INFO">
+    <End Role="EMPLOYEE_INFO" Type="Self.EMPLOYEE_INFO" Multiplicity="1" />
+    <End Role="INCREMENT_INFO" Type="Self.INCREMENT_INFO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EMPLOYEE_INFO">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="INCREMENT_INFO">
+        <PropertyRef Name="EMP_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_INV_INFO_INV_INFO">
     <End Role="EQUEPMENTS_INFO" Type="Self.EQUEPMENTS_INFO" Multiplicity="1" />
     <End Role="INV_INFO" Type="Self.INV_INFO" Multiplicity="*" />
@@ -516,6 +567,18 @@
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="SALARY_INFO">
+        <PropertyRef Name="EMPLOYEE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SALARY_INFO_MONTHLY_EMPLOYEE_INFO">
+    <End Role="EMPLOYEE_INFO" Type="Self.EMPLOYEE_INFO" Multiplicity="1" />
+    <End Role="SALARY_INFO_MONTHLY" Type="Self.SALARY_INFO_MONTHLY" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EMPLOYEE_INFO">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="SALARY_INFO_MONTHLY">
         <PropertyRef Name="EMPLOYEE_ID" />
       </Dependent>
     </ReferentialConstraint>
@@ -638,12 +701,14 @@
     <EntitySet Name="EMPLOYEE_APPLICATION" EntityType="Self.EMPLOYEE_APPLICATION" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="EMPLOYEE_INFO" EntityType="Self.EMPLOYEE_INFO" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="EQUEPMENTS_INFO" EntityType="Self.EQUEPMENTS_INFO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="INCREMENT_INFO" EntityType="Self.INCREMENT_INFO" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="INV_INFO" EntityType="Self.INV_INFO" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LEAVE_APPLICATION" EntityType="Self.LEAVE_APPLICATION" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LEAVE_TYPE" EntityType="Self.LEAVE_TYPE" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="NOTICE_BOARD" EntityType="Self.NOTICE_BOARD" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="POSITIONAL_INFO" EntityType="Self.POSITIONAL_INFO" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SALARY_INFO" EntityType="Self.SALARY_INFO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SALARY_INFO_MONTHLY" EntityType="Self.SALARY_INFO_MONTHLY" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SALARY_SETUP" EntityType="Self.SALARY_SETUP" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SALARY-GRADE" EntityType="Self.SALARY-GRADE" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="STOCK_INFO" EntityType="Self.STOCK_INFO" Schema="dbo" store:Type="Tables" />
@@ -681,6 +746,10 @@
       <End Role="ASSET_INFO" EntitySet="ASSET_INFO" />
       <End Role="EQUEPMENTS_INFO" EntitySet="EQUEPMENTS_INFO" />
     </AssociationSet>
+    <AssociationSet Name="FK_INCREMENT_INFO_EMPLOYEE_INFO" Association="Self.FK_INCREMENT_INFO_EMPLOYEE_INFO">
+      <End Role="EMPLOYEE_INFO" EntitySet="EMPLOYEE_INFO" />
+      <End Role="INCREMENT_INFO" EntitySet="INCREMENT_INFO" />
+    </AssociationSet>
     <AssociationSet Name="FK_INV_INFO_INV_INFO" Association="Self.FK_INV_INFO_INV_INFO">
       <End Role="EQUEPMENTS_INFO" EntitySet="EQUEPMENTS_INFO" />
       <End Role="INV_INFO" EntitySet="INV_INFO" />
@@ -708,6 +777,10 @@
     <AssociationSet Name="FK_SALARY_INFO_EMPLOYEE_INFO" Association="Self.FK_SALARY_INFO_EMPLOYEE_INFO">
       <End Role="EMPLOYEE_INFO" EntitySet="EMPLOYEE_INFO" />
       <End Role="SALARY_INFO" EntitySet="SALARY_INFO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SALARY_INFO_MONTHLY_EMPLOYEE_INFO" Association="Self.FK_SALARY_INFO_MONTHLY_EMPLOYEE_INFO">
+      <End Role="EMPLOYEE_INFO" EntitySet="EMPLOYEE_INFO" />
+      <End Role="SALARY_INFO_MONTHLY" EntitySet="SALARY_INFO_MONTHLY" />
     </AssociationSet>
     <AssociationSet Name="FK_SALARY_SETUP_EMPLOYEE_INFO" Association="Self.FK_SALARY_SETUP_EMPLOYEE_INFO">
       <End Role="EMPLOYEE_INFO" EntitySet="EMPLOYEE_INFO" />

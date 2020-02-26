@@ -261,8 +261,8 @@ namespace EMSApp.Controllers
                             collection.APPROVED_START_DATE = null;
                             collection.APPROVED_END_DATE = null;
                         }
-                        collection.ACTIVE_BY = converterHelper.GetLoggedUserID();
-                        collection.ACTIVE_DATE = DateTime.Now;
+                        collection.ACTION_BY = converterHelper.GetLoggedUserID();
+                        collection.ACTION_DATE = DateTime.Now;
                         if (ModelState.IsValid)
                         {
                             db.LEAVE_APPLICATION.Add(collection);
@@ -287,7 +287,7 @@ namespace EMSApp.Controllers
             {
                 var data = db.LEAVE_APPLICATION.Where(x => x.LEAVE_APP_ID == id && x.STATUS != ConstantValue.LeaveStatusApproved).FirstOrDefault();
                 //long empId = converterHelper.GetLoggedEmployeeID();
-                Session["AD"] = data.ACTIVE_DATE;
+                Session["AD"] = data.ACTION_DATE;
                 GetDataInBag(data.EMPLOYEE_ID, data.LEAVE_TYPE_ID);
                 return View(data);
             }
@@ -347,7 +347,7 @@ namespace EMSApp.Controllers
                             collection.APPROVED_END_DATE = null;
                         }
                         collection.UPDATE_BY = Convert.ToInt64(Session["USER_ID"]);
-                        collection.ACTIVE_DATE = Convert.ToDateTime(Session["AD"]);
+                        collection.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
                         collection.UPDATE_DATE = DateTime.Now;
                         if (ModelState.IsValid)
                         {

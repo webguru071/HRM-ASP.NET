@@ -211,6 +211,9 @@
     <Compile Include="Models\EQUEPMENTS_INFO.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\INCREMENT_INFO.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\INV_INFO.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -245,6 +248,9 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SALARY_INFO.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SALARY_INFO_MONTHLY.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SALARY_SETUP.cs">

@@ -41,7 +41,7 @@ namespace EMSApp.Controllers
             if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
             {
                 string status = collection["IS_DELETED"];
-                long empId = converterHelper.GetLoggedEmployeeID();
+                long empId = string.IsNullOrEmpty(collection["EMPLOYEE_ID"]) ? 0: Convert.ToInt64(collection["EMPLOYEE_ID"]);
                 var data = service.GetDeptWiseData(status: status, empId: empId);
                 ViewBag.EMPLOYEE_ID = SetEmployee();
                 return View(data);

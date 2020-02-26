@@ -39,8 +39,8 @@
                     <table class="color-table success-table" width="100%" border="1px">
                         <thead>
                             <tr>
-                                <th>Employee Name</th>
                                 <th>Date</th>
+                                <th>Employee Name</th>
                                 <th>Check In</th>
                                 <th>Check Out</th>
                             </tr>
@@ -50,20 +50,20 @@
                             {
                                 foreach (var item in Model)
                                 {
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.EMPLOYEE_NAME)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.ATT_DATE)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.CHECK_IN_TIME)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.CHECK_OUT_TIME)
-                                        </td>
-                                    </tr>
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ATT_DATE)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EMPLOYEE_NAME)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CHECK_IN_TIME)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CHECK_OUT_TIME)
+                                </td>
+                            </tr>
                                 }
                             }
                         </tbody>

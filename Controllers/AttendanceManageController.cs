@@ -150,12 +150,29 @@ namespace EMSApp.Controllers
         {
             if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
             {
+                ViewBag.MONTH = SetMonthDate();
+                ViewBag.YEAR = SetYear();
                 return View();
             }
             else
             {
                 return RedirectToAction("LogIn", "Login");
             }
+        }
+        private dynamic SetYear()
+        {
+            string year = DateTime.Now.Year.ToString();
+            List<SelectListItem> list = new SelectList(ListValue.Year, "Value", "Key", year).ToList();
+            list.Insert(0, (new SelectListItem { Text = "Select One", Value = "" }));
+            return list;
+        }
+
+        private dynamic SetMonthDate()
+        {
+            //string month = (DateTime.Now.Month).ToString();
+            List<SelectListItem> list = new SelectList(ListValue.MonthDate, "Value", "Key").ToList();
+            list.Insert(0, (new SelectListItem { Text = "Select One", Value = "" }));
+            return list;
         }
         // POST: AttendanceManage/Delete/5
         [HttpPost]
@@ -179,11 +196,19 @@ namespace EMSApp.Controllers
                 }
                 else
                 {
+                    string fromDate = "";
+                    string toDate = "";
+                    if (!string.IsNullOrEmpty(collection["MONTH"]) && !string.IsNullOrEmpty(collection["YEAR"]))
+                    {
+                        fromDate = collection["YEAR"] + "-" + collection["MONTH"] + "-01";
+                        DateTime firstDate = Convert.ToDateTime(fromDate);
+                        DateTime lastDate = firstDate.AddMonths(1).AddDays(-1);
+                        toDate = lastDate.ToString("yyyy-MM-dd");
+                    }
                     if (uploadFile != null && uploadFile.ContentLength > 0)
                     {
                         var fileName = Path.GetFileName(DateTime.Now.ToString() + "_" + uploadFile.FileName);
                         var path = Path.Combine(Server.MapPath("/ExcelFiles"), fileName);
-
                         uploadFile.SaveAs(path);
                         string connString = "";
                         string extension = Path.GetExtension(uploadFile.FileName);
@@ -196,18 +221,18 @@ namespace EMSApp.Controllers
                             connString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + path + ";Extended Properties=\"Excel 12.0;HDR=Yes;IMEX=2\"";
                         }
                         DataTable dt = ConvertXSLXtoDataTable(path, connString);
-                        if (dt != null)
+                        if (dt.Rows.Count>0)
                         {
                             DataTable result = InsertIntoDB(dt);
-                            if (result != null)
+                            if (result.Rows.Count > 0)
                             {
                                 ViewBag.ResultSuccess = "Data Import Successfully!!!";
                                 ViewBag.ResultFailed = "";
-                                viewList = service.GetAttendanceDataMonthyList(result);
+                                viewList = service.GetAttendanceDataMonthly(fromDate:fromDate,toDate: toDate);
                             }
                             else
                             {
-                                ViewBag.ResultFailed = "Failed To Import!!!";
+                                ViewBag.ResultFailed = "Failed To Import Or Duplicate Data Found!!!";
                                 ViewBag.ResultSuccess = "";
                             }
                         }
@@ -223,6 +248,8 @@ namespace EMSApp.Controllers
                 ViewBag.ResultFailed = "Failed To Import!!!";
                 ViewBag.ResultSuccess = "";
             }
+            ViewBag.MONTH = SetMonthDate();
+            ViewBag.YEAR = SetYear();
             return View(viewList);
         }
         private DataTable InsertIntoDB(DataTable dt)
@@ -246,42 +273,39 @@ namespace EMSApp.Controllers
                     if (!string.IsNullOrEmpty(dRow[0].ToString()))
                     {
                         string cardNo = Convert.ToString(dRow[0]);
-                        if (Convert.ToInt32(cardNo) == 24)
-                        {
-                            string my = cardNo;
-                        }
-                        string check_in = Convert.ToString(dRow[2]);
-                        string check_out = Convert.ToString(dRow[3]);
-                        DateTime date = Convert.ToDateTime(dRow[5]);
-                        string dateStr = date.ToString();
-                        if (dateFlag != dateStr)
-                        {
-                            slNoIN = 1;
-                            slNoOUT = slNoIN + 1;
-                            dateFlag = dateStr;
-                        }
-                        else
-                        {
-                            slNoIN = slNoOUT + 1;
-                            slNoOUT = slNoIN + 1;
-                        }
                         //Get employee info according to card no
                         var empDataCard = cardData.Where(x => x.CARD_NO.Trim() == cardNo.Trim()).FirstOrDefault();
-                        DateTime dateTemp = Convert.ToDateTime(check_in);
-                        int isImportedCount = db.ATTENDANCE_DETAILS.Where(x => x.EMPLOYEE_ID == empDataCard.EMP_ID && x.ATT_DATE == dateTemp).Count();
-                        if (empDataCard != null && isImportedCount == 0)
-                        {
-                            dtNew.Rows.Add(empDataCard.EMP_ID, date, TimeSpan.Parse(check_in), null, slNoIN, ConstantValue.AttendanceCheckIn);
-                            dtNew.Rows.Add(empDataCard.EMP_ID, date, null, TimeSpan.Parse(check_out), slNoOUT, ConstantValue.AttendanceCheckOut);
-                        }
+                        if (empDataCard != null)
+                        {                            
+                            string check_in = Convert.ToString(dRow[2]);
+                            string check_out = Convert.ToString(dRow[3]);
+                            DateTime date = Convert.ToDateTime(dRow[5]);
+                            string dateStr = date.ToString();
+                            if (dateFlag != dateStr)
+                            {
+                                slNoIN = 1;
+                                slNoOUT = slNoIN + 1;
+                                dateFlag = dateStr;
+                            }
+                            else
+                            {
+                                slNoIN = slNoOUT + 1;
+                                slNoOUT = slNoIN + 1;
+                            }      
+                            int isImportedCount = db.ATTENDANCE_DETAILS.Where(x => x.EMPLOYEE_ID == empDataCard.EMP_ID && x.ATT_DATE == date).Count();
+                            if (empDataCard != null && isImportedCount == 0)
+                            {
+                                dtNew.Rows.Add(empDataCard.EMP_ID, date, TimeSpan.Parse(check_in), null, slNoIN, ConstantValue.AttendanceCheckIn);
+                                dtNew.Rows.Add(empDataCard.EMP_ID, date, null, TimeSpan.Parse(check_out), slNoOUT, ConstantValue.AttendanceCheckOut);
+                            }
+                        }                        
                     }
                 }
             }
             catch (Exception ex)
             {
                 result = false;
-            }
-            int count = dtNew.Rows.Count;
+            }           
             DBHelper dbHelper = new DBHelper();
             using (var dbContextTransaction = db.Database.BeginTransaction())
             {
@@ -302,7 +326,7 @@ namespace EMSApp.Controllers
                             sqlBulkCopy.ColumnMappings.Add("SL_NO", "SL_NO");
                             sqlBulkCopy.ColumnMappings.Add("STATUS", "STATUS");
                             con.Open();
-                            //sqlBulkCopy.WriteToServer(dtNew);
+                            sqlBulkCopy.WriteToServer(dtNew);
                             con.Close();
                             result = true;
                         }
@@ -330,7 +354,7 @@ namespace EMSApp.Controllers
             {
 
                 oledbConn.Open();
-                using (OleDbCommand cmd = new OleDbCommand("SELECT * FROM [" + strWorksheetName + "]", oledbConn))
+                using (OleDbCommand cmd = new OleDbCommand("SELECT * FROM [" + strWorksheetName + "$]", oledbConn))
                 {
                     OleDbDataAdapter oleda = new OleDbDataAdapter();
                     oleda.SelectCommand = cmd;
