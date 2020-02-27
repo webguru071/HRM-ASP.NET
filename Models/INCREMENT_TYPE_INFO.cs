@@ -12,24 +12,23 @@ namespace EMSApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class LEAVE_APPLICATION
+    public partial class INCREMENT_TYPE_INFO
     {
-        public long LEAVE_APP_ID { get; set; }
-        public long LEAVE_TYPE_ID { get; set; }
-        public long EMPLOYEE_ID { get; set; }
-        public string START_DATE { get; set; }
-        public string END_DATE { get; set; }
-        public string APPROVED_START_DATE { get; set; }
-        public string APPROVED_END_DATE { get; set; }
-        public string STATUS { get; set; }
-        public string REMARKS { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public INCREMENT_TYPE_INFO()
+        {
+            this.INCREMENT_INFO = new HashSet<INCREMENT_INFO>();
+        }
+    
+        public long INCREMENT_TYPE_ID { get; set; }
+        public string INCREMENT_TYPE_TITLE { get; set; }
         public long ACTION_BY { get; set; }
         public System.DateTime ACTION_DATE { get; set; }
         public Nullable<long> UPDATE_BY { get; set; }
         public Nullable<System.DateTime> UPDATE_DATE { get; set; }
-        public Nullable<double> LEAVE_DAY { get; set; }
+        public string REMARKS { get; set; }
     
-        public virtual EMPLOYEE_INFO EMPLOYEE_INFO { get; set; }
-        public virtual LEAVE_TYPE LEAVE_TYPE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<INCREMENT_INFO> INCREMENT_INFO { get; set; }
     }
 }

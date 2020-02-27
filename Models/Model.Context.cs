@@ -35,6 +35,7 @@ namespace EMSApp.Models
         public virtual DbSet<EMPLOYEE_INFO> EMPLOYEE_INFO { get; set; }
         public virtual DbSet<EQUEPMENTS_INFO> EQUEPMENTS_INFO { get; set; }
         public virtual DbSet<INCREMENT_INFO> INCREMENT_INFO { get; set; }
+        public virtual DbSet<INCREMENT_TYPE_INFO> INCREMENT_TYPE_INFO { get; set; }
         public virtual DbSet<INV_INFO> INV_INFO { get; set; }
         public virtual DbSet<LEAVE_APPLICATION> LEAVE_APPLICATION { get; set; }
         public virtual DbSet<LEAVE_TYPE> LEAVE_TYPE { get; set; }

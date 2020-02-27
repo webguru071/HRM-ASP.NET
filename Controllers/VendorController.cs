@@ -80,7 +80,7 @@ namespace EMSApp.Controllers
                 }
 
             }
-            catch
+            catch(Exception ex)
             {
             }
             return View();
@@ -122,8 +122,9 @@ namespace EMSApp.Controllers
                 else
                 {
                     collection.VENDOR_TYPE = ConstantValue.VendorTypeSupplier;
-                    collection.ACTION_BY = converterHelper.GetLoggedUserID();
-                    collection.ACTION_DATE = DateTime.Now;
+                    collection.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
+                    collection.UPDATE_BY = converterHelper.GetLoggedUserID();
+                    collection.UPDATE_DATE = DateTime.Now;
                     if (ModelState.IsValid)
                     {
                         db.Entry(collection).State = EntityState.Modified;
@@ -262,8 +263,9 @@ namespace EMSApp.Controllers
                 else
                 {
                     collection.VENDOR_TYPE = ConstantValue.VendorTypeBuyer;
-                    collection.ACTION_BY = converterHelper.GetLoggedUserID();
-                    collection.ACTION_DATE = DateTime.Now;
+                    collection.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
+                    collection.UPDATE_BY = converterHelper.GetLoggedUserID();
+                    collection.UPDATE_DATE = DateTime.Now;
                     if (ModelState.IsValid)
                     {
                         db.Entry(collection).State = EntityState.Modified;

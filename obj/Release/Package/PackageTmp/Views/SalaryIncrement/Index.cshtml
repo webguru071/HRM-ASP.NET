@@ -1,0 +1,61 @@
+﻿@model IEnumerable<EMSApp.Models.INCREMENT_INFO>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+    <div class="container-fluid" style="padding-top:15px">
+        <div class="row">
+            <div class="col-md-3">
+                <p class="btn btn-block btn-outline-success btn-md">
+                    @Html.ActionLink("Create New", "Create")
+                </p>
+            </div>
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Asset Type</h4>
+                        <div class="table-responsive">
+                            <table class="table color-bordered-table primary-bordered-table">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+
+                                        <th>
+                                            Asset Type
+                                        </th>
+                                        <th>
+                                            Remarks
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model != null)
+                                    {
+                                        foreach (var item in Model)
+                                        {
+                                            @*<tr>
+                                                <td>
+                                                    @Html.ActionLink("View", "Edit", new { id = item.ASSET_ID })
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.ASSET_TITLE)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.REMARKS)
+                                                </td>
+                                                <td>
+                                                    @Html.ActionLink("Delete", "Delete", new { id = item.ASSET_ID })
+                                                </td>
+                                            </tr>*@
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

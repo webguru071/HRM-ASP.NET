@@ -205,123 +205,176 @@ namespace EMSApp.Services
         {
             List<AttendanceClass> list = new List<AttendanceClass>();
             var dataEmp = db.EMPLOYEE_INFO.ToList();
-            foreach (DataRow dRow in data.Rows)
+            try
             {
-                AttendanceClass listObj = new AttendanceClass();
-                long id = 0;
-                DataColumnCollection columns = data.Columns;
-                if (columns.Contains("ID"))
+                foreach (DataRow dRow in data.Rows)
                 {
-                    id = Convert.ToInt64(dRow["ID"]);
-                }
-                else
-                {
-                    id = Convert.ToInt64(dRow["EMPLOYEE_ID"]);
-                }
-                string name = "";
-                if (columns.Contains("EMPLOYEE_NAME"))
-                {
-                    name = Convert.ToString(dRow["EMPLOYEE_NAME"]);
-                }
-                else
-                {
-                    var temp = dataEmp.Where(x => x.ID == id).FirstOrDefault();
-                    name = temp.EMPLOYEE_NAME;
-                }
-                var allEmpPOsitionalData = db.POSITIONAL_INFO.Where(x => x.STATUS == ConstantValue.TypeActive).ToList();
-                DateTime date = Convert.ToDateTime(dRow["ATT_DATE"]);
-                listObj.EMPLOYEE_ID = id;
-                listObj.EMPLOYEE_NAME = name;
-                listObj.ATT_DATE = date.ToString("dd/MM/yyyy");
-                var dataList = db.ATTENDANCE_DETAILS.Where(x => x.EMPLOYEE_ID == id && x.ATT_DATE == date).ToList();
-                int maxSl = Convert.ToInt32(dataList.Max(x => x.SL_NO));
-                var dayData = dataList.Where(x => x.STATUS == ConstantValue.AttendanceCheckIn).FirstOrDefault();
-                int slNo = Convert.ToInt32(dayData.SL_NO);
-                DateTime checkIn = DateTime.ParseExact(dayData.CHECK_IN_TIME.ToString(), "HH:mm:ss", CultureInfo.InvariantCulture);
-                listObj.CHECK_IN_TIME = checkIn.ToString("hh:mm tt");
-                bool flag = true;
-                DateTime checkOut = checkIn;
-                TimeSpan wHour = TimeSpan.Zero;
-                for (int i = slNo; i <= maxSl; i++)
-                {
-                    if (slNo <= maxSl)
+                    AttendanceClass listObj = new AttendanceClass();
+                    long id = 0;
+                    DataColumnCollection columns = data.Columns;
+                    if (columns.Contains("ID"))
                     {
-                        if (flag)
-                        {
-                            dayData = dataList.Where(x => x.STATUS == ConstantValue.AttendanceCheckOut && x.SL_NO > slNo).FirstOrDefault();
-                            if (dayData != null)
-                            {
-                                flag = false;
-                                checkOut = DateTime.ParseExact(dayData.CHECK_OUT_TIME.ToString(), "HH:mm:ss", CultureInfo.InvariantCulture);
-                                slNo = Convert.ToInt32(dayData.SL_NO);
-                                if (wHour == TimeSpan.Zero)
-                                {
-                                    wHour = checkOut.Subtract(checkIn);
-                                }
-                                else
-                                {
-                                    wHour += checkOut.Subtract(checkIn);
-                                }
-
-                            }
-
-                        }
-                        else
-                        {
-                            flag = true;
-                            dayData = dataList.Where(x => x.STATUS == ConstantValue.AttendanceCheckIn && x.SL_NO > slNo).FirstOrDefault();
-                            if (dayData != null)
-                            {
-                                slNo = Convert.ToInt32(dayData.SL_NO);
-                                checkIn = DateTime.ParseExact(dayData.CHECK_IN_TIME.ToString(), "HH:mm:ss", CultureInfo.InvariantCulture);
-                            }
-                        }
+                        id = Convert.ToInt64(dRow["ID"]);
                     }
                     else
                     {
-                        break;
+                        id = Convert.ToInt64(dRow["EMPLOYEE_ID"]);
                     }
+                    string name = "";
+                    if (columns.Contains("EMPLOYEE_NAME"))
+                    {
+                        name = Convert.ToString(dRow["EMPLOYEE_NAME"]);
+                    }
+                    else
+                    {
+                        var temp = dataEmp.Where(x => x.ID == id).FirstOrDefault();
+                        name = temp.EMPLOYEE_NAME;
+                    }
+                    var allEmpPOsitionalData = db.POSITIONAL_INFO.Where(x => x.STATUS == ConstantValue.TypeActive).ToList();
+                    DateTime date = Convert.ToDateTime(dRow["ATT_DATE"]);
+                    listObj.EMPLOYEE_ID = id;
+                    listObj.EMPLOYEE_NAME = name;
+                    listObj.ATT_DATE = date.ToString("dd/MM/yyyy");
+                    var dataList = db.ATTENDANCE_DETAILS.Where(x => x.EMPLOYEE_ID == id && x.ATT_DATE == date).ToList();
+                    int maxSl = Convert.ToInt32(dataList.Max(x => x.SL_NO));
+                    var dayData = dataList.Where(x => x.STATUS == ConstantValue.AttendanceCheckIn).FirstOrDefault();
+                    int slNo = Convert.ToInt32(dayData.SL_NO);
+                    DateTime checkIn = DateTime.ParseExact(dayData.CHECK_IN_TIME.ToString(), "HH:mm:ss", CultureInfo.InvariantCulture);
+                    listObj.CHECK_IN_TIME = checkIn.ToString("hh:mm tt");
+                    bool flag = true;
+                    DateTime checkOut = checkIn;
+                    TimeSpan wHour = TimeSpan.Zero;
+                    for (int i = slNo; i <= maxSl; i++)
+                    {
+                        if (slNo <= maxSl)
+                        {
+                            if (flag)
+                            {
+                                dayData = dataList.Where(x => x.STATUS == ConstantValue.AttendanceCheckOut && x.SL_NO > slNo).FirstOrDefault();
+                                if (dayData != null)
+                                {
+                                    flag = false;
+                                    checkOut = DateTime.ParseExact(dayData.CHECK_OUT_TIME.ToString(), "HH:mm:ss", CultureInfo.InvariantCulture);
+                                    slNo = Convert.ToInt32(dayData.SL_NO);
+                                    if (wHour == TimeSpan.Zero)
+                                    {
+                                        wHour = checkOut.Subtract(checkIn);
+                                    }
+                                    else
+                                    {
+                                        wHour += checkOut.Subtract(checkIn);
+                                    }
 
+                                }
+
+                            }
+                            else
+                            {
+                                flag = true;
+                                dayData = dataList.Where(x => x.STATUS == ConstantValue.AttendanceCheckIn && x.SL_NO > slNo).FirstOrDefault();
+                                if (dayData != null)
+                                {
+                                    slNo = Convert.ToInt32(dayData.SL_NO);
+                                    checkIn = DateTime.ParseExact(dayData.CHECK_IN_TIME.ToString(), "HH:mm:ss", CultureInfo.InvariantCulture);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            break;
+                        }
+
+                    }
+                    listObj.CHECK_OUT_TIME = checkOut.ToString("hh:mm tt");
+                    listObj.PERDAY_WORKING_HOUR = wHour.ToString();
+                    TimeSpan totalDayWT = Convert.ToDateTime(listObj.CHECK_OUT_TIME).Subtract(Convert.ToDateTime(listObj.CHECK_IN_TIME));
+                    listObj.TOTAL_WORKING_HOUR = totalDayWT.ToString();
+                    listObj.TOTAL_BREAK = ConstantValue.BreakTime.ToString();
+                    var empPOsitionalData = allEmpPOsitionalData.Where(x => x.EMPLOYEE_ID == listObj.EMPLOYEE_ID).FirstOrDefault();
+                    TimeSpan actualWH = TimeSpan.FromHours(Convert.ToInt64(empPOsitionalData.WORKING_HOURS)).Subtract(ConstantValue.BreakTime);
+                    TimeSpan lessWork = actualWH.Subtract(wHour);
+                    TimeSpan overTime = wHour.Subtract(actualWH);
+                    if (lessWork > TimeSpan.Zero)
+                    {
+                        listObj.LESS_WORK = lessWork.ToString();
+                    }
+                    else
+                    {
+                        listObj.LESS_WORK = "0";
+                    }
+                    if (overTime > TimeSpan.Zero)
+                    {
+                        listObj.OVER_TIME = overTime.ToString();
+                    }
+                    else
+                    {
+                        listObj.OVER_TIME = "0";
+                    }
+                    TimeSpan workShift = empPOsitionalData.WORKING_SHIFT;
+                    DateTime arvTime = Convert.ToDateTime(listObj.CHECK_IN_TIME);
+                    TimeSpan lateArrival = (arvTime.TimeOfDay).Subtract(workShift);
+                    if (lateArrival > TimeSpan.Zero)
+                    {
+                        listObj.LATE_ARRIVED = lateArrival.ToString();
+                    }
+                    else
+                    {
+                        listObj.LATE_ARRIVED = "0";
+                    }
+                    list.Add(listObj);
                 }
-                listObj.CHECK_OUT_TIME = checkOut.ToString("hh:mm tt");
-                listObj.PERDAY_WORKING_HOUR = wHour.ToString();
-                TimeSpan totalDayWT = Convert.ToDateTime(listObj.CHECK_OUT_TIME).Subtract(Convert.ToDateTime(listObj.CHECK_IN_TIME));
-                listObj.TOTAL_WORKING_HOUR = totalDayWT.ToString();
-                listObj.TOTAL_BREAK = ConstantValue.BreakTime.ToString();
-                var empPOsitionalData = allEmpPOsitionalData.Where(x => x.EMPLOYEE_ID == listObj.EMPLOYEE_ID).FirstOrDefault();
-                TimeSpan actualWH = TimeSpan.FromHours(Convert.ToInt64(empPOsitionalData.WORKING_HOURS)).Subtract(ConstantValue.BreakTime);
-                TimeSpan lessWork = actualWH.Subtract(wHour);
-                TimeSpan overTime = wHour.Subtract(actualWH);
-                if (lessWork > TimeSpan.Zero)
-                {
-                    listObj.LESS_WORK = lessWork.ToString();
-                }               
-                else
-                {
-                    listObj.LESS_WORK = "0";
-                }
-                if (overTime > TimeSpan.Zero)
-                {
-                    listObj.OVER_TIME = overTime.ToString();
-                }
-                else
-                {
-                    listObj.OVER_TIME = "0";
-                }
-                TimeSpan workShift = empPOsitionalData.WORKING_SHIFT;
-                DateTime arvTime =Convert.ToDateTime(listObj.CHECK_IN_TIME);
-                TimeSpan lateArrival = (arvTime.TimeOfDay).Subtract(workShift);
-                if (lateArrival > TimeSpan.Zero)
-                {
-                    listObj.LATE_ARRIVED = lateArrival.ToString();
-                }
-                else
-                {
-                    listObj.LATE_ARRIVED = "0";
-                }
-                list.Add(listObj);
+            }
+            catch (Exception ex)
+            {
+
             }
             return list;
+        }
+        public List<EmployeeLeaveClass> GetEmployeeLeaveList(long empId = 0, string fromDate = "", string toDate = "")
+        {
+            string DateFilter = "";
+            string idFilter = empId > 0 ? " and ei.id=" + empId + " " : "";
+            if (!string.IsNullOrEmpty(toDate) && !string.IsNullOrEmpty(fromDate))
+            {
+                DateFilter = " and ad.ATT_DATE BETWEEN '" + fromDate + "' AND '" + toDate + "' ";
+            }
+            List<EmployeeLeaveClass> leaveList = new List<EmployeeLeaveClass>();
+            string query = @"SELECT EI.EMPLOYEE_NAME,LA.EMPLOYEE_ID,SUM(LA.LEAVE_DAY) AS SUM_LEAVE FROM LEAVE_APPLICATION LA
+                            INNER JOIN EMPLOYEE_INFO EI ON EI.ID=LA.EMPLOYEE_ID
+                            WHERE LA.STATUS='A' AND LA.APPROVED_START_DATE BETWEEN '2020-02-01' AND '2020-02-29'
+                            GROUP BY  LA.EMPLOYEE_ID,EI.EMPLOYEE_NAME";
+            DataTable dt = dbHelper.GetDataTable(query);
+            foreach (DataRow drow in dt.Rows)
+            {
+                if (dt.Rows.Count > 0)
+                {
+                    long id = Convert.ToInt64(drow["EMPLOYEE_ID"]);
+                    string empName = Convert.ToString(drow["EMPLOYEE_NAME"]);
+                    int totalLeave = Convert.ToInt32(drow["SUM_LEAVE"]);
+                    int casualleave = 0, sickLeave = 0, fullday = 0;
+                    double halfDay = 0;
+                    var dataList = db.LEAVE_APPLICATION.Where(x => x.STATUS == ConstantValue.LeaveStatusApproved && x.EMPLOYEE_ID == id && Convert.ToDateTime(x.APPROVED_START_DATE) >= Convert.ToDateTime(fromDate) && Convert.ToDateTime(x.APPROVED_START_DATE) <= Convert.ToDateTime(toDate)).ToList();
+                    foreach(var countList in dataList)
+                    {
+                        if (countList.LEAVE_APP_ID == ConstantValue.LeaveDayFullDayID)
+                        {
+                            //count for full day leave
+                            fullday++;
+                        }
+                        else if(countList.LEAVE_APP_ID == ConstantValue.LeaveDayHalfDayID)
+                        {
+                            //count for half day leave
+                            halfDay = halfDay + .5;
+                        }
+                        else
+                        {
+                            //count for casual and medical leave
+
+                        }
+                    }
+                }
+            }
+            return leaveList;
         }
     }
 }

@@ -260,7 +260,36 @@ namespace EMSApp.Controllers
                             collection.STATUS = ConstantValue.LeaveStatusPending;
                             collection.APPROVED_START_DATE = null;
                             collection.APPROVED_END_DATE = null;
+                            if (collection.LEAVE_TYPE_ID == 2)
+                            {
+                                collection.LEAVE_DAY = 1;
+                            }
+                            else if (collection.LEAVE_TYPE_ID == 3)
+                            {
+                                collection.LEAVE_DAY = .5;
+                            }
+                            else
+                            {
+                                TimeSpan difference = Convert.ToDateTime(collection.END_DATE).Subtract(Convert.ToDateTime(collection.START_DATE));
+                                collection.LEAVE_DAY = difference.Days + 1;
+                            }                           
                         }
+                        if (collection.APPROVED_END_DATE != null)
+                        {
+                            if (collection.LEAVE_TYPE_ID == 2)
+                            {
+                                collection.LEAVE_DAY = 1;
+                            }
+                            else if (collection.LEAVE_TYPE_ID == 3)
+                            {
+                                collection.LEAVE_DAY = .5;
+                            }
+                            else
+                            {
+                                TimeSpan difference = Convert.ToDateTime(collection.END_DATE).Subtract(Convert.ToDateTime(collection.START_DATE));
+                                collection.LEAVE_DAY = difference.Days + 1;
+                            }
+                        }                        
                         collection.ACTION_BY = converterHelper.GetLoggedUserID();
                         collection.ACTION_DATE = DateTime.Now;
                         if (ModelState.IsValid)
@@ -344,7 +373,14 @@ namespace EMSApp.Controllers
                             collection.EMPLOYEE_ID = converterHelper.GetLoggedEmployeeID(); 
                             collection.STATUS = ConstantValue.LeaveStatusPending;
                             collection.APPROVED_START_DATE = null;
-                            collection.APPROVED_END_DATE = null;
+                            collection.APPROVED_END_DATE = null; 
+                            TimeSpan difference = Convert.ToDateTime(collection.END_DATE).Subtract(Convert.ToDateTime(collection.START_DATE));
+                            collection.LEAVE_DAY = difference.Days + 1;
+                        }
+                        if (collection.APPROVED_END_DATE != null)
+                        {
+                            TimeSpan difference = Convert.ToDateTime(collection.APPROVED_END_DATE).Subtract(Convert.ToDateTime(collection.APPROVED_START_DATE));
+                            collection.LEAVE_DAY = difference.Days + 1;
                         }
                         collection.UPDATE_BY = Convert.ToInt64(Session["USER_ID"]);
                         collection.ACTION_DATE = Convert.ToDateTime(Session["AD"]);

@@ -742,3 +742,5 @@ F:\Projects\And IT\MVC\HRM-ASP.NET\bin\Microsoft.CodeDom.Providers.DotNetCompile
 F:\Projects\And IT\MVC\HRM-ASP.NET\obj\Debug\EMSApp.csproj.CopyComplete
 F:\Projects\And IT\MVC\HRM-ASP.NET\obj\Debug\EMSApp.dll
 F:\Projects\And IT\MVC\HRM-ASP.NET\obj\Debug\EMSApp.pdb
+F:\Projects\And IT\MVC\HRM-ASP.NET\obj\Debug\EMSApp.csprojAssemblyReference.cache
+F:\Projects\And IT\MVC\HRM-ASP.NET\bin\EMSApp.xml

@@ -138,12 +138,25 @@
           <Property Name="INCREMENT_ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EMP_ID" Type="bigint" Nullable="false" />
           <Property Name="INCREMENT_RATE" Type="int" Nullable="false" />
-          <Property Name="INCREMENT_TYPE" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="INCREMENT_TYPE" Type="bigint" Nullable="false" />
           <Property Name="INCREMENT_FROM" Type="date" Nullable="false" />
           <Property Name="ACTION_DATE" Type="datetime" Nullable="false" />
           <Property Name="ACTION_BY" Type="bigint" Nullable="false" />
           <Property Name="UPDATE_DATE" Type="datetime" />
           <Property Name="UPDATE_BY" Type="bigint" />
+          <Property Name="REMARKS" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="INCREMENT_TYPE_INFO">
+          <Key>
+            <PropertyRef Name="INCREMENT_TYPE_ID" />
+          </Key>
+          <Property Name="INCREMENT_TYPE_ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="INCREMENT_TYPE_TITLE" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ACTION_BY" Type="bigint" Nullable="false" />
+          <Property Name="ACTION_DATE" Type="datetime" Nullable="false" />
+          <Property Name="UPDATE_BY" Type="bigint" />
+          <Property Name="UPDATE_DATE" Type="datetime" />
+          <Property Name="REMARKS" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="INV_INFO">
           <Key>
@@ -177,6 +190,7 @@
           <Property Name="ACTION_DATE" Type="datetime" Nullable="false" />
           <Property Name="UPDATE_BY" Type="bigint" />
           <Property Name="UPDATE_DATE" Type="datetime" />
+          <Property Name="LEAVE_DAY" Type="float" />
         </EntityType>
         <EntityType Name="LEAVE_TYPE">
           <Key>
@@ -492,6 +506,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_INCREMENT_INFO_INCREMENT_TYPE_INFO">
+          <End Role="INCREMENT_TYPE_INFO" Type="Self.INCREMENT_TYPE_INFO" Multiplicity="1" />
+          <End Role="INCREMENT_INFO" Type="Self.INCREMENT_INFO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INCREMENT_TYPE_INFO">
+              <PropertyRef Name="INCREMENT_TYPE_ID" />
+            </Principal>
+            <Dependent Role="INCREMENT_INFO">
+              <PropertyRef Name="INCREMENT_TYPE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_INV_INFO_INV_INFO">
           <End Role="EQUEPMENTS_INFO" Type="Self.EQUEPMENTS_INFO" Multiplicity="1" />
           <End Role="INV_INFO" Type="Self.INV_INFO" Multiplicity="*" />
@@ -707,6 +733,7 @@
           <EntitySet Name="EMPLOYEE_INFO" EntityType="Self.EMPLOYEE_INFO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EQUEPMENTS_INFO" EntityType="Self.EQUEPMENTS_INFO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="INCREMENT_INFO" EntityType="Self.INCREMENT_INFO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="INCREMENT_TYPE_INFO" EntityType="Self.INCREMENT_TYPE_INFO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="INV_INFO" EntityType="Self.INV_INFO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LEAVE_APPLICATION" EntityType="Self.LEAVE_APPLICATION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LEAVE_TYPE" EntityType="Self.LEAVE_TYPE" Schema="dbo" store:Type="Tables" />
@@ -753,6 +780,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_INCREMENT_INFO_EMPLOYEE_INFO" Association="Self.FK_INCREMENT_INFO_EMPLOYEE_INFO">
             <End Role="EMPLOYEE_INFO" EntitySet="EMPLOYEE_INFO" />
+            <End Role="INCREMENT_INFO" EntitySet="INCREMENT_INFO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_INCREMENT_INFO_INCREMENT_TYPE_INFO" Association="Self.FK_INCREMENT_INFO_INCREMENT_TYPE_INFO">
+            <End Role="INCREMENT_TYPE_INFO" EntitySet="INCREMENT_TYPE_INFO" />
             <End Role="INCREMENT_INFO" EntitySet="INCREMENT_INFO" />
           </AssociationSet>
           <AssociationSet Name="FK_INV_INFO_INV_INFO" Association="Self.FK_INV_INFO_INV_INFO">
@@ -839,6 +870,7 @@
           <EntitySet Name="EMPLOYEE_INFO" EntityType="EMSModel.EMPLOYEE_INFO" />
           <EntitySet Name="EQUEPMENTS_INFO" EntityType="EMSModel.EQUEPMENTS_INFO" />
           <EntitySet Name="INCREMENT_INFO" EntityType="EMSModel.INCREMENT_INFO" />
+          <EntitySet Name="INCREMENT_TYPE_INFO" EntityType="EMSModel.INCREMENT_TYPE_INFO" />
           <EntitySet Name="INV_INFO" EntityType="EMSModel.INV_INFO" />
           <EntitySet Name="LEAVE_APPLICATION" EntityType="EMSModel.LEAVE_APPLICATION" />
           <EntitySet Name="LEAVE_TYPE" EntityType="EMSModel.LEAVE_TYPE" />
@@ -930,6 +962,10 @@
           <AssociationSet Name="FK_STOCK_INFO_EQUEPMENTS_INFO" Association="EMSModel.FK_STOCK_INFO_EQUEPMENTS_INFO">
             <End Role="EQUEPMENTS_INFO" EntitySet="EQUEPMENTS_INFO" />
             <End Role="STOCK_INFO" EntitySet="STOCK_INFO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_INCREMENT_INFO_INCREMENT_TYPE_INFO" Association="EMSModel.FK_INCREMENT_INFO_INCREMENT_TYPE_INFO">
+            <End Role="INCREMENT_TYPE_INFO" EntitySet="INCREMENT_TYPE_INFO" />
+            <End Role="INCREMENT_INFO" EntitySet="INCREMENT_INFO" />
           </AssociationSet>
           <AssociationSet Name="FK_INV_INFO_VENDOR_INFO" Association="EMSModel.FK_INV_INFO_VENDOR_INFO">
             <End Role="VENDOR_INFO" EntitySet="VENDOR_INFO" />
@@ -1115,13 +1151,28 @@
           <Property Name="INCREMENT_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EMP_ID" Type="Int64" Nullable="false" />
           <Property Name="INCREMENT_RATE" Type="Int32" Nullable="false" />
-          <Property Name="INCREMENT_TYPE" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="INCREMENT_TYPE" Type="Int64" Nullable="false" />
           <Property Name="INCREMENT_FROM" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="ACTION_DATE" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ACTION_BY" Type="Int64" Nullable="false" />
           <Property Name="UPDATE_DATE" Type="DateTime" Precision="3" />
           <Property Name="UPDATE_BY" Type="Int64" />
+          <Property Name="REMARKS" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="EMPLOYEE_INFO" Relationship="EMSModel.FK_INCREMENT_INFO_EMPLOYEE_INFO" FromRole="INCREMENT_INFO" ToRole="EMPLOYEE_INFO" />
+          <NavigationProperty Name="INCREMENT_TYPE_INFO" Relationship="EMSModel.FK_INCREMENT_INFO_INCREMENT_TYPE_INFO" FromRole="INCREMENT_INFO" ToRole="INCREMENT_TYPE_INFO" />
+        </EntityType>
+        <EntityType Name="INCREMENT_TYPE_INFO">
+          <Key>
+            <PropertyRef Name="INCREMENT_TYPE_ID" />
+          </Key>
+          <Property Name="INCREMENT_TYPE_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="INCREMENT_TYPE_TITLE" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ACTION_BY" Type="Int64" Nullable="false" />
+          <Property Name="ACTION_DATE" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UPDATE_BY" Type="Int64" />
+          <Property Name="UPDATE_DATE" Type="DateTime" Precision="3" />
+          <Property Name="REMARKS" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="INCREMENT_INFO" Relationship="EMSModel.FK_INCREMENT_INFO_INCREMENT_TYPE_INFO" FromRole="INCREMENT_TYPE_INFO" ToRole="INCREMENT_INFO" />
         </EntityType>
         <EntityType Name="INV_INFO">
           <Key>
@@ -1158,6 +1209,7 @@
           <Property Name="ACTION_DATE" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UPDATE_BY" Type="Int64" />
           <Property Name="UPDATE_DATE" Type="DateTime" Precision="3" />
+          <Property Name="LEAVE_DAY" Type="Double" />
           <NavigationProperty Name="EMPLOYEE_INFO" Relationship="EMSModel.FK_LEAVE_APPLICATION_EMPLOYEE_INFO" FromRole="LEAVE_APPLICATION" ToRole="EMPLOYEE_INFO" />
           <NavigationProperty Name="LEAVE_TYPE" Relationship="EMSModel.FK_LEAVE_APPLICATION_LEAVE_APPLICATION" FromRole="LEAVE_APPLICATION" ToRole="LEAVE_TYPE" />
         </EntityType>
@@ -1625,6 +1677,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_INCREMENT_INFO_INCREMENT_TYPE_INFO">
+          <End Type="EMSModel.INCREMENT_TYPE_INFO" Role="INCREMENT_TYPE_INFO" Multiplicity="1" />
+          <End Type="EMSModel.INCREMENT_INFO" Role="INCREMENT_INFO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INCREMENT_TYPE_INFO">
+              <PropertyRef Name="INCREMENT_TYPE_ID" />
+            </Principal>
+            <Dependent Role="INCREMENT_INFO">
+              <PropertyRef Name="INCREMENT_TYPE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_INV_INFO_VENDOR_INFO">
           <End Type="EMSModel.VENDOR_INFO" Role="VENDOR_INFO" Multiplicity="1" />
           <End Type="EMSModel.INV_INFO" Role="INV_INFO" Multiplicity="*" />
@@ -1841,6 +1905,7 @@
           <EntitySetMapping Name="INCREMENT_INFO">
             <EntityTypeMapping TypeName="EMSModel.INCREMENT_INFO">
               <MappingFragment StoreEntitySet="INCREMENT_INFO">
+                <ScalarProperty Name="REMARKS" ColumnName="REMARKS" />
                 <ScalarProperty Name="UPDATE_BY" ColumnName="UPDATE_BY" />
                 <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
                 <ScalarProperty Name="ACTION_BY" ColumnName="ACTION_BY" />
@@ -1850,6 +1915,19 @@
                 <ScalarProperty Name="INCREMENT_RATE" ColumnName="INCREMENT_RATE" />
                 <ScalarProperty Name="EMP_ID" ColumnName="EMP_ID" />
                 <ScalarProperty Name="INCREMENT_ID" ColumnName="INCREMENT_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="INCREMENT_TYPE_INFO">
+            <EntityTypeMapping TypeName="EMSModel.INCREMENT_TYPE_INFO">
+              <MappingFragment StoreEntitySet="INCREMENT_TYPE_INFO">
+                <ScalarProperty Name="REMARKS" ColumnName="REMARKS" />
+                <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
+                <ScalarProperty Name="UPDATE_BY" ColumnName="UPDATE_BY" />
+                <ScalarProperty Name="ACTION_DATE" ColumnName="ACTION_DATE" />
+                <ScalarProperty Name="ACTION_BY" ColumnName="ACTION_BY" />
+                <ScalarProperty Name="INCREMENT_TYPE_TITLE" ColumnName="INCREMENT_TYPE_TITLE" />
+                <ScalarProperty Name="INCREMENT_TYPE_ID" ColumnName="INCREMENT_TYPE_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1872,6 +1950,7 @@
           <EntitySetMapping Name="LEAVE_APPLICATION">
             <EntityTypeMapping TypeName="EMSModel.LEAVE_APPLICATION">
               <MappingFragment StoreEntitySet="LEAVE_APPLICATION">
+                <ScalarProperty Name="LEAVE_DAY" ColumnName="LEAVE_DAY" />
                 <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
                 <ScalarProperty Name="UPDATE_BY" ColumnName="UPDATE_BY" />
                 <ScalarProperty Name="ACTION_DATE" ColumnName="ACTION_DATE" />

@@ -40,7 +40,13 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
+    <DocumentationFile>bin\EMSApp.xml</DocumentationFile>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <FilesToIncludeForPublish>AllFilesInTheProject</FilesToIncludeForPublish>
+    <LegacyPublishPropertiesPageEnabled>true</LegacyPublishPropertiesPageEnabled>
+    <IncludeIisSettings>false</IncludeIisSettings>
+    <PublishDatabases>true</PublishDatabases>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -171,6 +177,8 @@
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\SalaryController.cs" />
     <Compile Include="Controllers\SalaryGradeController.cs" />
+    <Compile Include="Controllers\SalaryIncrementController.cs" />
+    <Compile Include="Controllers\SalaryIncrementTypeController.cs" />
     <Compile Include="Controllers\SalarySetupController.cs" />
     <Compile Include="Controllers\SellsController.cs" />
     <Compile Include="Controllers\TeamController.cs" />
@@ -212,6 +220,9 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\INCREMENT_INFO.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\INCREMENT_TYPE_INFO.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\INV_INFO.cs">
@@ -272,6 +283,7 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserModel\AttendanceClass.cs" />
+    <Compile Include="Models\UserModel\EmployeeLeaveClass.cs" />
     <Compile Include="Models\UserModel\EmployeeReport.cs" />
     <Compile Include="Models\UserModel\InvProductClass.cs" />
     <Compile Include="Models\UserModel\NoticeBoard.cs" />
@@ -4339,6 +4351,14 @@
     <Content Include="Views\CardAssignment\Index.cshtml" />
     <Content Include="Views\CardAssignment\Create.cshtml" />
     <Content Include="Views\CardAssignment\Edit.cshtml" />
+    <Content Include="Views\SalaryIncrement\Index.cshtml" />
+    <Content Include="Views\SalaryIncrementType\Index.cshtml" />
+    <Content Include="Views\SalaryIncrementType\Create.cshtml" />
+    <Content Include="Views\SalaryIncrementType\Edit.cshtml" />
+    <Content Include="Views\SalaryIncrementType\Delete.cshtml" />
+    <Content Include="Views\SalaryIncrement\Create.cshtml" />
+    <Content Include="Views\SalaryIncrement\Edit.cshtml" />
+    <Content Include="Views\Reports\EmployeeLeaveReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,56 @@
+﻿@model EMSApp.Models.INCREMENT_TYPE_INFO
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="card card-outline-danger">
+        <div class="card-header" style="padding:15px">
+            <h4 class="m-b-0 text-white">
+                Are you sure you want to delete this?
+            </h4>
+        </div>
+        <div class="card-body">
+            <form class="form-horizontal" role="form">
+                <div class="form-body">
+                    <h3 class="box-title">Increment Type</h3>
+                    <hr class="m-t-0 m-b-40">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="control-label text-right col-md-3">Increment Type</label>
+                                <div class="col-md-9">
+                                    @Html.DisplayFor(model => model.INCREMENT_TYPE_TITLE)
+                                </div>
+                            </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="control-label text-right col-md-3">Remarks</label>
+                                <div class="col-md-9">
+                                    @Html.DisplayFor(model => model.REMARKS)
+                                </div>
+                            </div>
+                        </div>
+                        <!--/span-->
+                    </div>
+                    <!--/row-->
+
+                    <div class="form-actions">
+                        <div class="btn btn-secondary pull-center">
+                            @Html.ActionLink("Back to List", "Index")
+                        </div>
+                        <button type="submit" class="btn btn-danger pull-right">Delete</button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+
+}

@@ -1,0 +1,57 @@
+﻿@model IEnumerable<EMSApp.Models.INCREMENT_TYPE_INFO>
+
+@{
+    ViewBag.Title = "Increment Type";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+    <div class="container-fluid" style="padding-top:15px">
+        <div class="row">
+            <div class="col-md-3">
+                <p class="btn btn-block btn-outline-success btn-md">
+                    @Html.ActionLink("Create New", "Create")
+                </p>
+            </div>
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Increment Type</h4>
+                        <div class="table-responsive">
+                            <table class="table color-bordered-table primary-bordered-table">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Increment Type</th>
+                                        <th>
+                                            Remarks
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model != null)
+                                    {
+                                        foreach (var item in Model)
+                                        {
+                                    <tr>
+                                        <td>
+                                            @Html.ActionLink("Edit", "Edit", new { id = item.INCREMENT_TYPE_ID })
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.INCREMENT_TYPE_TITLE)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.REMARKS)
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("Delete", "Delete", new { id = item.INCREMENT_TYPE_ID })
+                                        </td>
+                                    </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

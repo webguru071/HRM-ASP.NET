@@ -41,7 +41,7 @@ namespace EMSApp.Controllers
             if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
             {
                 string status = collection["IS_DELETED"];
-                long empId = string.IsNullOrEmpty(collection["EMPLOYEE_ID"]) ? 0: Convert.ToInt64(collection["EMPLOYEE_ID"]);
+                long empId = string.IsNullOrEmpty(collection["EMPLOYEE_ID"]) ? 0 : Convert.ToInt64(collection["EMPLOYEE_ID"]);
                 var data = service.GetDeptWiseData(status: status, empId: empId);
                 ViewBag.EMPLOYEE_ID = SetEmployee();
                 return View(data);
@@ -89,7 +89,7 @@ namespace EMSApp.Controllers
         public ActionResult AttendanceReportMonthly()
         {
             if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
-            {                
+            {
                 ViewBag.EMPLOYEE_ID = SetEmployee();
                 ViewBag.MONTH = SetMonthDate();
                 ViewBag.YEAR = SetYear();
@@ -113,7 +113,7 @@ namespace EMSApp.Controllers
                 else if (string.IsNullOrEmpty(collection["YEAR"]))
                 {
                     ModelState.AddModelError("", "Please Select Year!!!");
-                }               
+                }
                 else
                 {
                     string fromDate = "";
@@ -125,7 +125,7 @@ namespace EMSApp.Controllers
                         DateTime lastDate = firstDate.AddMonths(1).AddDays(-1);
                         toDate = lastDate.ToString("yyyy-MM-dd");
                     }
-                    long empId =!string.IsNullOrEmpty(collection["EMPLOYEE_ID"].ToString()) ? Convert.ToInt64(collection["EMPLOYEE_ID"]):0;
+                    long empId = !string.IsNullOrEmpty(collection["EMPLOYEE_ID"].ToString()) ? Convert.ToInt64(collection["EMPLOYEE_ID"]) : 0;
                     var data = service.GetAttendanceDataMonthly(fromDate: fromDate, toDate: toDate, empId: empId);
                     ViewBag.STR = " of " + collection["MONTH"] + ", " + collection["YEAR"];
                     ViewBag.EMPLOYEE_ID = SetEmployee();
@@ -144,12 +144,6 @@ namespace EMSApp.Controllers
                 return RedirectToAction("LogIn", "Login");
             }
 
-        }
-        private List<SelectListItem> SetEmployee()
-        {
-            List<SelectListItem> empList = new SelectList(db.EMPLOYEE_INFO, "ID", "EMPLOYEE_NAME").ToList();
-            empList.Insert(0, (new SelectListItem { Text = "Select Employee", Value = "" }));
-            return empList;
         }
         [HttpGet]
         public ActionResult DepartmentWiseReport()
@@ -182,12 +176,6 @@ namespace EMSApp.Controllers
             }
 
         }
-        private List<SelectListItem> SetDepartment()
-        {
-            List<SelectListItem> empList = new SelectList(db.DEPARTMENT_INFO, "DEPT_ID", "DEPT_TITLE").ToList();
-            empList.Insert(0, (new SelectListItem { Text = "Select Department", Value = "0" }));
-            return empList;
-        }
         [HttpGet]
         public ActionResult AllEmployeeSalaryReport()
         {
@@ -217,15 +205,15 @@ namespace EMSApp.Controllers
                 else if (string.IsNullOrEmpty(collection["YEAR"]))
                 {
                     ModelState.AddModelError("", "Please Select Year!!!");
-                }                
+                }
                 else
                 {
                     string dateStr = "";
                     if (!string.IsNullOrEmpty(collection["MONTH"]) && !string.IsNullOrEmpty(collection["YEAR"]))
                     {
-                        dateStr = collection["MONTH"]+", "+ collection["YEAR"];
+                        dateStr = collection["MONTH"] + ", " + collection["YEAR"];
                     }
-                    var data = db.SALARY_INFO.Where(x=>x.SALARY_PAID==dateStr).ToList();
+                    var data = db.SALARY_INFO.Where(x => x.SALARY_PAID == dateStr).ToList();
                     ViewBag.STR = " of " + collection["MONTH"] + ", " + collection["YEAR"];
                     ViewBag.MONTH = SetMonthDate();
                     ViewBag.YEAR = SetYear();
@@ -305,6 +293,38 @@ namespace EMSApp.Controllers
             }
 
         }
+        [HttpPost]
+        public ActionResult EmployeeLeaveReport()
+        {
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            {
+                ViewBag.MONTH = SetMonth();
+                ViewBag.YEAR = SetYear();
+                ViewBag.EMPLOYEE_ID = SetEmployee();
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+
+        }
+        [HttpGet]
+        public ActionResult EmployeeLeaveReport(FormCollection collection)
+        {
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            {
+                long Id = converterHelper.GetLoggedEmployeeID();
+                var data = db.SALARY_INFO.Where(x => x.EMPLOYEE_ID == Id).OrderByDescending(x => x.SALARY_PAID).ToList();
+                ViewBag.EMPLOYEE_ID = SetEmployee();
+                return View(data);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+
+        }
         private dynamic SetYear()
         {
             string year = DateTime.Now.Year.ToString();
@@ -326,6 +346,18 @@ namespace EMSApp.Controllers
             List<SelectListItem> list = new SelectList(ListValue.Month, "Value", "Key").ToList();
             list.Insert(0, (new SelectListItem { Text = "Select One", Value = "" }));
             return list;
+        }
+        private List<SelectListItem> SetDepartment()
+        {
+            List<SelectListItem> empList = new SelectList(db.DEPARTMENT_INFO, "DEPT_ID", "DEPT_TITLE").ToList();
+            empList.Insert(0, (new SelectListItem { Text = "Select Department", Value = "0" }));
+            return empList;
+        }
+        private List<SelectListItem> SetEmployee()
+        {
+            List<SelectListItem> empList = new SelectList(db.EMPLOYEE_INFO, "ID", "EMPLOYEE_NAME").ToList();
+            empList.Insert(0, (new SelectListItem { Text = "Select Employee", Value = "" }));
+            return empList;
         }
     }
 }

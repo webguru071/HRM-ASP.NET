@@ -109,6 +109,11 @@
                                             var data = db.USER_INFO.Where(x => x.ID == item.UPDATE_BY).FirstOrDefault();
                                             approvedBy = " " + data.USER_NAME;
                                         }
+                                        else
+                                        {
+                                            var data = db.USER_INFO.Where(x => x.ID == item.ACTION_BY).FirstOrDefault();
+                                            approvedBy = " " + data.USER_NAME;
+                                        }
                                     }
                                     @if (item.STATUS == EMSApp.Helper.ConstantValue.LeaveStatusPending)
                                     {

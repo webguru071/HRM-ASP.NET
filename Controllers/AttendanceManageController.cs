@@ -208,7 +208,7 @@ namespace EMSApp.Controllers
                     if (uploadFile != null && uploadFile.ContentLength > 0)
                     {
                         var fileName = Path.GetFileName(DateTime.Now.ToString() + "_" + uploadFile.FileName);
-                        var path = Path.Combine(Server.MapPath("/ExcelFiles"), fileName);
+                        var path = Path.Combine(Server.MapPath("~/Uploads"), fileName);
                         uploadFile.SaveAs(path);
                         string connString = "";
                         string extension = Path.GetExtension(uploadFile.FileName);
@@ -245,7 +245,7 @@ namespace EMSApp.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.ResultFailed = "Failed To Import!!!";
+                ViewBag.ResultFailed = ex.ToString();
                 ViewBag.ResultSuccess = "";
             }
             ViewBag.MONTH = SetMonthDate();

@@ -17,13 +17,15 @@ namespace EMSApp.Models
         public long INCREMENT_ID { get; set; }
         public long EMP_ID { get; set; }
         public int INCREMENT_RATE { get; set; }
-        public string INCREMENT_TYPE { get; set; }
+        public long INCREMENT_TYPE { get; set; }
         public System.DateTime INCREMENT_FROM { get; set; }
         public System.DateTime ACTION_DATE { get; set; }
         public long ACTION_BY { get; set; }
         public Nullable<System.DateTime> UPDATE_DATE { get; set; }
         public Nullable<long> UPDATE_BY { get; set; }
+        public string REMARKS { get; set; }
     
         public virtual EMPLOYEE_INFO EMPLOYEE_INFO { get; set; }
+        public virtual INCREMENT_TYPE_INFO INCREMENT_TYPE_INFO { get; set; }
     }
 }

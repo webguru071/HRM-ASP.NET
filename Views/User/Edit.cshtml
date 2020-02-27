@@ -58,7 +58,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="bmd-label-floating">Status</label>
+                                <label class="bmd-label-floating">User Type</label>
                                 @Html.DropDownList("USER_LEVEL", null, htmlAttributes: new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.USER_LEVEL, "", new { @class = "text-danger" })
                             </div>

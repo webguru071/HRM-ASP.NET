@@ -139,6 +139,7 @@
     <EntitySetMapping Name="INCREMENT_INFO">
       <EntityTypeMapping TypeName="EMSModel.INCREMENT_INFO">
         <MappingFragment StoreEntitySet="INCREMENT_INFO">
+          <ScalarProperty Name="REMARKS" ColumnName="REMARKS" />
           <ScalarProperty Name="UPDATE_BY" ColumnName="UPDATE_BY" />
           <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
           <ScalarProperty Name="ACTION_BY" ColumnName="ACTION_BY" />
@@ -148,6 +149,19 @@
           <ScalarProperty Name="INCREMENT_RATE" ColumnName="INCREMENT_RATE" />
           <ScalarProperty Name="EMP_ID" ColumnName="EMP_ID" />
           <ScalarProperty Name="INCREMENT_ID" ColumnName="INCREMENT_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="INCREMENT_TYPE_INFO">
+      <EntityTypeMapping TypeName="EMSModel.INCREMENT_TYPE_INFO">
+        <MappingFragment StoreEntitySet="INCREMENT_TYPE_INFO">
+          <ScalarProperty Name="REMARKS" ColumnName="REMARKS" />
+          <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
+          <ScalarProperty Name="UPDATE_BY" ColumnName="UPDATE_BY" />
+          <ScalarProperty Name="ACTION_DATE" ColumnName="ACTION_DATE" />
+          <ScalarProperty Name="ACTION_BY" ColumnName="ACTION_BY" />
+          <ScalarProperty Name="INCREMENT_TYPE_TITLE" ColumnName="INCREMENT_TYPE_TITLE" />
+          <ScalarProperty Name="INCREMENT_TYPE_ID" ColumnName="INCREMENT_TYPE_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -170,6 +184,7 @@
     <EntitySetMapping Name="LEAVE_APPLICATION">
       <EntityTypeMapping TypeName="EMSModel.LEAVE_APPLICATION">
         <MappingFragment StoreEntitySet="LEAVE_APPLICATION">
+          <ScalarProperty Name="LEAVE_DAY" ColumnName="LEAVE_DAY" />
           <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
           <ScalarProperty Name="UPDATE_BY" ColumnName="UPDATE_BY" />
           <ScalarProperty Name="ACTION_DATE" ColumnName="ACTION_DATE" />

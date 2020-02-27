@@ -17,5 +17,6 @@ namespace EMSApp.Services
         List<EmployeeReport> GetDeptWiseData(string status="",long deptId=0, long empId = 0);
         List<SalaryInfo> GetSalaryWithBenifitsData(string status="");
         List<AttendanceClass> GetAttendanceDataMonthyList(DataTable data);
+        List<EmployeeLeaveClass> GetEmployeeLeaveList(long empId = 0, string fromDate = "", string toDate = "");
     }
 }
