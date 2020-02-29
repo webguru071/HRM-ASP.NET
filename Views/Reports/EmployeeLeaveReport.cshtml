@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<EMSApp.Models.UserModel.EmployeeLeaveClass>
 @{
     ViewBag.Title = "Employee Leave Report";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -13,17 +13,17 @@
             <h3 class="box-title m-b-0">Filters</h3>
             <hr />
             <div class="row">
-                <div class="col-md-4">
-                    @Html.DropDownList("DEPT_ID", null, htmlAttributes: new { @class = "form-control", onchange = @"form.submit();" })
-                </div>
+                @*<div class="col-md-4">
+                    @Html.DropDownList("EMPLOYEE_ID", null, htmlAttributes: new { @class = "form-control" })
+                </div>*@
                 <div class="col-md-4">
                     @Html.DropDownList("MONTH", null, htmlAttributes: new { @class = "form-control" })
                 </div>
                 <div class="col-md-4">
                     @Html.DropDownList("YEAR", null, htmlAttributes: new { @class = "form-control" })
                 </div>
-                <div class="col-md-12">
-                    <button type="submit" class="btn btn-success waves-effect waves-light m-t-10 pull-right">Search</button>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-success waves-effect waves-light m-t-10 pull-center">Search</button>
                 </div>
             </div>
         </div>
@@ -35,72 +35,78 @@
                 <button type="button" class="btn btn-warning waves-effect waves-light m-t-10 pull-right" onclick=" printDiv()">Print</button>
             </div>
             <div class="card-body">
-                <h3 class="card-title">Departmentwise Employee Report</h3>
-                <div class="table-responsive" id="DivIdToPrint">
-                    <table class="color-table success-table" width="100%" border="1px">
+                <h3 class="card-title">Employee Leave Report</h3>
+                <div class="table" id="DivIdToPrint">
+                    <table class="color-table success-table table-bordered" width="100%" border="1" cellpadding="10">
                         <thead>
                             <tr>
                                 <th>
-                                    Department
-                                </th>
-                                <th>
-                                    Division
-                                </th>
-                                <th>
-                                    Designation
+                                    SL No.
                                 </th>
                                 <th>
                                     Employee
                                 </th>
                                 <th>
-                                    Contact
+                                    Total Leave
                                 </th>
                                 <th>
-                                    Email
+                                    Casual Leave
                                 </th>
                                 <th>
-                                    Joining Date
+                                    Medical Leave
                                 </th>
                                 <th>
-                                    Resigning Date
+                                    Fullday Leave
                                 </th>
                                 <th>
-                                    Status
+                                    Half-Day Leave
+                                </th>
+                                <th>
+                                    Total Leave of Month
+                                </th>
+                                <th>
+                                    Remaining Leave
+                                </th>
+                                <th>
+                                    Exceed Leave
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
                             @if (Model != null)
                             {
+                                int count = 0;
                                 foreach (var item in Model)
                                 {
+                                    count++;
                                     <tr>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.DEPT_TITLE)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.DIV_TITLE)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.POSITION_TITLE)
-                                        </td>
+                                        <td>@count</td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.EMPLOYEE_NAME)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.CONTACT)
+                                            @Html.DisplayFor(modelItem => item.TOTAL_LEAVE)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.EMAIL)
+                                            @Html.DisplayFor(modelItem => item.CASUAL_LEAVE)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.JOINING_DATE)
+                                            @Html.DisplayFor(modelItem => item.MEDI_LEAVE)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.RESIGNING_DATE)
+                                            @Html.DisplayFor(modelItem => item.FULL_DAY_LEAVE)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.STATUS)
+                                            @Html.DisplayFor(modelItem => item.HALF_DAY_LEAVE)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TOTAL_LEAVE_TAKEN)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.REMAIN_LEAVE)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.EXCEED_LEAVE)
                                         </td>
                                     </tr>
                                 }
@@ -120,7 +126,7 @@
             var divToPrint = document.getElementById('DivIdToPrint');
             var newWin = window.open('', 'Print-Window');
             newWin.document.open();
-            newWin.document.write('<html><body onload="window.print()">' +'<h2>Department Wise Employee Report<h2/><br/>'+ divToPrint.innerHTML + '</body></html>');
+            newWin.document.write('<html><body onload="window.print()">' + '<h2>Department Wise Employee Report<h2/><br/>' + divToPrint.innerHTML + '</body></html>');
             newWin.document.close();
             setTimeout(function () { newWin.close(); }, 10);
         }

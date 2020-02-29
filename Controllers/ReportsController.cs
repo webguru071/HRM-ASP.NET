@@ -249,7 +249,7 @@ namespace EMSApp.Controllers
         {
             if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
             {
-                long Id = converterHelper.GetLoggedEmployeeID();
+                long Id = Convert.ToInt64(collection["EMPLOYEE_ID"]);
                 var data = db.SALARY_INFO.Where(x => x.EMPLOYEE_ID == Id).OrderByDescending(x => x.SALARY_PAID).ToList();
                 ViewBag.EMPLOYEE_ID = SetEmployee();
                 return View(data);
@@ -293,12 +293,12 @@ namespace EMSApp.Controllers
             }
 
         }
-        [HttpPost]
+        [HttpGet]
         public ActionResult EmployeeLeaveReport()
         {
             if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
             {
-                ViewBag.MONTH = SetMonth();
+                ViewBag.MONTH = SetMonthDate();
                 ViewBag.YEAR = SetYear();
                 ViewBag.EMPLOYEE_ID = SetEmployee();
                 return View();
@@ -309,14 +309,29 @@ namespace EMSApp.Controllers
             }
 
         }
-        [HttpGet]
+        [HttpPost]
         public ActionResult EmployeeLeaveReport(FormCollection collection)
         {
             if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
             {
-                long Id = converterHelper.GetLoggedEmployeeID();
-                var data = db.SALARY_INFO.Where(x => x.EMPLOYEE_ID == Id).OrderByDescending(x => x.SALARY_PAID).ToList();
+                string fromDate = "";
+                string toDate = "";
+                long empId = 0;
+                if (!string.IsNullOrEmpty(collection["EMPLOYEE_ID"]))
+                {
+                    empId= Convert.ToInt64(collection["EMPLOYEE_ID"]);
+                }
+                if (!string.IsNullOrEmpty(collection["MONTH"]) && !string.IsNullOrEmpty(collection["YEAR"]))
+                {
+                    fromDate = collection["YEAR"] + "-" + collection["MONTH"] + "-01";
+                    DateTime firstDate = Convert.ToDateTime(fromDate);
+                    DateTime lastDate = firstDate.AddMonths(1).AddDays(-1);
+                    toDate = lastDate.ToString("yyyy-MM-dd");
+                }
+                var data = service.GetEmployeeLeaveList(empId:empId,fromDate:fromDate,toDate:toDate);
                 ViewBag.EMPLOYEE_ID = SetEmployee();
+                ViewBag.MONTH = SetMonthDate();
+                ViewBag.YEAR = SetYear();
                 return View(data);
             }
             else

@@ -9,9 +9,13 @@ namespace EMSApp.Models.UserModel
     {
         public long EMPLOYEE_ID { get; set; }
         public string EMPLOYEE_NAME { get; set; }
-        public int MEDI_LEAVE { get; set; }
-        public int CASUAL_LEAVE { get; set; }
-        public int HALF_DAY_LEAVE { get; set; }
-        public int FULL_DAY_LEAVE { get; set; }
+        public double MEDI_LEAVE { get; set; }
+        public double CASUAL_LEAVE { get; set; }
+        public double HALF_DAY_LEAVE { get; set; }
+        public double FULL_DAY_LEAVE { get; set; }
+        public double TOTAL_LEAVE { get; set; }
+        public double TOTAL_LEAVE_TAKEN { get; set; }
+        public double REMAIN_LEAVE { get; set; }
+        public double EXCEED_LEAVE { get; set; }
     }
 }

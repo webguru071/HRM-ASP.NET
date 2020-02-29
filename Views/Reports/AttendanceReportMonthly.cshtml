@@ -39,6 +39,9 @@
                     <table class="color-table success-table" width="100%" border="1px">
                         <thead>
                             <tr>
+                                <th>
+                                    SL No.
+                                </th>
                                 <th>Date</th>
                                 <th>Employee Name</th>
                                 <th>Check In</th>
@@ -54,9 +57,12 @@
                         <tbody>
                             @if (Model != null)
                             {
+                                int count = 0;
                                 foreach (var item in Model)
                                 {
+                                    count++;
                                     <tr>
+                                        <td>@count</td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.ATT_DATE)
                                         </td>

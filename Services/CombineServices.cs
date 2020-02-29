@@ -332,47 +332,122 @@ namespace EMSApp.Services
         }
         public List<EmployeeLeaveClass> GetEmployeeLeaveList(long empId = 0, string fromDate = "", string toDate = "")
         {
-            string DateFilter = "";
-            string idFilter = empId > 0 ? " and ei.id=" + empId + " " : "";
-            if (!string.IsNullOrEmpty(toDate) && !string.IsNullOrEmpty(fromDate))
-            {
-                DateFilter = " and ad.ATT_DATE BETWEEN '" + fromDate + "' AND '" + toDate + "' ";
-            }
             List<EmployeeLeaveClass> leaveList = new List<EmployeeLeaveClass>();
-            string query = @"SELECT EI.EMPLOYEE_NAME,LA.EMPLOYEE_ID,SUM(LA.LEAVE_DAY) AS SUM_LEAVE FROM LEAVE_APPLICATION LA
-                            INNER JOIN EMPLOYEE_INFO EI ON EI.ID=LA.EMPLOYEE_ID
-                            WHERE LA.STATUS='A' AND LA.APPROVED_START_DATE BETWEEN '2020-02-01' AND '2020-02-29'
-                            GROUP BY  LA.EMPLOYEE_ID,EI.EMPLOYEE_NAME";
-            DataTable dt = dbHelper.GetDataTable(query);
-            foreach (DataRow drow in dt.Rows)
+            try
             {
-                if (dt.Rows.Count > 0)
+                string DateFilter = "";
+                string idFilter = empId > 0 ? " and ei.id=" + empId + "  " : " ";
+                if (!string.IsNullOrEmpty(toDate) && !string.IsNullOrEmpty(fromDate))
                 {
-                    long id = Convert.ToInt64(drow["EMPLOYEE_ID"]);
-                    string empName = Convert.ToString(drow["EMPLOYEE_NAME"]);
-                    int totalLeave = Convert.ToInt32(drow["SUM_LEAVE"]);
-                    int casualleave = 0, sickLeave = 0, fullday = 0;
-                    double halfDay = 0;
-                    var dataList = db.LEAVE_APPLICATION.Where(x => x.STATUS == ConstantValue.LeaveStatusApproved && x.EMPLOYEE_ID == id && Convert.ToDateTime(x.APPROVED_START_DATE) >= Convert.ToDateTime(fromDate) && Convert.ToDateTime(x.APPROVED_START_DATE) <= Convert.ToDateTime(toDate)).ToList();
-                    foreach(var countList in dataList)
+                    DateFilter = " AND LA.APPROVED_START_DATE BETWEEN '" + fromDate + "' AND '" + toDate + "' OR LA.APPROVED_END_DATE BETWEEN '" + fromDate + "' AND '" + toDate + "' ";
+                }
+                string query = @"SELECT EI.EMPLOYEE_NAME,LA.EMPLOYEE_ID,SUM(LA.LEAVE_DAY) AS SUM_LEAVE FROM LEAVE_APPLICATION LA
+                            INNER JOIN EMPLOYEE_INFO EI ON EI.ID=LA.EMPLOYEE_ID
+                            WHERE LA.STATUS='A' " + DateFilter + idFilter + @" GROUP BY  LA.EMPLOYEE_ID,EI.EMPLOYEE_NAME";
+                DataTable dt = dbHelper.GetDataTable(query);
+                foreach (DataRow drow in dt.Rows)
+                {
+                    EmployeeLeaveClass obj = new EmployeeLeaveClass();
+                    if (dt.Rows.Count > 0)
                     {
-                        if (countList.LEAVE_APP_ID == ConstantValue.LeaveDayFullDayID)
+                        long id = Convert.ToInt64(drow["EMPLOYEE_ID"]);
+                        string empName = Convert.ToString(drow["EMPLOYEE_NAME"]);
+                        double totalLeave = Convert.ToDouble(drow["SUM_LEAVE"]);
+                        double casualleave = 0, medicalLeave = 0, fullday = 0, halfDay = 0, dayCount = 0;
+                        var dataList = db.LEAVE_APPLICATION.Where(x => x.STATUS == ConstantValue.LeaveStatusApproved && x.EMPLOYEE_ID == id).ToList();
+                        foreach (var countList in dataList)
                         {
-                            //count for full day leave
-                            fullday++;
+                            if ((Convert.ToDateTime(countList.APPROVED_START_DATE) >= Convert.ToDateTime(fromDate) && Convert.ToDateTime(countList.APPROVED_START_DATE) <= Convert.ToDateTime(toDate)) || Convert.ToDateTime(countList.APPROVED_END_DATE) >= Convert.ToDateTime(fromDate))
+                            {
+                                if (countList.LEAVE_TYPE_ID == ConstantValue.LeaveDayFullDayID)
+                                {
+                                    //count for full day leave
+                                    fullday++;
+                                    dayCount = dayCount + 1;
+                                }
+                                else if (countList.LEAVE_TYPE_ID == ConstantValue.LeaveDayHalfDayID)
+                                {
+                                    //count for half day leave
+                                    halfDay++;
+                                    dayCount = dayCount + .5;
+                                }
+                                else
+                                {
+                                    //count for casual and medical leave
+                                    DateTime startdate = Convert.ToDateTime(countList.APPROVED_START_DATE);
+                                    DateTime enddate = Convert.ToDateTime(countList.APPROVED_END_DATE);
+                                    if (enddate > Convert.ToDateTime(toDate))
+                                    {
+                                        TimeSpan difference = Convert.ToDateTime(countList.APPROVED_END_DATE).Subtract(Convert.ToDateTime(toDate));
+                                        double dayOther = difference.Days;
+                                        double leaveDayRemain = Convert.ToInt64(countList.LEAVE_DAY) - dayOther;
+                                        if (countList.LEAVE_TYPE_ID == ConstantValue.LeaveDayCasualID)
+                                        {
+                                            casualleave = casualleave + leaveDayRemain;
+                                        }
+                                        else
+                                        {
+                                            medicalLeave = medicalLeave + leaveDayRemain; 
+                                        }
+                                        dayCount = dayCount + leaveDayRemain;
+                                    }
+                                    else if (enddate >= Convert.ToDateTime(fromDate) && startdate <= Convert.ToDateTime(fromDate))
+                                    {
+                                        TimeSpan difference = Convert.ToDateTime(countList.APPROVED_END_DATE).Subtract(Convert.ToDateTime(fromDate));
+                                        double dayRem = difference.Days + 1;
+                                        if (countList.LEAVE_TYPE_ID == ConstantValue.LeaveDayCasualID)
+                                        {
+                                            casualleave = casualleave + dayRem;
+                                        }
+                                        else
+                                        {
+                                            medicalLeave = medicalLeave + dayRem;                                           
+                                        }
+                                        dayCount = dayCount + dayRem;
+                                    }
+                                    else
+                                    {
+                                        TimeSpan difference = Convert.ToDateTime(countList.APPROVED_END_DATE).Subtract(Convert.ToDateTime(countList.APPROVED_START_DATE));
+                                        double allLeave = difference.Days + 1;
+                                        if (countList.LEAVE_TYPE_ID == ConstantValue.LeaveDayCasualID)
+                                        {
+                                            casualleave = casualleave + allLeave;
+                                        }
+                                        else
+                                        {
+                                            medicalLeave = medicalLeave + allLeave;
+                                        }
+                                        dayCount = dayCount + allLeave;
+                                    }
+                                }
+                            }
                         }
-                        else if(countList.LEAVE_APP_ID == ConstantValue.LeaveDayHalfDayID)
+                        obj.EMPLOYEE_ID = id;
+                        obj.EMPLOYEE_NAME = empName;
+                        obj.TOTAL_LEAVE = ConstantValue.LeaveDayCountTotal;
+                        obj.CASUAL_LEAVE = casualleave;
+                        obj.MEDI_LEAVE = medicalLeave;
+                        obj.HALF_DAY_LEAVE = halfDay;
+                        obj.FULL_DAY_LEAVE = fullday;
+                        obj.TOTAL_LEAVE_TAKEN = dayCount;
+                        double remainLeaves = obj.TOTAL_LEAVE - totalLeave;
+                        if (remainLeaves >= 0)
                         {
-                            //count for half day leave
-                            halfDay = halfDay + .5;
+                            obj.REMAIN_LEAVE = remainLeaves;
+                            obj.EXCEED_LEAVE = 0;
                         }
                         else
                         {
-                            //count for casual and medical leave
-
+                            obj.REMAIN_LEAVE = 0;
+                            obj.EXCEED_LEAVE = obj.TOTAL_LEAVE_TAKEN - totalLeave;
                         }
+                        leaveList.Add(obj);
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+
             }
             return leaveList;
         }
