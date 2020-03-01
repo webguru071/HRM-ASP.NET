@@ -451,5 +451,12 @@ namespace EMSApp.Services
             }
             return leaveList;
         }
+
+        public bool SalarySetupUpdate(long id, SALARY_SETUP obj)
+        {
+            string query = @"UPDATE SALARY_SETUP SET EMP_ID="+obj.EMP_ID+", POSITION_ID="+obj.POSITION_ID+ ",PAY_TYPE='" + obj.PAY_TYPE + "',GROSS_SALARY=" + obj.GROSS_SALARY + ",SALARY_GRADE_SETUP='" + obj.SALARY_GRADE_SETUP 
+                + "', SALARY_GRADE_SETUP_STRING='" + obj.SALARY_GRADE_SETUP_STRING + "',CANGE_TYPE='" + obj.CANGE_TYPE + "',UPDATE_BY=" + obj.UPDATE_BY + ",UPDATE_DATE='" + obj.UPDATE_DATE + "' WHERE SALARY_SET_ID="+id;
+            return dbHelper.ExecuteDML(query);             
+        }
     }
 }

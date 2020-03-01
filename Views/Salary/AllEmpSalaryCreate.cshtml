@@ -5,11 +5,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("AllEmpSalaryCreate", "Salary", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
-
-
     <div class="content">
         <div class="container-fluid">
             <div class="card">
@@ -34,13 +32,13 @@
                                         @Html.DropDownList("SALARY_YEAR", null, htmlAttributes: new { @class = "form-control" })
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-actions">
-                                <div class="btn btn-secondary pull-center">
-                                    @Html.ActionLink("Back to List", "AllEmpIndex")
+                                <div class="col-md-4">
+                                    <div class="form-group">                                        
+                                        <button style="height:40px; margin-top:30px" type="submit" name="submit" value="Generate" class="btn btn-info pull-center">Generate</button>
+                                    </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary pull-right">Generate</button>
-                            </div>
+                                
+                            </div>                                                        
                         </form>
                     </div>
                 </div>
@@ -54,59 +52,90 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Employee Salary List</h4>
+                        <hr />
                         <div class="table-responsive">
-                            <table class="table color-bordered-table primary-bordered-table">
+                            <table class="table color-bordered-table success-bordered-table">
                                 <thead>
                                     <tr>
-                                        <th>
-                                            Employee
-                                        </th>
-                                        <th>
-                                            Salary
-                                        </th>
+                                        <th>Sl No.</th>
+                                        <th hidden>ID</th>
+                                        <th>Employee</th>
+                                        <th>Basic Salary</th>
+                                        <th>Benefits</th>
+                                        <th>Gross Salary</th>
+                                        <th>Bonus</th>
+                                        <th>Addition</th>
+                                        <th>Deduction</th>
+                                        <th>Advance</th>
+                                        <th>Commission</th>
+                                        <th>Total</th>
+                                        <th>Leaves</th>
+                                        <th>Note</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if (ViewBag.SALARY_INFO != null)
+                                    @if (ViewBag.ListValue != null)
                                     {
-                                        foreach (var item in (ViewBag.SALARY_INFO as List<EMSApp.Models.UserModel.SalaryInfo>))
+                                        int slNo = 0;
+                                        foreach (var item in (ViewBag.ListValue as List<EMSApp.Models.UserModel.SalaryInfo>))
                                         {
-                                            <tr>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.EMPLOYEE_NAME)
-                                                </td>                                                
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.GROSS_SALARY)
-                                                </td>
-                                            </tr>
+                                            slNo++;
+                                    <tr>
+                                        <td>@slNo</td>
+                                        <td hidden> @Html.DisplayFor(modelItem => item.EMP_ID)</td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.EMPLOYEE_NAME)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.BASIC_SALARY)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.SALARY_GRADE_STRING)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.GROSS_SALARY)
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(modelItem => item.BONUS)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ADDITION)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.DEDUCTION)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ADVANCE)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.COMMISSION)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TOTAL)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TOTAL_LEAVE)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.NOTE)
+                                        </td>
+                                    </tr>
+
                                         }
                                     }
                                 </tbody>
                             </table>
                         </div>
-                    </div>
+                        <div class="form-actions ">
+                            <div class="btn btn-secondary pull-center">
+                                @Html.ActionLink("Back to List", "AllEmpIndex")
+                            </div>
+                            <button type="submit" id="btnGen" name="submit" value="Pay" class="btn btn-warning pull-right">Salary Pay</button>
+                        </div>
+                    </div>          
                 </div>
             </div>
         </div>
     </div>
 }
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-    <script type="text/javascript">
-        function GetEmpInfo() {
-            var id = $('#EMP_ID').val();
-            $.ajax({
-                url: "@Url.Action("GetEmpInfo", "Salary")",
-                type: "GET",
-                dataType: "JSON",
-                data: { id: id },
-                success: function (listOfData) {
-                    $('#GROSS_SALARY').val(listOfData["GROSS_SALARY"]);
-                },
-                error: function (data) {
-                    alert("Error");
-                }
-            });
-        }
-    </script>
-}
+

@@ -17,6 +17,7 @@ namespace EMSApp.Controllers
     {
         EMSEntities db = new EMSEntities();
         ConverterHelper converterHelper = new ConverterHelper();
+        ICombine service = new CombineServices();
 
         // GET: SalarySetup
         public ActionResult Index()
@@ -29,7 +30,7 @@ namespace EMSApp.Controllers
             else
             {
                 return RedirectToAction("LogIn", "Login");
-            }            
+            }
         }
         // GET: SalarySetup/Details/5
         public ActionResult Details(int id)
@@ -48,7 +49,7 @@ namespace EMSApp.Controllers
             else
             {
                 return RedirectToAction("LogIn", "Login");
-            }           
+            }
         }
         // POST: SalarySetup/Create
         [HttpPost]
@@ -70,12 +71,17 @@ namespace EMSApp.Controllers
                 {
                     ModelState.AddModelError("", "Basic Salary is Required!!");
                 }
+                else if (string.IsNullOrEmpty(collection["CALCULATE_AS"]))
+                {
+                    ModelState.AddModelError("", "Benefit Calculation Type is Required!!");
+                }
                 else
                 {
                     List<SalarySeupClass> list = new List<SalarySeupClass>();
                     decimal basicSalary = Convert.ToDecimal(collection["BASIC_SALARY"]);
                     decimal grossSalary = 0;
                     string gradeString = "";
+                    string gradeAdd = collection["CALCULATE_AS"];
                     foreach (var key in collection.AllKeys)
                     {
                         bool isNum = int.TryParse(key, out int n);
@@ -92,8 +98,16 @@ namespace EMSApp.Controllers
                             var data = db.SALARY_GRADE.Where(x => x.GRADE_ID == id).FirstOrDefault();
                             if (value != 0)
                             {
-                                gradeString = gradeString + data.GRADE_TITLE + ": " + value + "%" + "; ";
-                                rateValue = (basicSalary * value) / 100;
+                                if (collection["CALCULATE_AS"] == ConstantValue.SalarySetupInPercentage)
+                                {
+                                    rateValue = (basicSalary * value) / 100;
+                                }
+                                else
+                                {
+                                    rateValue = value;
+                                }
+                                gradeString = gradeString + data.GRADE_TITLE + ": " + value + "; ";
+                                gradeAdd = gradeAdd + " " + key + ":" + value;
                             }
 
                             if (data.GRADE_TYPE == Helper.ConstantValue.SalaryGradeAdd)
@@ -113,7 +127,8 @@ namespace EMSApp.Controllers
                     setUp.POSITION_ID = Convert.ToInt64(Session["POSITION_ID"]);
                     setUp.PAY_TYPE = collection["PAY_TYPE"];
                     setUp.GROSS_SALARY = grossSalary;
-                    setUp.SALARY_GRADE_SETUP = gradeString;
+                    setUp.SALARY_GRADE_SETUP = gradeAdd;
+                    setUp.SALARY_GRADE_SETUP_STRING = gradeString;
                     setUp.ACTION_BY = converterHelper.GetLoggedUserID();
                     setUp.ACTION_DATE = DateTime.Now;
                     setUp.CANGE_TYPE = Helper.ConstantValue.TypeActive;
@@ -140,24 +155,51 @@ namespace EMSApp.Controllers
         {
             if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
             {
-                var dataGrade = db.SALARY_GRADE.ToList();
                 var data = db.SALARY_SETUP.Where(x => x.SALARY_SET_ID == id).FirstOrDefault();
+                var positionalData = db.POSITIONAL_INFO.Where(x => x.EMPLOYEE_ID == data.EMP_ID).FirstOrDefault();
+                Session["POSITION_ID"] = data.POSITION_ID;
+                Session["AD"] = data.ACTION_DATE;
                 GetDataInBag(data.EMP_ID, data.PAY_TYPE);
-                List<SalarySeupClass> empObj = JsonConvert.DeserializeObject<List<SalarySeupClass>>(data.SALARY_GRADE_SETUP);
-                foreach (var obj in empObj)
+                var dataGrade = db.SALARY_GRADE.ToList();
+                string grdStr = data.SALARY_GRADE_SETUP.Trim();
+                string[] gradArray = grdStr.Split(new char[0]);
+                int arrCount = gradArray.Length;
+                ViewBag.CALCULATE_AS = gradArray[0];
+                data.GROSS_SALARY = positionalData.BASIC_SALARY;
+                int index = 1;
+                List<SalarySeupClass> gradeListValue = new List<SalarySeupClass>();
+                foreach (var dt in dataGrade)
                 {
-                    ViewData.Add(obj.GRADE_ID.ToString(), obj.GRADE_TITLE_VALUE);
+                    SalarySeupClass obj = new SalarySeupClass();
+                    obj.GRADE_ID = dt.GRADE_ID;
+                    obj.GRADE_TITLE = dt.GRADE_TITLE;
+                    if (arrCount > index && !string.IsNullOrWhiteSpace(gradArray[index]))
+                    {
+                        string[] setup = gradArray[index].Split(':');
+                        if (Convert.ToInt64(setup[0]) == dt.GRADE_ID)
+                        {
+                            obj.GRADE_TITLE_VALUE = Convert.ToDecimal(setup[1]);
+                            index++;
+                        }
+                    }
+                    else
+                    {
+                        obj.GRADE_TITLE_VALUE = 0;
+                    }
+                    gradeListValue.Add(obj);
+
                 }
-                return View(dataGrade);
+                ViewBag.ListValue = gradeListValue;
+                return View(data);
             }
             else
             {
                 return RedirectToAction("LogIn", "Login");
-            }            
+            }
         }
         // POST: SalarySetup/Edit/5
         [HttpPost]
-        public ActionResult Edit(int newid, FormCollection collection)
+        public ActionResult Edit(int id, FormCollection collection)
         {
             try
             {
@@ -170,25 +212,48 @@ namespace EMSApp.Controllers
                 {
                     ModelState.AddModelError("", "Salary Patment Type is Required!!");
                 }
-                else if (string.IsNullOrEmpty(collection["BASIC_SALARY"]))
+                else if (string.IsNullOrEmpty(collection["GROSS_SALARY"]))
                 {
                     ModelState.AddModelError("", "Basic Salary is Required!!");
+                }
+                else if (string.IsNullOrEmpty(collection["CALCULATE_AS"]))
+                {
+                    ModelState.AddModelError("", "Benefit Calculation Type is Required!!");
                 }
                 else
                 {
                     List<SalarySeupClass> list = new List<SalarySeupClass>();
-                    decimal basicSalary = Convert.ToDecimal(collection["BASIC_SALARY"]);
+                    decimal basicSalary = Convert.ToDecimal(collection["GROSS_SALARY"]);
                     decimal grossSalary = 0;
+                    string gradeString = "";
+                    string gradeAdd = collection["CALCULATE_AS"];
                     foreach (var key in collection.AllKeys)
                     {
                         bool isNum = int.TryParse(key, out int n);
                         if (isNum)
                         {
-                            SalarySeupClass obj = new SalarySeupClass();
-                            long id = obj.GRADE_ID = Convert.ToInt64(key);
-                            decimal value = obj.GRADE_TITLE_VALUE = Convert.ToDecimal(int.TryParse(key, out int i) ? collection[key] : "0");
-                            var data = db.SALARY_GRADE.Where(x => x.GRADE_ID == id).FirstOrDefault();
-                            decimal rateValue = (basicSalary * value) / 100;
+                            long KeyId = Convert.ToInt64(key);
+                            decimal rateValue = 0;
+                            decimal value = 0;
+                            if (int.TryParse(collection[key], out int i))
+                            {
+                                value = Convert.ToDecimal(collection[key]);
+                            }
+
+                            var data = db.SALARY_GRADE.Where(x => x.GRADE_ID == KeyId).FirstOrDefault();
+                            if (value != 0)
+                            {
+                                if (collection["CALCULATE_AS"] == ConstantValue.SalarySetupInPercentage)
+                                {
+                                    rateValue = (basicSalary * value) / 100;
+                                }
+                                else
+                                {
+                                    rateValue = value;
+                                }
+                                gradeString = gradeString + data.GRADE_TITLE + ": " + value + "; ";
+                                gradeAdd = gradeAdd + " " + key + ":" + value;
+                            }
                             if (data.GRADE_TYPE == Helper.ConstantValue.SalaryGradeAdd)
                             {
 
@@ -198,33 +263,38 @@ namespace EMSApp.Controllers
                             {
                                 grossSalary = (grossSalary <= 0) ? basicSalary - rateValue : grossSalary - rateValue;
                             }
-                            list.Add(obj);
                         }
                     }
-                    string jSonString = GetJsonString(list);
+
                     SALARY_SETUP setUp = new SALARY_SETUP();
-                    setUp.EMP_ID = converterHelper.GetLoggedEmployeeID();
+                    setUp.SALARY_SET_ID = Convert.ToInt64(collection["EMP_ID"]);
+                    setUp.EMP_ID = Convert.ToInt64(collection["EMP_ID"]);
+                    setUp.POSITION_ID = Convert.ToInt64(Session["POSITION_ID"]);
                     setUp.PAY_TYPE = collection["PAY_TYPE"];
                     setUp.GROSS_SALARY = grossSalary;
-                    setUp.SALARY_GRADE_SETUP = jSonString;
+                    setUp.SALARY_GRADE_SETUP = gradeAdd;
+                    setUp.SALARY_GRADE_SETUP_STRING = gradeString;
+                    setUp.CANGE_TYPE = ConstantValue.TypeActive;
                     setUp.UPDATE_BY = converterHelper.GetLoggedUserID();
                     setUp.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
                     setUp.UPDATE_DATE = DateTime.Now;
                     if (ModelState.IsValid)
                     {
-                        db.Entry(setUp).State = EntityState.Modified;
-                        db.SaveChanges();
-                        return RedirectToAction("Index");
+                        bool result = service.SalarySetupUpdate(id: id, obj: setUp);
+                        if (result)
+                        {
+                            Session["POSITION_ID"] = null;
+                            return RedirectToAction("Index");
+                        }                           
                     }
                 }
-                GetDataInBag();
-                return View();
-
             }
             catch (Exception ex)
             {
-                return View();
+
             }
+            GetDataInBag();
+            return View(collection);
         }
         // GET: SalarySetup/Delete/5
         public ActionResult Delete(int id)
@@ -238,7 +308,7 @@ namespace EMSApp.Controllers
             else
             {
                 return RedirectToAction("LogIn", "Login");
-            }          
+            }
         }
         // POST: SalarySetup/Delete/5
         [HttpPost]

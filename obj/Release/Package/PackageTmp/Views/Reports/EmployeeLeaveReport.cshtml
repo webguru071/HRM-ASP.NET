@@ -1,18 +1,21 @@
-﻿@model IEnumerable<EMSApp.Models.UserModel.AttendanceClass>
+﻿@model IEnumerable<EMSApp.Models.UserModel.EmployeeLeaveClass>
 @{
-    ViewBag.Title = "Monthly Attendance Report";
+    ViewBag.Title = "Employee Leave Report";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
+
     <div class="col-md-12" style="padding-top:15px">
         <div class="card card-body">
             <h3 class="box-title m-b-0">Filters</h3>
             <hr />
-            <div class="" style="font-weight:900">@Html.ValidationSummary(true, "", new { @class = "text-danger alert alert-danger" })</div>
             <div class="row">
+                @*<div class="col-md-4">
+                    @Html.DropDownList("EMPLOYEE_ID", null, htmlAttributes: new { @class = "form-control" })
+                </div>*@
                 <div class="col-md-4">
                     @Html.DropDownList("MONTH", null, htmlAttributes: new { @class = "form-control" })
                 </div>
@@ -20,38 +23,53 @@
                     @Html.DropDownList("YEAR", null, htmlAttributes: new { @class = "form-control" })
                 </div>
                 <div class="col-md-4">
-                    @Html.DropDownList("EMPLOYEE_ID", null, htmlAttributes: new { @class = "form-control" })
-                </div>
-                <div class="col-md-12">
-                    <button type="submit" class="btn btn-success waves-effect waves-light m-t-10 pull-right">Search</button>
+                    <button type="submit" class="btn btn-success waves-effect waves-light m-t-10 pull-center">Search</button>
                 </div>
             </div>
         </div>
     </div>
+
     <div class="col-12">
         <div class="card">
             <div class="col-md-12">
-                <button type="button" class="btn btn-primary waves-effect waves-light m-t-10 pull-right" onclick=" printDiv()">Print</button>
+                <button type="button" class="btn btn-warning waves-effect waves-light m-t-10 pull-right" onclick=" printDiv()">Print</button>
             </div>
             <div class="card-body">
-                <h3 class="card-title">Attandence @ViewBag.STR</h3>
-                <div class="table-responsive" id="DivIdToPrint">
-                    <table class="color-table success-table" width="100%" border="1px">
+                <h3 class="card-title">Employee Leave Report</h3>
+                <div class="table" id="DivIdToPrint">
+                    <table class="color-table success-table table-bordered" width="100%" border="1" cellpadding="10">
                         <thead>
                             <tr>
                                 <th>
                                     SL No.
                                 </th>
-                                <th>Date</th>
-                                <th>Employee Name</th>
-                                <th>Check In</th>
-                                <th>Check Out</th>
-                                <th>Total Working Hour</th>
-                                <th>Break</th>
-                                <th>Active Working Hour</th>
-                                <th>Less Work</th>
-                                <th>Over Time </th>
-                                <th>Late Arrival</th>
+                                <th>
+                                    Employee
+                                </th>
+                                <th>
+                                    Total Leave
+                                </th>
+                                <th>
+                                    Casual Leave
+                                </th>
+                                <th>
+                                    Medical Leave
+                                </th>
+                                <th>
+                                    Fullday Leave
+                                </th>
+                                <th>
+                                    Half-Day Leave
+                                </th>
+                                <th>
+                                    Total Leave of Month
+                                </th>
+                                <th>
+                                    Remaining Leave
+                                </th>
+                                <th>
+                                    Exceed Leave
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -64,35 +82,31 @@
                                     <tr>
                                         <td>@count</td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.ATT_DATE)
-                                        </td>
-                                        <td>
                                             @Html.DisplayFor(modelItem => item.EMPLOYEE_NAME)
                                         </td>
-
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.CHECK_IN_TIME)
+                                            @Html.DisplayFor(modelItem => item.TOTAL_LEAVE)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.CHECK_OUT_TIME)
+                                            @Html.DisplayFor(modelItem => item.CASUAL_LEAVE)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.TOTAL_WORKING_HOUR)
+                                            @Html.DisplayFor(modelItem => item.MEDI_LEAVE)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.TOTAL_BREAK)
+                                            @Html.DisplayFor(modelItem => item.FULL_DAY_LEAVE)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.PERDAY_WORKING_HOUR)
+                                            @Html.DisplayFor(modelItem => item.HALF_DAY_LEAVE)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.LESS_WORK)
+                                            @Html.DisplayFor(modelItem => item.TOTAL_LEAVE_TAKEN)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.OVER_TIME)
+                                            @Html.DisplayFor(modelItem => item.REMAIN_LEAVE)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.LATE_ARRIVED)
+                                            @Html.DisplayFor(modelItem => item.EXCEED_LEAVE)
                                         </td>
                                     </tr>
                                 }
@@ -112,11 +126,9 @@
             var divToPrint = document.getElementById('DivIdToPrint');
             var newWin = window.open('', 'Print-Window');
             newWin.document.open();
-            newWin.document.write('<html><body onload="window.print()">' +'<h2>Attendance of @ViewBag.STR<h2/><br/>'+ divToPrint.innerHTML + '</body></html>');
+            newWin.document.write('<html><body onload="window.print()">' + '<h2>Department Wise Employee Report<h2/><br/>' + divToPrint.innerHTML + '</body></html>');
             newWin.document.close();
             setTimeout(function () { newWin.close(); }, 10);
-
         }
     </script>
 }
-

@@ -52,6 +52,9 @@ namespace EMSApp.Helper
         public static string SalaryGradeDeduct = "d";
         public static string SalaryPaymentIndividual = "i";
         public static string SalaryPaymentMonthly = "m";
+        //Salary Setup
+        public static string SalarySetupInPercentage= "p";
+        public static string SalarySetupInAmount= "a";
         //Activity Type
         public static string TypeActive = "a";
         public static string TypeDeactive = "d";

@@ -9,6 +9,7 @@ namespace EMSApp.Models.UserModel
     public class SalarySeupClass
     {       
         public long GRADE_ID { get; set; }        
-        public decimal GRADE_TITLE_VALUE { get; set; }        
+        public string GRADE_TITLE { get; set; }        
+        public decimal GRADE_TITLE_VALUE { get; set; }
     }
 }
