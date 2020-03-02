@@ -244,38 +244,29 @@
           </Key>
           <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EMPLOYEE_ID" Type="bigint" Nullable="false" />
-          <Property Name="GROSS_SALARY" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="BONUS" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="OTHERS" Type="decimal" Precision="18" Scale="2" />
           <Property Name="SALARY_PAID" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="TOTAL" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="STATUS" Type="char" MaxLength="1" />
-          <Property Name="ACTION_BY" Type="bigint" Nullable="false" />
-          <Property Name="ACTION_DATE" Type="datetime" Nullable="false" />
-          <Property Name="UPDATE_BY" Type="bigint" />
-          <Property Name="UPDATE_DATE" Type="datetime" />
-          <Property Name="REMARKS" Type="nvarchar" MaxLength="50" />
-        </EntityType>
-        <EntityType Name="SALARY_INFO_MONTHLY">
-          <Key>
-            <PropertyRef Name="SALARY_INFO_MONTHLY_ID" />
-          </Key>
-          <Property Name="SALARY_INFO_MONTHLY_ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="EMPLOYEE_ID" Type="bigint" Nullable="false" />
-          <Property Name="BASIC_SALARY" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="GROSS_SALARY" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="ADDITIONAL" Type="decimal" Precision="18" Scale="2" />
           <Property Name="BONUS" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="COMMISSION" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="ADVANCE" Type="decimal" Precision="18" Scale="2" />
           <Property Name="DEDUCTION" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="LEAVE_COUNT" Type="float" />
-          <Property Name="TOTAL_SALARY" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="NOTE" Type="nvarchar" MaxLength="500" />
-          <Property Name="ACTION_DATE" Type="datetime" Nullable="false" />
+          <Property Name="TOTAL" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="OTHERS" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ADDITION" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="STATUS" Type="char" MaxLength="1" />
+          <Property Name="ADVANCE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="COMMISSION" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="REMARKS" Type="nvarchar" MaxLength="50" />
           <Property Name="ACTION_BY" Type="bigint" Nullable="false" />
-          <Property Name="UPDATE_DATE" Type="datetime" />
+          <Property Name="ACTION_DATE" Type="datetime" Nullable="false" />
           <Property Name="UPDATE_BY" Type="bigint" />
+          <Property Name="UPDATE_DATE" Type="datetime" />
+        </EntityType>
+        <EntityType Name="SALARY_INFO_SUM">
+          <Key>
+            <PropertyRef Name="SALARY_INFO_SUM_ID" />
+          </Key>
+          <Property Name="SALARY_INFO_SUM_ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SALARY_PAID_MONTH" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TOTAL_PAID" Type="decimal" Precision="18" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="SALARY_SETUP">
           <Key>
@@ -602,18 +593,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_SALARY_INFO_MONTHLY_EMPLOYEE_INFO">
-          <End Role="EMPLOYEE_INFO" Type="Self.EMPLOYEE_INFO" Multiplicity="1" />
-          <End Role="SALARY_INFO_MONTHLY" Type="Self.SALARY_INFO_MONTHLY" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EMPLOYEE_INFO">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="SALARY_INFO_MONTHLY">
-              <PropertyRef Name="EMPLOYEE_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_SALARY_SETUP_EMPLOYEE_INFO">
           <End Role="EMPLOYEE_INFO" Type="Self.EMPLOYEE_INFO" Multiplicity="1" />
           <End Role="SALARY_SETUP" Type="Self.SALARY_SETUP" Multiplicity="*" />
@@ -740,7 +719,7 @@
           <EntitySet Name="NOTICE_BOARD" EntityType="Self.NOTICE_BOARD" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="POSITIONAL_INFO" EntityType="Self.POSITIONAL_INFO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SALARY_INFO" EntityType="Self.SALARY_INFO" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="SALARY_INFO_MONTHLY" EntityType="Self.SALARY_INFO_MONTHLY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SALARY_INFO_SUM" EntityType="Self.SALARY_INFO_SUM" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SALARY_SETUP" EntityType="Self.SALARY_SETUP" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SALARY-GRADE" EntityType="Self.SALARY-GRADE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="STOCK_INFO" EntityType="Self.STOCK_INFO" Schema="dbo" store:Type="Tables" />
@@ -814,10 +793,6 @@
             <End Role="EMPLOYEE_INFO" EntitySet="EMPLOYEE_INFO" />
             <End Role="SALARY_INFO" EntitySet="SALARY_INFO" />
           </AssociationSet>
-          <AssociationSet Name="FK_SALARY_INFO_MONTHLY_EMPLOYEE_INFO" Association="Self.FK_SALARY_INFO_MONTHLY_EMPLOYEE_INFO">
-            <End Role="EMPLOYEE_INFO" EntitySet="EMPLOYEE_INFO" />
-            <End Role="SALARY_INFO_MONTHLY" EntitySet="SALARY_INFO_MONTHLY" />
-          </AssociationSet>
           <AssociationSet Name="FK_SALARY_SETUP_EMPLOYEE_INFO" Association="Self.FK_SALARY_SETUP_EMPLOYEE_INFO">
             <End Role="EMPLOYEE_INFO" EntitySet="EMPLOYEE_INFO" />
             <End Role="SALARY_SETUP" EntitySet="SALARY_SETUP" />
@@ -877,7 +852,7 @@
           <EntitySet Name="NOTICE_BOARD" EntityType="EMSModel.NOTICE_BOARD" />
           <EntitySet Name="POSITIONAL_INFO" EntityType="EMSModel.POSITIONAL_INFO" />
           <EntitySet Name="SALARY_INFO" EntityType="EMSModel.SALARY_INFO" />
-          <EntitySet Name="SALARY_INFO_MONTHLY" EntityType="EMSModel.SALARY_INFO_MONTHLY" />
+          <EntitySet Name="SALARY_INFO_SUM" EntityType="EMSModel.SALARY_INFO_SUM" />
           <EntitySet Name="SALARY_SETUP" EntityType="EMSModel.SALARY_SETUP" />
           <EntitySet Name="SALARY_GRADE" EntityType="EMSModel.SALARY_GRADE" />
           <EntitySet Name="STOCK_INFO" EntityType="EMSModel.STOCK_INFO" />
@@ -934,10 +909,6 @@
           <AssociationSet Name="FK_SALARY_INFO_EMPLOYEE_INFO" Association="EMSModel.FK_SALARY_INFO_EMPLOYEE_INFO">
             <End Role="EMPLOYEE_INFO" EntitySet="EMPLOYEE_INFO" />
             <End Role="SALARY_INFO" EntitySet="SALARY_INFO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SALARY_INFO_MONTHLY_EMPLOYEE_INFO" Association="EMSModel.FK_SALARY_INFO_MONTHLY_EMPLOYEE_INFO">
-            <End Role="EMPLOYEE_INFO" EntitySet="EMPLOYEE_INFO" />
-            <End Role="SALARY_INFO_MONTHLY" EntitySet="SALARY_INFO_MONTHLY" />
           </AssociationSet>
           <AssociationSet Name="FK_SALARY_SETUP_EMPLOYEE_INFO" Association="EMSModel.FK_SALARY_SETUP_EMPLOYEE_INFO">
             <End Role="EMPLOYEE_INFO" EntitySet="EMPLOYEE_INFO" />
@@ -1119,7 +1090,6 @@
           <NavigationProperty Name="LEAVE_APPLICATION" Relationship="EMSModel.FK_LEAVE_APPLICATION_EMPLOYEE_INFO" FromRole="EMPLOYEE_INFO" ToRole="LEAVE_APPLICATION" />
           <NavigationProperty Name="POSITIONAL_INFO" Relationship="EMSModel.FK_POSITIONAL_INFO_EMPLOYEE_INFO" FromRole="EMPLOYEE_INFO" ToRole="POSITIONAL_INFO" />
           <NavigationProperty Name="SALARY_INFO" Relationship="EMSModel.FK_SALARY_INFO_EMPLOYEE_INFO" FromRole="EMPLOYEE_INFO" ToRole="SALARY_INFO" />
-          <NavigationProperty Name="SALARY_INFO_MONTHLY" Relationship="EMSModel.FK_SALARY_INFO_MONTHLY_EMPLOYEE_INFO" FromRole="EMPLOYEE_INFO" ToRole="SALARY_INFO_MONTHLY" />
           <NavigationProperty Name="SALARY_SETUP" Relationship="EMSModel.FK_SALARY_SETUP_EMPLOYEE_INFO" FromRole="EMPLOYEE_INFO" ToRole="SALARY_SETUP" />
           <NavigationProperty Name="TEAM_DETAILS" Relationship="EMSModel.FK_TEAM_DETAILS_EMPLOYEE_INFO" FromRole="EMPLOYEE_INFO" ToRole="TEAM_DETAILS" />
           <NavigationProperty Name="TEAM_INFO" Relationship="EMSModel.FK_TEAM_EMPLOYEE_INFO" FromRole="EMPLOYEE_INFO" ToRole="TEAM_INFO" />
@@ -1269,40 +1239,30 @@
           </Key>
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EMPLOYEE_ID" Type="Int64" Nullable="false" />
+          <Property Name="SALARY_PAID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="GROSS_SALARY" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="BONUS" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="OTHERS" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="SALARY_PAID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DEDUCTION" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="TOTAL" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="OTHERS" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ADDITION" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="STATUS" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ADVANCE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="COMMISSION" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="REMARKS" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ACTION_BY" Type="Int64" Nullable="false" />
           <Property Name="ACTION_DATE" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UPDATE_BY" Type="Int64" />
           <Property Name="UPDATE_DATE" Type="DateTime" Precision="3" />
-          <Property Name="REMARKS" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="EMPLOYEE_INFO" Relationship="EMSModel.FK_SALARY_INFO_EMPLOYEE_INFO" FromRole="SALARY_INFO" ToRole="EMPLOYEE_INFO" />
         </EntityType>
-        <EntityType Name="SALARY_INFO_MONTHLY">
+        <EntityType Name="SALARY_INFO_SUM">
           <Key>
-            <PropertyRef Name="SALARY_INFO_MONTHLY_ID" />
+            <PropertyRef Name="SALARY_INFO_SUM_ID" />
           </Key>
-          <Property Name="SALARY_INFO_MONTHLY_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EMPLOYEE_ID" Type="Int64" Nullable="false" />
-          <Property Name="BASIC_SALARY" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="GROSS_SALARY" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="ADDITIONAL" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="BONUS" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="COMMISSION" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="ADVANCE" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="DEDUCTION" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="LEAVE_COUNT" Type="Double" />
-          <Property Name="TOTAL_SALARY" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="NOTE" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="ACTION_DATE" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ACTION_BY" Type="Int64" Nullable="false" />
-          <Property Name="UPDATE_DATE" Type="DateTime" Precision="3" />
-          <Property Name="UPDATE_BY" Type="Int64" />
-          <NavigationProperty Name="EMPLOYEE_INFO" Relationship="EMSModel.FK_SALARY_INFO_MONTHLY_EMPLOYEE_INFO" FromRole="SALARY_INFO_MONTHLY" ToRole="EMPLOYEE_INFO" />
+          <Property Name="SALARY_INFO_SUM_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SALARY_PAID_MONTH" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TOTAL_PAID" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="SALARY_SETUP">
           <Key>
@@ -1589,18 +1549,6 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="SALARY_INFO">
-              <PropertyRef Name="EMPLOYEE_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SALARY_INFO_MONTHLY_EMPLOYEE_INFO">
-          <End Type="EMSModel.EMPLOYEE_INFO" Role="EMPLOYEE_INFO" Multiplicity="1" />
-          <End Type="EMSModel.SALARY_INFO_MONTHLY" Role="SALARY_INFO_MONTHLY" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EMPLOYEE_INFO">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="SALARY_INFO_MONTHLY">
               <PropertyRef Name="EMPLOYEE_ID" />
             </Dependent>
           </ReferentialConstraint>
@@ -2019,41 +1967,32 @@
           <EntitySetMapping Name="SALARY_INFO">
             <EntityTypeMapping TypeName="EMSModel.SALARY_INFO">
               <MappingFragment StoreEntitySet="SALARY_INFO">
-                <ScalarProperty Name="REMARKS" ColumnName="REMARKS" />
                 <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
                 <ScalarProperty Name="UPDATE_BY" ColumnName="UPDATE_BY" />
                 <ScalarProperty Name="ACTION_DATE" ColumnName="ACTION_DATE" />
                 <ScalarProperty Name="ACTION_BY" ColumnName="ACTION_BY" />
+                <ScalarProperty Name="REMARKS" ColumnName="REMARKS" />
+                <ScalarProperty Name="COMMISSION" ColumnName="COMMISSION" />
+                <ScalarProperty Name="ADVANCE" ColumnName="ADVANCE" />
                 <ScalarProperty Name="STATUS" ColumnName="STATUS" />
-                <ScalarProperty Name="TOTAL" ColumnName="TOTAL" />
-                <ScalarProperty Name="SALARY_PAID" ColumnName="SALARY_PAID" />
+                <ScalarProperty Name="ADDITION" ColumnName="ADDITION" />
                 <ScalarProperty Name="OTHERS" ColumnName="OTHERS" />
+                <ScalarProperty Name="TOTAL" ColumnName="TOTAL" />
+                <ScalarProperty Name="DEDUCTION" ColumnName="DEDUCTION" />
                 <ScalarProperty Name="BONUS" ColumnName="BONUS" />
                 <ScalarProperty Name="GROSS_SALARY" ColumnName="GROSS_SALARY" />
+                <ScalarProperty Name="SALARY_PAID" ColumnName="SALARY_PAID" />
                 <ScalarProperty Name="EMPLOYEE_ID" ColumnName="EMPLOYEE_ID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="SALARY_INFO_MONTHLY">
-            <EntityTypeMapping TypeName="EMSModel.SALARY_INFO_MONTHLY">
-              <MappingFragment StoreEntitySet="SALARY_INFO_MONTHLY">
-                <ScalarProperty Name="UPDATE_BY" ColumnName="UPDATE_BY" />
-                <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
-                <ScalarProperty Name="ACTION_BY" ColumnName="ACTION_BY" />
-                <ScalarProperty Name="ACTION_DATE" ColumnName="ACTION_DATE" />
-                <ScalarProperty Name="NOTE" ColumnName="NOTE" />
-                <ScalarProperty Name="TOTAL_SALARY" ColumnName="TOTAL_SALARY" />
-                <ScalarProperty Name="LEAVE_COUNT" ColumnName="LEAVE_COUNT" />
-                <ScalarProperty Name="DEDUCTION" ColumnName="DEDUCTION" />
-                <ScalarProperty Name="ADVANCE" ColumnName="ADVANCE" />
-                <ScalarProperty Name="COMMISSION" ColumnName="COMMISSION" />
-                <ScalarProperty Name="BONUS" ColumnName="BONUS" />
-                <ScalarProperty Name="ADDITIONAL" ColumnName="ADDITIONAL" />
-                <ScalarProperty Name="GROSS_SALARY" ColumnName="GROSS_SALARY" />
-                <ScalarProperty Name="BASIC_SALARY" ColumnName="BASIC_SALARY" />
-                <ScalarProperty Name="EMPLOYEE_ID" ColumnName="EMPLOYEE_ID" />
-                <ScalarProperty Name="SALARY_INFO_MONTHLY_ID" ColumnName="SALARY_INFO_MONTHLY_ID" />
+          <EntitySetMapping Name="SALARY_INFO_SUM">
+            <EntityTypeMapping TypeName="EMSModel.SALARY_INFO_SUM">
+              <MappingFragment StoreEntitySet="SALARY_INFO_SUM">
+                <ScalarProperty Name="TOTAL_PAID" ColumnName="TOTAL_PAID" />
+                <ScalarProperty Name="SALARY_PAID_MONTH" ColumnName="SALARY_PAID_MONTH" />
+                <ScalarProperty Name="SALARY_INFO_SUM_ID" ColumnName="SALARY_INFO_SUM_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

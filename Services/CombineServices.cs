@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
 using System.Web;
@@ -457,6 +458,49 @@ namespace EMSApp.Services
             string query = @"UPDATE SALARY_SETUP SET EMP_ID="+obj.EMP_ID+", POSITION_ID="+obj.POSITION_ID+ ",PAY_TYPE='" + obj.PAY_TYPE + "',GROSS_SALARY=" + obj.GROSS_SALARY + ",SALARY_GRADE_SETUP='" + obj.SALARY_GRADE_SETUP 
                 + "', SALARY_GRADE_SETUP_STRING='" + obj.SALARY_GRADE_SETUP_STRING + "',CANGE_TYPE='" + obj.CANGE_TYPE + "',UPDATE_BY=" + obj.UPDATE_BY + ",UPDATE_DATE='" + obj.UPDATE_DATE + "' WHERE SALARY_SET_ID="+id;
             return dbHelper.ExecuteDML(query);             
+        }
+
+        public bool InsertSalary(SALARY_INFO_SUM objSum, List<SALARY_INFO> objInfo)
+        {
+            List<KeyValuePair<SqlCommand, string>> list = new List<KeyValuePair<SqlCommand, string>>();
+            list = GetSalarySumInsertQuery(objSum, list);
+            list = GetSalaryInfoInsertQuery(objInfo, list);
+            throw new NotImplementedException();
+        }
+
+        private List<KeyValuePair<SqlCommand, string>> GetSalaryInfoInsertQuery(List<SALARY_INFO> objInfo, List<KeyValuePair<SqlCommand, string>> list)
+        {
+            string insertQuery = @"INSERT INTO SALARY_INFO (EMPLOYEE_ID,SALARY_PAID,GROSS_SALARY,BONUS,DEDUCTION,TOTAL,OTHERS,ADDITION,ADVANCE,COMMISSION,REMARKS,ACTION_BY,ACTION_DATE)
+                                   VALUES(@EMPLOYEE_ID,@SALARY_PAID,@GROSS_SALARY,@BONUS,@DEDUCTION,@TOTAL,@OTHERS,@ADDITION,@ADVANCE,@COMMISSION,@REMARKS,@ACTION_BY,@ACTION_DATE)";
+            foreach(var obj in objInfo)
+            {
+                SqlCommand command = new SqlCommand();
+                command.Parameters.Add("EMPLOYEE_ID", SqlDbType.BigInt).Value = obj.EMPLOYEE_ID;
+                command.Parameters.Add("SALARY_PAID", SqlDbType.NVarChar,50).Value = obj.SALARY_PAID;
+                command.Parameters.Add("GROSS_SALARY", SqlDbType.Decimal).Value = obj.GROSS_SALARY;
+                command.Parameters.Add("BONUS", SqlDbType.Decimal).Value = obj.BONUS;
+                command.Parameters.Add("DEDUCTION", SqlDbType.Decimal).Value = obj.DEDUCTION;
+                command.Parameters.Add("TOTAL", SqlDbType.Decimal).Value = obj.TOTAL;
+                command.Parameters.Add("OTHERS", SqlDbType.Decimal).Value = obj.OTHERS;
+                command.Parameters.Add("ADDITION", SqlDbType.Decimal).Value = obj.ADDITION;
+                command.Parameters.Add("ADVANCE", SqlDbType.Decimal).Value = obj.ADVANCE;
+                command.Parameters.Add("COMMISSION", SqlDbType.Decimal).Value = obj.COMMISSION;
+                command.Parameters.Add("REMARKS", SqlDbType.Decimal).Value = obj.REMARKS;
+                command.Parameters.Add("ACTION_BY", SqlDbType.Decimal).Value = obj.ACTION_BY;
+                command.Parameters.Add("ACTION_DATE", SqlDbType.Decimal).Value = obj.ACTION_DATE;
+                list.Add(new KeyValuePair<SqlCommand, string>(command, insertQuery));
+            }           
+            return list;
+        }
+
+        private List<KeyValuePair<SqlCommand, string>> GetSalarySumInsertQuery(SALARY_INFO_SUM objSum, List<KeyValuePair<SqlCommand, string>> list)
+        {
+            string insertQuery = @"INSERT INTO SALARY_INFO_SUM (SALARY_PAID_MONTH,TOTAL_PAID) VALUES(@SALARY_PAID_MONTH,@TOTAL_PAID)";
+            SqlCommand command = new SqlCommand();
+            command.Parameters.Add("SALARY_PAID_MONTH", SqlDbType.NVarChar,50).Value = objSum.SALARY_PAID_MONTH;
+            command.Parameters.Add("TOTAL_PAID", SqlDbType.Decimal).Value = objSum.TOTAL_PAID;
+            list.Add(new KeyValuePair<SqlCommand, string>(command, insertQuery));
+            return list;
         }
     }
 }

@@ -229,40 +229,40 @@
                                 </li>
 
                                 @*<li>
-                                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-group"></i><span class="hide-menu">Team</span></a>
-                                    <ul aria-expanded="false" class="collapse">
-                                        <li><a href="~/Team/Index">New Team</a></li>
-                                        <li><a href="~/Team/TeamMemberIndex">Add Member</a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                        <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-elevation-rise"></i><span class="hide-menu">Asset</span></a>
+                                        <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-group"></i><span class="hide-menu">Team</span></a>
                                         <ul aria-expanded="false" class="collapse">
-                                            <li><a href="~/Asset/Index">Asset Type</a></li>
-                                            <li><a href="~/Equipment/Index">Equipments</a></li>
-                                            <li><a href="~/EquipmentManage/Index">Equipment Manage</a></li>
+                                            <li><a href="~/Team/Index">New Team</a></li>
+                                            <li><a href="~/Team/TeamMemberIndex">Add Member</a></li>
                                         </ul>
                                     </li>
                                     <li>
-                                        <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-minus-box-outline"></i><span class="hide-menu">Expense</span></a>
-                                        <ul aria-expanded="false" class="collapse">
-                                            <li><a href="~/Expense/Index">Expenses Item</a></li>
-                                            <li><a href="~/Expense/ExpenseSheetIndex">Expenses List</a></li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-plus-box"></i><span class="hide-menu">Income</span></a>
-                                        <ul aria-expanded="false" class="collapse">
-                                            <li><a href="~/Income/Index">Income Item</a></li>
-                                            <li><a href="~/Income/IncomeSheetIndex">Income List</a></li>
-                                        </ul>
-                                    </li>*@
+                                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-elevation-rise"></i><span class="hide-menu">Asset</span></a>
+                                            <ul aria-expanded="false" class="collapse">
+                                                <li><a href="~/Asset/Index">Asset Type</a></li>
+                                                <li><a href="~/Equipment/Index">Equipments</a></li>
+                                                <li><a href="~/EquipmentManage/Index">Equipment Manage</a></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-minus-box-outline"></i><span class="hide-menu">Expense</span></a>
+                                            <ul aria-expanded="false" class="collapse">
+                                                <li><a href="~/Expense/Index">Expenses Item</a></li>
+                                                <li><a href="~/Expense/ExpenseSheetIndex">Expenses List</a></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-plus-box"></i><span class="hide-menu">Income</span></a>
+                                            <ul aria-expanded="false" class="collapse">
+                                                <li><a href="~/Income/Index">Income Item</a></li>
+                                                <li><a href="~/Income/IncomeSheetIndex">Income List</a></li>
+                                            </ul>
+                                        </li>*@
                                 <li>
                                     <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-file-chart"></i><span class="hide-menu">Salary</span></a>
                                     <ul aria-expanded="false" class="collapse">
                                         <li><a href="~/SalaryGrade/Index">Benefits </a></li>
                                         <li><a href="~/SalarySetup/Index">Salary Setup</a></li>
-                                        <li><a href="~/Salary/AllEmpIndex">Salary Pay</a></li>  
+                                        <li><a href="~/Salary/AllEmpIndex">Salary Pay</a></li>
                                         <li>
                                             <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi "></i><span class="hide-menu">Salary Increment</span></a>
                                             <ul aria-expanded="false" class="collapse">
@@ -341,16 +341,16 @@
                             <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-airplane"></i><span class="hide-menu">Leave</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 @*@try
-                                {
-                                    if (levelU == EMSApp.Helper.ConstantValue.UserLevelAdmin)
                                     {
-                                        <li><a href="~/Leave/Index">Leave Type</a></li>
+                                        if (levelU == EMSApp.Helper.ConstantValue.UserLevelAdmin)
+                                        {
+                                            <li><a href="~/Leave/Index">Leave Type</a></li>
+                                        }
                                     }
-                                }
-                                catch (Exception ex)
-                                {
-                                    Url.Action("LogIn", "Login");
-                                }*@
+                                    catch (Exception ex)
+                                    {
+                                        Url.Action("LogIn", "Login");
+                                    }*@
                                 <li><a href="~/Leave/LeaveAppIndex">Leave Application</a></li>
                             </ul>
                         </li>
@@ -425,7 +425,7 @@
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
-    @RenderSection("scripts", required: false)
+
     <script src="~/Content/assets/plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap tether Core JavaScript -->
     <script src="~/Content/assets/plugins/bootstrap/js/popper.min.js"></script>
@@ -462,6 +462,7 @@
     <!-- Style switcher -->
     <!-- ============================================================== -->
     <script src="~/Content/assets/plugins/styleswitcher/jQuery.style.switcher.js"></script>
+    @RenderSection("scripts", required: false)
 </body>
 
 </html>

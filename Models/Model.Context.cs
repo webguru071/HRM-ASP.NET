@@ -42,7 +42,7 @@ namespace EMSApp.Models
         public virtual DbSet<NOTICE_BOARD> NOTICE_BOARD { get; set; }
         public virtual DbSet<POSITIONAL_INFO> POSITIONAL_INFO { get; set; }
         public virtual DbSet<SALARY_INFO> SALARY_INFO { get; set; }
-        public virtual DbSet<SALARY_INFO_MONTHLY> SALARY_INFO_MONTHLY { get; set; }
+        public virtual DbSet<SALARY_INFO_SUM> SALARY_INFO_SUM { get; set; }
         public virtual DbSet<SALARY_SETUP> SALARY_SETUP { get; set; }
         public virtual DbSet<SALARY_GRADE> SALARY_GRADE { get; set; }
         public virtual DbSet<STOCK_INFO> STOCK_INFO { get; set; }

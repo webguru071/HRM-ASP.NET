@@ -24,7 +24,6 @@ namespace EMSApp.Models
             this.LEAVE_APPLICATION = new HashSet<LEAVE_APPLICATION>();
             this.POSITIONAL_INFO = new HashSet<POSITIONAL_INFO>();
             this.SALARY_INFO = new HashSet<SALARY_INFO>();
-            this.SALARY_INFO_MONTHLY = new HashSet<SALARY_INFO_MONTHLY>();
             this.SALARY_SETUP = new HashSet<SALARY_SETUP>();
             this.TEAM_DETAILS = new HashSet<TEAM_DETAILS>();
             this.TEAM_INFO = new HashSet<TEAM_INFO>();
@@ -68,8 +67,6 @@ namespace EMSApp.Models
         public virtual ICollection<POSITIONAL_INFO> POSITIONAL_INFO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SALARY_INFO> SALARY_INFO { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SALARY_INFO_MONTHLY> SALARY_INFO_MONTHLY { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SALARY_SETUP> SALARY_SETUP { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

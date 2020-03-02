@@ -101,12 +101,14 @@ namespace EMSApp.Controllers
                                 if (collection["CALCULATE_AS"] == ConstantValue.SalarySetupInPercentage)
                                 {
                                     rateValue = (basicSalary * value) / 100;
+                                    gradeString = gradeString + data.GRADE_TITLE + ": " + value + "% ; ";
                                 }
                                 else
                                 {
                                     rateValue = value;
+                                    gradeString = gradeString + data.GRADE_TITLE + ": " + value + " ; ";
                                 }
-                                gradeString = gradeString + data.GRADE_TITLE + ": " + value + "; ";
+                               
                                 gradeAdd = gradeAdd + " " + key + ":" + value;
                             }
 
@@ -246,12 +248,14 @@ namespace EMSApp.Controllers
                                 if (collection["CALCULATE_AS"] == ConstantValue.SalarySetupInPercentage)
                                 {
                                     rateValue = (basicSalary * value) / 100;
+                                    gradeString = gradeString + data.GRADE_TITLE + ": " + value + "% ; ";
                                 }
                                 else
                                 {
                                     rateValue = value;
+                                    gradeString = gradeString + data.GRADE_TITLE + ": " + value + " ; ";
                                 }
-                                gradeString = gradeString + data.GRADE_TITLE + ": " + value + "; ";
+                                
                                 gradeAdd = gradeAdd + " " + key + ":" + value;
                             }
                             if (data.GRADE_TYPE == Helper.ConstantValue.SalaryGradeAdd)
@@ -385,6 +389,6 @@ namespace EMSApp.Controllers
                 listOfData["BASIC_SALARY"] = "";
             }
             return Json(listOfData, JsonRequestBehavior.AllowGet);
-        }
+        }       
     }
 }

@@ -261,7 +261,7 @@
     <Compile Include="Models\SALARY_INFO.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SALARY_INFO_MONTHLY.cs">
+    <Compile Include="Models\SALARY_INFO_SUM.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SALARY_SETUP.cs">

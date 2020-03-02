@@ -1,5 +1,4 @@
-﻿@model EMSApp.Models.UserModel.SalaryInfo
-
+﻿
 @{
     ViewBag.Title = "All Employee Salary Generate";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -33,12 +32,12 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="form-group">                                        
+                                    <div class="form-group">
                                         <button style="height:40px; margin-top:30px" type="submit" name="submit" value="Generate" class="btn btn-info pull-center">Generate</button>
                                     </div>
                                 </div>
-                                
-                            </div>                                                        
+
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -47,18 +46,18 @@
     </div>
 
     <div class="container-fluid" style="padding-top:15px">
-        <div class="row">           
+        <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Employee Salary List</h4>
                         <hr />
                         <div class="table-responsive">
-                            <table class="table color-bordered-table success-bordered-table">
+                            <table id="tblArticles" class="table color-bordered-table success-bordered-table">
                                 <thead>
                                     <tr>
                                         <th>Sl No.</th>
-                                        <th hidden>ID</th>
+                                        <th hidden>id</th>
                                         <th>Employee</th>
                                         <th>Basic Salary</th>
                                         <th>Benefits</th>
@@ -80,62 +79,133 @@
                                         foreach (var item in (ViewBag.ListValue as List<EMSApp.Models.UserModel.SalaryInfo>))
                                         {
                                             slNo++;
-                                    <tr>
-                                        <td>@slNo</td>
-                                        <td hidden> @Html.DisplayFor(modelItem => item.EMP_ID)</td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.EMPLOYEE_NAME)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.BASIC_SALARY)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.SALARY_GRADE_STRING)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.GROSS_SALARY)
-                                        </td>
-                                        <td>
-                                            @Html.EditorFor(modelItem => item.BONUS)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.ADDITION)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.DEDUCTION)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.ADVANCE)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.COMMISSION)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.TOTAL)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.TOTAL_LEAVE)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.NOTE)
-                                        </td>
-                                    </tr>
+                                            <tr>
+                                                <td>@slNo</td>
+                                                <td hidden> @Html.DisplayFor(modelItem => item.EMP_ID)</td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.EMPLOYEE_NAME)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.BASIC_SALARY)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.SALARY_GRADE_STRING)
+                                                </td>
+                                                <td>
+                                                    <input id="Gross_@item.EMP_ID" name="Gross_@item.EMP_ID" class="form-control" type="number" value="@item.GROSS_SALARY" readonly style="width:100px;" />
+                                                </td>
+                                                <td>
+                                                    <input id="bonus_@item.EMP_ID" name="bonus_@item.EMP_ID" class="form-control" type="number" value="@item.BONUS" onchange="CalCulate(id)" />
+                                                </td>
+                                                <td>
+                                                    <input id="Add_@item.EMP_ID" name="Add_@item.EMP_ID" class="form-control" type="number" value="@item.ADDITION" onchange="CalCulate(id)" />
+                                                </td>
+                                                <td>
+                                                    <input id="Deduc_@item.EMP_ID" name="Deduc_@item.EMP_ID" class="form-control" type="number" value="@item.DEDUCTION" onchange="CalCulate(id)" />
+                                                </td>
+                                                <td>
+                                                    <input id="Adv_@item.EMP_ID" name="Adv_@item.EMP_ID" class="form-control" type="number" value="@item.ADVANCE" onchange="CalCulate(id)" />
+                                                </td>
+                                                <td>
+                                                    <input id="Com_@item.EMP_ID" name="Com_@item.EMP_ID" class="form-control" type="number" value="@item.COMMISSION" onchange="CalCulate(id)" />
+                                                </td>
+                                                <td>
+                                                    <input id="Total_@item.EMP_ID" name="Total_@item.EMP_ID" class="form-control" type="number" value="@item.TOTAL" readonly style="width:100px;" />
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.TOTAL_LEAVE)
+                                                </td>
+                                                <td>
+                                                    <textarea id="Note_@item.EMP_ID" name="Note_@item.EMP_ID" class="form-control" type="text" style="width:150px;"></textarea>
+                                                </td>
+                                            </tr>
 
                                         }
                                     }
                                 </tbody>
                             </table>
                         </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                Grand Total
+                                <input id="GRAND_TOTAL_PAY" readonly name=GRAND_TOTAL_PAY class="form-control col-md-6" type="text" />
+                                <button type="submit" id="btnCal" name="submit" value="Calculate" class="btn btn-info pull-center" onclick="CalculateTotal()">Calculate Total Pay</button>
+                            </div>
+                        </div>
                         <div class="form-actions ">
                             <div class="btn btn-secondary pull-center">
                                 @Html.ActionLink("Back to List", "AllEmpIndex")
                             </div>
-                            <button type="submit" id="btnGen" name="submit" value="Pay" class="btn btn-warning pull-right">Salary Pay</button>
+                            <button type="button" onclick="ReadTable()" id="btnGen" name="submit" value="Pay" class="btn btn-primary pull-right">Salary Pay</button>
                         </div>
-                    </div>          
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        function CalCulate(idF) {
+            var idStr = idF.split("_");
+            var id = idStr[1];
+            var bonus = parseFloat($("#bonus_" + id).val());
+            var add = parseFloat($("#Add_" + id).val());
+            var deduc = parseFloat($("#Deduc_" + id).val());
+            var adv = parseFloat($("#Adv_" + id).val());
+            var com = parseFloat($("#Com_" + id).val());
+            var gross = parseFloat($("#Gross_" + id).val());
+            var totalG = gross + bonus + add - deduc - adv + com;
+            $("#Total_" + id).val(totalG);
+        }
+        function ReadTable() {
+
+            var table = document.getElementById("tblArticles");
+            var rowLength = table.rows.length;
+            var arrayList = [];
+            var totalPaid=$("#GRAND_TOTAL_PAY").val();
+            arrayList.push(totalPaid);
+            for (var i = 1; i < rowLength; i++) {
+                var id = document.getElementById("tblArticles").rows[i].cells[1].innerHTML.trim();
+
+                var bonus = $("#bonus_" + id).val();
+                var add = $("#Add_" + id).val();
+                var deduc = $("#Deduc_" + id).val();
+                var adv = $("#Adv_" + id).val();
+                var com = $("#Com_" + id).val();
+                var gross = $("#Gross_" + id).val();
+                var total = $("#Total_" + id).val();
+                var note = $("#Note_" + id).val();
+                var arrStr = id+":"+bonus + ":" + add + ":" + deduc + ":" + adv + ":" + com + ":" + gross + ":" + total + ":" + note;
+                arrayList.push(arrStr);
+            }
+            $.ajax({
+                url: "@Url.Action("InsertData", "Salary")",
+                type: "POST",
+                traditional: true,
+                dataType: "json",
+                data: { arrayList: arrayList },
+                success: function () {
+                    alert("Success");
+                },
+                error: function () {
+                    alert("Error");
+                }
+
+            });
+        }
+        function CalculateTotal() {
+            var gTotal = parseFloat(0);
+            var table = document.getElementById("tblArticles");
+            var rowLength = table.rows.length;
+            for (var i = 1; i < rowLength; i++) {
+                var id = document.getElementById("tblArticles").rows[i].cells[1].innerHTML.trim();
+                var total = parseFloat($("#Total_" + id).val());
+                gTotal = gTotal + total;
+            }
+            $("#GRAND_TOTAL_PAY").val(gTotal);
+        }
+    </script>
 }
 
