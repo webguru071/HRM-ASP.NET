@@ -179,63 +179,30 @@ namespace EMSApp.Controllers
                 {
                     ModelState.AddModelError("", "Salary is Already Generated for " + paidDAate + "!!!");
                 }
-                switch (submit)
+                else
                 {
-                    case "Generate":
-                        {
-                            GetSalaryInfo(collection["SALARY_MONTH"], collection["SALARY_YEAR"]);
-                            break;
-                        }
-                    case "Pay":
-                        {
-                            break;
-                        }
-                    case "Calculate":
-                        {
-                            break;
-                        }
-                    default:
-                        {
-                            ModelState.AddModelError("", "Error Accured!!!");
-                            break;
-                        }
-                }
-                //string paidDAate = collection.SALARY_MONTH + ", " + collection.SALARY_YEAR;
-                //var checkData = db.SALARY_INFO.Where(x => x.SALARY_PAID == paidDAate && x.STATUS != ConstantValue.SalaryPaymentIndividual).ToList();
-                //if (checkData.Count > 0)
-                //{
-                //    ModelState.AddModelError("", "Salary is Already Generated for " + paidDAate + "!!!");
-                //}
-                //if (ModelState.IsValid)
-                //{
-                //    var data = db.SALARY_SETUP.Where(x => x.CANGE_TYPE == ConstantValue.TypeActive).ToList();
-                //    using (var dbContextTransaction = db.Database.BeginTransaction())
-                //    {
-                //        try
-                //        {
-                //            foreach (var dt in data)
-                //            {
-                //                SALARY_INFO sInfo = new SALARY_INFO();
-                //                sInfo.EMPLOYEE_ID = dt.EMP_ID;
-                //                sInfo.GROSS_SALARY = dt.GROSS_SALARY;
-                //                sInfo.BONUS = 0;
-                //                sInfo.OTHERS = 0;
-                //                sInfo.SALARY_PAID = paidDAate;
-                //                sInfo.TOTAL = sInfo.GROSS_SALARY + sInfo.BONUS + sInfo.OTHERS;
-                //                sInfo.ACTION_BY = converterHelper.GetLoggedUserID();
-                //                sInfo.ACTION_DATE = DateTime.Now;
-                //                db.SALARY_INFO.Add(sInfo);
-                //                db.SaveChanges();
-                //            }
-                //            dbContextTransaction.Commit();
-                //        }
-                //        catch (Exception ex)
-                //        {
-                //            dbContextTransaction.Rollback();
-                //        }
-                //    }
-                //    ShowDataInList(paidDAate);
-                //}
+                    switch (submit)
+                    {
+                        case "Generate":
+                            {
+                                GetSalaryInfo(collection["SALARY_MONTH"], collection["SALARY_YEAR"]);
+                                break;
+                            }
+                        case "Pay":
+                            {
+                                break;
+                            }
+                        case "Calculate":
+                            {
+                                break;
+                            }
+                        default:
+                            {
+                                ModelState.AddModelError("", "Error Accured!!!");
+                                break;
+                            }
+                    }
+                }                               
             }
             ViewBag.SALARY_MONTH = SetMonth(collection["SALARY_MONTH"]);
             ViewBag.SALARY_YEAR = SetYear();
@@ -258,19 +225,36 @@ namespace EMSApp.Controllers
         {
             try
             {
+                string[] arr = dateStr.Split(',');
+                string month = arr[0].Trim();
+                string year = arr[1].Trim();
+                string fromDate = year + "-" + month + "-01";
+                DateTime firstDate = Convert.ToDateTime(fromDate);
+                DateTime lastDate = firstDate.AddMonths(1).AddDays(-1);
+                string toDate = lastDate.ToString("yyyy-MM-dd");
                 var data = db.SALARY_INFO.Where(x => x.SALARY_PAID == dateStr).ToList();
-                var empData = db.EMPLOYEE_INFO.ToList();
-                List<SalaryInfo> list = new List<SalaryInfo>();
-                foreach (var dt in data)
+                List<SalaryInfo> infoList = new List<SalaryInfo>();
+                var dataLeaveList = service.GetEmployeeLeaveList(fromDate: fromDate, toDate: toDate);
+                var positionData = db.POSITIONAL_INFO.Where(x => x.STATUS == ConstantValue.TypeActive).ToList();
+                foreach (var item in data)
                 {
-                    SalaryInfo info = new SalaryInfo();
-                    var empDataInd = empData.Find(x => x.ID == dt.EMPLOYEE_ID);
-                    info.EMPLOYEE_NAME = empDataInd.EMPLOYEE_NAME;
-                    info.GROSS_SALARY = dt.GROSS_SALARY;
-                    info.SALARY_PAID = dateStr;
-                    list.Add(info);
+                    SalaryInfo obj = new SalaryInfo();
+                    obj.EMP_ID = item.EMPLOYEE_ID;
+                    obj.EMPLOYEE_NAME = dataLeaveList.Where(x => x.EMPLOYEE_ID == item.EMPLOYEE_ID).Select(x => x.EMPLOYEE_NAME).FirstOrDefault();
+                    obj.BASIC_SALARY = positionData.Where(x => x.EMPLOYEE_ID == item.EMPLOYEE_ID).Select(x => x.BASIC_SALARY).FirstOrDefault();
+                    obj.GROSS_SALARY = item.GROSS_SALARY;
+                    obj.BONUS = Convert.ToDecimal(item.BONUS);
+                    obj.OTHERS = Convert.ToDecimal(item.OTHERS);
+                    obj.ADDITION = Convert.ToDecimal(item.ADDITION);
+                    obj.DEDUCTION = Convert.ToDecimal(item.DEDUCTION);
+                    obj.ADVANCE = Convert.ToDecimal(item.ADVANCE);
+                    obj.COMMISSION = Convert.ToDecimal(item.COMMISSION);
+                    obj.TOTAL = Convert.ToDecimal(item.TOTAL);
+                    obj.NOTE = item.REMARKS;
+                    obj.TOTAL_LEAVE = dataLeaveList.Where(x => x.EMPLOYEE_ID == item.EMPLOYEE_ID).Select(x => x.TOTAL_LEAVE_TAKEN).FirstOrDefault();
+                    infoList.Add(obj);
                 }
-                ViewBag.SALARY_INFO = list;
+                ViewBag.ListValue = infoList;
             }
             catch (Exception ex)
             {
@@ -436,6 +420,10 @@ namespace EMSApp.Controllers
                 sInfoList.Add(obj);
             }
             bool result=service.InsertSalary(objSum: objSum, objInfo: sInfoList);
+            if (result)
+            {
+                return View("AllEmpIndex");
+            }
             return View();
         }
     }

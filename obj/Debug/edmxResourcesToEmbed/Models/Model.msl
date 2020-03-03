@@ -139,6 +139,8 @@
     <EntitySetMapping Name="INCREMENT_INFO">
       <EntityTypeMapping TypeName="EMSModel.INCREMENT_INFO">
         <MappingFragment StoreEntitySet="INCREMENT_INFO">
+          <ScalarProperty Name="PREV_BASIC" ColumnName="PREV_BASIC" />
+          <ScalarProperty Name="INCREMENT_CALCULATE_AS" ColumnName="INCREMENT_CALCULATE_AS" />
           <ScalarProperty Name="REMARKS" ColumnName="REMARKS" />
           <ScalarProperty Name="UPDATE_BY" ColumnName="UPDATE_BY" />
           <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />

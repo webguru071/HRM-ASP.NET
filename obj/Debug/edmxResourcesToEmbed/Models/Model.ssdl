@@ -139,7 +139,9 @@
     <Property Name="ACTION_BY" Type="bigint" Nullable="false" />
     <Property Name="UPDATE_DATE" Type="datetime" />
     <Property Name="UPDATE_BY" Type="bigint" />
-    <Property Name="REMARKS" Type="nvarchar" MaxLength="50" />
+    <Property Name="REMARKS" Type="nvarchar" MaxLength="500" />
+    <Property Name="INCREMENT_CALCULATE_AS" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="PREV_BASIC" Type="decimal" Precision="18" Scale="2" Nullable="false" />
   </EntityType>
   <EntityType Name="INCREMENT_TYPE_INFO">
     <Key>
@@ -249,7 +251,7 @@
     <Property Name="STATUS" Type="char" MaxLength="1" />
     <Property Name="ADVANCE" Type="decimal" Precision="18" Scale="2" />
     <Property Name="COMMISSION" Type="decimal" Precision="18" Scale="2" />
-    <Property Name="REMARKS" Type="nvarchar" MaxLength="50" />
+    <Property Name="REMARKS" Type="nvarchar" MaxLength="500" />
     <Property Name="ACTION_BY" Type="bigint" Nullable="false" />
     <Property Name="ACTION_DATE" Type="datetime" Nullable="false" />
     <Property Name="UPDATE_BY" Type="bigint" />

@@ -24,6 +24,8 @@ namespace EMSApp.Models
         public Nullable<System.DateTime> UPDATE_DATE { get; set; }
         public Nullable<long> UPDATE_BY { get; set; }
         public string REMARKS { get; set; }
+        public string INCREMENT_CALCULATE_AS { get; set; }
+        public decimal PREV_BASIC { get; set; }
     
         public virtual EMPLOYEE_INFO EMPLOYEE_INFO { get; set; }
         public virtual INCREMENT_TYPE_INFO INCREMENT_TYPE_INFO { get; set; }

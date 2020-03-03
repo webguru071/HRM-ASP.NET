@@ -7,13 +7,14 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using EMSApp.Services.Position;
 
 namespace EMSApp.Controllers
 {
     public class SalaryIncrementController : Controller
     {
         EMSEntities db = new EMSEntities();
-        //ICombine service = new CombineServices();
+        IPosition pService = new PositionService();
         ConverterHelper converterHelper = new ConverterHelper();
         // GET: SalaryIncrement
         public ActionResult Index()
@@ -23,7 +24,7 @@ namespace EMSApp.Controllers
                 long empId = converterHelper.GetLoggedEmployeeID();
                 if (empId > 0)
                 {
-                    var data = db.INCREMENT_INFO.OrderByDescending(x=>x.INCREMENT_FROM).ToList();
+                    var data = db.INCREMENT_INFO.OrderByDescending(x => x.INCREMENT_FROM).ToList();
                     return View(data);
                 }
                 else
@@ -55,7 +56,7 @@ namespace EMSApp.Controllers
             {
                 return RedirectToAction("LogIn", "Login");
             }
-        }        
+        }
         // POST: SalaryIncrement/Create
         [HttpPost]
         public ActionResult Create(INCREMENT_INFO collection)
@@ -67,31 +68,59 @@ namespace EMSApp.Controllers
                 {
                     ModelState.AddModelError("", "Please Select Employee!!");
                 }
-                else if (string.IsNullOrEmpty(collection.INCREMENT_RATE.ToString()))
+                else if (string.IsNullOrEmpty(collection.INCREMENT_TYPE.ToString()))
                 {
                     ModelState.AddModelError("", "Increment Rate is Required!!");
                 }
                 else if (string.IsNullOrEmpty(collection.INCREMENT_RATE.ToString()))
                 {
                     ModelState.AddModelError("", "Increment Rate is Required!!");
+                }
+                else if (string.IsNullOrEmpty(collection.INCREMENT_CALCULATE_AS.ToString()))
+                {
+                    ModelState.AddModelError("", "Please Select Calculation Type!!");
                 }
                 else
                 {
-                    collection.INCREMENT_FROM= DateTime.Today.Date;
+                    collection.INCREMENT_FROM = DateTime.Today.Date;
                     collection.ACTION_BY = converterHelper.GetLoggedUserID();
                     collection.ACTION_DATE = DateTime.Now;
+                    POSITIONAL_INFO pInfo = new POSITIONAL_INFO();
+                    pInfo.EMPLOYEE_ID = collection.EMP_ID;
+                    var pData = db.POSITIONAL_INFO.Where(x => x.EMPLOYEE_ID == pInfo.EMPLOYEE_ID).FirstOrDefault();
+                    decimal basic = pData.BASIC_SALARY;
+                    collection.PREV_BASIC = basic;
+                    if (collection.INCREMENT_CALCULATE_AS == ConstantValue.SalarySetupInAmount)
+                    {
+                        basic = basic + collection.INCREMENT_RATE;
+                    }
+                    else
+                    {
+                        decimal increment = (basic * collection.INCREMENT_RATE / 100);
+                        basic = basic + increment;
+                    }
+                    pInfo.BASIC_SALARY = basic;
+                    pInfo.UPDATE_BY= converterHelper.GetLoggedUserID();
+                    pInfo.UPDATE_DATE= DateTime.Now;
                     if (ModelState.IsValid)
                     {
-                        db.INCREMENT_INFO.Add(collection);
-                        db.SaveChanges();
-                        return RedirectToAction("Index");
+                        bool result = pService.InsertIncrementInfo(incObj:collection,posObj:pInfo);
+                        if(result)
+                        {
+                            return RedirectToAction("Index");
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("", "Failed to Save Increment!!!");
+                        }
                     }
                 }
             }
             catch (Exception ex)
             {
             }
-            return View();
+            GetDataInBg(collection.EMP_ID);
+            return View(collection);
         }
 
         // GET: SalaryIncrement/Edit/5
@@ -102,6 +131,8 @@ namespace EMSApp.Controllers
                 var data = db.INCREMENT_INFO.Where(x => x.EMP_ID == id).FirstOrDefault();
                 GetDataInBg(empId: data.EMP_ID, incId: data.INCREMENT_TYPE);
                 Session["AD"] = data.ACTION_DATE;
+                Session["PREV_BASIC"] = data.PREV_BASIC;
+                ViewBag.INCREMENT_CALCULATE_AS = data.INCREMENT_CALCULATE_AS.Trim();
                 return View(data);
             }
             else
@@ -121,35 +152,58 @@ namespace EMSApp.Controllers
                 {
                     ModelState.AddModelError("", "Please Select Employee!!");
                 }
-                else if (string.IsNullOrEmpty(collection.INCREMENT_RATE.ToString()))
+                else if (string.IsNullOrEmpty(collection.INCREMENT_TYPE.ToString()))
                 {
                     ModelState.AddModelError("", "Increment Rate is Required!!");
                 }
                 else if (string.IsNullOrEmpty(collection.INCREMENT_RATE.ToString()))
                 {
                     ModelState.AddModelError("", "Increment Rate is Required!!");
+                }
+                else if (string.IsNullOrEmpty(collection.INCREMENT_CALCULATE_AS.ToString()))
+                {
+                    ModelState.AddModelError("", "Please Select Calculation Type!!");
                 }
                 else
                 {
-                    //Increment Calculation
-
+                    collection.INCREMENT_ID = id;
                     collection.INCREMENT_FROM = DateTime.Today.Date;
-                    collection.ACTION_DATE = Convert.ToDateTime(Session["AD"]);
                     collection.UPDATE_BY = converterHelper.GetLoggedUserID();
                     collection.UPDATE_DATE = DateTime.Now;
+                    POSITIONAL_INFO pInfo = new POSITIONAL_INFO();
+                    pInfo.EMPLOYEE_ID = collection.EMP_ID;                    
+                    decimal basic = Convert.ToDecimal(Session["PREV_BASIC"]);
+                    if (collection.INCREMENT_CALCULATE_AS == ConstantValue.SalarySetupInAmount)
+                    {
+                        basic = basic + collection.INCREMENT_RATE;
+                    }
+                    else
+                    {
+                        decimal increment = (basic * collection.INCREMENT_RATE / 100);
+                        basic = basic + increment;
+                    }
+                    pInfo.BASIC_SALARY = basic;
+                    pInfo.UPDATE_BY = converterHelper.GetLoggedUserID();
+                    pInfo.UPDATE_DATE = DateTime.Now;
                     if (ModelState.IsValid)
                     {
-                        db.Entry(collection).State = EntityState.Modified;
-                        db.SaveChanges();
-                        Session["AD"] = null;
-                        return RedirectToAction("Index");
+                        bool result = pService.UpdateIncrementInfo(incObj: collection, posObj: pInfo);
+                        if (result)
+                        {
+                            return RedirectToAction("Index");
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("", "Failed to Update Increment!!!");
+                        }
                     }
                 }
             }
             catch (Exception ex)
             {
             }
-            return View();
+            GetDataInBg(collection.EMP_ID);
+            return View(collection);
         }
 
         // GET: SalaryIncrement/Delete/5

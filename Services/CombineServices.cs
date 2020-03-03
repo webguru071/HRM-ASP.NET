@@ -465,7 +465,15 @@ namespace EMSApp.Services
             List<KeyValuePair<SqlCommand, string>> list = new List<KeyValuePair<SqlCommand, string>>();
             list = GetSalarySumInsertQuery(objSum, list);
             list = GetSalaryInfoInsertQuery(objInfo, list);
-            throw new NotImplementedException();
+            try
+            {
+                bool result = dbHelper.ExecuteCommandWithParameterList(list);
+                return result;
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }           
         }
 
         private List<KeyValuePair<SqlCommand, string>> GetSalaryInfoInsertQuery(List<SALARY_INFO> objInfo, List<KeyValuePair<SqlCommand, string>> list)
@@ -485,9 +493,9 @@ namespace EMSApp.Services
                 command.Parameters.Add("ADDITION", SqlDbType.Decimal).Value = obj.ADDITION;
                 command.Parameters.Add("ADVANCE", SqlDbType.Decimal).Value = obj.ADVANCE;
                 command.Parameters.Add("COMMISSION", SqlDbType.Decimal).Value = obj.COMMISSION;
-                command.Parameters.Add("REMARKS", SqlDbType.Decimal).Value = obj.REMARKS;
-                command.Parameters.Add("ACTION_BY", SqlDbType.Decimal).Value = obj.ACTION_BY;
-                command.Parameters.Add("ACTION_DATE", SqlDbType.Decimal).Value = obj.ACTION_DATE;
+                command.Parameters.Add("REMARKS", SqlDbType.NVarChar,500).Value = obj.REMARKS;
+                command.Parameters.Add("ACTION_BY", SqlDbType.BigInt).Value = obj.ACTION_BY;
+                command.Parameters.Add("ACTION_DATE", SqlDbType.DateTime).Value = obj.ACTION_DATE;
                 list.Add(new KeyValuePair<SqlCommand, string>(command, insertQuery));
             }           
             return list;

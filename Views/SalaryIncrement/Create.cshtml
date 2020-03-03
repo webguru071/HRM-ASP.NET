@@ -23,27 +23,38 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="bmd-label-floating">Increment Rate</label>
-                                @Html.EditorFor(model => model.INCREMENT_RATE, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.INCREMENT_RATE, "", new { @class = "text-danger" })
-                            </div>
-                        </div>                       
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
                                 <label class="bmd-label-floating"> Increment Type</label>
                                 @Html.DropDownList("INCREMENT_TYPE", null, htmlAttributes: new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.INCREMENT_TYPE, "", new { @class = "text-danger" })
                             </div>
+                        </div>                        
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">Calculation Type</label>
+                                @Html.DropDownList("INCREMENT_CALCULATE_AS", new SelectListItem[]
+                                                                    {
+                                                                         new SelectListItem { Text = "Select One", Value="" },
+                                                                        new SelectListItem { Text = "Amount(+)", Value=EMSApp.Helper.ConstantValue.SalarySetupInAmount },
+                                                                        new SelectListItem{ Text="Percecntage(%)",Value=EMSApp.Helper.ConstantValue.SalarySetupInPercentage },},
+                                                                        htmlAttributes: new { @class = "form-control" })
+                            </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="bmd-label-floating">Remarks</label>
-                                @Html.EditorFor(model => model.REMARKS, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.REMARKS, "", new { @class = "text-danger" })
+                                <label class="bmd-label-floating">Increment Rate</label>
+                                @Html.EditorFor(model => model.INCREMENT_RATE, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.INCREMENT_RATE, "", new { @class = "text-danger" })
                             </div>
-                        </div>                        
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="bmd-label-floating">Remarks</label>
+                            @Html.EditorFor(model => model.REMARKS, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.REMARKS, "", new { @class = "text-danger" })
+                        </div>
                     </div>
                     <div class="form-actions">
                         <div class="btn btn-secondary pull-center">

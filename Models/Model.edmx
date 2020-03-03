@@ -144,7 +144,9 @@
           <Property Name="ACTION_BY" Type="bigint" Nullable="false" />
           <Property Name="UPDATE_DATE" Type="datetime" />
           <Property Name="UPDATE_BY" Type="bigint" />
-          <Property Name="REMARKS" Type="nvarchar" MaxLength="50" />
+          <Property Name="REMARKS" Type="nvarchar" MaxLength="500" />
+          <Property Name="INCREMENT_CALCULATE_AS" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="PREV_BASIC" Type="decimal" Precision="18" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="INCREMENT_TYPE_INFO">
           <Key>
@@ -254,7 +256,7 @@
           <Property Name="STATUS" Type="char" MaxLength="1" />
           <Property Name="ADVANCE" Type="decimal" Precision="18" Scale="2" />
           <Property Name="COMMISSION" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="REMARKS" Type="nvarchar" MaxLength="50" />
+          <Property Name="REMARKS" Type="nvarchar" MaxLength="500" />
           <Property Name="ACTION_BY" Type="bigint" Nullable="false" />
           <Property Name="ACTION_DATE" Type="datetime" Nullable="false" />
           <Property Name="UPDATE_BY" Type="bigint" />
@@ -1127,7 +1129,9 @@
           <Property Name="ACTION_BY" Type="Int64" Nullable="false" />
           <Property Name="UPDATE_DATE" Type="DateTime" Precision="3" />
           <Property Name="UPDATE_BY" Type="Int64" />
-          <Property Name="REMARKS" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="REMARKS" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="INCREMENT_CALCULATE_AS" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="PREV_BASIC" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <NavigationProperty Name="EMPLOYEE_INFO" Relationship="EMSModel.FK_INCREMENT_INFO_EMPLOYEE_INFO" FromRole="INCREMENT_INFO" ToRole="EMPLOYEE_INFO" />
           <NavigationProperty Name="INCREMENT_TYPE_INFO" Relationship="EMSModel.FK_INCREMENT_INFO_INCREMENT_TYPE_INFO" FromRole="INCREMENT_INFO" ToRole="INCREMENT_TYPE_INFO" />
         </EntityType>
@@ -1249,7 +1253,7 @@
           <Property Name="STATUS" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="ADVANCE" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="COMMISSION" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="REMARKS" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="REMARKS" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="ACTION_BY" Type="Int64" Nullable="false" />
           <Property Name="ACTION_DATE" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UPDATE_BY" Type="Int64" />
@@ -1853,6 +1857,8 @@
           <EntitySetMapping Name="INCREMENT_INFO">
             <EntityTypeMapping TypeName="EMSModel.INCREMENT_INFO">
               <MappingFragment StoreEntitySet="INCREMENT_INFO">
+                <ScalarProperty Name="PREV_BASIC" ColumnName="PREV_BASIC" />
+                <ScalarProperty Name="INCREMENT_CALCULATE_AS" ColumnName="INCREMENT_CALCULATE_AS" />
                 <ScalarProperty Name="REMARKS" ColumnName="REMARKS" />
                 <ScalarProperty Name="UPDATE_BY" ColumnName="UPDATE_BY" />
                 <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
