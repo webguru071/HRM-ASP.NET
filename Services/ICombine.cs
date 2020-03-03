@@ -12,6 +12,7 @@ namespace EMSApp.Services
     {
         string GetTeamLeaderById(long id);
         bool SalarySetupStatusChange(long id, string statusV);
+        bool EmployeeDelete(long id, string statusV);
         bool SalarySetupUpdate(long id, SALARY_SETUP obj);
         bool InsertSalary(SALARY_INFO_SUM objSum,  List<SALARY_INFO> objInfo);
         List<AttendanceClass> GetAttendanceData(string fromDate="",string toDate="",long empId=0);

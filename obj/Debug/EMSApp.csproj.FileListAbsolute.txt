@@ -739,8 +739,15 @@ F:\Projects\And IT\MVC\HRM-ASP.NET\bin\System.Web.WebPages.Razor.xml
 F:\Projects\And IT\MVC\HRM-ASP.NET\bin\Newtonsoft.Json.xml
 F:\Projects\And IT\MVC\HRM-ASP.NET\bin\Antlr3.Runtime.pdb
 F:\Projects\And IT\MVC\HRM-ASP.NET\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+F:\Projects\And IT\MVC\HRM-ASP.NET\obj\Debug\EMSApp.csprojAssemblyReference.cache
 F:\Projects\And IT\MVC\HRM-ASP.NET\obj\Debug\EMSApp.csproj.CopyComplete
 F:\Projects\And IT\MVC\HRM-ASP.NET\obj\Debug\EMSApp.dll
 F:\Projects\And IT\MVC\HRM-ASP.NET\obj\Debug\EMSApp.pdb
-F:\Projects\And IT\MVC\HRM-ASP.NET\obj\Debug\EMSApp.csprojAssemblyReference.cache
-F:\Projects\And IT\MVC\HRM-ASP.NET\bin\EMSApp.xml
+F:\Projects\And IT\MVC\HRM-ASP.NET\obj\Debug\EMSApp.csproj.ResolveComReference.cache
+F:\Projects\And IT\MVC\HRM-ASP.NET\obj\Debug\Interop.InteropExtensionLib.dll
+F:\Projects\And IT\MVC\HRM-ASP.NET\obj\Debug\Interop.AdHocReportingExcelClientLib.dll
+F:\Projects\And IT\MVC\HRM-ASP.NET\obj\Debug\Interop.COMAdmin.dll
+F:\Projects\And IT\MVC\HRM-ASP.NET\obj\Debug\Interop.COMSVCSLib.dll
+F:\Projects\And IT\MVC\HRM-ASP.NET\obj\Debug\Interop.ExcelPlugInShell.dll
+F:\Projects\And IT\MVC\HRM-ASP.NET\obj\Debug\Interop.MSDASC.dll
+F:\Projects\And IT\MVC\HRM-ASP.NET\obj\Debug\Interop.PowerPivotExcelClientAddInLib.dll

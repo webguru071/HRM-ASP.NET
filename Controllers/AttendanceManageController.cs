@@ -12,6 +12,8 @@ using EMSApp.Helper;
 using EMSApp.Models;
 using EMSApp.Models.UserModel;
 using EMSApp.Services;
+using Microsoft.Office.Interop.Excel;
+using DataTable = System.Data.DataTable;
 
 namespace EMSApp.Controllers
 {
@@ -341,11 +343,11 @@ namespace EMSApp.Controllers
         }
         private DataTable ConvertXSLXtoDataTable(string strFilePath, string connString)
         {
-            Microsoft.Office.Interop.Excel.Application ExcelObj = new Microsoft.Office.Interop.Excel.Application();
-            Microsoft.Office.Interop.Excel.Workbook theWorkbook = null;
+            Application ExcelObj = new Application();
+            Workbook theWorkbook = null;
             theWorkbook = ExcelObj.Workbooks.Open(strFilePath);
-            Microsoft.Office.Interop.Excel.Sheets sheets = theWorkbook.Worksheets;
-            Microsoft.Office.Interop.Excel.Worksheet worksheet = (Microsoft.Office.Interop.Excel.Worksheet)sheets.get_Item(1);//Get the reference of first worksheet
+            Sheets sheets = theWorkbook.Worksheets;
+            Worksheet worksheet = (Worksheet)sheets.get_Item(1);//Get the reference of first worksheet
             string strWorksheetName = worksheet.Name;//Get the name of worksheet.
             ExcelObj.Workbooks.Close();
             OleDbConnection oledbConn = new OleDbConnection(connString);

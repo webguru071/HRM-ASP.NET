@@ -40,23 +40,26 @@
                                 {
                                     foreach (var item in Model)
                                     {
-                                        <tr>
-                                            <td>
-                                                @Html.ActionLink("Edit", "Edit", new { id = item.ID })
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.EMPLOYEE_NAME)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.CONTACT)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.ADDRESS)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.JOINING_DATE)
-                                            </td>
-                                        </tr>
+                                <tr>
+                                    <td>
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.ID })
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.EMPLOYEE_NAME)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CONTACT)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ADDRESS)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.JOINING_DATE)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                                    </td>
+                                </tr>
                                     }
                                 }
                             </tbody>

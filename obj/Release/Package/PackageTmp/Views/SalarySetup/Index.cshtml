@@ -32,6 +32,7 @@
                                     <th>
                                         Benifites
                                     </th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -41,7 +42,7 @@
                                     {
                                 <tr>
                                     <td>
-                                        @Html.ActionLink("Delete", "Delete", new { id = item.SALARY_SET_ID })
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.SALARY_SET_ID })
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.EMPLOYEE_INFO.EMPLOYEE_NAME)
@@ -57,13 +58,16 @@
                                         <td>
                                             Bank
                                         </td>
-                                    }                                   
+                                    }
 
                                     <td>
                                         @Html.DisplayFor(modelItem => item.GROSS_SALARY)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.SALARY_GRADE_SETUP)
+                                        @Html.DisplayFor(modelItem => item.SALARY_GRADE_SETUP_STRING)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.SALARY_SET_ID })
                                     </td>
                                 </tr>
                                     }

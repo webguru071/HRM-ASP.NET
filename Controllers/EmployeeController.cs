@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Data.Entity;
 using EMSApp.Helper;
 using System.IO;
+using EMSApp.Services;
 
 namespace EMSApp.Controllers
 {
@@ -14,11 +15,11 @@ namespace EMSApp.Controllers
     {
         EMSEntities db = new EMSEntities();
         ConverterHelper converterHelper = new ConverterHelper();
-
+        ICombine service = new CombineServices();
         // GET: Employee
         public ActionResult Index()
         {
-            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
             {
                 var data = db.EMPLOYEE_INFO.Where(x => x.IS_DELETED == ConstantValue.TypeActive).ToList();
                 return View(data);
@@ -27,7 +28,7 @@ namespace EMSApp.Controllers
             {
                 return RedirectToAction("LogIn", "Login");
             }
-            
+
         }
         // GET: Employee/Details/5
         public ActionResult Details(int id)
@@ -37,7 +38,7 @@ namespace EMSApp.Controllers
         // GET: Employee/Create
         public ActionResult Create()
         {
-            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
             {
                 ViewBag.IS_DELETED = SetStatusList();
                 return View();
@@ -46,7 +47,7 @@ namespace EMSApp.Controllers
             {
                 return RedirectToAction("LogIn", "Login");
             }
-            
+
         }
         // POST: Employee/Create
         [HttpPost]
@@ -124,7 +125,7 @@ namespace EMSApp.Controllers
         // GET: Employee/Edit/5
         public ActionResult Edit(int id)
         {
-            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel()==ConstantValue.UserLevelAdmin)
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
             {
                 var data = db.EMPLOYEE_INFO.Where(x => x.ID == id).FirstOrDefault();
                 Session["AD"] = data.ACTION_DATE;
@@ -136,7 +137,7 @@ namespace EMSApp.Controllers
             {
                 return RedirectToAction("LogIn", "Login");
             }
-            
+
         }
         // POST: Employee/Edit/5
         [HttpPost]
@@ -205,22 +206,37 @@ namespace EMSApp.Controllers
         // GET: Employee/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            {
+                var dt = db.EMPLOYEE_INFO.Where(x => x.ID == id).FirstOrDefault();
+                return View(dt);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
         }
         // POST: Employee/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
+            var dt = db.EMPLOYEE_INFO.Where(x => x.ID == id).FirstOrDefault();
             try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
+            {               
+                if (dt != null)
+                {
+                    bool result = service.EmployeeDelete(id, ConstantValue.UserStatusDeactive);
+                    if (result)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                }
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                ModelState.AddModelError("", "Failled to Delete Employee!!!");
             }
+            return View(dt);
         }
     }
 }

@@ -18,34 +18,60 @@
                     <div class="card-body">
                         <h4 class="card-title">Employee Salary List</h4>
                         <div class="table-responsive">
-                            <table class="table color-bordered-table primary-bordered-table">
+                            <table id="tblArticles" class="table color-bordered-table success-bordered-table" width="100%" border="1">
                                 <thead>
                                     <tr>
-                                        <th>
-                                            Month
-                                        </th>
-                                        <th>
-                                            Employee
-                                        </th>
-                                        <th>
-                                            Salary
-                                        </th>
+                                        <th>Sl No.</th>
+                                        <th>Employee</th>
+                                        <th>Gross Salary</th>
+                                        <th>Bonus</th>
+                                        <th>Addition</th>
+                                        <th>Deduction</th>
+                                        <th>Advance</th>
+                                        <th>Commission</th>
+                                        <th>Total</th>
+                                        <th>Leaves</th>
+                                        <th>Note</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if (ViewBag.SALARY_INFO != null)
+                                    @if (ViewBag.ListValue != null)
                                     {
-                                        foreach (var item in (ViewBag.SALARY_INFO as List<EMSApp.Models.UserModel.SalaryInfo>))
+                                        int slNo = 0;
+                                        foreach (var item in (ViewBag.ListValue as List<EMSApp.Models.UserModel.SalaryInfo>))
                                         {
+                                            slNo++;
                                             <tr>
-                                                <td style="padding:20px">
-                                                    @Html.DisplayFor(modelItem => item.SALARY_PAID)
-                                                </td>
-                                                <td style="padding:20px">
+                                                <td>@slNo</td>
+                                                <td>
                                                     @Html.DisplayFor(modelItem => item.EMPLOYEE_NAME)
                                                 </td>
-                                                <td style="padding:20px">
+                                                <td>
                                                     @Html.DisplayFor(modelItem => item.GROSS_SALARY)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.BONUS)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.ADDITION)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.DEDUCTION)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.ADVANCE)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.COMMISSION)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.TOTAL)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.TOTAL_LEAVE)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.NOTE)
                                                 </td>
                                             </tr>
                                         }

@@ -366,6 +366,7 @@ namespace EMSApp.Controllers
             DateTime lastDate = firstDate.AddMonths(1).AddDays(-1);
             string toDate = lastDate.ToString("yyyy-MM-dd");
             List<SalaryInfo> infoList = new List<SalaryInfo>();
+            var empData = db.EMPLOYEE_INFO.ToList();
             var dataLeaveList = service.GetEmployeeLeaveList(fromDate: fromDate, toDate: toDate);
             var positionData = db.POSITIONAL_INFO.Where(x => x.STATUS == ConstantValue.TypeActive).ToList();
             var data = db.SALARY_SETUP.Where(x => x.CANGE_TYPE == ConstantValue.TypeActive).ToList();
@@ -373,7 +374,7 @@ namespace EMSApp.Controllers
             {
                 SalaryInfo obj = new SalaryInfo();
                 obj.EMP_ID = item.EMP_ID;
-                obj.EMPLOYEE_NAME = dataLeaveList.Where(x => x.EMPLOYEE_ID == item.EMP_ID).Select(x => x.EMPLOYEE_NAME).FirstOrDefault();
+                obj.EMPLOYEE_NAME = empData.Where(x => x.ID == item.EMP_ID).Select(x => x.EMPLOYEE_NAME).FirstOrDefault();
                 obj.BASIC_SALARY = positionData.Where(x => x.EMPLOYEE_ID == item.EMP_ID).Select(x => x.BASIC_SALARY).FirstOrDefault();
                 obj.SALARY_GRADE_STRING = item.SALARY_GRADE_SETUP_STRING;
                 obj.GROSS_SALARY = item.GROSS_SALARY;

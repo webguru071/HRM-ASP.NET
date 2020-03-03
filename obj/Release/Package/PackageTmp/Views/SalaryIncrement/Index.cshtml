@@ -40,19 +40,30 @@
                                     {
                                 <tr>
                                     <td>
-                                        @Html.ActionLink("View", "Edit", new { id = item.INCREMENT_ID })
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.INCREMENT_ID })
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.EMPLOYEE_INFO.EMPLOYEE_NAME)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.INCREMENT_FROM)
+                                       @item.INCREMENT_FROM.ToString("dd-MM-yyyy")
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.INCREMENT_TYPE_INFO.INCREMENT_TYPE_TITLE)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.INCREMENT_RATE)
+                                        @{ 
+                                            string rateType = "";
+                                            if (item.INCREMENT_CALCULATE_AS == EMSApp.Helper.ConstantValue.SalarySetupInAmount)
+                                            {
+                                                rateType = " Tk.";
+                                            }
+                                            else
+                                            {
+                                                rateType = "%";
+                                            }
+                                        }
+                                        @Html.DisplayFor(modelItem => item.INCREMENT_RATE)@rateType
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.REMARKS)

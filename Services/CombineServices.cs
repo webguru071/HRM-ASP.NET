@@ -290,7 +290,7 @@ namespace EMSApp.Services
                     listObj.PERDAY_WORKING_HOUR = wHour.ToString();
                     TimeSpan totalDayWT = Convert.ToDateTime(listObj.CHECK_OUT_TIME).Subtract(Convert.ToDateTime(listObj.CHECK_IN_TIME));
                     listObj.TOTAL_WORKING_HOUR = totalDayWT.ToString();
-                    listObj.TOTAL_BREAK = ConstantValue.BreakTime.ToString();
+                    listObj.TOTAL_BREAK = totalDayWT.Subtract(wHour).ToString();
                     var empPOsitionalData = allEmpPOsitionalData.Where(x => x.EMPLOYEE_ID == listObj.EMPLOYEE_ID).FirstOrDefault();
                     TimeSpan actualWH = TimeSpan.FromHours(Convert.ToInt64(empPOsitionalData.WORKING_HOURS)).Subtract(ConstantValue.BreakTime);
                     TimeSpan lessWork = actualWH.Subtract(wHour);
@@ -508,6 +508,64 @@ namespace EMSApp.Services
             command.Parameters.Add("SALARY_PAID_MONTH", SqlDbType.NVarChar,50).Value = objSum.SALARY_PAID_MONTH;
             command.Parameters.Add("TOTAL_PAID", SqlDbType.Decimal).Value = objSum.TOTAL_PAID;
             list.Add(new KeyValuePair<SqlCommand, string>(command, insertQuery));
+            return list;
+        }
+
+        public bool EmployeeDelete(long id, string statusV)
+        {
+            List<KeyValuePair<SqlCommand, string>> list = new List<KeyValuePair<SqlCommand, string>>();
+            list = ChangeEmployeeInfo(id, statusV, list);
+            list = ChangePositionalInfo(id, statusV, list);
+            list = ChangeSalarySetup(id, statusV, list);
+            list = ChangeUserId(id, statusV, list);
+            try
+            {
+                bool result = dbHelper.ExecuteCommandWithParameterList(list);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        private List<KeyValuePair<SqlCommand, string>> ChangeUserId(long id, string statusV, List<KeyValuePair<SqlCommand, string>> list)
+        {
+            string query = @"UPDATE USER_INFO SET IS_DELETED=@IS_DELETED WHERE EMPLOYEE_ID=@EMPLOYEE_ID";
+            SqlCommand command = new SqlCommand();
+            command.Parameters.Add("EMPLOYEE_ID", SqlDbType.BigInt).Value = id;
+            command.Parameters.Add("IS_DELETED", SqlDbType.Char,1).Value = statusV;
+            list.Add(new KeyValuePair<SqlCommand, string>(command, query));
+            return list;
+        }
+
+        private List<KeyValuePair<SqlCommand, string>> ChangeSalarySetup(long id, string statusV, List<KeyValuePair<SqlCommand, string>> list)
+        {
+            string query = @"UPDATE SALARY_SETUP SET CANGE_TYPE=@CANGE_TYPE WHERE EMP_ID=@EMP_ID";
+            SqlCommand command = new SqlCommand();
+            command.Parameters.Add("EMP_ID", SqlDbType.BigInt).Value = id;
+            command.Parameters.Add("CANGE_TYPE", SqlDbType.Char,1).Value = statusV;
+            list.Add(new KeyValuePair<SqlCommand, string>(command, query));
+            return list;
+        }
+
+        private List<KeyValuePair<SqlCommand, string>> ChangePositionalInfo(long id, string statusV, List<KeyValuePair<SqlCommand, string>> list)
+        {
+            string query = @"UPDATE POSITIONAL_INFO SET STATUS=@STATUS WHERE EMPLOYEE_ID=@EMPLOYEE_ID";
+            SqlCommand command = new SqlCommand();
+            command.Parameters.Add("EMPLOYEE_ID", SqlDbType.BigInt).Value = id;
+            command.Parameters.Add("STATUS", SqlDbType.Char,1).Value = statusV;
+            list.Add(new KeyValuePair<SqlCommand, string>(command, query));
+            return list;
+        }
+
+        private List<KeyValuePair<SqlCommand, string>> ChangeEmployeeInfo(long id, string statusV, List<KeyValuePair<SqlCommand, string>> list)
+        {
+            string query = @"UPDATE EMPLOYEE_INFO SET IS_DELETED=@IS_DELETED WHERE ID=@ID";
+            SqlCommand command = new SqlCommand();
+            command.Parameters.Add("ID", SqlDbType.BigInt).Value = id;
+            command.Parameters.Add("IS_DELETED", SqlDbType.Char,1).Value = statusV;
+            list.Add(new KeyValuePair<SqlCommand, string>(command, query));
             return list;
         }
     }

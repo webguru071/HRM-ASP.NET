@@ -266,3 +266,11 @@ F:\Projects\And IT\MVC\HRM-ASP.NET\obj\Release\EMSApp.csprojAssemblyReference.ca
 F:\Projects\And IT\MVC\HRM-ASP.NET\obj\Release\EMSApp.csproj.CopyComplete
 F:\Projects\And IT\MVC\HRM-ASP.NET\obj\Release\EMSApp.dll
 F:\Projects\And IT\MVC\HRM-ASP.NET\obj\Release\EMSApp.pdb
+F:\Projects\And IT\MVC\HRM-ASP.NET\obj\Release\Interop.InteropExtensionLib.dll
+F:\Projects\And IT\MVC\HRM-ASP.NET\obj\Release\EMSApp.csproj.ResolveComReference.cache
+F:\Projects\And IT\MVC\HRM-ASP.NET\obj\Release\Interop.AdHocReportingExcelClientLib.dll
+F:\Projects\And IT\MVC\HRM-ASP.NET\obj\Release\Interop.COMAdmin.dll
+F:\Projects\And IT\MVC\HRM-ASP.NET\obj\Release\Interop.COMSVCSLib.dll
+F:\Projects\And IT\MVC\HRM-ASP.NET\obj\Release\Interop.ExcelPlugInShell.dll
+F:\Projects\And IT\MVC\HRM-ASP.NET\obj\Release\Interop.MSDASC.dll
+F:\Projects\And IT\MVC\HRM-ASP.NET\obj\Release\Interop.PowerPivotExcelClientAddInLib.dll
