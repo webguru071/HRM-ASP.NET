@@ -214,6 +214,8 @@ namespace EMSApp.Controllers
             if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
             {
                 ShowDataInList(monthStr);
+                var dt = db.SALARY_INFO_SUM.Where(x => x.SALARY_PAID_MONTH == monthStr).FirstOrDefault();
+                ViewBag.TOTAL_PAID = dt.TOTAL_PAID;
                 return View();
             }
             else
