@@ -16,14 +16,10 @@
                 <h5 class="text-danger">@ViewBag.ResultFailed</h5>
             </div>
             <div class="row">
-                <div class="col-md-4">
-                    @Html.DropDownList("MONTH", null, htmlAttributes: new { @class = "form-control" })
-                </div>
-                <div class="col-md-4">
-                    @Html.DropDownList("YEAR", null, htmlAttributes: new { @class = "form-control" })
-                </div>                
                 <form action="#" class="dropzone">
+                   
                     <div class="fallback">
+                        <label class="form-control col-md-2" style=" font-size:18px; margin:10px">Upload File Here</label>
                         <input name="uploadFile" id="uploadFile" type="file" multiple />
                     </div>
                 </form>

@@ -198,15 +198,6 @@ namespace EMSApp.Controllers
                 }
                 else
                 {
-                    string fromDate = "";
-                    string toDate = "";
-                    if (!string.IsNullOrEmpty(collection["MONTH"]) && !string.IsNullOrEmpty(collection["YEAR"]))
-                    {
-                        fromDate = collection["YEAR"] + "-" + collection["MONTH"] + "-01";
-                        DateTime firstDate = Convert.ToDateTime(fromDate);
-                        DateTime lastDate = firstDate.AddMonths(1).AddDays(-1);
-                        toDate = lastDate.ToString("yyyy-MM-dd");
-                    }
                     if (uploadFile != null && uploadFile.ContentLength > 0)
                     {
                         var fileName = Path.GetFileName(DateTime.Now.ToString() + "_" + uploadFile.FileName);
@@ -223,14 +214,16 @@ namespace EMSApp.Controllers
                             connString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + path + ";Extended Properties=\"Excel 12.0;HDR=Yes;IMEX=2\"";
                         }
                         DataTable dt = ConvertXSLXtoDataTable(path, connString);
-                        if (dt.Rows.Count>0)
+                        if (dt.Rows.Count > 0)
                         {
                             DataTable result = InsertIntoDB(dt);
                             if (result.Rows.Count > 0)
                             {
                                 ViewBag.ResultSuccess = "Data Import Successfully!!!";
                                 ViewBag.ResultFailed = "";
-                                viewList = service.GetAttendanceDataMonthly(fromDate:fromDate,toDate: toDate);
+                                string fromDate = Convert.ToString(Session["fromDate"]);
+                                string toDate = Convert.ToString(Session["toDate"]);
+                                viewList = service.GetAttendanceDataMonthly(fromDate: fromDate, toDate: toDate);
                             }
                             else
                             {
@@ -278,7 +271,7 @@ namespace EMSApp.Controllers
                         //Get employee info according to card no
                         var empDataCard = cardData.Where(x => x.CARD_NO.Trim() == cardNo.Trim()).FirstOrDefault();
                         if (empDataCard != null)
-                        {                            
+                        {
                             string check_in = Convert.ToString(dRow[2]);
                             string check_out = Convert.ToString(dRow[3]);
                             DateTime date = Convert.ToDateTime(dRow[5]);
@@ -293,21 +286,21 @@ namespace EMSApp.Controllers
                             {
                                 slNoIN = slNoOUT + 1;
                                 slNoOUT = slNoIN + 1;
-                            }      
+                            }
                             int isImportedCount = db.ATTENDANCE_DETAILS.Where(x => x.EMPLOYEE_ID == empDataCard.EMP_ID && x.ATT_DATE == date).Count();
                             if (empDataCard != null && isImportedCount == 0)
                             {
                                 dtNew.Rows.Add(empDataCard.EMP_ID, date, TimeSpan.Parse(check_in), null, slNoIN, ConstantValue.AttendanceCheckIn);
                                 dtNew.Rows.Add(empDataCard.EMP_ID, date, null, TimeSpan.Parse(check_out), slNoOUT, ConstantValue.AttendanceCheckOut);
                             }
-                        }                        
+                        }
                     }
                 }
             }
             catch (Exception ex)
             {
                 result = false;
-            }           
+            }
             DBHelper dbHelper = new DBHelper();
             using (var dbContextTransaction = db.Database.BeginTransaction())
             {
@@ -349,6 +342,18 @@ namespace EMSApp.Controllers
             Sheets sheets = theWorkbook.Worksheets;
             Worksheet worksheet = (Worksheet)sheets.get_Item(1);//Get the reference of first worksheet
             string strWorksheetName = worksheet.Name;//Get the name of worksheet.
+            int rw = worksheet.Cells.Find("*", System.Reflection.Missing.Value,
+                               System.Reflection.Missing.Value, System.Reflection.Missing.Value,
+                               Microsoft.Office.Interop.Excel.XlSearchOrder.xlByRows, Microsoft.Office.Interop.Excel.XlSearchDirection.xlPrevious,
+                               false, System.Reflection.Missing.Value, System.Reflection.Missing.Value).Row;
+            int cl = worksheet.Cells.Find("*", System.Reflection.Missing.Value,
+                               System.Reflection.Missing.Value, System.Reflection.Missing.Value,
+                               Microsoft.Office.Interop.Excel.XlSearchOrder.xlByColumns, Microsoft.Office.Interop.Excel.XlSearchDirection.xlPrevious,
+                               false, System.Reflection.Missing.Value, System.Reflection.Missing.Value).Column;
+            string dateFirst = worksheet.UsedRange.Cells[2, cl].Value2.ToString();
+            string dateLast = worksheet.UsedRange.Cells[rw, cl].Value2.ToString();
+            Session["fromDate"] = dateFirst;
+            Session["toDate"] = dateLast;
             ExcelObj.Workbooks.Close();
             OleDbConnection oledbConn = new OleDbConnection(connString);
             DataTable dt = new DataTable();
