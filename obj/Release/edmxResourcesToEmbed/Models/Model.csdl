@@ -326,6 +326,8 @@
     <Property Name="ACTION_BY" Type="Int64" Nullable="false" />
     <Property Name="UPDATE_BY" Type="Int64" />
     <Property Name="UPDATE_DATE" Type="DateTime" Precision="3" />
+    <Property Name="NOTE" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="TAG_NO" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="EQUEPMENTS_INFO" Relationship="EMSModel.FK_INV_INFO_INV_INFO" FromRole="INV_INFO" ToRole="EQUEPMENTS_INFO" />
     <NavigationProperty Name="VENDOR_INFO" Relationship="EMSModel.FK_INV_INFO_VENDOR_INFO" FromRole="INV_INFO" ToRole="VENDOR_INFO" />
     <NavigationProperty Name="STOCK_INFO" Relationship="EMSModel.FK_STOCK_INFO_INV_INFO" FromRole="INV_INFO" ToRole="STOCK_INFO" />

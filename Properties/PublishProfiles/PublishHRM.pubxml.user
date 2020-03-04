@@ -16,10 +16,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/10/2013 16:29:20</publishTime>
     </File>
     <File Include="bin/EMSApp.dll">
-      <publishTime>03/04/2020 15:19:17</publishTime>
+      <publishTime>03/04/2020 17:25:17</publishTime>
     </File>
     <File Include="bin/EMSApp.pdb">
-      <publishTime>03/04/2020 15:19:17</publishTime>
+      <publishTime>03/04/2020 17:25:17</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>10/23/2017 13:15:18</publishTime>
@@ -12208,7 +12208,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/12/2020 17:42:00</publishTime>
     </File>
     <File Include="Models/Model.edmx.diagram">
-      <publishTime>03/03/2020 13:51:55</publishTime>
+      <publishTime>03/04/2020 16:17:01</publishTime>
     </File>
     <File Include="Scripts/bootstrap.js">
       <publishTime>01/12/2020 17:42:12</publishTime>
@@ -12349,13 +12349,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/03/2020 12:09:00</publishTime>
     </File>
     <File Include="Views/EquipmentManage/Create.cshtml">
-      <publishTime>02/25/2020 13:31:44</publishTime>
+      <publishTime>03/04/2020 15:52:30</publishTime>
     </File>
     <File Include="Views/EquipmentManage/Delete.cshtml">
       <publishTime>02/03/2020 14:01:13</publishTime>
     </File>
     <File Include="Views/EquipmentManage/Edit.cshtml">
-      <publishTime>02/25/2020 13:31:55</publishTime>
+      <publishTime>03/04/2020 15:52:20</publishTime>
     </File>
     <File Include="Views/EquipmentManage/Index.cshtml">
       <publishTime>01/29/2020 13:54:50</publishTime>
@@ -12471,6 +12471,15 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/Purchase/Index.cshtml">
       <publishTime>02/13/2020 13:44:56</publishTime>
     </File>
+    <File Include="Views/Purchase/IndexWastage.cshtml">
+      <publishTime>03/04/2020 16:32:54</publishTime>
+    </File>
+    <File Include="Views/Purchase/WastageCreate.cshtml">
+      <publishTime>03/04/2020 16:34:37</publishTime>
+    </File>
+    <File Include="Views/Purchase/WastageEdit.cshtml">
+      <publishTime>03/04/2020 16:35:06</publishTime>
+    </File>
     <File Include="Views/Reports/AllEmployeeSalaryReport.cshtml">
       <publishTime>02/22/2020 12:07:28</publishTime>
     </File>
@@ -12571,7 +12580,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/09/2020 13:07:23</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>03/03/2020 18:31:53</publishTime>
+      <publishTime>03/04/2020 16:40:10</publishTime>
     </File>
     <File Include="Views/Team/Create.cshtml">
       <publishTime>02/15/2020 16:46:28</publishTime>

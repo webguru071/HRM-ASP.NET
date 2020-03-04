@@ -169,6 +169,8 @@
     <Property Name="ACTION_BY" Type="bigint" Nullable="false" />
     <Property Name="UPDATE_BY" Type="bigint" />
     <Property Name="UPDATE_DATE" Type="datetime" />
+    <Property Name="NOTE" Type="nvarchar" MaxLength="500" />
+    <Property Name="TAG_NO" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="LEAVE_APPLICATION">
     <Key>

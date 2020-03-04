@@ -208,6 +208,160 @@ namespace EMSApp.Controllers
                 return View();
             }
         }
+        [HttpGet]
+        public ActionResult IndexWastage()
+        {
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            {
+                var data = db.INV_INFO.Where(x => x.STOCK_TYPE == ConstantValue.TransactionSheetTransTypeWastage).ToList();
+                return View(data);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+        }
+        [HttpGet]
+        public ActionResult WastageCreate()
+        {
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            {
+                GetDataInBag();
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+        }
+
+        // POST: Purchase/Delete/5
+        [HttpPost]
+        public ActionResult WastageCreate( INV_INFO collection)
+        {
+            try
+            {
+                // TODO: Add insert logic here
+                if (collection.EQP_ID <= 0)
+                {
+                    ModelState.AddModelError("", "Product Name is Required!!");
+                }
+                else if (collection.VENDOR_ID <= 0)
+                {
+                    ModelState.AddModelError("", "Supplier is Required!!");
+                }
+                else if (string.IsNullOrEmpty(collection.DATE))
+                {
+                    ModelState.AddModelError("", "Purchase Date is Required!!");
+                }
+                else if (collection.UNIT <= 0)
+                {
+                    ModelState.AddModelError("", "Purchase Unit is Required!!");
+                }
+                else
+                {
+                    STOCK_INFO stock = new STOCK_INFO();
+                    stock.INV_ID = collection.INV_ID = GetInvId();
+                    stock.EQP_ID = collection.EQP_ID;
+                    stock.UNIT = collection.UNIT;
+                    stock.STOCK_FOR = ConstantValue.StockForDeduct;
+                    stock.STOCK_TYPE = collection.STOCK_TYPE = ConstantValue.TransactionSheetTransTypeWastage;
+                    stock.ACTION_BY = collection.ACTION_BY = converterHelper.GetLoggedUserID();
+                    stock.ACTION_DATE = collection.ACTION_DATE = DateTime.Now;
+                    if (ModelState.IsValid)
+                    {
+                        using (var dbContextTransaction = db.Database.BeginTransaction())
+                        {
+                            try
+                            {
+                                db.INV_INFO.Add(collection);
+                                db.STOCK_INFO.Add(stock);
+                                db.SaveChanges();
+                                dbContextTransaction.Commit();
+                                return RedirectToAction("IndexWastage");
+                            }
+                            catch (Exception ex)
+                            {
+                                dbContextTransaction.Rollback();
+                            }
+                        }
+                    }
+                }
+            }
+            catch
+            {
+            }
+            long supplierId = Convert.ToInt64(collection.VENDOR_ID);
+            GetDataInBag(supplierId: supplierId);
+            return View();
+        }
+        [HttpGet]
+        public ActionResult WastageEdit(int id)
+        {
+            if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
+            {
+                var data = db.INV_INFO.Where(x => x.INV_ID == id && x.STOCK_TYPE == ConstantValue.TransactionSheetTransTypeWastage).FirstOrDefault();
+                Session["AD"] = data.ACTION_DATE;
+                long supplierId = Convert.ToInt64(data.VENDOR_ID);
+                GetDataInBag(supplierId: supplierId, eqpId: data.EQP_ID);
+                return View(data);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Login");
+            }
+        }
+
+        // POST: Purchase/Edit/5
+        [HttpPost]
+        public ActionResult WastageEdit(int id, INV_INFO collection)
+        {
+            try
+            {
+                // TODO: Add insert logic here
+                if (collection.EQP_ID <= 0)
+                {
+                    ModelState.AddModelError("", "Product Name is Required!!");
+                }
+                else if (collection.VENDOR_ID <= 0)
+                {
+                    ModelState.AddModelError("", "Supplier is Required!!");
+                }
+                else if (string.IsNullOrEmpty(collection.DATE))
+                {
+                    ModelState.AddModelError("", "Purchase Date is Required!!");
+                }
+                else if (collection.UNIT <= 0)
+                {
+                    ModelState.AddModelError("", "Purchase Unit is Required!!");
+                }
+                else
+                {
+                    STOCK_INFO stock = new STOCK_INFO();
+                    stock.INV_ID = id;
+                    stock.EQP_ID = collection.EQP_ID;
+                    stock.UNIT = collection.UNIT;
+                    stock.STOCK_FOR = ConstantValue.StockForDeduct;
+                    stock.STOCK_TYPE = collection.STOCK_TYPE = ConstantValue.TransactionSheetTransTypeWastage;
+                    stock.UPDATE_BY = collection.UPDATE_BY = converterHelper.GetLoggedUserID();
+                    stock.UPDATE_DATE = collection.UPDATE_DATE = DateTime.Now;
+                    if (ModelState.IsValid)
+                    {
+                        bool updateResult = invService.UpdateInventoryData(collection: collection, stock: stock, id: id);
+                        if (updateResult)
+                        {
+                            return RedirectToAction("IndexWastage");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+            long supplierId = Convert.ToInt64(collection.VENDOR_ID);
+            GetDataInBag(supplierId: supplierId, eqpId: collection.EQP_ID);
+            return View();
+        }
         private void GetDataInBag(long assetId = 0, long supplierId = 0, long eqpId=0)
         {
             ViewBag.ASSET_ID = new SelectList(SetAsset(), "Value", "Text", assetId);
@@ -224,7 +378,7 @@ namespace EMSApp.Controllers
             {
                 var data = db.EQUEPMENTS_INFO.Where(x => x.EQUEPMENT_ID == eqpId).FirstOrDefault();
                 ViewBag.ASSET_ID = new SelectList(SetAsset(), "Value", "Text", data.ASSET_ID);
-                List<SelectListItem> list = new SelectList(db.EQUEPMENTS_INFO.Where(x => x.ASSET_ID == data.ASSET_ID && x.ASSET_FOR==ConstantValue.TransactionSheetTransTypePurchase), "EQUEPMENT_ID", "EQP_TITLE").ToList();
+                List<SelectListItem> list = new SelectList(db.EQUEPMENTS_INFO.Where(x => x.ASSET_ID == data.ASSET_ID), "EQUEPMENT_ID", "EQP_TITLE").ToList();
                 list.Insert(0, (new SelectListItem { Text = "Select One", Value = "0" }));                
                 ViewBag.EQP_ID = new SelectList(list, "Value", "Text", eqpId);
             }

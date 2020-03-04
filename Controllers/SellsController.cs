@@ -219,7 +219,7 @@ namespace EMSApp.Controllers
             {
                 var data = db.EQUEPMENTS_INFO.Where(x => x.EQUEPMENT_ID == eqpId).FirstOrDefault();
                 ViewBag.ASSET_ID = new SelectList(SetAsset(), "Value", "Text", data.ASSET_ID);
-                List<SelectListItem> list = new SelectList(db.EQUEPMENTS_INFO.Where(x => x.ASSET_ID == data.ASSET_ID && x.ASSET_FOR == ConstantValue.TransactionSheetTransTypeSell), "EQUEPMENT_ID", "EQP_TITLE").ToList();
+                List<SelectListItem> list = new SelectList(db.EQUEPMENTS_INFO.Where(x => x.ASSET_ID == data.ASSET_ID), "EQUEPMENT_ID", "EQP_TITLE").ToList();
                 list.Insert(0, (new SelectListItem { Text = "Select One", Value = "0" }));
                 ViewBag.EQP_ID = new SelectList(list, "Value", "Text", eqpId);
             }

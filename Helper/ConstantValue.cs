@@ -47,6 +47,7 @@ namespace EMSApp.Helper
         public static string TransactionSheetPayTypeBank = "b";
         public static string TransactionSheetTransTypePurchase = "p";
         public static string TransactionSheetTransTypeSell = "s";
+        public static string TransactionSheetTransTypeWastage = "w";
         //Payroll
         public static string SalaryGradeAdd = "a";
         public static string SalaryGradeDeduct = "d";

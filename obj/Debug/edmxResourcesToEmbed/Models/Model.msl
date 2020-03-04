@@ -170,6 +170,8 @@
     <EntitySetMapping Name="INV_INFO">
       <EntityTypeMapping TypeName="EMSModel.INV_INFO">
         <MappingFragment StoreEntitySet="INV_INFO">
+          <ScalarProperty Name="TAG_NO" ColumnName="TAG_NO" />
+          <ScalarProperty Name="NOTE" ColumnName="NOTE" />
           <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
           <ScalarProperty Name="UPDATE_BY" ColumnName="UPDATE_BY" />
           <ScalarProperty Name="ACTION_BY" ColumnName="ACTION_BY" />

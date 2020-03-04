@@ -63,6 +63,8 @@ namespace EMSApp.Services.Inventory
             command.Parameters.Add("UNIT", SqlDbType.Int).Value = collection.UNIT;
             command.Parameters.Add("DATE", SqlDbType.NVarChar,50).Value = collection.DATE;
             command.Parameters.Add("STOCK_TYPE", SqlDbType.Char,1).Value = collection.STOCK_TYPE;
+            command.Parameters.Add("TAG_NO", SqlDbType.NVarChar,50).Value = (string.IsNullOrEmpty(collection.TAG_NO)) ? "" : collection.TAG_NO;
+            command.Parameters.Add("NOTE", SqlDbType.NVarChar,500).Value =(string.IsNullOrEmpty(collection.NOTE))?"": collection.NOTE;
             if (string.IsNullOrEmpty(qType))
             {
                 command.Parameters.Add("ACTION_BY", SqlDbType.BigInt).Value = collection.ACTION_BY;
@@ -93,7 +95,7 @@ namespace EMSApp.Services.Inventory
         }
         string UpdateQueryInventory(long id)
         {
-            string query = @"UPDATE INV_INFO SET EQP_ID=@EQP_ID,VENDOR_ID=@VENDOR_ID,UNIT=@UNIT,STOCK_TYPE=@STOCK_TYPE,UPDATE_BY=@UPDATE_BY,UPDATE_DATE=@UPDATE_DATE WHERE INV_ID="+id;
+            string query = @"UPDATE INV_INFO SET EQP_ID=@EQP_ID,VENDOR_ID=@VENDOR_ID,UNIT=@UNIT,STOCK_TYPE=@STOCK_TYPE,UPDATE_BY=@UPDATE_BY,UPDATE_DATE=@UPDATE_DATE,TAG_NO=@TAG_NO,NOTE=@NOTE WHERE INV_ID=" + id;
             return query;
         }
     }

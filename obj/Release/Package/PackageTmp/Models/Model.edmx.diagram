@@ -5,33 +5,33 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="542d0dff45874b8c9ee6298c96dbdeca" Name="Diagram1">
-        <EntityTypeShape EntityType="EMSModel.ASSET_INFO" Width="1.5" PointX="1.5" PointY="6.125" />
-        <EntityTypeShape EntityType="EMSModel.ASSET_MANAGEMENT" Width="1.5" PointX="6" PointY="23.625" />
-        <EntityTypeShape EntityType="EMSModel.ATTENDANCE_DETAILS" Width="1.5" PointX="3" PointY="56.5" />
-        <EntityTypeShape EntityType="EMSModel.CARD_ASSIGN_INFO" Width="1.5" PointX="3" PointY="14.375" />
-        <EntityTypeShape EntityType="EMSModel.DEPARTMENT_INFO" Width="1.5" PointX="1.5" PointY="10.125" />
-        <EntityTypeShape EntityType="EMSModel.DIVISION_INFO" Width="1.5" PointX="3.75" PointY="10" />
-        <EntityTypeShape EntityType="EMSModel.EMPLOYEE_APPLICATION" Width="1.5" PointX="3" PointY="17.75" />
+        <EntityTypeShape EntityType="EMSModel.ASSET_INFO" Width="1.5" PointX="1.5" PointY="14.125" />
+        <EntityTypeShape EntityType="EMSModel.ASSET_MANAGEMENT" Width="1.5" PointX="3" PointY="28.625" />
+        <EntityTypeShape EntityType="EMSModel.ATTENDANCE_DETAILS" Width="1.5" PointX="3" PointY="40.75" />
+        <EntityTypeShape EntityType="EMSModel.CARD_ASSIGN_INFO" Width="1.5" PointX="3" PointY="37.5" />
+        <EntityTypeShape EntityType="EMSModel.DEPARTMENT_INFO" Width="1.5" PointX="1.5" PointY="33.125" />
+        <EntityTypeShape EntityType="EMSModel.DIVISION_INFO" Width="1.5" PointX="3.75" PointY="33" />
+        <EntityTypeShape EntityType="EMSModel.EMPLOYEE_APPLICATION" Width="1.5" PointX="3" PointY="53.25" />
         <EntityTypeShape EntityType="EMSModel.EMPLOYEE_INFO" Width="1.5" PointX="0.75" PointY="21.75" />
-        <EntityTypeShape EntityType="EMSModel.EQUEPMENTS_INFO" Width="1.5" PointX="3.75" PointY="5.5" />
-        <EntityTypeShape EntityType="EMSModel.INCREMENT_INFO" Width="1.5" PointX="3" PointY="29.5" />
-        <EntityTypeShape EntityType="EMSModel.INCREMENT_TYPE_INFO" Width="1.5" PointX="0.75" PointY="30.125" />
-        <EntityTypeShape EntityType="EMSModel.INV_INFO" Width="1.5" PointX="6" PointY="5.625" />
-        <EntityTypeShape EntityType="EMSModel.LEAVE_APPLICATION" Width="1.5" PointX="6" PointY="28.375" />
-        <EntityTypeShape EntityType="EMSModel.LEAVE_TYPE" Width="1.5" PointX="3.75" PointY="21.125" />
-        <EntityTypeShape EntityType="EMSModel.NOTICE_BOARD" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="EMSModel.POSITIONAL_INFO" Width="1.5" PointX="6" PointY="18.125" />
-        <EntityTypeShape EntityType="EMSModel.SALARY_INFO" Width="1.5" PointX="3" PointY="39" />
-        <EntityTypeShape EntityType="EMSModel.SALARY_INFO_SUM" Width="1.5" PointX="10.75" PointY="0.75" />
-        <EntityTypeShape EntityType="EMSModel.SALARY_SETUP" Width="1.5" PointX="8.25" PointY="21.75" />
-        <EntityTypeShape EntityType="EMSModel.SALARY_GRADE" Width="1.5" PointX="10.75" PointY="3.75" />
-        <EntityTypeShape EntityType="EMSModel.STOCK_INFO" Width="1.5" PointX="8.25" PointY="5.75" />
-        <EntityTypeShape EntityType="EMSModel.TEAM_DETAILS" Width="1.5" PointX="5.25" PointY="37.125" />
-        <EntityTypeShape EntityType="EMSModel.TEAM_INFO" Width="1.5" PointX="3" PointY="52.625" />
-        <EntityTypeShape EntityType="EMSModel.TRANSACTION_ITEM" Width="1.5" PointX="5.75" PointY="1.5" />
-        <EntityTypeShape EntityType="EMSModel.TRANSACTION_SHEET" Width="1.5" PointX="8" PointY="1" />
-        <EntityTypeShape EntityType="EMSModel.USER_INFO" Width="1.5" PointX="3" PointY="24.75" />
-        <EntityTypeShape EntityType="EMSModel.VENDOR_INFO" Width="1.5" PointX="3.75" PointY="0.875" />
+        <EntityTypeShape EntityType="EMSModel.EQUEPMENTS_INFO" Width="1.5" PointX="0.75" PointY="36.5" />
+        <EntityTypeShape EntityType="EMSModel.INCREMENT_INFO" Width="1.5" PointX="3" PointY="23.5" />
+        <EntityTypeShape EntityType="EMSModel.INCREMENT_TYPE_INFO" Width="1.5" PointX="0.75" PointY="18.125" />
+        <EntityTypeShape EntityType="EMSModel.INV_INFO" Width="1.5" PointX="6" PointY="33.5" />
+        <EntityTypeShape EntityType="EMSModel.LEAVE_APPLICATION" Width="1.5" PointX="9" PointY="23.375" />
+        <EntityTypeShape EntityType="EMSModel.LEAVE_TYPE" Width="1.5" PointX="6.75" PointY="19.125" />
+        <EntityTypeShape EntityType="EMSModel.NOTICE_BOARD" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="EMSModel.POSITIONAL_INFO" Width="1.5" PointX="6" PointY="23.125" />
+        <EntityTypeShape EntityType="EMSModel.SALARY_INFO" Width="1.5" PointX="3" PointY="44.125" />
+        <EntityTypeShape EntityType="EMSModel.SALARY_INFO_SUM" Width="1.5" PointX="0.75" PointY="5.75" />
+        <EntityTypeShape EntityType="EMSModel.SALARY_SETUP" Width="1.5" PointX="11.25" PointY="23.5" />
+        <EntityTypeShape EntityType="EMSModel.SALARY_GRADE" Width="1.5" PointX="2.75" PointY="5.75" />
+        <EntityTypeShape EntityType="EMSModel.STOCK_INFO" Width="1.5" PointX="8.25" PointY="35.125" />
+        <EntityTypeShape EntityType="EMSModel.TEAM_DETAILS" Width="1.5" PointX="5.25" PointY="38.875" />
+        <EntityTypeShape EntityType="EMSModel.TEAM_INFO" Width="1.5" PointX="3" PointY="55.875" />
+        <EntityTypeShape EntityType="EMSModel.TRANSACTION_ITEM" Width="1.5" PointX="0.75" PointY="1.5" />
+        <EntityTypeShape EntityType="EMSModel.TRANSACTION_SHEET" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="EMSModel.USER_INFO" Width="1.5" PointX="3" PointY="18.875" />
+        <EntityTypeShape EntityType="EMSModel.VENDOR_INFO" Width="1.5" PointX="3.75" PointY="14.875" />
         <AssociationConnector Association="EMSModel.FK_EQUEPMENTS_INFO_EQUEPMENTS_INFO" />
         <AssociationConnector Association="EMSModel.FK_ASSET_ASSIGNMENT_EMPLOYEE_INFO" />
         <AssociationConnector Association="EMSModel.FK_ASSET_MANAGEMENT_EQUEPMENTS_INFO" />

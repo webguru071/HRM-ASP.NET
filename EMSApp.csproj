@@ -4357,6 +4357,9 @@
     <Content Include="Views\SalaryIncrement\Edit.cshtml" />
     <Content Include="Views\Reports\EmployeeLeaveReport.cshtml" />
     <Content Include="Views\Employee\Delete.cshtml" />
+    <Content Include="Views\Purchase\WastageCreate.cshtml" />
+    <Content Include="Views\Purchase\IndexWastage.cshtml" />
+    <Content Include="Views\Purchase\WastageEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

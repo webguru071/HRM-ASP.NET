@@ -1,0 +1,80 @@
+﻿@model IEnumerable<EMSApp.Models.INV_INFO>
+
+@{
+    ViewBag.Title = "Index Wastage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+    <div class="container-fluid" style="padding-top:15px">
+        <div class="row">
+            <div class="col-md-3">
+                <p class="btn btn-block btn-outline-success btn-md">
+                    @Html.ActionLink("Create New", "WastageCreate")
+                </p>
+            </div>
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Product Wastage</h4>
+                        <div class="table-responsive">
+                            <table class="table color-bordered-table primary-bordered-table">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>
+                                            Product
+                                        </th>
+                                        <th>
+                                            Supplier
+                                        </th>
+                                        <th>
+                                            Unit
+                                        </th>
+                                        <th>
+                                            Date
+                                        </th>
+                                        <th>
+                                            Tag No
+                                        </th>
+                                        <th>
+                                            Note
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model != null)
+                                    {
+                                        foreach (var item in Model)
+                                        {
+                                    <tr>
+                                        <td>
+                                            @Html.ActionLink("Edit", "WastageEdit", new { id = item.INV_ID })
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.EQUEPMENTS_INFO.EQP_TITLE)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.VENDOR_INFO.VENDOR_NAME)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.UNIT)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.DATE)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TAG_NO)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.NOTE)
+                                        </td>
+                                    </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

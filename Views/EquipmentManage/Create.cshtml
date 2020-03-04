@@ -13,40 +13,60 @@
                 <h4 class="card-title">Asset Assign</h4>
                 <form class="form-material m-t-40">
                     <div class="" style="font-weight:900">@Html.ValidationSummary(true, "", new { @class = "text-danger alert alert-danger" })</div>
-                    <div class="form-group">
-                        Employee
-                        <div class="col-md-10">
-                            @Html.DropDownList("EMP_ID", null, htmlAttributes: new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.EMP_ID, "", new { @class = "text-danger" })
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                Employee
+                                <div class="col-md-10">
+                                    @Html.DropDownList("EMP_ID", null, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.EMP_ID, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        Asset
-                        <div class="col-md-10">
-                            @Html.DropDownList("EQUP_ID", null, htmlAttributes: new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.EQUP_ID, "", new { @class = "text-danger" })
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                Asset
+                                <div class="col-md-10">
+                                    @Html.DropDownList("EQUP_ID", null, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.EQUP_ID, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        Assign Date
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.DATE_ASSN, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
-                            @Html.ValidationMessageFor(model => model.DATE_ASSN, "", new { @class = "text-danger" })
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                Assign Date
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.DATE_ASSN, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                                    @Html.ValidationMessageFor(model => model.DATE_ASSN, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        Return Date
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.DATE_RTN, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
-                            @Html.ValidationMessageFor(model => model.DATE_ASSN, "", new { @class = "text-danger" })
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                Return Date
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.DATE_RTN, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                                    @Html.ValidationMessageFor(model => model.DATE_ASSN, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="form-group">
-                        Remark
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.REMARKS, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.REMARKS, "", new { @class = "text-danger" })
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                Location
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.LOCATION, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.LOCATION, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                Tag No.
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.REMARKS, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.REMARKS, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="form-actions">

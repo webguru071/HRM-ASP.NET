@@ -30,6 +30,8 @@ namespace EMSApp.Models
         public long ACTION_BY { get; set; }
         public Nullable<long> UPDATE_BY { get; set; }
         public Nullable<System.DateTime> UPDATE_DATE { get; set; }
+        public string NOTE { get; set; }
+        public string TAG_NO { get; set; }
     
         public virtual EQUEPMENTS_INFO EQUEPMENTS_INFO { get; set; }
         public virtual VENDOR_INFO VENDOR_INFO { get; set; }
