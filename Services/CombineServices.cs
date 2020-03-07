@@ -204,6 +204,8 @@ namespace EMSApp.Services
         }
         public List<AttendanceClass> GetAttendanceDataMonthyList(DataTable data)
         {
+            long idTemp = 0;
+            TimeSpan allTotalWorkingH = TimeSpan.Zero;
             List<AttendanceClass> list = new List<AttendanceClass>();
             var dataEmp = db.EMPLOYEE_INFO.ToList();
             try
@@ -288,6 +290,7 @@ namespace EMSApp.Services
                     }
                     listObj.CHECK_OUT_TIME = checkOut.ToString("hh:mm tt");
                     listObj.PERDAY_WORKING_HOUR = wHour.ToString();
+                    allTotalWorkingH = allTotalWorkingH + wHour;
                     TimeSpan totalDayWT = Convert.ToDateTime(listObj.CHECK_OUT_TIME).Subtract(Convert.ToDateTime(listObj.CHECK_IN_TIME));
                     listObj.TOTAL_WORKING_HOUR = totalDayWT.ToString();
                     listObj.TOTAL_BREAK = totalDayWT.Subtract(wHour).ToString();
@@ -323,12 +326,30 @@ namespace EMSApp.Services
                         listObj.LATE_ARRIVED = "0";
                     }
                     list.Add(listObj);
+                    if (id != idTemp && idTemp != 0)
+                    {
+                        idTemp = id;
+                        AttendanceClass ObjNew = new AttendanceClass();
+                        ObjNew.TOTAL_BREAK = "Total Working Hours";
+                        ObjNew.PERDAY_WORKING_HOUR = allTotalWorkingH.ToString();
+                        list.Add(ObjNew);
+                        allTotalWorkingH = TimeSpan.Zero;
+                    }
+                    else
+                    {
+                        idTemp = id;
+                    }
                 }
             }
             catch (Exception ex)
             {
 
             }
+            AttendanceClass Obj = new AttendanceClass();
+            Obj.TOTAL_BREAK = "Total Working Hours";
+            Obj.PERDAY_WORKING_HOUR = allTotalWorkingH.ToString();
+            list.Add(Obj);
+            allTotalWorkingH = TimeSpan.Zero;
             return list;
         }
         public List<EmployeeLeaveClass> GetEmployeeLeaveList(long empId = 0, string fromDate = "", string toDate = "")
@@ -388,7 +409,7 @@ namespace EMSApp.Services
                                         }
                                         else
                                         {
-                                            medicalLeave = medicalLeave + leaveDayRemain; 
+                                            medicalLeave = medicalLeave + leaveDayRemain;
                                         }
                                         dayCount = dayCount + leaveDayRemain;
                                     }
@@ -402,7 +423,7 @@ namespace EMSApp.Services
                                         }
                                         else
                                         {
-                                            medicalLeave = medicalLeave + dayRem;                                           
+                                            medicalLeave = medicalLeave + dayRem;
                                         }
                                         dayCount = dayCount + dayRem;
                                     }
@@ -440,7 +461,7 @@ namespace EMSApp.Services
                         else
                         {
                             obj.REMAIN_LEAVE = 0;
-                            obj.EXCEED_LEAVE = obj.TOTAL_LEAVE_TAKEN - totalLeave;
+                            obj.EXCEED_LEAVE = obj.TOTAL_LEAVE_TAKEN - obj.TOTAL_LEAVE;
                         }
                         leaveList.Add(obj);
                     }
@@ -455,9 +476,9 @@ namespace EMSApp.Services
 
         public bool SalarySetupUpdate(long id, SALARY_SETUP obj)
         {
-            string query = @"UPDATE SALARY_SETUP SET EMP_ID="+obj.EMP_ID+", POSITION_ID="+obj.POSITION_ID+ ",PAY_TYPE='" + obj.PAY_TYPE + "',GROSS_SALARY=" + obj.GROSS_SALARY + ",SALARY_GRADE_SETUP='" + obj.SALARY_GRADE_SETUP 
-                + "', SALARY_GRADE_SETUP_STRING='" + obj.SALARY_GRADE_SETUP_STRING + "',CANGE_TYPE='" + obj.CANGE_TYPE + "',UPDATE_BY=" + obj.UPDATE_BY + ",UPDATE_DATE='" + obj.UPDATE_DATE + "' WHERE SALARY_SET_ID="+id;
-            return dbHelper.ExecuteDML(query);             
+            string query = @"UPDATE SALARY_SETUP SET EMP_ID=" + obj.EMP_ID + ", POSITION_ID=" + obj.POSITION_ID + ",PAY_TYPE='" + obj.PAY_TYPE + "',GROSS_SALARY=" + obj.GROSS_SALARY + ",SALARY_GRADE_SETUP='" + obj.SALARY_GRADE_SETUP
+                + "', SALARY_GRADE_SETUP_STRING='" + obj.SALARY_GRADE_SETUP_STRING + "',CANGE_TYPE='" + obj.CANGE_TYPE + "',UPDATE_BY=" + obj.UPDATE_BY + ",UPDATE_DATE='" + obj.UPDATE_DATE + "' WHERE SALARY_SET_ID=" + id;
+            return dbHelper.ExecuteDML(query);
         }
 
         public bool InsertSalary(SALARY_INFO_SUM objSum, List<SALARY_INFO> objInfo)
@@ -470,21 +491,21 @@ namespace EMSApp.Services
                 bool result = dbHelper.ExecuteCommandWithParameterList(list);
                 return result;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return false;
-            }           
+            }
         }
 
         private List<KeyValuePair<SqlCommand, string>> GetSalaryInfoInsertQuery(List<SALARY_INFO> objInfo, List<KeyValuePair<SqlCommand, string>> list)
         {
             string insertQuery = @"INSERT INTO SALARY_INFO (EMPLOYEE_ID,SALARY_PAID,GROSS_SALARY,BONUS,DEDUCTION,TOTAL,OTHERS,ADDITION,ADVANCE,COMMISSION,REMARKS,ACTION_BY,ACTION_DATE)
                                    VALUES(@EMPLOYEE_ID,@SALARY_PAID,@GROSS_SALARY,@BONUS,@DEDUCTION,@TOTAL,@OTHERS,@ADDITION,@ADVANCE,@COMMISSION,@REMARKS,@ACTION_BY,@ACTION_DATE)";
-            foreach(var obj in objInfo)
+            foreach (var obj in objInfo)
             {
                 SqlCommand command = new SqlCommand();
                 command.Parameters.Add("EMPLOYEE_ID", SqlDbType.BigInt).Value = obj.EMPLOYEE_ID;
-                command.Parameters.Add("SALARY_PAID", SqlDbType.NVarChar,50).Value = obj.SALARY_PAID;
+                command.Parameters.Add("SALARY_PAID", SqlDbType.NVarChar, 50).Value = obj.SALARY_PAID;
                 command.Parameters.Add("GROSS_SALARY", SqlDbType.Decimal).Value = obj.GROSS_SALARY;
                 command.Parameters.Add("BONUS", SqlDbType.Decimal).Value = obj.BONUS;
                 command.Parameters.Add("DEDUCTION", SqlDbType.Decimal).Value = obj.DEDUCTION;
@@ -493,11 +514,11 @@ namespace EMSApp.Services
                 command.Parameters.Add("ADDITION", SqlDbType.Decimal).Value = obj.ADDITION;
                 command.Parameters.Add("ADVANCE", SqlDbType.Decimal).Value = obj.ADVANCE;
                 command.Parameters.Add("COMMISSION", SqlDbType.Decimal).Value = obj.COMMISSION;
-                command.Parameters.Add("REMARKS", SqlDbType.NVarChar,500).Value = obj.REMARKS;
+                command.Parameters.Add("REMARKS", SqlDbType.NVarChar, 500).Value = obj.REMARKS;
                 command.Parameters.Add("ACTION_BY", SqlDbType.BigInt).Value = obj.ACTION_BY;
                 command.Parameters.Add("ACTION_DATE", SqlDbType.DateTime).Value = obj.ACTION_DATE;
                 list.Add(new KeyValuePair<SqlCommand, string>(command, insertQuery));
-            }           
+            }
             return list;
         }
 
@@ -505,7 +526,7 @@ namespace EMSApp.Services
         {
             string insertQuery = @"INSERT INTO SALARY_INFO_SUM (SALARY_PAID_MONTH,TOTAL_PAID) VALUES(@SALARY_PAID_MONTH,@TOTAL_PAID)";
             SqlCommand command = new SqlCommand();
-            command.Parameters.Add("SALARY_PAID_MONTH", SqlDbType.NVarChar,50).Value = objSum.SALARY_PAID_MONTH;
+            command.Parameters.Add("SALARY_PAID_MONTH", SqlDbType.NVarChar, 50).Value = objSum.SALARY_PAID_MONTH;
             command.Parameters.Add("TOTAL_PAID", SqlDbType.Decimal).Value = objSum.TOTAL_PAID;
             list.Add(new KeyValuePair<SqlCommand, string>(command, insertQuery));
             return list;
@@ -534,7 +555,7 @@ namespace EMSApp.Services
             string query = @"UPDATE USER_INFO SET IS_DELETED=@IS_DELETED WHERE EMPLOYEE_ID=@EMPLOYEE_ID";
             SqlCommand command = new SqlCommand();
             command.Parameters.Add("EMPLOYEE_ID", SqlDbType.BigInt).Value = id;
-            command.Parameters.Add("IS_DELETED", SqlDbType.Char,1).Value = statusV;
+            command.Parameters.Add("IS_DELETED", SqlDbType.Char, 1).Value = statusV;
             list.Add(new KeyValuePair<SqlCommand, string>(command, query));
             return list;
         }
@@ -544,7 +565,7 @@ namespace EMSApp.Services
             string query = @"UPDATE SALARY_SETUP SET CANGE_TYPE=@CANGE_TYPE WHERE EMP_ID=@EMP_ID";
             SqlCommand command = new SqlCommand();
             command.Parameters.Add("EMP_ID", SqlDbType.BigInt).Value = id;
-            command.Parameters.Add("CANGE_TYPE", SqlDbType.Char,1).Value = statusV;
+            command.Parameters.Add("CANGE_TYPE", SqlDbType.Char, 1).Value = statusV;
             list.Add(new KeyValuePair<SqlCommand, string>(command, query));
             return list;
         }
@@ -554,7 +575,7 @@ namespace EMSApp.Services
             string query = @"UPDATE POSITIONAL_INFO SET STATUS=@STATUS WHERE EMPLOYEE_ID=@EMPLOYEE_ID";
             SqlCommand command = new SqlCommand();
             command.Parameters.Add("EMPLOYEE_ID", SqlDbType.BigInt).Value = id;
-            command.Parameters.Add("STATUS", SqlDbType.Char,1).Value = statusV;
+            command.Parameters.Add("STATUS", SqlDbType.Char, 1).Value = statusV;
             list.Add(new KeyValuePair<SqlCommand, string>(command, query));
             return list;
         }
@@ -564,7 +585,7 @@ namespace EMSApp.Services
             string query = @"UPDATE EMPLOYEE_INFO SET IS_DELETED=@IS_DELETED WHERE ID=@ID";
             SqlCommand command = new SqlCommand();
             command.Parameters.Add("ID", SqlDbType.BigInt).Value = id;
-            command.Parameters.Add("IS_DELETED", SqlDbType.Char,1).Value = statusV;
+            command.Parameters.Add("IS_DELETED", SqlDbType.Char, 1).Value = statusV;
             list.Add(new KeyValuePair<SqlCommand, string>(command, query));
             return list;
         }

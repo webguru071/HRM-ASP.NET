@@ -22,7 +22,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="bmd-label-floating">Payment Month</label>
-                                        @Html.DropDownList("SALARY_MONTH", null, htmlAttributes: new { @class = "form-control" })
+                                        @Html.DropDownList("SALARY_MONTH", null, htmlAttributes: new { @class = "form-control",@id="month" })
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -146,6 +146,7 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript">
+
         function CalCulate(idF) {
             var idStr = idF.split("_");
             var id = idStr[1];
@@ -158,42 +159,50 @@
             var totalG = gross + bonus + add - deduc - adv + com;
             $("#Total_" + id).val(totalG);
         }
+
         function ReadTable() {
-
-            var table = document.getElementById("tblArticles");
-            var rowLength = table.rows.length;
-            var arrayList = [];
-            var totalPaid=$("#GRAND_TOTAL_PAY").val();
-            arrayList.push(totalPaid);
-            for (var i = 1; i < rowLength; i++) {
-                var id = document.getElementById("tblArticles").rows[i].cells[1].innerHTML.trim();
-
-                var bonus = $("#bonus_" + id).val();
-                var add = $("#Add_" + id).val();
-                var deduc = $("#Deduc_" + id).val();
-                var adv = $("#Adv_" + id).val();
-                var com = $("#Com_" + id).val();
-                var gross = $("#Gross_" + id).val();
-                var total = $("#Total_" + id).val();
-                var note = $("#Note_" + id).val();
-                var arrStr = id+":"+bonus + ":" + add + ":" + deduc + ":" + adv + ":" + com + ":" + gross + ":" + total + ":" + note;
-                arrayList.push(arrStr);
+            
+            if ($("#GRAND_TOTAL_PAY").val() == "") {
+                alert("Please Generate Total Pay First!!");
             }
-            $.ajax({
-                url: "@Url.Action("InsertData", "Salary")",
-                type: "POST",
-                traditional: true,
-                dataType: "json",
-                data: { arrayList: arrayList },
-                success: function () {
-                    
-                },
-                error: function () {
-                    
+            else {
+                 var table = document.getElementById("tblArticles");
+                var rowLength = table.rows.length;
+                var arrayList = [];
+                var totalPaid="g"+$("#GRAND_TOTAL_PAY").val();
+                arrayList.push(totalPaid);
+
+                for (var i = 1; i < rowLength; i++) {
+                    var id = document.getElementById("tblArticles").rows[i].cells[1].innerHTML.trim();
+
+                    var bonus = $("#bonus_" + id).val();
+                    var add = $("#Add_" + id).val();
+                    var deduc = $("#Deduc_" + id).val();
+                    var adv = $("#Adv_" + id).val();
+                    var com = $("#Com_" + id).val();
+                    var gross = $("#Gross_" + id).val();
+                    var total = $("#Total_" + id).val();
+                    var note = $("#Note_" + id).val();
+                    var arrStr = id+":"+bonus + ":" + add + ":" + deduc + ":" + adv + ":" + com + ":" + gross + ":" + total + ":" + note;
+                    arrayList.push(arrStr);
                 }
 
-            });
+                $.ajax({
+                    url: "@Url.Action("InsertData", "Salary")",
+                    type: "POST",
+                    traditional: true,
+                    dataType: "json",
+                    data: { arrayList: arrayList },
+                    success: function (result) {                    
+                       window.location.replace("AllEmpIndex");
+                    },
+                    error: function (result) {
+                        alert("Salary is Not Generated!!");
+                    }
+                });          
+            }                          
         }
+
         function CalculateTotal() {
             var gTotal = parseFloat(0);
             var table = document.getElementById("tblArticles");

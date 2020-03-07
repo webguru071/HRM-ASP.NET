@@ -84,7 +84,6 @@ namespace EMSApp.Controllers
                     if (data.PASSWORD != pass)
                     {
                         ModelState.AddModelError("", "Password is Not Matched!!");
-                        return View(collection);
                     }
                     else
                     {
@@ -105,7 +104,6 @@ namespace EMSApp.Controllers
                         else
                         {
                             ModelState.AddModelError("", "Please Give Proper Information");
-                            return View(collection);
                         }
                         if (ModelState.IsValid)
                         {
@@ -114,15 +112,13 @@ namespace EMSApp.Controllers
                             return RedirectToAction("Index");
                         }
                     }
-                }
-
-                return View();
+                }              
             }
             catch (Exception ex)
             {
 
-                return View();
             }
+            return View();
         }
 
         // GET: AttendanceManage/Edit/5
@@ -188,7 +184,7 @@ namespace EMSApp.Controllers
                 {
                     ModelState.AddModelError("", "File is Required!!!");
                 }
-                else if (!uploadFile.FileName.EndsWith("xls") && !uploadFile.FileName.EndsWith("xlsx"))
+                else if (!uploadFile.FileName.EndsWith("xls") && !uploadFile.FileName.EndsWith("xlsx") && !uploadFile.FileName.EndsWith("csv"))
                 {
                     ModelState.AddModelError("", "File is Not in Correct Format!!!");
                 }
@@ -200,6 +196,7 @@ namespace EMSApp.Controllers
                 {
                     if (uploadFile != null && uploadFile.ContentLength > 0)
                     {
+                        DataTable dt;
                         var fileName = Path.GetFileName(DateTime.Now.ToString() + "_" + uploadFile.FileName);
                         var path = Path.Combine(Server.MapPath("~/Uploads"), fileName);
                         uploadFile.SaveAs(path);
@@ -208,12 +205,17 @@ namespace EMSApp.Controllers
                         if (extension.Trim() == ".xls")
                         {
                             connString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + path + ";Extended Properties=\"Excel 8.0;HDR=Yes;IMEX=2\"";
+                            dt = ConvertXSLXtoDataTable(path, connString);
                         }
                         else if (extension.Trim() == ".xlsx")
                         {
                             connString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + path + ";Extended Properties=\"Excel 12.0;HDR=Yes;IMEX=2\"";
+                            dt = ConvertXSLXtoDataTable(path, connString);
                         }
-                        DataTable dt = ConvertXSLXtoDataTable(path, connString);
+                        else
+                        {
+                            dt = ConvertCSVtoDataTable(path);
+                        }                        
                         if (dt.Rows.Count > 0)
                         {
                             DataTable result = InsertIntoDB(dt);
@@ -246,6 +248,41 @@ namespace EMSApp.Controllers
             ViewBag.MONTH = SetMonthDate();
             ViewBag.YEAR = SetYear();
             return View(viewList);
+        }
+
+        private DataTable ConvertCSVtoDataTable(string path)
+        {
+            DataTable dtNew = CreateDataTable();
+            StreamReader sr = new StreamReader(path);
+            string line = sr.ReadToEnd();
+            //spliting row after new line  
+            string[] csvRow = line.Split(new string[] { "\r\n" }, StringSplitOptions.None);
+            for(int i=0;i<csvRow.Length;i++)
+            {
+                if (!string.IsNullOrEmpty(csvRow[i]))
+                {
+                    //Adding each row into datatable  
+                    dtNew.Rows.Add();
+                    int count = 0;
+                    foreach (string FileRec in csvRow[i].Split(','))
+                    {
+                        dtNew.Rows[dtNew.Rows.Count - 1][count] = FileRec;
+                        count++;
+                    }
+                }
+            }
+            return dtNew;
+        }
+        private DataTable CreateDataTable()
+        {
+            DataTable dtNew = new DataTable();
+            dtNew.Columns.AddRange(new DataColumn[6] { new DataColumn("AC-No.", typeof(string)),
+                        new DataColumn("Name", typeof(string)),
+                        new DataColumn("Start_time", typeof(string)),
+                        new DataColumn("End_time", typeof(string)),
+                        new DataColumn("Time_long", typeof(string)),
+                        new DataColumn("Date",typeof(string)) });
+            return dtNew;
         }
         private DataTable InsertIntoDB(DataTable dt)
         {

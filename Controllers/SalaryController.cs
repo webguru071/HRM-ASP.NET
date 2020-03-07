@@ -393,41 +393,47 @@ namespace EMSApp.Controllers
             ViewBag.ListValue = infoList;
         }
         [HttpPost]
-        public ActionResult InsertData(string[] arrayList)
+        public JsonResult InsertData(string[] arrayList)
         {
-            string paidDAate = Convert.ToString(Session["paidDAate"]);
-            string sumValue = arrayList[0].Trim();
-            string[] sumArr = sumValue.Split(':');
-            SALARY_INFO_SUM objSum = new SALARY_INFO_SUM();
-            objSum.SALARY_PAID_MONTH = paidDAate;
-            objSum.TOTAL_PAID = Convert.ToDecimal(sumArr[0]);
-            List<SALARY_INFO> sInfoList = new List<SALARY_INFO>();
-            for (int i=1;i< arrayList.Length;i++)
+            bool result=false;
+            if (arrayList.Length > 0)
             {
-                string valueStr = arrayList[i].Trim();
-                string[] valueArr = valueStr.Split(':');
-                SALARY_INFO obj = new SALARY_INFO();
-                obj.EMPLOYEE_ID = Convert.ToInt64(valueArr[0]);
-                obj.BONUS = Convert.ToDecimal(valueArr[1]);
-                obj.OTHERS = 0;
-                obj.ADDITION = Convert.ToDecimal(valueArr[2]);
-                obj.DEDUCTION = Convert.ToDecimal(valueArr[3]);
-                obj.ADVANCE = Convert.ToDecimal(valueArr[4]);
-                obj.COMMISSION = Convert.ToDecimal(valueArr[5]);
-                obj.GROSS_SALARY = Convert.ToDecimal(valueArr[6]);
-                obj.TOTAL = Convert.ToDecimal(valueArr[7]);
-                obj.REMARKS = Convert.ToString(valueArr[8]);
-                obj.SALARY_PAID = paidDAate;
-                obj.ACTION_BY = converterHelper.GetLoggedUserID(); 
-                obj.ACTION_DATE = DateTime.Now;
-                sInfoList.Add(obj);
+                string paidDAate = Convert.ToString(Session["paidDAate"]);
+                string sumValue = arrayList[0].Trim();
+                if (sumValue.Contains("g"))
+                {
+                    string[] sumArr = sumValue.Split('g');
+                    SALARY_INFO_SUM objSum = new SALARY_INFO_SUM();
+                    objSum.SALARY_PAID_MONTH = paidDAate;
+                    objSum.TOTAL_PAID = Convert.ToDecimal(sumArr[1]);
+                    List<SALARY_INFO> sInfoList = new List<SALARY_INFO>();
+                    for (int i = 1; i < arrayList.Length; i++)
+                    {
+                        string valueStr = arrayList[i].Trim();
+                        string[] valueArr = valueStr.Split(':');
+                        SALARY_INFO obj = new SALARY_INFO();
+                        obj.EMPLOYEE_ID = Convert.ToInt64(valueArr[0]);
+                        obj.BONUS = Convert.ToDecimal(valueArr[1]);
+                        obj.OTHERS = 0;
+                        obj.ADDITION = Convert.ToDecimal(valueArr[2]);
+                        obj.DEDUCTION = Convert.ToDecimal(valueArr[3]);
+                        obj.ADVANCE = Convert.ToDecimal(valueArr[4]);
+                        obj.COMMISSION = Convert.ToDecimal(valueArr[5]);
+                        obj.GROSS_SALARY = Convert.ToDecimal(valueArr[6]);
+                        obj.TOTAL = Convert.ToDecimal(valueArr[7]);
+                        obj.REMARKS = Convert.ToString(valueArr[8]);
+                        obj.SALARY_PAID = paidDAate;
+                        obj.ACTION_BY = converterHelper.GetLoggedUserID();
+                        obj.ACTION_DATE = DateTime.Now;
+                        sInfoList.Add(obj);
+                    }
+                    if (ModelState.IsValid)
+                    {
+                        result = service.InsertSalary(objSum: objSum, objInfo: sInfoList);                                              
+                    }
+                }               
             }
-            bool result=service.InsertSalary(objSum: objSum, objInfo: sInfoList);
-            if (result)
-            {
-                return View("AllEmpIndex");
-            }
-            return View();
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }

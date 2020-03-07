@@ -130,6 +130,7 @@ namespace EMSApp.Controllers
                 var data = db.EMPLOYEE_INFO.Where(x => x.ID == id).FirstOrDefault();
                 Session["AD"] = data.ACTION_DATE;
                 //Session["AT"] = data.ACTION_BY;
+                ViewBag.BLOOD_GROUP = data.BLOOD_GROUP.Trim();
                 ViewBag.IS_DELETED = new SelectList(SetStatusList(), "Value", "Text", data.IS_DELETED);
                 return View(data);
             }

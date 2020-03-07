@@ -16,10 +16,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/10/2013 16:29:20</publishTime>
     </File>
     <File Include="bin/EMSApp.dll">
-      <publishTime>03/04/2020 17:25:17</publishTime>
+      <publishTime>03/07/2020 19:09:15</publishTime>
     </File>
     <File Include="bin/EMSApp.pdb">
-      <publishTime>03/04/2020 17:25:17</publishTime>
+      <publishTime>03/07/2020 19:09:15</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>10/23/2017 13:15:18</publishTime>
@@ -12274,13 +12274,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/15/2020 16:37:46</publishTime>
     </File>
     <File Include="Views/Asset/Index.cshtml">
-      <publishTime>02/27/2020 12:50:11</publishTime>
+      <publishTime>03/07/2020 15:57:35</publishTime>
     </File>
     <File Include="Views/AttendanceManage/Create.cshtml">
-      <publishTime>02/15/2020 17:46:37</publishTime>
+      <publishTime>03/05/2020 18:59:22</publishTime>
     </File>
     <File Include="Views/AttendanceManage/Import.cshtml">
-      <publishTime>03/04/2020 12:50:23</publishTime>
+      <publishTime>03/07/2020 17:43:03</publishTime>
     </File>
     <File Include="Views/AttendanceManage/Index.cshtml">
       <publishTime>02/08/2020 11:59:38</publishTime>
@@ -12331,7 +12331,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/03/2020 14:09:13</publishTime>
     </File>
     <File Include="Views/EmployeeProfile/Edit.cshtml">
-      <publishTime>02/15/2020 16:53:55</publishTime>
+      <publishTime>03/05/2020 18:38:32</publishTime>
     </File>
     <File Include="Views/EmployeeProfile/Index.cshtml">
       <publishTime>02/05/2020 11:25:31</publishTime>
@@ -12487,7 +12487,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/25/2020 12:26:54</publishTime>
     </File>
     <File Include="Views/Reports/AttendanceReportMonthly.cshtml">
-      <publishTime>03/03/2020 12:16:10</publishTime>
+      <publishTime>03/07/2020 18:44:57</publishTime>
     </File>
     <File Include="Views/Reports/DepartmentWiseReport.cshtml">
       <publishTime>02/27/2020 16:40:36</publishTime>
@@ -12508,7 +12508,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/18/2020 18:02:22</publishTime>
     </File>
     <File Include="Views/Salary/AllEmpSalaryCreate.cshtml">
-      <publishTime>03/03/2020 11:30:54</publishTime>
+      <publishTime>03/07/2020 17:23:42</publishTime>
     </File>
     <File Include="Views/Salary/Create.cshtml">
       <publishTime>02/18/2020 16:20:47</publishTime>
@@ -12562,7 +12562,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/03/2020 14:04:00</publishTime>
     </File>
     <File Include="Views/SalarySetup/Edit.cshtml">
-      <publishTime>03/01/2020 13:36:29</publishTime>
+      <publishTime>03/05/2020 19:18:15</publishTime>
     </File>
     <File Include="Views/SalarySetup/Index.cshtml">
       <publishTime>03/01/2020 12:52:06</publishTime>

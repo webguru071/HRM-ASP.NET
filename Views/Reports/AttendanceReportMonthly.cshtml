@@ -62,7 +62,17 @@
                                 {
                                     count++;
                                     <tr>
-                                        <td>@count</td>
+                                        @{ if (string.IsNullOrEmpty(item.ATT_DATE))
+                                            {
+                                                count = 0;
+                                                <td></td>
+                                            }
+                                            else
+                                            {
+                                                <td>@count</td>
+                                            }
+                                        }
+
                                         <td>
                                             @Html.DisplayFor(modelItem => item.ATT_DATE)
                                         </td>

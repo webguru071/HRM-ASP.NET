@@ -128,7 +128,7 @@ namespace EMSApp.Controllers
         {
             if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
             {
-                var data = db.INCREMENT_INFO.Where(x => x.EMP_ID == id).FirstOrDefault();
+                var data = db.INCREMENT_INFO.Where(x => x.INCREMENT_ID == id).FirstOrDefault();
                 GetDataInBg(empId: data.EMP_ID, incId: data.INCREMENT_TYPE);
                 Session["AD"] = data.ACTION_DATE;
                 Session["PREV_BASIC"] = data.PREV_BASIC;
