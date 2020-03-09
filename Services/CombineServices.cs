@@ -199,7 +199,11 @@ namespace EMSApp.Services
                             inner join EMPLOYEE_INFO ei on ei.ID=ad.EMPLOYEE_ID 
                             where ei.id!=0" + idFilter + DateFilter + @"  group by ad.ATT_DATE,ei.EMPLOYEE_NAME,ei.ID";
             DataTable data = dbHelper.GetDataTable(query);
-            List<AttendanceClass> list = GetAttendanceDataMonthyList(data);
+            List<AttendanceClass> list=new List<AttendanceClass>();
+            if (data != null)
+            {
+                list = GetAttendanceDataMonthyList(data);
+            }
             return list;
         }
         public List<AttendanceClass> GetAttendanceDataMonthyList(DataTable data)
@@ -290,7 +294,7 @@ namespace EMSApp.Services
                     }
                     listObj.CHECK_OUT_TIME = checkOut.ToString("hh:mm tt");
                     listObj.PERDAY_WORKING_HOUR = wHour.ToString();
-                    allTotalWorkingH = allTotalWorkingH + wHour;
+                    allTotalWorkingH = allTotalWorkingH.Add(wHour);
                     TimeSpan totalDayWT = Convert.ToDateTime(listObj.CHECK_OUT_TIME).Subtract(Convert.ToDateTime(listObj.CHECK_IN_TIME));
                     listObj.TOTAL_WORKING_HOUR = totalDayWT.ToString();
                     listObj.TOTAL_BREAK = totalDayWT.Subtract(wHour).ToString();
@@ -326,30 +330,30 @@ namespace EMSApp.Services
                         listObj.LATE_ARRIVED = "0";
                     }
                     list.Add(listObj);
-                    if (id != idTemp && idTemp != 0)
-                    {
-                        idTemp = id;
-                        AttendanceClass ObjNew = new AttendanceClass();
-                        ObjNew.TOTAL_BREAK = "Total Working Hours";
-                        ObjNew.PERDAY_WORKING_HOUR = allTotalWorkingH.ToString();
-                        list.Add(ObjNew);
-                        allTotalWorkingH = TimeSpan.Zero;
-                    }
-                    else
-                    {
-                        idTemp = id;
-                    }
+                    //if (id != idTemp && idTemp != 0)
+                    //{
+                    //    idTemp = id;
+                    //    AttendanceClass ObjNew = new AttendanceClass();
+                    //    ObjNew.TOTAL_BREAK = "Total Working Hours";
+                    //    ObjNew.PERDAY_WORKING_HOUR = allTotalWorkingH.ToString();
+                    //    list.Add(ObjNew);
+                    //    allTotalWorkingH = TimeSpan.Zero;
+                    //}
+                    //else
+                    //{
+                    //    idTemp = id;
+                    //}
                 }
             }
             catch (Exception ex)
             {
 
             }
-            AttendanceClass Obj = new AttendanceClass();
-            Obj.TOTAL_BREAK = "Total Working Hours";
-            Obj.PERDAY_WORKING_HOUR = allTotalWorkingH.ToString();
-            list.Add(Obj);
-            allTotalWorkingH = TimeSpan.Zero;
+            //AttendanceClass Obj = new AttendanceClass();
+            //Obj.TOTAL_BREAK = "Total Working Hours";
+            //Obj.PERDAY_WORKING_HOUR = allTotalWorkingH.ToString(@"0,5");
+            //list.Add(Obj);
+            //allTotalWorkingH = TimeSpan.Zero;
             return list;
         }
         public List<EmployeeLeaveClass> GetEmployeeLeaveList(long empId = 0, string fromDate = "", string toDate = "")

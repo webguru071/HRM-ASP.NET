@@ -228,7 +228,7 @@ namespace EMSApp.Controllers
             ViewBag.DIV_ID = new SelectList(SetDiv(), "Value", "Text", divId);
             if (divId != 0)
             {
-                var data = db.DEPARTMENT_INFO.Where(x => x.DEPT_ID == divId).FirstOrDefault();
+                var data = db.DIVISION_INFO.Where(x => x.DIV_ID == divId).FirstOrDefault();
                 deptId = data.DEPT_ID;
             }
             ViewBag.DEPT_ID = new SelectList(SetDept(), "Value", "Text", deptId);

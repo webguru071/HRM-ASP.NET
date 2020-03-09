@@ -26,9 +26,8 @@ namespace EMSApp.Controllers
         {
             if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
             {
-                ViewBag.EMPLOYEE_ID = SetEmployee();
-                var data = service.GetDeptWiseData();
-                return View(data);
+                ViewBag.EMPLOYEE_ID = SetEmployee();              
+                return View();
             }
             else
             {
@@ -40,11 +39,23 @@ namespace EMSApp.Controllers
         {
             if (converterHelper.CheckLogin() && converterHelper.GetLoggedUserLevel() == ConstantValue.UserLevelAdmin)
             {
-                string status = collection["IS_DELETED"];
-                long empId = string.IsNullOrEmpty(collection["EMPLOYEE_ID"]) ? 0 : Convert.ToInt64(collection["EMPLOYEE_ID"]);
-                var data = service.GetDeptWiseData(status: status, empId: empId);
-                ViewBag.EMPLOYEE_ID = SetEmployee();
-                return View(data);
+                if (string.IsNullOrEmpty(collection["EMPLOYEE_ID"].ToString()) || Convert.ToInt64(collection["EMPLOYEE_ID"])<=0)
+                {
+                    ModelState.AddModelError("", "Please Select Employee!!!");
+                }
+                else
+                {
+                    string status = collection["IS_DELETED"];
+                    long empId = string.IsNullOrEmpty(collection["EMPLOYEE_ID"]) ? 0 : Convert.ToInt64(collection["EMPLOYEE_ID"]);
+                    var data = service.GetDeptWiseData(status: status, empId: empId);
+                    var incremetData = db.INCREMENT_INFO.Where(x => x.EMP_ID == empId).ToList();
+                    var salaryData=db.SALARY_INFO.Where(x => x.EMPLOYEE_ID == empId).ToList();
+                    ViewBag.INCREMENT_INFO = incremetData;
+                    ViewBag.SALARY_INFO = salaryData;
+                    ViewBag.EMPLOYEE_ID = SetEmployee();
+                    return View(data);
+                }
+                return View();
             }
             else
             {

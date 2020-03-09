@@ -13,7 +13,7 @@
             <hr />
             <div class="row">
                 <div class="col-md-4">
-                    @Html.DropDownList("EMPLOYEE_ID", null, htmlAttributes: new { @class = "form-control", @onchange = @"form.submit();"})
+                    @Html.DropDownList("EMPLOYEE_ID", null, htmlAttributes: new { @class = "form-control" })
                 </div>
                 <div class="col-md-4">
                     @Html.DropDownList("IS_DELETED", new SelectListItem[]
@@ -21,12 +21,9 @@
                                      new SelectListItem { Text = "Select Status", Value="" },
                                     new SelectListItem { Text = "Active", Value=EMSApp.Helper.ConstantValue.UserStatusActive },
                                     new SelectListItem{ Text="Deactive",Value=EMSApp.Helper.ConstantValue.UserStatusDeactive },},
-                         htmlAttributes: new { @class = "form-control",onchange = @"form.submit();" })
+                         htmlAttributes: new { @class = "form-control" })
                 </div>
-                @*<div class="col-md-12">
-                    <button type="submit" class="btn btn-success waves-effect waves-light m-t-10 pull-right">Search</button>
-
-                </div>*@
+                <button type="submit" class="btn btn-success waves-effect waves-light m-t-10 pull-center">Search</button>
             </div>
         </div>
     </div>
@@ -35,22 +32,22 @@
         foreach (var item in Model)
         {
             <div class="row">
-                <div class="col-lg-12" >
-                    <div class="card card-outline-success">
+                <div class="col-lg-12">
+                    <div class="card card-outline-info">
                         <div class="card-header">
                             <h4 class="m-b-0 text-white">Employee All Details</h4>
                         </div>
                         <div class="card-body">
-                            <form role="form" class="form-horizontal">
+                            <form role="form" class="form-horizontal" style="text-align:left">
                                 <div class="form-body">
-                                    <h3 class="box-title">Person Info</h3>
+                                    <h3 class="box-title">Personal Details</h3>
                                     <hr class="m-t-0 m-b-40">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group row">
                                                 <label class="control-label text-right col-md-3">Name</label>
                                                 <div class="col-md-9">
-                                                      <p class="form-control-static">@item.EMPLOYEE_NAME</p>
+                                                    <p class="form-control-static">@item.EMPLOYEE_NAME</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -260,6 +257,122 @@
                                         <!--/span-->
                                     </div>
                                     <!--/row-->
+                                    <h3 class="box-title">Increment Details</h3>
+                                    <hr class="m-t-0 m-b-40">
+                                    <div class="row">
+                                        <div class="table-responsive">
+                                            <table class="table color-bordered-table info-bordered-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Sl No.</th>
+                                                        <th>Increment From</th>
+                                                        <th>Increment Type</th>
+                                                        <th>Rate</th>
+                                                        <th>
+                                                            Remarks
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (ViewBag.INCREMENT_INFO != null)
+                                                    {
+                                                        int slNo = 0;
+                                                        foreach (var itemInc in (ViewBag.INCREMENT_INFO as List<EMSApp.Models.INCREMENT_INFO>))
+                                                        {
+                                                            slNo++;
+                                                            <tr>
+                                                                <td>@slNo</td>
+                                                                <td>
+                                                                    @itemInc.INCREMENT_FROM.ToString("dd-MM-yyyy")
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => itemInc.INCREMENT_TYPE_INFO.INCREMENT_TYPE_TITLE)
+                                                                </td>
+                                                                <td>
+                                                                    @{
+                                                                        string rateType = "";
+                                                                        if (itemInc.INCREMENT_CALCULATE_AS == EMSApp.Helper.ConstantValue.SalarySetupInAmount)
+                                                                        {
+                                                                            rateType = " Tk.";
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            rateType = "%";
+                                                                        }
+                                                                    }
+                                                                    @itemInc.INCREMENT_RATE@rateType
+                                                                </td>
+                                                                <td>
+                                                                    @itemInc.REMARKS
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <!--/row-->
+                                    <h3 class="box-title">Paid Salary Details</h3>
+                                    <hr class="m-t-0 m-b-40">
+                                    <div class="row">
+                                        <div class="table-responsive">
+                                            <table class="table color-bordered-table info-bordered-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Sl No.</th>
+                                                        <th>Paid</th>
+                                                        <th>Gross Salary</th>
+                                                        <th>Bonus</th>
+                                                        <th>Addition</th>
+                                                        <th>Deduction</th>
+                                                        <th>Advance</th>
+                                                        <th>Commission</th>
+                                                        <th>Total</th>
+                                                        <th>Note</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (ViewBag.SALARY_INFO != null)
+                                                    {
+                                                        int slNo = 0;
+                                                        foreach (var itemSalr in (ViewBag.SALARY_INFO as List<EMSApp.Models.SALARY_INFO>))
+                                                        {
+                                                            slNo++;
+                                                            <tr>
+                                                                <td>@slNo</td>
+                                                                <td>@itemSalr.SALARY_PAID</td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => itemSalr.GROSS_SALARY)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => itemSalr.BONUS)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => itemSalr.ADDITION)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => itemSalr.DEDUCTION)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => itemSalr.ADVANCE)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => itemSalr.COMMISSION)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => itemSalr.TOTAL)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => itemSalr.REMARKS)
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
                             </form>
                         </div>
