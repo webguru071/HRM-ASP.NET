@@ -23,7 +23,8 @@ namespace EMSApp.Helper
             try
             {
                 if (ConfigurationManager.ConnectionStrings["SQLEntities"] == null)
-                    connStr = @"Data Source=DESKTOP-OSJOPBK\SQLEXPRESS;Initial Catalog=EMS;User ID=sa;password=12345";
+                    //connStr = @"Data Source=DESKTOP-OSJOPBK\SQLEXPRESS;Initial Catalog=EMS;User ID=sa;password=12345";
+                    connStr = @"Data Source=DESKTOP-NMPMI10;Initial Catalog=EMS;User ID=sa;password=12345";
                 else
                     connStr = ConfigurationManager.ConnectionStrings["SQLEntities"].ConnectionString;
             }

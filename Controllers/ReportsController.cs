@@ -137,7 +137,7 @@ namespace EMSApp.Controllers
                         toDate = lastDate.ToString("yyyy-MM-dd");
                     }
                     long empId = !string.IsNullOrEmpty(collection["EMPLOYEE_ID"].ToString()) ? Convert.ToInt64(collection["EMPLOYEE_ID"]) : 0;
-                    var data = service.GetAttendanceDataMonthly(fromDate: fromDate, toDate: toDate, empId: empId);
+                    var data = service.GetAttendanceDataMonthly(fromDate: fromDate, toDate: toDate, empId: empId).OrderBy(x => x.EMPLOYEE_ID);
                     ViewBag.STR = " of " + collection["MONTH"] + ", " + collection["YEAR"];
                     ViewBag.EMPLOYEE_ID = SetEmployee();
                     ViewBag.MONTH = SetMonthDate();

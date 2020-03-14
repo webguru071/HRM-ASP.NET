@@ -176,7 +176,7 @@ namespace EMSApp.Controllers
         [HttpPost]
         public ActionResult Import(FormCollection collection, HttpPostedFileBase uploadFile)
         {
-            List<AttendanceClass> viewList = new List<AttendanceClass>();
+            
             try
             {
                 // TODO: Add delete logic here
@@ -225,7 +225,10 @@ namespace EMSApp.Controllers
                                 ViewBag.ResultFailed = "";
                                 string fromDate = Convert.ToString(Session["fromDate"]);
                                 string toDate = Convert.ToString(Session["toDate"]);
-                                viewList = service.GetAttendanceDataMonthly(fromDate: fromDate, toDate: toDate);
+                                ViewBag.MONTH = SetMonthDate();
+                                ViewBag.YEAR = SetYear();
+                                var viewList = service.GetAttendanceDataMonthly(fromDate: fromDate, toDate: toDate).OrderBy(x => x.EMPLOYEE_ID);
+                                return View(viewList);
                             }
                             else
                             {
@@ -247,7 +250,7 @@ namespace EMSApp.Controllers
             }
             ViewBag.MONTH = SetMonthDate();
             ViewBag.YEAR = SetYear();
-            return View(viewList);
+            return View();
         }
 
         private DataTable ConvertCSVtoDataTable(string path)

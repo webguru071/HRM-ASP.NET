@@ -75,7 +75,7 @@ namespace EMSApp.Helper
         public static long LeaveDayMedicalID = 4;
         public static double LeaveDayCountOneValue = 1;
         public static double LeaveDayCountHalfValue = .5;
-        public static double LeaveDayCountTotal = 20;
+        public static double LeaveDayCountTotal = 18;
         //Attendance
         public static TimeSpan BreakTime = TimeSpan.FromMinutes(45);
     }
